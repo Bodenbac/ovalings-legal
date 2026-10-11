@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ovalings · Freigabe für Käufe</title><style>
+:root { --bg: #f6f3f8; --fg: #1d1a24; --muted: #6a6478; --accent: #8e24aa; --line: #e3dcea; color-scheme: light }
+@media (prefers-color-scheme: dark) { :root { --bg: #14111b; --fg: #f1edf7; --muted: #a59db5; --accent: #c77ddb; --line: #2f2939; color-scheme: dark } }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif }
+main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px }
+h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px }
+h2 { font-size: 19px; margin: 32px 0 8px }
+p, li { color: var(--muted) }
+ul { padding-left: 20px }
+nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--line) }
+a { color: var(--accent) }
+
+form { display: grid; gap: 12px }
+label { display: grid; gap: 4px; font-weight: 600 }
+input, select, textarea { font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: var(--fg) }
+textarea { min-height: 160px; resize: vertical }
+button { font: inherit; font-weight: 700; padding: 12px; border: 0; border-radius: 14px; background: var(--accent); color: var(--bg); cursor: pointer }
+.trap { position: absolute; left: -9999px }
+#status { min-height: 1.6em }
+[hidden] { display: none !important }
+button.quiet { background: transparent; color: var(--accent); border: 1px solid var(--line) }
+</style></head><body><main><nav><a href="privacy-de.html">Datenschutzerklärung</a><a href="terms-de.html">Nutzungsbedingungen</a><a href="imprint-de.html">Impressum</a><a href="contact-de.html">Kontakt</a><a href="parents.html" lang="en">English</a></nav><h1>Freigabe für Käufe in Ovalings</h1><p>Wer jünger als 18 ist, kann in Ovalings nur mit Zustimmung der Eltern mit echtem Geld kaufen. Mit Diamanten kauft man unter anderem Eier, aus denen zufällige Ovalings schlüpfen, die Chancen stehen im Spiel direkt am Kauf. Hier entscheiden Sie, ob Käufe erlaubt sind und wie viel im Monat ausgegeben werden darf.</p><form id="ask" hidden onsubmit="return false"><p>Konto: <strong id="name"></strong></p><label>Grenze je Monat<select id="limit"></select></label><button type="button" id="approve">Freigeben</button><button type="button" id="decline" class="quiet">Nicht freigeben</button></form><form id="withdraw" hidden onsubmit="return false"><p>Freigabe für Käufe zurückziehen. Danach sind Käufe mit echtem Geld wieder gesperrt.</p><button type="button" id="revoke">Freigabe zurückziehen</button></form><p id="status" role="status"></p><script>
+const T = {"title": "Freigabe für Käufe in Ovalings", "intro": "Wer jünger als 18 ist, kann in Ovalings nur mit Zustimmung der Eltern mit echtem Geld kaufen. Mit Diamanten kauft man unter anderem Eier, aus denen zufällige Ovalings schlüpfen, die Chancen stehen im Spiel direkt am Kauf. Hier entscheiden Sie, ob Käufe erlaubt sind und wie viel im Monat ausgegeben werden darf.", "account": "Konto", "limit": "Grenze je Monat", "approve": "Freigeben", "decline": "Nicht freigeben", "loading": "Wird geladen …", "approved": "Danke. Käufe sind bis zur gewählten Grenze im Monat erlaubt. Ihre E-Mail-Adresse ist gelöscht. Mit dem zweiten Link aus der E-Mail können Sie die Freigabe jederzeit zurückziehen.", "declined": "Käufe bleiben gesperrt. Ihre E-Mail-Adresse ist gelöscht.", "revoke_text": "Freigabe für Käufe zurückziehen. Danach sind Käufe mit echtem Geld wieder gesperrt.", "revoke": "Freigabe zurückziehen", "revoked": "Die Freigabe ist zurückgezogen. Käufe sind gesperrt.", "invalid": "Dieser Link gilt nicht mehr. Vielleicht ist er abgelaufen oder wurde schon benutzt.", "missing": "Dieser Link ist unvollständig. Bitte öffnen Sie den Link aus der E-Mail.", "failed": "Das hat nicht geklappt. Bitte versuchen Sie es später noch einmal.", "zero": "Keine Käufe"}, LANG = "de", q = new URLSearchParams(location.search), t = q.get('t'), r = q.get('r');
+const $ = (id) => document.getElementById(id), status = $('status');
+// Sprachwechsel behält den Link aus der E-Mail
+document.querySelectorAll('nav a[lang]').forEach((a) => { a.href += location.search; });
+const euro = (c) => c === 0 ? T.zero : (c / 100).toLocaleString(LANG, {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
+async function call(body) {
+  const res = await fetch("https://kglxfxsccunylhbxquqz.supabase.co" + '/functions/v1/parental-consent', {
+    method: 'POST', headers: {'Content-Type': 'application/json', apikey: "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss"}, body: JSON.stringify(body)});
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || String(res.status));
+  return data;
+}
+const failed = (e) => { status.textContent = e.message === 'invalid_token' ? T.invalid : T.failed; };
+const done = (text) => { $('ask').hidden = true; $('withdraw').hidden = true; status.textContent = text; };
+async function busy(f) {
+  document.querySelectorAll('button').forEach((b) => b.disabled = true);
+  try { await f(); } catch (e) { failed(e); }
+  document.querySelectorAll('button').forEach((b) => b.disabled = false);
+}
+if (t) {
+  status.textContent = T.loading;
+  call({action: 'lookup', token: t}).then((d) => {
+    $('name').textContent = d.display_name || '';
+    for (const c of [0, 500, 1000, 2000, 3000, 5000].filter((c) => c <= d.max_limit_cents)) {
+      const o = new Option(euro(c), c, false, c === d.default_limit_cents);
+      $('limit').add(o);
+    }
+    $('ask').hidden = false;
+    status.textContent = '';
+  }, failed);
+  $('approve').onclick = () => busy(async () => { await call({action: 'confirm', token: t, limit_cents: Number($('limit').value)}); done(T.approved); });
+  $('decline').onclick = () => busy(async () => { await call({action: 'revoke', token: t}); done(T.declined); });
+} else if (r) {
+  $('withdraw').hidden = false;
+  $('revoke').onclick = () => busy(async () => { await call({action: 'revoke', token: r}); done(T.revoked); });
+} else {
+  status.textContent = T.missing;
+}
+</script></main></body></html>
