@@ -480,8 +480,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.dcf036f6.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.68a89b81.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.9eccdc3f.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.60a759d5.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -544,7 +544,7 @@ main { display: block; padding-bottom: var(--s-huge); }
 }
 .top.glass { background: var(--bar); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--line); color: var(--text); }
 .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font: 600 22px/1 var(--display); flex: none; }
-.brand img { width: 36px; height: 36px; }
+.brand img { width: auto; height: 36px; } /* Logo ist hochkant (Figur ohne Rand), nur die Höhe festlegen, sonst gestreckt (Luis 15.10.2026) */
 .top:not(.glass) .brand span { text-shadow: var(--outline-shadow); }
 .brand:hover { color: inherit; }
 .sections { display: none; gap: var(--s-s); margin: 0 auto; }
@@ -1205,7 +1205,7 @@ a.nextcard:hover { color: var(--white); }
 /* Schlanker Fuß (confirmed): Marke, Impressum und Datenschutz auf Englisch und Deutsch, Kontakt */
 .footnote.minimal { align-items: center; margin-top: 0; padding-top: 0; border-top: 0; font-size: 14px; }
 .footnote.minimal .brand { font-size: 18px; margin-right: var(--s-s); }
-.footnote.minimal .brand img { width: 32px; height: 32px; }
+.footnote.minimal .brand img { width: auto; height: 32px; }
 body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 /* Wurzel und 404: Impressum und Datenschutz */
 .legalline { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; margin-top: var(--s-xxl); font-size: 14px; font-weight: 700; }
