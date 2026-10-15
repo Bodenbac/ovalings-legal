@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000">
+<title>Türkiye</title>
+<rect width="1500" height="1000" fill="#E30A17"/>
+<circle cx="500" cy="500" r="250" fill="#FFFFFF"/>
+<circle cx="562.5" cy="500" r="200" fill="#E30A17"/>
+<path fill="#FFFFFF" d="M695.833 500 L782.206 471.936 L782.206 381.118 L835.588 454.591 L921.96 426.527 L868.579 500 L921.96 573.473 L835.588 545.409 L782.206 618.882 L782.206 528.064Z"/>
+</svg>

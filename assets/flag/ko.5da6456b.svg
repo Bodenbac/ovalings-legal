@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+<title>대한민국</title>
+<rect width="900" height="600" fill="#FFFFFF"/>
+<g transform="translate(450 300) rotate(33.69)"><circle r="150" fill="#00499A"/><path fill="#CC3037" d="M-150 0A150 150 0 0 1 150 0A75 75 0 0 0 0 0A75 75 0 0 1 -150 0Z"/></g>
+<path fill="#000000" transform="translate(221.186 147.457) rotate(213.69)" d="M-50 -75h25v150h-25ZM-12.5 -75h25v150h-25ZM25 -75h25v150h-25Z"/>
+<path fill="#000000" transform="translate(678.814 452.543) rotate(33.69)" d="M-50 -75h25v68.75h-25ZM-50 6.25h25v68.75h-25ZM-12.5 -75h25v68.75h-25ZM-12.5 6.25h25v68.75h-25ZM25 -75h25v68.75h-25ZM25 6.25h25v68.75h-25Z"/>
+<path fill="#000000" transform="translate(678.814 147.457) rotate(-33.69)" d="M-50 -75h25v68.75h-25ZM-50 6.25h25v68.75h-25ZM-12.5 -75h25v150h-25ZM25 -75h25v68.75h-25ZM25 6.25h25v68.75h-25Z"/>
+<path fill="#000000" transform="translate(221.186 452.543) rotate(146.31)" d="M-50 -75h25v150h-25ZM-12.5 -75h25v68.75h-25ZM-12.5 6.25h25v68.75h-25ZM25 -75h25v150h-25Z"/>
+</svg>
