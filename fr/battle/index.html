@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="fr" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Combat et effets · Ovalings</title>
+<meta name="description" content="Comment se passent les combats dans Ovalings : jauge de tour, coups critiques, attaques de base et tous les effets.">
+<link rel="canonical" href="https://ovalings.app/fr/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Combat et effets · Ovalings">
+<meta property="og:description" content="Comment se passent les combats dans Ovalings : jauge de tour, coups critiques, attaques de base et tous les effets.">
+<meta property="og:url" content="https://ovalings.app/fr/battle/"><meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="Menu principal">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>Guide du jeu</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>Donjons</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>Campagne</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>Voir un Ovaling</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">Français</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">Langue</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">Combat</h1>
+<p class="lead on-image">Les combats se jouent au tour par tour. Tu choisis une attaque, ou tu laisses l’équipe se battre seule.</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>Déroulement d’un combat</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>Chaque combattant remplit sa jauge de tour selon sa <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Vitesse</span>. Celui qui la remplit en premier agit.</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p>La <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Chance critique</span> décide à quelle fréquence un coup est critique, les <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Dégâts critiques</span> à quel point il frappe fort.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>En Auto l’équipe combat seule, et le bouton de vitesse accélère le combat.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>Dans la campagne, les niveaux gagnés avec 3 étoiles se passent avec un Jeton de combat rapide.</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>Attaques de base</span></h2>
+    <p class="read">L’emplacement 1 porte toujours l’attaque de base de la famille. Les deux sont aussi fortes l’une que l’autre.</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Rayon</h3>
+<p class="sub">Lumière</p>    </div>
+  </div>
+  <p class="short">un ennemi · puissance 1 · sans recharge</p>
+  <details class="expander">
+    <summary>Effet</summary>
+    <dl class="rows">
+<div><dt>Cible</dt><dd>un ennemi</dd></div></dl>
+<ul class="lines"><li>Inflige 100 % de l’<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span> en dégâts.</li></ul>
+<dl class="rows">
+<div><dt>Recharge</dt><dd>aucune</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Coup</h3>
+<p class="sub">Ombre</p>    </div>
+  </div>
+  <p class="short">un ennemi · puissance 1 · sans recharge</p>
+  <details class="expander">
+    <summary>Effet</summary>
+    <dl class="rows">
+<div><dt>Cible</dt><dd>un ennemi</dd></div></dl>
+<ul class="lines"><li>Inflige 100 % de l’<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span> en dégâts.</li></ul>
+<dl class="rows">
+<div><dt>Recharge</dt><dd>aucune</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>Effets</span></h2>
+    <p class="read">La puissance d’un effet vient toujours de la capacité qui l’applique. Les effets du même type ne se cumulent pas : la valeur la plus forte et la durée la plus longue s’appliquent. Les renforcements aident ton équipe, les affaiblissements touchent l’ennemi. Touche un effet pour en savoir plus.</p>
+    <h3 class="subtitle">Renforcements</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse d’attaque</h4><p class="sub">Augmente l’attaque, ses coups font plus de dégâts.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Hausse d’attaque augmente l’<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Attaque</span> d’un pourcentage tant qu’elle dure. Tous les dégâts infligés par l’Ovaling augmentent d’autant.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse de défense</h4><p class="sub">Augmente la défense, il subit moins de dégâts.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Hausse de défense augmente la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Défense</span> d’un pourcentage tant qu’elle dure. Chaque coup sur l’Ovaling fait moins de dégâts.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse de vitesse</h4><p class="sub">Augmente la vitesse, il agit plus souvent.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Hausse de vitesse augmente la <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Vitesse</span> d’un pourcentage tant qu’elle dure. La jauge de tour se remplit plus vite, l’Ovaling joue donc plus tôt et plus souvent.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Régénération</h4><p class="sub">Soigne au début de chacun de ses tours.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Au début de chacun de ses tours, l’Ovaling récupère une partie de sa <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max, jusqu’à la fin de l’effet.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la vie max par tour, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bouclier</h4><p class="sub">Absorbe les dégâts avant la vie.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Un bouclier est une réserve faite d’une partie de la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max. Les dégâts touchent d’abord le bouclier, puis seulement la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span>. Un bouclier n’a pas de durée et reste jusqu’à épuisement. Chaque bouclier réduit aussi tous les dégâts subis d’au moins 5 % tant qu’il en reste quelque chose. L’icône de réduction de dégâts s’affiche alors.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Jusqu’à épuisement</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la vie max, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, le plus grand bouclier s’applique</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Réduction de dégâts</h4><p class="sub">Tous les dégâts subis sont plus faibles.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Tous les dégâts subis baissent de la valeur indiquée. Chaque bouclier apporte sa propre réduction de dégâts tant qu’il tient, mais elle peut aussi venir comme effet à part avec une durée. Toutes les réductions ensemble : 50 % au plus.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Provocation</h4><p class="sub">Attire toutes les attaques ciblées des ennemis.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Tant que la provocation dure, les ennemis doivent viser le provocateur avec leurs attaques ciblées. Si plusieurs Ovalings provoquent, l’un d’eux est touché au hasard. Les attaques de zone touchent toujours tout le monde.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Lien protecteur</h4><p class="sub">Un protecteur encaisse une partie des coups.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Le lanceur est lié à la cible et subit une partie de chaque coup direct qu’elle reçoit. Le poison et les autres dégâts sur la durée ne sont pas partagés.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage des dégâts infligés, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Blocage des affaiblissements</h4><p class="sub">Les nouveaux affaiblissements sont sans effet.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Tant qu’il dure, tous les nouveaux affaiblissements rebondissent. Ceux déjà en place restent, une purification les retire.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Contre-attaque</h4><p class="sub">Riposte à chaque coup direct.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Quand l’Ovaling subit un coup direct, il riposte aussitôt avec son attaque de base, à chaque coup. Une contre-attaque n’en déclenche jamais une autre. Le poison et les dégâts renvoyés ne comptent pas comme des coups.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage de l’attaque, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Intuable</h4><p class="sub">La vie ne peut pas descendre sous 1.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Tant qu’il dure, l’Ovaling ne peut pas tomber. Les dégâts et le poison réduisent sa <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> à 1 au plus bas. Une fois terminé, chaque coup compte à nouveau.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse de chance critique</h4><p class="sub">Plus de chances de coups critiques.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>La <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">chance critique</span> monte d’autant de points que l’indique la capacité. Les coups critiques infligent des dégâts selon les <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">dégâts critiques</span> de l’Ovaling.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Points de pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse de dégâts critiques</h4><p class="sub">Les coups critiques font plus de dégâts.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Les <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">dégâts critiques</span> montent d’autant de points que l’indique la capacité tant que l’effet dure.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Renforcement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Points de pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Affaiblissements</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Baisse d’attaque</h4><p class="sub">Réduit l’attaque, ses coups font moins de dégâts.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Baisse d’attaque réduit l’<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Attaque</span> d’un pourcentage tant qu’elle dure. Tous les dégâts infligés par l’Ovaling diminuent d’autant. Certains boss y sont insensibles.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Baisse de défense</h4><p class="sub">Réduit la défense, il subit plus de dégâts.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Baisse de défense réduit la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Défense</span> d’un pourcentage tant qu’elle dure. Chaque coup sur l’Ovaling fait plus de dégâts.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Baisse de vitesse</h4><p class="sub">Réduit la vitesse, il agit moins souvent.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Baisse de vitesse réduit la <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Vitesse</span> d’un pourcentage tant qu’elle dure. La jauge de tour se remplit plus lentement, l’Ovaling joue donc plus tard et moins souvent.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Poison</h4><p class="sub">Inflige des dégâts au début de chacun de ses tours.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Au début de chacun de ses tours, l’Ovaling empoisonné perd une partie de sa <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max. Le poison ignore la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">défense</span>. Un bouclier l’absorbe d’abord, comme tout autre dégât. Il prend fin après le nombre de tours indiqué.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la vie max par tour, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Étourdissement</h4><p class="sub">Passe son prochain tour.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Un Ovaling étourdi passe son tour et ne peut rien faire. Les boss sont souvent insensibles à l’étourdissement, et certains Ovalings peuvent y résister grâce à un passif.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Réduction de soins</h4><p class="sub">Les soins sur la cible sont plus faibles.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Tant qu’il dure, chaque soin sur la cible est réduit de la valeur de la capacité, vol de vie et régénération compris. La purification le retire.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Affaiblissement</dd></div><div><dt>Durée</dt><dd>Quelques tours, selon la capacité</dd></div><div><dt>Puissance</dt><dd>Pourcentage, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, la valeur la plus forte et la durée la plus longue s’appliquent</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Effets instantanés</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Soin</h4><p class="sub">Rend de la vie aussitôt.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Le soin rend aussitôt une partie de la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max de la cible. La <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> ne dépasse jamais le maximum.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la vie max, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Vol de vie</h4><p class="sub">Soigne d’une part des dégâts infligés.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Une part des dégâts infligés par l’attaquant lui revient en <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span>, à chaque coup.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage des dégâts infligés, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Réanimation</h4><p class="sub">Ramène un allié tombé.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>La réanimation ramène un Ovaling tombé au combat avec une partie de sa <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span>. Chaque Ovaling ne peut être réanimé qu’une fois par combat.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de vie après réanimation, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Non, une fois par combat et par Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Purification</h4><p class="sub">Retire tous les affaiblissements.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>La purification retire d’un coup tous les affaiblissements de la cible, par exemple le poison, l’étourdissement et toutes les baisses d’<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span>, de <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">défense</span> et de <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">vitesse</span>. Les renforcements et les boucliers restent.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hausse de jauge de tour</h4><p class="sub">Remplit une partie de la jauge de tour.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Hausse de jauge de tour ajoute un pourcentage à la jauge de tour de la cible, son prochain tour arrive donc plus tôt.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la jauge de tour, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Baisse de jauge de tour</h4><p class="sub">Vide une partie de la jauge de tour.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Baisse de jauge de tour retire un pourcentage de la jauge de tour de la cible, son prochain tour arrive donc plus tard.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la jauge de tour, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Coût en vie</h4><p class="sub">Coûte de la vie au lanceur.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Une aide puissante a un prix : le lanceur perd une partie de sa <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max, sans tenir compte des boucliers, mais jamais son dernier point.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de la vie max, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Attaque alliée</h4><p class="sub">Un allié attaque hors de son tour.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>L’allié frappe aussitôt avec son attaque de base l’ennemi qui a le moins de <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span>. La provocation s’applique. Cela ne compte pas comme son tour, les recharges et les effets n’avancent pas.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage de l’attaque, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Vol de vie partagé</h4><p class="sub">Les dégâts soignent toute l’équipe.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Une partie des dégâts de l’attaque soigne chaque allié en vie, attaquant compris.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Pourcentage des dégâts infligés, selon la capacité</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Décharge de venin</h4><p class="sub">Le poison inflige tous ses dégâts d’un coup.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effet</summary>
+          <p>Chaque poison sur la cible inflige aussitôt sa puissance multipliée par les tours restants, puis disparaît. Sans poison, rien ne se passe. Ne peut pas être bloqué.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Effet instantané</dd></div><div><dt>Durée</dt><dd>Instantané</dd></div><div><dt>Puissance</dt><dd>Aucune</dd></div><div><dt>Cumul</dt><dd>Oui, chaque utilisation agit séparément</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>Règles des effets</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>Chaque bouclier réduit les dégâts subis d’au moins 5 % tant qu’il tient. Toutes les réductions ensemble atteignent au plus 50 %.</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="Menu principal">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Accueil</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Guide</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">Voir</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Donjons</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Astuces</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>Chaque Ovaling est unique au monde.</p>
+    </div>
+    <div>
+      <h2>Jeu</h2>
+      <ul>
+<li><a href="../guide/">Guide du jeu</a></li><li><a href="../dungeons/">Donjons</a></li><li><a href="../campaign/">Campagne</a></li><li><a href="../ovaling/">Voir un Ovaling</a></li><li><a href="../faq/">Questions fréquentes</a></li>      </ul>
+    </div>
+    <div>
+      <h2>Mentions</h2>
+      <ul>
+<li><a href="../../privacy.html">Politique de confidentialité</a></li><li><a href="../../terms.html">Conditions d’utilisation</a></li><li><a href="../../imprint.html">Mentions légales</a></li><li><a href="../../contact.html">Contact</a></li><li><a href="../../delete-account.html">Supprimer le compte</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>Langues</h2>
+      <ul class="langlist">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="./" hreflang="fr" lang="fr" data-lang="fr" aria-current="true">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>Sans cookies et sans traceurs</span>
+    <span>Polices : Fredoka et Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>Version du 15.10.2026 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="Fermer"></button>
+  <h2 id="langtitle">Choisis ta langue</h2>
+  <ul class="langchoice">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="./" hreflang="fr" lang="fr" data-lang="fr" class="on" aria-current="true">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>

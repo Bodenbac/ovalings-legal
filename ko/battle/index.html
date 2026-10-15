@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ko" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>전투와 효과 · Ovalings</title>
+<meta name="description" content="Ovalings 전투의 흐름. 턴 게이지, 치명타, 기본 공격과 모든 효과.">
+<link rel="canonical" href="https://ovalings.app/ko/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="전투와 효과 · Ovalings">
+<meta property="og:description" content="Ovalings 전투의 흐름. 턴 게이지, 치명타, 기본 공격과 모든 효과.">
+<meta property="og:url" content="https://ovalings.app/ko/battle/"><meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="메인 메뉴">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>게임 가이드</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>던전</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>캠페인</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>Ovaling 보기</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">한국어</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">언어</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">전투</h1>
+<p class="lead on-image">전투는 턴제예요. 기술을 고르거나, 팀이 알아서 싸우게 할 수 있어요.</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>전투의 흐름</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>모두가 <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">속도</span>에 따라 턴 게이지를 채워요. 먼저 채운 쪽이 행동해요.</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">치명타 확률</span>은 치명타가 얼마나 자주 나는지, <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">치명타 피해</span>는 얼마나 세게 맞히는지 정해요.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>자동 모드에서는 팀이 알아서 싸우고, 속도 버튼으로 전투를 빠르게 할 수 있어요.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>캠페인에서 별 3개로 이긴 스테이지는 빠른 전투 토큰으로 넘길 수 있어요.</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>기본 공격</span></h2>
+    <p class="read">슬롯 1에는 항상 패밀리의 기본 공격이 들어 있어요. 둘 다 같은 강도예요.</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>광선</h3>
+<p class="sub">빛</p>    </div>
+  </div>
+  <p class="short">적 1명 · 위력 1 · 쿨타임 없음</p>
+  <details class="expander">
+    <summary>효과</summary>
+    <dl class="rows">
+<div><dt>대상</dt><dd>적 1명</dd></div></dl>
+<ul class="lines"><li><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>의 100%만큼 피해를 입혀요.</li></ul>
+<dl class="rows">
+<div><dt>쿨타임</dt><dd>없음</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>일격</h3>
+<p class="sub">그림자</p>    </div>
+  </div>
+  <p class="short">적 1명 · 위력 1 · 쿨타임 없음</p>
+  <details class="expander">
+    <summary>효과</summary>
+    <dl class="rows">
+<div><dt>대상</dt><dd>적 1명</dd></div></dl>
+<ul class="lines"><li><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>의 100%만큼 피해를 입혀요.</li></ul>
+<dl class="rows">
+<div><dt>쿨타임</dt><dd>없음</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>효과</span></h2>
+    <p class="read">효과의 위력은 항상 그 효과를 거는 스킬에서 정해져요. 같은 종류의 효과는 중첩되지 않고 더 강한 값과 더 긴 지속 시간이 적용돼요. 강화 효과는 우리 팀을 돕고 약화 효과는 적에게 걸려요. 효과를 탭하면 자세히 볼 수 있어요.</p>
+    <h3 class="subtitle">강화 효과</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>공격력 증가</h4><p class="sub">공격력이 높아져 주는 피해가 늘어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>공격력 증가는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>을 일정 비율 높여요. Ovaling이 주는 모든 피해가 함께 늘어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>방어력 증가</h4><p class="sub">방어력이 높아져 받는 피해가 줄어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>방어력 증가는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">방어력</span>을 일정 비율 높여요. Ovaling이 받는 모든 타격의 피해가 작아져요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>속도 증가</h4><p class="sub">속도가 높아져 더 자주 행동해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>속도 증가는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">속도</span>를 일정 비율 높여요. 턴 게이지가 빨리 차서 Ovaling의 턴이 빨리, 더 자주 와요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>지속 회복</h4><p class="sub">자신의 턴이 시작될 때마다 회복해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>효과가 끝날 때까지 자신의 턴이 시작될 때마다 Ovaling이 최대 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>의 일부를 회복해요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>턴마다 최대 체력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>보호막</h4><p class="sub">체력보다 먼저 피해를 흡수해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>보호막은 최대 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>의 일부로 만든 완충막이에요. 피해는 먼저 보호막에 들어가고 그다음 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>에 들어가요. 보호막은 지속 시간이 없고 소진될 때까지 남아요. 조금이라도 남아 있는 동안에는 받는 모든 피해를 최소 5% 줄여 주고, 이때 피해 감소 아이콘이 표시돼요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>소진될 때까지</dd></div><div><dt>위력</dt><dd>최대 체력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 큰 보호막이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>피해 감소</h4><p class="sub">받는 모든 피해가 줄어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>받는 모든 피해가 그 값만큼 줄어요. 모든 보호막은 버티는 동안 자체 피해 감소를 주지만, 지속 시간이 있는 별도 효과로도 걸릴 수 있어요. 모든 감소를 합쳐 최대 50%예요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>도발</h4><p class="sub">적의 단일 공격을 모두 끌어와요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>도발이 지속되는 동안 적은 단일 공격을 도발한 대상에게 써야 해요. 여러 Ovaling이 도발하면 그중 무작위로 하나가 맞아요. 광역 공격은 그대로 모두에게 맞아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>수호 결속</h4><p class="sub">수호자가 타격의 일부를 대신 받아요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>사용자가 대상과 결속되어 대상이 받는 모든 직접 타격의 일부를 대신 받아요. 독 같은 지속 피해는 나누지 않아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>입힌 피해 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>약화 차단</h4><p class="sub">새 약화 효과가 통하지 않아요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>지속되는 동안 새 약화 효과는 모두 튕겨 나가요. 이미 걸린 약화 효과는 남아 있으며 정화로 없앨 수 있어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>반격</h4><p class="sub">직접 타격마다 반격해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>Ovaling이 직접 타격을 받으면 맞을 때마다 즉시 기본 공격으로 반격해요. 반격이 또 다른 반격을 부르지는 않아요. 독과 반사 피해는 타격으로 치지 않아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>공격력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>불사</h4><p class="sub">체력이 1 아래로 떨어지지 않아요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>지속되는 동안 Ovaling은 쓰러지지 않아요. 피해와 독을 받아도 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>은 최소 1로 남아요. 효과가 끝나면 모든 타격이 다시 그대로 들어가요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>치명타 확률 증가</h4><p class="sub">치명타 확률이 올라가요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">치명타 확률</span>이 스킬에 적힌 만큼 %p 올라가요. 치명타는 Ovaling의 <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">치명타 피해</span>만큼 피해를 입혀요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%p, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>치명타 피해 증가</h4><p class="sub">치명타 피해가 커져요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>효과가 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">치명타 피해</span>가 스킬에 적힌 만큼 %p 올라가요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>강화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%p, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">약화 효과</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>공격력 감소</h4><p class="sub">공격력이 낮아져 주는 피해가 줄어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>공격력 감소는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>을 일정 비율 낮춰요. Ovaling이 주는 모든 피해가 함께 줄어요. 일부 보스는 면역이에요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>방어력 감소</h4><p class="sub">방어력이 낮아져 받는 피해가 늘어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>방어력 감소는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">방어력</span>을 일정 비율 낮춰요. Ovaling이 받는 모든 타격의 피해가 커져요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>속도 감소</h4><p class="sub">속도가 낮아져 덜 자주 행동해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>속도 감소는 지속되는 동안 <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">속도</span>를 일정 비율 낮춰요. 턴 게이지가 느리게 차서 Ovaling의 턴이 늦게, 덜 자주 와요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>독</h4><p class="sub">자신의 턴이 시작될 때마다 피해를 입어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>독에 걸린 Ovaling은 자신의 턴이 시작될 때마다 최대 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>의 일부를 잃어요. 독은 <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">방어력</span>을 무시해요. 다른 피해처럼 보호막이 먼저 흡수해요. 정해진 턴이 지나면 끝나요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>턴마다 최대 체력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>기절</h4><p class="sub">다음 턴을 건너뛰어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>기절한 Ovaling은 턴을 건너뛰고 아무것도 할 수 없어요. 보스는 기절에 면역인 경우가 많고, 일부 Ovaling은 패시브로 막을 수 있어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>회복 감소</h4><p class="sub">대상이 받는 회복이 줄어요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>지속되는 동안 대상이 받는 모든 회복이 스킬 값만큼 줄어요. 흡혈과 지속 회복도 포함이에요. 정화로 없앨 수 있어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>약화 효과</dd></div><div><dt>지속 시간</dt><dd>몇 턴, 스킬에 따라 다름</dd></div><div><dt>위력</dt><dd>%, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 더 강한 값과 더 긴 지속 시간이 적용돼요</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">즉시 효과</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>회복</h4><p class="sub">즉시 체력을 회복해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>회복은 대상의 최대 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span> 일부를 즉시 되돌려요. <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>은 최대치를 넘지 않아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>최대 체력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>흡혈</h4><p class="sub">입힌 피해의 일부만큼 회복해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>공격자가 입힌 피해의 일부가 타격마다 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>으로 돌아와요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>입힌 피해 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>부활</h4><p class="sub">쓰러진 아군을 되살려요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>부활은 쓰러진 Ovaling을 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span> 일부와 함께 전투로 되돌려요. 각 Ovaling은 전투마다 한 번만 부활할 수 있어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>부활 후 체력 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>아니요, 전투마다 Ovaling당 1회</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>정화</h4><p class="sub">모든 약화 효과를 제거해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>정화는 대상의 모든 약화 효과를 한 번에 제거해요. 예를 들어 독, 기절, <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>, <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">방어력</span>, <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">속도</span> 감소가 모두 사라져요. 강화 효과와 보호막은 남아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>턴 게이지 증가</h4><p class="sub">턴 게이지 일부를 채워요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>턴 게이지 증가는 대상의 턴 게이지를 일정 비율 채워 다음 턴이 빨리 와요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>턴 게이지 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>턴 게이지 감소</h4><p class="sub">턴 게이지 일부를 비워요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>턴 게이지 감소는 대상의 턴 게이지를 일정 비율 깎아 다음 턴이 늦게 와요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>턴 게이지 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>생명 대가</h4><p class="sub">사용자의 체력을 소모해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>강력한 지원에는 대가가 따라요. 사용자는 보호막을 무시하고 최대 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>의 일부를 잃지만, 마지막 1은 절대 잃지 않아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>최대 체력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>협공</h4><p class="sub">아군이 차례와 상관없이 공격해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>아군이 즉시 기본 공격으로 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>이 가장 낮은 적을 공격해요. 도발이 적용돼요. 자신의 턴으로 치지 않으며 쿨타임과 효과도 줄지 않아요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>공격력 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>공유 흡혈</h4><p class="sub">입힌 피해로 팀 전체가 회복해요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>공격으로 입힌 피해의 일부만큼 공격자를 포함한 살아 있는 모든 아군이 회복해요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>입힌 피해 대비 %, 스킬에 따라 다름</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>독 방출</h4><p class="sub">독이 모든 피해를 한꺼번에 입혀요.</p></div>
+        </div>
+        <details class="expander">
+          <summary>효과</summary>
+          <p>대상에 걸린 모든 독이 위력에 남은 턴 수를 곱한 피해를 즉시 입히고 사라져요. 독이 없으면 아무 일도 없어요. 막을 수 없어요.</p>
+          <dl class="rows"><div><dt>종류</dt><dd>즉시 효과</dd></div><div><dt>지속 시간</dt><dd>즉시</dd></div><div><dt>위력</dt><dd>없음</dd></div><div><dt>중첩</dt><dd>예, 사용할 때마다 각각 적용돼요</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>효과 규칙</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>보호막은 남아 있는 동안 받는 피해를 최소 5% 줄여요. 모든 감소를 합쳐도 최대 50%예요.</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="메인 메뉴">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">홈</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">가이드</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">보기</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">던전</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">팁</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>모든 Ovaling은 세상에 단 하나뿐이에요.</p>
+    </div>
+    <div>
+      <h2>게임</h2>
+      <ul>
+<li><a href="../guide/">게임 가이드</a></li><li><a href="../dungeons/">던전</a></li><li><a href="../campaign/">캠페인</a></li><li><a href="../ovaling/">Ovaling 보기</a></li><li><a href="../faq/">자주 묻는 질문</a></li>      </ul>
+    </div>
+    <div>
+      <h2>법적 고지</h2>
+      <ul>
+<li><a href="../../privacy.html">개인정보 처리방침</a></li><li><a href="../../terms.html">이용약관</a></li><li><a href="../../imprint.html">운영자 정보</a></li><li><a href="../../contact.html">문의</a></li><li><a href="../../delete-account.html">계정 삭제</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>언어</h2>
+      <ul class="langlist">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="./" hreflang="ko" lang="ko" data-lang="ko" aria-current="true">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>쿠키와 추적기 없음</span>
+    <span>글꼴: Fredoka와 Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>2026.10.15 버전 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="닫기"></button>
+  <h2 id="langtitle">언어를 선택하세요</h2>
+  <ul class="langchoice">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="./" hreflang="ko" lang="ko" data-lang="ko" class="on" aria-current="true">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>

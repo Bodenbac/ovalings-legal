@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Combate y efectos · Ovalings</title>
+<meta name="description" content="Así funcionan los combates en Ovalings: barra de turno, golpes críticos, ataques básicos y todos los efectos.">
+<link rel="canonical" href="https://ovalings.app/es/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Combate y efectos · Ovalings">
+<meta property="og:description" content="Así funcionan los combates en Ovalings: barra de turno, golpes críticos, ataques básicos y todos los efectos.">
+<meta property="og:url" content="https://ovalings.app/es/battle/"><meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="Menú principal">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>Guía del juego</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>Mazmorras</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>Campaña</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>Ver un Ovaling</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">Español</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">Idioma</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">Combate</h1>
+<p class="lead on-image">Los combates son por turnos. Eliges un ataque o dejas que el equipo luche solo.</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>Así va un combate</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>Cada luchador llena su barra de turno según su <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Velocidad</span>. Quien la llena primero actúa.</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p>La <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Prob. crítica</span> decide cada cuánto un golpe es crítico, el <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Daño crítico</span> cuánto daño hace.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>Con Auto el equipo lucha solo, y el botón de velocidad hace que el combate vaya más rápido.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>En la campaña, los niveles ganados con 3 estrellas se pueden saltar con una Ficha de combate rápido.</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>Ataques básicos</span></h2>
+    <p class="read">La ranura 1 siempre lleva el ataque básico de la familia. Los dos son igual de fuertes.</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Haz</h3>
+<p class="sub">Luz</p>    </div>
+  </div>
+  <p class="short">un enemigo · poder 1 · sin recarga</p>
+  <details class="expander">
+    <summary>Efecto</summary>
+    <dl class="rows">
+<div><dt>Objetivo</dt><dd>un enemigo</dd></div></dl>
+<ul class="lines"><li>Hace un 100 % del <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span> como daño.</li></ul>
+<dl class="rows">
+<div><dt>Recarga</dt><dd>ninguna</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Golpe</h3>
+<p class="sub">Sombra</p>    </div>
+  </div>
+  <p class="short">un enemigo · poder 1 · sin recarga</p>
+  <details class="expander">
+    <summary>Efecto</summary>
+    <dl class="rows">
+<div><dt>Objetivo</dt><dd>un enemigo</dd></div></dl>
+<ul class="lines"><li>Hace un 100 % del <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span> como daño.</li></ul>
+<dl class="rows">
+<div><dt>Recarga</dt><dd>ninguna</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>Efectos</span></h2>
+    <p class="read">La fuerza de un efecto siempre viene de la habilidad que lo aplica. Los efectos del mismo tipo no se acumulan: valen el valor más fuerte y la duración más larga. Los beneficios ayudan a tu equipo, los perjuicios afectan al enemigo. Toca un efecto para saber más.</p>
+    <h3 class="subtitle">Beneficios</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de ataque</h4><p class="sub">Sube el ataque, así sus golpes hacen más daño.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Aumento de ataque sube el <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span> un porcentaje mientras dura. Todo el daño que hace el Ovaling sube con él.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de defensa</h4><p class="sub">Sube la defensa, así recibe menos daño.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Aumento de defensa sube la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span> un porcentaje mientras dura. Cada golpe al Ovaling hace menos daño.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de velocidad</h4><p class="sub">Sube la velocidad, así actúa más a menudo.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Aumento de velocidad sube la <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">velocidad</span> un porcentaje mientras dura. La barra de turno se llena más rápido, así el Ovaling recibe su turno antes y con más frecuencia.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Regeneración</h4><p class="sub">Cura al empezar cada uno de sus turnos.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Al empezar cada uno de sus turnos, el Ovaling recupera parte de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima, hasta que el efecto termina.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima por turno, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Escudo</h4><p class="sub">Absorbe el daño antes de perder vida.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Un escudo es un colchón hecho de parte de la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima. El daño golpea primero el escudo y solo después la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span>. Un escudo no tiene duración y se queda hasta que se gasta. Además, cada escudo reduce todo el daño recibido al menos un 5 % mientras quede algo de él. Entonces se ve el icono de reducción de daño.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Hasta que se gaste</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, vale el escudo más grande</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de daño</h4><p class="sub">Todo el daño recibido es menor.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Todo el daño recibido baja según el valor. Cada escudo trae su propia reducción de daño mientras aguanta, pero también puede venir como efecto propio con duración. Todas las reducciones juntas llegan como mucho al 50 %.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Provocación</h4><p class="sub">Atrae todos los ataques individuales de los enemigos.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Mientras dura la provocación, los enemigos deben usar sus ataques individuales contra quien provoca. Si provocan varios Ovalings, se golpea a uno de ellos al azar. Los ataques de área siguen golpeando a todos.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Vínculo protector</h4><p class="sub">Un protector recibe parte de los golpes.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>El usuario queda unido al objetivo y recibe parte de cada golpe directo contra él. El veneno y otros daños por turno no se reparten.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje del daño hecho, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bloquear perjuicios</h4><p class="sub">Los nuevos perjuicios no tienen efecto.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Mientras dura, todos los nuevos perjuicios rebotan. Los que ya estaban se quedan, la limpieza los elimina.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Contraataque</h4><p class="sub">Responde a cada golpe directo.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Cuando el Ovaling recibe un golpe directo, responde al instante con su ataque básico, en cada golpe. Un contraataque nunca provoca otro. El veneno y el daño devuelto no cuentan como golpes.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje del ataque, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Inmortal</h4><p class="sub">La vida no puede bajar de 1.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Mientras dura, el Ovaling no puede caer. El daño y el veneno bajan su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> como mucho a 1. Cuando termina, cada golpe vuelve a contar.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de prob. crítica</h4><p class="sub">Más probabilidad de golpes críticos.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>La <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">prob. crítica</span> sube tantos puntos porcentuales como indica la habilidad. Los golpes críticos hacen daño según el <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">daño crítico</span> del Ovaling.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Puntos porcentuales, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de daño crítico</h4><p class="sub">Los golpes críticos hacen más daño.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>El <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">daño crítico</span> sube tantos puntos porcentuales como indica la habilidad mientras dura el efecto.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Puntos porcentuales, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Perjuicios</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de ataque</h4><p class="sub">Baja el ataque, así sus golpes hacen menos daño.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Reducción de ataque baja el <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span> un porcentaje mientras dura. Todo el daño que hace el Ovaling baja con él. Algunos jefes son inmunes.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de defensa</h4><p class="sub">Baja la defensa, así recibe más daño.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Reducción de defensa baja la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span> un porcentaje mientras dura. Cada golpe al Ovaling hace más daño.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de velocidad</h4><p class="sub">Baja la velocidad, así actúa menos a menudo.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Reducción de velocidad baja la <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">velocidad</span> un porcentaje mientras dura. La barra de turno se llena más despacio, así el Ovaling recibe su turno más tarde y con menos frecuencia.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Veneno</h4><p class="sub">Hace daño al empezar cada uno de sus turnos.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Al empezar cada uno de sus turnos, el Ovaling envenenado pierde parte de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima. El veneno atraviesa la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span>. Un escudo lo absorbe primero, como cualquier otro daño. Termina tras el número de turnos indicado.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima por turno, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aturdimiento</h4><p class="sub">Se salta su siguiente turno.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Un Ovaling aturdido se salta su turno y no puede hacer nada. Los jefes suelen ser inmunes al aturdimiento, y algunos Ovalings pueden evitarlo con una pasiva.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de curación</h4><p class="sub">La curación del objetivo es más débil.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Mientras dura, cada curación del objetivo es menor según el valor de la habilidad, incluidos el robo de vida y la regeneración. Limpiar la elimina.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Efectos instantáneos</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Curación</h4><p class="sub">Recupera vida al instante.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Curar recupera al instante parte de la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima del objetivo. La <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> nunca supera el máximo.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Robo de vida</h4><p class="sub">Cura con parte del daño hecho.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Parte del daño que hace el atacante vuelve a él como <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span>, con cada golpe.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje del daño hecho, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Revivir</h4><p class="sub">Trae de vuelta a un aliado caído.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Revivir devuelve al combate a un Ovaling caído con parte de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span>. Cada Ovaling solo puede revivir una vez por combate.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de vida al revivir, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, una vez por combate y Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Limpiar</h4><p class="sub">Elimina todos los perjuicios.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Limpiar elimina al instante todos los perjuicios del objetivo, por ejemplo veneno, aturdimiento y toda reducción de <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span>, <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span> y <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">velocidad</span>. Los beneficios y escudos se quedan.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Aumento de barra de turno</h4><p class="sub">Llena parte de la barra de turno.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Aumento de barra de turno añade un porcentaje a la barra de turno del objetivo, así su siguiente turno llega antes.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la barra de turno, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reducción de barra de turno</h4><p class="sub">Vacía parte de la barra de turno.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Reducción de barra de turno quita un porcentaje de la barra de turno del objetivo, así su siguiente turno llega más tarde.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la barra de turno, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Coste de vida</h4><p class="sub">Le cuesta vida al usuario.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Alguna ayuda poderosa tiene un precio: el usuario pierde parte de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima, sin importar los escudos, pero nunca el último punto.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Ataque aliado</h4><p class="sub">Un aliado ataca fuera de turno.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>El aliado golpea al instante con su ataque básico al enemigo con menos <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span>. La provocación se aplica. No cuenta como su turno, las recargas y los efectos no avanzan.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje del ataque, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Robo de vida compartido</h4><p class="sub">El daño cura a todo el equipo.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Parte del daño que hace el ataque cura a cada aliado vivo, incluido el atacante.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje del daño hecho, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Descarga de veneno</h4><p class="sub">El veneno hace todo su daño de golpe.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Efecto</summary>
+          <p>Cada veneno sobre el objetivo hace al instante su fuerza por los turnos restantes como daño, y luego desaparece. Sin veneno no pasa nada. No se puede bloquear.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>Reglas de los efectos</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>Cada escudo reduce el daño recibido al menos un 5 % mientras dura. Todas las reducciones juntas llegan como máximo al 50 %.</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="Menú principal">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Inicio</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Guía</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">Ver</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Mazmorras</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Consejos</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>Cada Ovaling existe una sola vez.</p>
+    </div>
+    <div>
+      <h2>Juego</h2>
+      <ul>
+<li><a href="../guide/">Guía del juego</a></li><li><a href="../dungeons/">Mazmorras</a></li><li><a href="../campaign/">Campaña</a></li><li><a href="../ovaling/">Ver un Ovaling</a></li><li><a href="../faq/">Preguntas frecuentes</a></li>      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+<li><a href="../../privacy.html">Política de privacidad</a></li><li><a href="../../terms.html">Condiciones de uso</a></li><li><a href="../../imprint.html">Aviso legal</a></li><li><a href="../../contact.html">Contacto</a></li><li><a href="../../delete-account.html">Borrar cuenta</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>Idiomas</h2>
+      <ul class="langlist">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="./" hreflang="es" lang="es" data-lang="es" aria-current="true">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>Sin cookies y sin rastreadores</span>
+    <span>Fuentes: Fredoka y Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>Versión del 15.10.2026 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="Cerrar"></button>
+  <h2 id="langtitle">Elige tu idioma</h2>
+  <ul class="langchoice">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="./" hreflang="es" lang="es" data-lang="es" class="on" aria-current="true">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>

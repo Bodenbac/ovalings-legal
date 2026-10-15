@@ -1,32 +1,54 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Ovalings</title><style>
-:root { --bg: #f6f3f8; --fg: #1d1a24; --muted: #6a6478; --accent: #8e24aa; --line: #e3dcea; color-scheme: light }
-@media (prefers-color-scheme: dark) { :root { --bg: #14111b; --fg: #f1edf7; --muted: #a59db5; --accent: #c77ddb; --line: #2f2939; color-scheme: dark } }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif }
-main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px }
-h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px }
-h2 { font-size: 19px; margin: 32px 0 8px }
-p, li { color: var(--muted) }
-ul { padding-left: 20px }
-nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--line) }
-a { color: var(--accent) }
-.mark { width: 64px; height: 80px; margin: 24px 0 16px; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%; background: radial-gradient(circle at 35% 30%, #fffbef, #e2d6b8); border: 3px solid #a8915e }
-a.open { display: inline-block; margin: 8px 0 16px; padding: 12px 22px; border-radius: 14px; background: var(--accent); color: var(--bg); font-weight: 700; text-decoration: none }
-[hidden] { display: none !important }
-</style></head><body><main><div class="mark" aria-hidden="true"></div><h1 id="title"></h1><p id="text"></p><a id="open" class="open" hidden></a><p id="hint"></p></main><script>
-const T = {"en": ["Email confirmed", "Your email address is confirmed. You can continue in the Ovalings app.", "Open Ovalings", "Opened this on a computer? Just open Ovalings on your phone, everything is done.", "Link no longer valid", "This link has expired or was already used. Request a new one in the app."], "de": ["E-Mail bestätigt", "Deine E-Mail-Adresse ist bestätigt. Du kannst in der Ovalings-App weitermachen.", "Ovalings öffnen", "Du bist am Computer? Öffne Ovalings einfach auf deinem Handy, alles ist erledigt.", "Link nicht mehr gültig", "Dieser Link ist abgelaufen oder wurde schon benutzt. Fordere in der App einen neuen an."], "es": ["Correo confirmado", "Tu dirección de correo está confirmada. Puedes continuar en la app de Ovalings.", "Abrir Ovalings", "¿Estás en un ordenador? Abre Ovalings en tu móvil, ya está todo listo.", "Enlace no válido", "Este enlace ha caducado o ya se usó. Pide uno nuevo en la app."], "pt": ["E-mail confirmado", "Seu endereço de e-mail está confirmado. Você pode continuar no app Ovalings.", "Abrir Ovalings", "Está no computador? Abra o Ovalings no celular, está tudo certo.", "Link inválido", "Este link expirou ou já foi usado. Peça um novo no app."], "fr": ["E-mail confirmé", "Ton adresse e-mail est confirmée. Tu peux continuer dans l’app Ovalings.", "Ouvrir Ovalings", "Tu es sur un ordinateur ? Ouvre simplement Ovalings sur ton téléphone, tout est prêt.", "Lien plus valide", "Ce lien a expiré ou a déjà été utilisé. Demandes-en un nouveau dans l’app."], "tr": ["E-posta onaylandı", "E-posta adresin onaylandı. Ovalings uygulamasında devam edebilirsin.", "Ovalings’i aç", "Bilgisayarda mısın? Ovalings’i telefonunda açman yeterli, her şey hazır.", "Bağlantı artık geçerli değil", "Bu bağlantının süresi doldu veya zaten kullanıldı. Uygulamada yenisini iste."], "id": ["Email dikonfirmasi", "Alamat email kamu sudah dikonfirmasi. Kamu bisa lanjut di aplikasi Ovalings.", "Buka Ovalings", "Sedang di komputer? Buka saja Ovalings di ponselmu, semuanya sudah beres.", "Tautan tidak berlaku", "Tautan ini sudah kedaluwarsa atau sudah dipakai. Minta tautan baru di aplikasi."], "ja": ["メールアドレスを確認しました", "メールアドレスの確認が完了しました。Ovalingsアプリで続けてください。", "Ovalingsを開く", "パソコンで開きましたか？スマートフォンでOvalingsを開けば大丈夫です。", "リンクが無効です", "このリンクは期限切れか、すでに使われています。アプリで新しいリンクをリクエストしてください。"], "ko": ["이메일 확인 완료", "이메일 주소가 확인되었어요. Ovalings 앱에서 계속하세요.", "Ovalings 열기", "컴퓨터에서 열었나요? 휴대폰에서 Ovalings를 열면 돼요.", "링크가 유효하지 않아요", "이 링크는 만료되었거나 이미 사용되었어요. 앱에서 새 링크를 요청하세요."]}, langs = (navigator.languages || [navigator.language || 'en']).map(l => l.slice(0, 2).toLowerCase());
-const t = T[langs.find(l => T[l]) || 'en'];
-const hash = new URLSearchParams(location.hash.slice(1)), query = new URLSearchParams(location.search);
-const failed = hash.get('error') || query.get('error');
-const phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-document.documentElement.lang = langs.find(l => T[l]) || 'en';
-document.getElementById('title').textContent = failed ? t[4] : t[0];
-document.getElementById('text').textContent = failed ? t[5] : t[1];
-document.title = 'Ovalings · ' + (failed ? t[4] : t[0]);
-const open = document.getElementById('open'), hint = document.getElementById('hint');
-open.textContent = t[2];
-open.href = 'app.ovalings://login-callback' + location.search + location.hash;
-if (phone) { open.hidden = false; if (!failed) setTimeout(() => { location.href = open.href; }, 400); }
-else if (!failed) { hint.textContent = t[3]; }
-if (failed && phone) open.hidden = false;
-</script></body></html>
+<html lang="en" data-page="legal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ovalings</title>
+<meta name="description" content="Ovalings">
+<meta name="robots" content="noindex"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Ovalings">
+<meta property="og:description" content="Ovalings">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./favicon.png" sizes="32x32">
+<link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
+<link rel="preload" href="assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top" id="top">
+  <a class="brand" href="./index.html" aria-label="Ovalings">
+    <img src="assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+</header>
+
+<main id="main">
+<div class="wrap legalwrap">
+  <article class="card legal confirmed">
+    <img class="confirmegg float" src="assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="80" height="104">
+    <h1 id="title"></h1><p id="text"></p><a id="open" class="open" hidden></a><p id="hint"></p>
+  </article>
+</div>
+</main>
+
+
+<footer class="foot">
+  <div class="wrap footnote minimal">
+    <a class="brand" href="./index.html"><img src="assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="32" height="32"><span>Ovalings</span></a>
+<a href="imprint.html" lang="en" hreflang="en">Imprint</a><a href="privacy.html" lang="en" hreflang="en">Privacy policy</a><a href="imprint-de.html" lang="de" hreflang="de">Impressum</a><a href="privacy-de.html" lang="de" hreflang="de">Datenschutzerklärung</a>    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+  </div>
+</footer>
+
+<script type="application/json" id="cfg">{"text": {"en": ["Email confirmed", "Your email address is confirmed. You can continue in the Ovalings app.", "Open Ovalings", "Opened this on a computer? Just open Ovalings on your phone, everything is done.", "Link no longer valid", "This link has expired or was already used. Request a new one in the app."], "de": ["E-Mail bestätigt", "Deine E-Mail-Adresse ist bestätigt. Du kannst in der Ovalings-App weitermachen.", "Ovalings öffnen", "Du bist am Computer? Öffne Ovalings einfach auf deinem Handy, alles ist erledigt.", "Link nicht mehr gültig", "Dieser Link ist abgelaufen oder wurde schon benutzt. Fordere in der App einen neuen an."], "es": ["Correo confirmado", "Tu dirección de correo está confirmada. Puedes continuar en la app de Ovalings.", "Abrir Ovalings", "¿Estás en un ordenador? Abre Ovalings en tu móvil, ya está todo listo.", "Enlace no válido", "Este enlace ha caducado o ya se usó. Pide uno nuevo en la app."], "pt": ["E-mail confirmado", "Seu endereço de e-mail está confirmado. Você pode continuar no app Ovalings.", "Abrir Ovalings", "Está no computador? Abra o Ovalings no celular, está tudo certo.", "Link inválido", "Este link expirou ou já foi usado. Peça um novo no app."], "fr": ["E-mail confirmé", "Ton adresse e-mail est confirmée. Tu peux continuer dans l’app Ovalings.", "Ouvrir Ovalings", "Tu es sur un ordinateur ? Ouvre simplement Ovalings sur ton téléphone, tout est prêt.", "Lien plus valide", "Ce lien a expiré ou a déjà été utilisé. Demandes-en un nouveau dans l’app."], "tr": ["E-posta onaylandı", "E-posta adresin onaylandı. Ovalings uygulamasında devam edebilirsin.", "Ovalings’i aç", "Bilgisayarda mısın? Ovalings’i telefonunda açman yeterli, her şey hazır.", "Bağlantı artık geçerli değil", "Bu bağlantının süresi doldu veya zaten kullanıldı. Uygulamada yenisini iste."], "id": ["Email dikonfirmasi", "Alamat email kamu sudah dikonfirmasi. Kamu bisa lanjut di aplikasi Ovalings.", "Buka Ovalings", "Sedang di komputer? Buka saja Ovalings di ponselmu, semuanya sudah beres.", "Tautan tidak berlaku", "Tautan ini sudah kedaluwarsa atau sudah dipakai. Minta tautan baru di aplikasi."], "ja": ["メールアドレスを確認しました", "メールアドレスの確認が完了しました。Ovalingsアプリで続けてください。", "Ovalingsを開く", "パソコンで開きましたか？スマートフォンでOvalingsを開けば大丈夫です。", "リンクが無効です", "このリンクは期限切れか、すでに使われています。アプリで新しいリンクをリクエストしてください。"], "ko": ["이메일 확인 완료", "이메일 주소가 확인되었어요. Ovalings 앱에서 계속하세요.", "Ovalings 열기", "컴퓨터에서 열었나요? 휴대폰에서 Ovalings를 열면 돼요.", "링크가 유효하지 않아요", "이 링크는 만료되었거나 이미 사용되었어요. 앱에서 새 링크를 요청하세요."]}}</script><script src="assets/site.a111075e.js" defer></script>
+<script src="assets/confirmed.69781ed6.js" defer></script></body>
+</html>

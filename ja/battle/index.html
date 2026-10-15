@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ja" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>バトルと効果 · Ovalings</title>
+<meta name="description" content="Ovalingsのバトルの流れ。ターンゲージ、会心、基本攻撃、すべての効果。">
+<link rel="canonical" href="https://ovalings.app/ja/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="バトルと効果 · Ovalings">
+<meta property="og:description" content="Ovalingsのバトルの流れ。ターンゲージ、会心、基本攻撃、すべての効果。">
+<meta property="og:url" content="https://ovalings.app/ja/battle/"><meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="メインメニュー">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>ゲームガイド</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>ダンジョン</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>キャンペーン</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>Ovalingを見る</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">日本語</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">言語</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">バトル</h1>
+<p class="lead on-image">バトルはターン制です。技を選ぶか、チームに自動で戦わせます。</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>バトルの流れ</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>それぞれが<span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">素早さ</span>に応じてターンゲージをためます。先にたまった方が行動します。</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">会心率</span>は会心の出やすさ、<span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">会心ダメージ</span>はその強さを決めます。</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>オートではチームが自分で戦い、速度ボタンでバトルが速くなります。</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>キャンペーンで星3つを取ったステージは、スキップチケットで飛ばせます。</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>基本攻撃</span></h2>
+    <p class="read">スロット1にはいつもファミリーの基本攻撃が入っています。どちらも同じ強さです。</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>光線</h3>
+<p class="sub">光</p>    </div>
+  </div>
+  <p class="short">敵単体 · 威力1 · クールタイムなし</p>
+  <details class="expander">
+    <summary>効果</summary>
+    <dl class="rows">
+<div><dt>対象</dt><dd>敵単体</dd></div></dl>
+<ul class="lines"><li><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の100%のダメージを与える。</li></ul>
+<dl class="rows">
+<div><dt>クールタイム</dt><dd>なし</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>一撃</h3>
+<p class="sub">影</p>    </div>
+  </div>
+  <p class="short">敵単体 · 威力1 · クールタイムなし</p>
+  <details class="expander">
+    <summary>効果</summary>
+    <dl class="rows">
+<div><dt>対象</dt><dd>敵単体</dd></div></dl>
+<ul class="lines"><li><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の100%のダメージを与える。</li></ul>
+<dl class="rows">
+<div><dt>クールタイム</dt><dd>なし</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>効果</span></h2>
+    <p class="read">効果の強さは、その効果を与えるスキルで決まります。同じ種類の効果は重複しません。強いほうの値と長いほうの効果時間が適用されます。強化効果は味方を助け、弱体効果は敵にかかります。効果をタップすると詳細が見られます。</p>
+    <h3 class="subtitle">強化効果</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>攻撃アップ</h4><p class="sub">攻撃が上がり、与えるダメージが増える。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>攻撃アップは、効果中<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>を一定の割合上げます。Ovalingが与えるダメージがすべて増えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>防御アップ</h4><p class="sub">防御が上がり、受けるダメージが減る。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>防御アップは、効果中<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>を一定の割合上げます。Ovalingが受ける攻撃のダメージが減ります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>素早さアップ</h4><p class="sub">素早さが上がり、行動回数が増える。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>素早さアップは、効果中<span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">素早さ</span>を一定の割合上げます。ターンゲージがたまりやすくなり、ターンが早く、多く来ます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>継続回復</h4><p class="sub">自分のターン開始時に回復する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>効果が切れるまで、Ovalingは自分のターン開始時に最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部を回復します。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>毎ターン最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>シールド</h4><p class="sub">HPが減る前にダメージを吸収する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>シールドは最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部でできた守りです。ダメージはまずシールドに当たり、その後で<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>に届きます。シールドに効果時間はなく、なくなるまで残ります。さらにシールドが残っている間、受けるダメージをすべて5%以上軽減します。その間はダメージ軽減のアイコンが表示されます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>なくなるまで</dd></div><div><dt>強さ</dt><dd>最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。大きいほうのシールドが適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>ダメージ軽減</h4><p class="sub">受けるダメージがすべて減る。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>受けるダメージがすべてその値だけ減ります。シールドは残っている間それぞれダメージ軽減を持ちますが、効果時間のある単独の効果としてもかかります。軽減は合計で最大50%です。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>挑発</h4><p class="sub">敵の単体攻撃をすべて引き受ける。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>挑発中、敵は挑発した相手に単体攻撃を使わなければなりません。複数のOvalingが挑発している場合は、その中からランダムに狙われます。全体攻撃は全員に当たります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>守りの絆</h4><p class="sub">守り手が攻撃の一部を引き受ける。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>使用者は対象と結ばれ、対象への直接攻撃の一部を受けます。毒などの継続ダメージは分担されません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>与えたダメージの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>弱体無効</h4><p class="sub">新たな弱体効果を受けない。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>効果中は新たな弱体効果をすべて跳ね返します。すでにかかっている弱体効果は残り、解除で取り除けます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>反撃</h4><p class="sub">直接攻撃を受けるたびに反撃する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>Ovalingが直接攻撃を受けると、そのたびにすぐ通常攻撃で反撃します。反撃が別の反撃を引き起こすことはありません。毒と跳ね返したダメージは攻撃に数えません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>攻撃の割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>不死</h4><p class="sub">HPが1未満にならない。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>効果中、Ovalingは倒れません。ダメージや毒を受けても<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>は1までしか減りません。効果が切れると、すべての攻撃が再び有効になります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>会心率アップ</h4><p class="sub">会心攻撃が出やすくなる。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">会心率</span>がスキルに記載のポイント分上がります。会心攻撃はOvalingの<span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">会心ダメージ</span>に応じたダメージを与えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>ポイント、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>会心ダメージアップ</h4><p class="sub">会心攻撃のダメージが増える。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>効果中、<span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">会心ダメージ</span>がスキルに記載のポイント分上がります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>ポイント、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">弱体効果</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>攻撃ダウン</h4><p class="sub">攻撃が下がり、与えるダメージが減る。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>攻撃ダウンは、効果中<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>を一定の割合下げます。Ovalingが与えるダメージがすべて減ります。効かないボスもいます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>防御ダウン</h4><p class="sub">防御が下がり、受けるダメージが増える。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>防御ダウンは、効果中<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>を一定の割合下げます。Ovalingが受ける攻撃のダメージが増えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>素早さダウン</h4><p class="sub">素早さが下がり、行動回数が減る。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>素早さダウンは、効果中<span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">素早さ</span>を一定の割合下げます。ターンゲージがたまりにくくなり、ターンが来るのが遅く、少なくなります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>毒</h4><p class="sub">自分のターン開始時にダメージを受ける。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>毒状態のOvalingは、自分のターン開始時に最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部を失います。毒は<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>を無視します。ほかのダメージと同じく、シールドが先に吸収します。記載のターン数が過ぎると解除されます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>毎ターン最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>スタン</h4><p class="sub">次のターンを行動できない。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>スタン状態のOvalingはターンを飛ばし、何もできません。ボスはスタンを受けないことが多く、パッシブで防げるOvalingもいます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>回復量ダウン</h4><p class="sub">対象への回復量が減る。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>効果中、対象へのすべての回復がスキルの値だけ減ります。HP吸収と継続回復も含みます。弱体解除で取り除けます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">即時効果</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>回復</h4><p class="sub">HPをすぐに回復する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>回復は対象の最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部をすぐに回復します。<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が最大値を超えることはありません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>HP吸収</h4><p class="sub">与えたダメージの一部で回復する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>攻撃者が与えたダメージの一部が、攻撃のたびに<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>として戻ります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>与えたダメージの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>復活</h4><p class="sub">倒れた味方を復活させる。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>復活は倒れたOvalingを<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部とともにバトルに戻します。各Ovalingが復活できるのはバトルごとに1回だけです。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>復活後のHPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。バトルごとにOvaling1体につき1回</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>弱体解除</h4><p class="sub">弱体効果をすべて解除する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>弱体解除は、毒、スタン、<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>、<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>、<span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">素早さ</span>のダウンなど、対象の弱体効果をすべてすぐに解除します。強化効果とシールドは残ります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>ターンゲージアップ</h4><p class="sub">ターンゲージの一部を増やす。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>ターンゲージアップは対象のターンゲージを一定の割合増やし、次のターンを早めます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>ターンゲージの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>ターンゲージダウン</h4><p class="sub">ターンゲージの一部を減らす。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>ターンゲージダウンは対象のターンゲージを一定の割合減らし、次のターンを遅らせます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>ターンゲージの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>HPコスト</h4><p class="sub">使用者のHPを消費する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>強力な支援には代償があります。使用者はシールドを無視して最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部を失いますが、最後の1ポイントは残ります。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>連携攻撃</h4><p class="sub">味方がターン外に攻撃する。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>味方がすぐに通常攻撃を行い、<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が最も低い敵を狙います。挑発は有効です。その味方のターンには数えず、クールタイムや効果のターンも進みません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>攻撃の割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>全体HP吸収</h4><p class="sub">与えたダメージでチーム全体を回復。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>攻撃で与えたダメージの一部で、攻撃者を含む生存中の味方全員を回復します。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>与えたダメージの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>毒の放出</h4><p class="sub">毒のダメージをすべて一度に与える。</p></div>
+        </div>
+        <details class="expander">
+          <summary>効果</summary>
+          <p>対象にかかった毒がそれぞれ、強さに残りターン数をかけたダメージをすぐに与え、毒は消えます。毒がなければ何も起きません。防ぐことはできません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>効果のルール</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>シールドは残っている間、受けるダメージを少なくとも5%減らします。軽減はすべて合わせて最大50%です。</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="メインメニュー">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">ホーム</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">ガイド</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">見る</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">ダンジョン</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">ヒント</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>すべてのOvalingは世界にひとつだけ。</p>
+    </div>
+    <div>
+      <h2>ゲーム</h2>
+      <ul>
+<li><a href="../guide/">ゲームガイド</a></li><li><a href="../dungeons/">ダンジョン</a></li><li><a href="../campaign/">キャンペーン</a></li><li><a href="../ovaling/">Ovalingを見る</a></li><li><a href="../faq/">よくある質問</a></li>      </ul>
+    </div>
+    <div>
+      <h2>法的情報</h2>
+      <ul>
+<li><a href="../../privacy.html">プライバシーポリシー</a></li><li><a href="../../terms.html">利用規約</a></li><li><a href="../../imprint.html">運営者情報</a></li><li><a href="../../contact.html">お問い合わせ</a></li><li><a href="../../delete-account.html">アカウント削除</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>言語</h2>
+      <ul class="langlist">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" aria-current="true">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>Cookieもトラッカーもありません</span>
+    <span>フォント：FredokaとNunito Sans、SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>2026.10.15版 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="閉じる"></button>
+  <h2 id="langtitle">言語を選んでください</h2>
+  <ul class="langchoice">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>

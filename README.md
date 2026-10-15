@@ -1,5 +1,10 @@
-# Ovalings Rechtstexte
+# ovalings.app
 
-Öffentliche Seiten der App Ovalings: Datenschutzerklärung, Nutzungsbedingungen, Impressum, Kontakt und Konto löschen, auf Deutsch und Englisch.
+Website ovalings.app (Spielführer, Ovaling ansehen, Rechtstexte). Ausgeliefert von Cloudflare (Worker ovalings-legal,
+`wrangler.jsonc`), jeder Push auf main geht nach rund einer Minute online.
 
-Nicht hier bearbeiten. Quelle sind `assets/legal` im App-Repo, gebaut mit `python tool/build_legal.py`, danach mit `python tool/publish_legal.py` hierher kopiert.
+Hier nichts von Hand bearbeiten. Die Quelle liegt im privaten App-Repo unter `tool/site`, gebaut mit
+`python tool/site/build_site.py`, veröffentlicht mit `python tool/site/publish_site.py`. Dieses Repo ist nur der Spiegel
+des Baus.
+
+Stand: 2026-10-15T17:02:15+00:00, Commit 4ca0b70 im App-Repo.

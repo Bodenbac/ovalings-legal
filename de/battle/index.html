@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="de" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kampf und Effekte · Ovalings</title>
+<meta name="description" content="So laufen Kämpfe in Ovalings: Zugleiste, kritische Treffer, Grundangriffe und alle Stärkungen und Schwächungen.">
+<link rel="canonical" href="https://ovalings.app/de/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Kampf und Effekte · Ovalings">
+<meta property="og:description" content="So laufen Kämpfe in Ovalings: Zugleiste, kritische Treffer, Grundangriffe und alle Stärkungen und Schwächungen.">
+<meta property="og:url" content="https://ovalings.app/de/battle/"><meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="Hauptmenü">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>Spielwissen</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>Dungeons</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>Kampagne</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>Ovaling ansehen</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">Deutsch</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">Sprache</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">Kampf</h1>
+<p class="lead on-image">Kämpfe laufen in Zügen. Du wählst eine Attacke oder lässt das Team allein kämpfen.</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>So läuft ein Kampf</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>Alle Kämpfenden füllen ihre Zugleiste nach ihrem <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span>. Wer sie zuerst voll hat, ist als Nächstes dran.</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p>Die <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> bestimmt, wie oft ein Treffer kritisch ist, der <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span>, wie stark.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>Mit Auto kämpft das Team allein, und der Knopf für das Tempo lässt den Kampf schneller laufen.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>In der Kampagne lassen sich Stufen mit 3 Sternen mit einem Schnellkampf-Token überspringen.</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>Grundangriffe</span></h2>
+    <p class="read">Platz 1 trägt immer den Grundangriff der Familie. Beide sind gleich stark.</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Strahl</h3>
+<p class="sub">Licht</p>    </div>
+  </div>
+  <p class="short">ein Gegner · Stärke 1 · keine Abklingzeit</p>
+  <details class="expander">
+    <summary>Wirkung</summary>
+    <dl class="rows">
+<div><dt>Ziel</dt><dd>ein Gegner</dd></div></dl>
+<ul class="lines"><li>Verursacht 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> als Schaden.</li></ul>
+<dl class="rows">
+<div><dt>Abklingzeit</dt><dd>keine</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Hieb</h3>
+<p class="sub">Schatten</p>    </div>
+  </div>
+  <p class="short">ein Gegner · Stärke 1 · keine Abklingzeit</p>
+  <details class="expander">
+    <summary>Wirkung</summary>
+    <dl class="rows">
+<div><dt>Ziel</dt><dd>ein Gegner</dd></div></dl>
+<ul class="lines"><li>Verursacht 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> als Schaden.</li></ul>
+<dl class="rows">
+<div><dt>Abklingzeit</dt><dd>keine</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>Effekte</span></h2>
+    <p class="read">Die Stärke eines Effekts steht immer in der Fähigkeit, die ihn auslöst. Gleiche Effekte stapeln nicht, es gelten der stärkere Wert und die längere Dauer. Stärkungen helfen dem eigenen Team, Schwächungen treffen die Gegner. Tippe auf einen Effekt für mehr.</p>
+    <h3 class="subtitle">Stärkungen</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Angriff hoch</h4><p class="sub">Erhöht den Angriff, seine Treffer richten mehr an.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Angriff hoch erhöht den <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> um einen Prozentwert, solange es wirkt. Aller Schaden, den das Ovaling austeilt, wird entsprechend größer.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Verteidigung hoch</h4><p class="sub">Erhöht die Verteidigung, es bekommt weniger Schaden.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Verteidigung hoch erhöht die <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> um einen Prozentwert, solange es wirkt. Jeder Treffer auf das Ovaling richtet weniger an.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Tempo hoch</h4><p class="sub">Erhöht das Tempo, es ist öfter dran.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Tempo hoch erhöht das <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span> um einen Prozentwert, solange es wirkt. Die Zugleiste füllt sich schneller, das Ovaling ist früher und öfter dran.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Erneuerung</h4><p class="sub">Heilt zu Beginn jedes eigenen Zugs.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Zu Beginn jedes eigenen Zugs heilt das Ovaling einen Teil seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, bis der Effekt endet.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens je Zug, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Schild</h4><p class="sub">Nimmt Schaden auf, bevor Leben verloren geht.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Ein Schild ist ein Polster aus einem Teil des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. Schaden trifft zuerst den Schild und erst dann das <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>. Ein Schild hat keine Dauer und bleibt, bis er verbraucht ist. Jeder Schild mindert außerdem jeden erhaltenen Schaden um mindestens 5 %, solange etwas von ihm übrig ist. Dann erscheint das Zeichen der Schadensminderung.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Bis er verbraucht ist</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der größere Schild gilt</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Schadensminderung</h4><p class="sub">Jeder erhaltene Schaden ist kleiner.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Jeder erhaltene Schaden ist um den Wert kleiner. Jeder Schild bringt eine eigene Schadensminderung mit, solange er hält, sie kann aber auch als eigener Effekt mit Dauer kommen. Alle Minderungen zusammen höchstens 50 %.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Spott</h4><p class="sub">Zieht alle Einzelangriffe der Gegner auf sich.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Solange Spott wirkt, müssen die Gegner mit Einzelangriffen den Spötter angreifen. Haben mehrere Ovalings Spott, trifft es zufällig einen von ihnen. Flächenangriffe treffen weiter alle.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Schutzband</h4><p class="sub">Ein Beschützer nimmt einen Teil der Treffer auf sich.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Der Anwender ist mit dem Ziel verbunden und nimmt einen Teil jedes direkten Treffers auf das Ziel auf sich. Gift und andere Schäden über Zeit teilt er nicht.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent des verursachten Schadens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Schwächungsschutz</h4><p class="sub">Neue Schwächungen wirken nicht.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Solange der Schutz wirkt, prallen alle neuen Schwächungen ab. Schwächungen, die schon wirken, bleiben, dafür gibt es Reinigen.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Gegenangriff</h4><p class="sub">Erwidert jeden direkten Treffer.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Wird das Ovaling direkt getroffen, schlägt es sofort mit seinem Standardangriff zurück, bei jedem Treffer. Ein Gegenangriff löst keinen weiteren aus. Gift und Rückwurf zählen nicht als Treffer.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent des Angriffs, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Unsterblich</h4><p class="sub">Das Leben fällt nicht unter 1.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Solange der Effekt wirkt, kann das Ovaling nicht fallen. Schaden und Gift bringen sein <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> höchstens auf 1. Läuft der Effekt aus, zählt wieder jeder Treffer.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Krit-Chance hoch</h4><p class="sub">Mehr Chance auf kritische Treffer.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Die <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> steigt um so viele Prozentpunkte, wie die Fähigkeit angibt. Kritische Treffer machen Schaden in Höhe des <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schadens</span> des Ovalings.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozentpunkte, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Krit-Schaden hoch</h4><p class="sub">Kritische Treffer machen mehr Schaden.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Der <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> steigt um so viele Prozentpunkte, wie die Fähigkeit angibt, solange der Effekt wirkt.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozentpunkte, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Schwächungen</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Angriff runter</h4><p class="sub">Senkt den Angriff, seine Treffer richten weniger an.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Angriff runter senkt den <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> um einen Prozentwert, solange es wirkt. Aller Schaden, den das Ovaling austeilt, wird entsprechend kleiner. Manche Bosse sind immun.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Verteidigung runter</h4><p class="sub">Senkt die Verteidigung, es bekommt mehr Schaden.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Verteidigung runter senkt die <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> um einen Prozentwert, solange es wirkt. Jeder Treffer auf das Ovaling richtet mehr an.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Tempo runter</h4><p class="sub">Senkt das Tempo, es ist seltener dran.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Tempo runter senkt das <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span> um einen Prozentwert, solange es wirkt. Die Zugleiste füllt sich langsamer, das Ovaling ist später und seltener dran.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Gift</h4><p class="sub">Verursacht zu Beginn jedes eigenen Zugs Schaden.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Zu Beginn jedes eigenen Zugs verliert das vergiftete Ovaling einen Teil seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. Gift geht an der <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> vorbei. Ein Schild nimmt es zuerst auf, wie jeden Schaden. Es endet nach der angegebenen Zahl an Zügen.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens je Zug, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Betäubung</h4><p class="sub">Setzt den nächsten Zug aus.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Ein betäubtes Ovaling setzt seinen Zug aus und kann nichts tun. Bosse sind oft immun gegen Betäubung, und manche Ovalings wehren sie mit einer Passive ab.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Heilung verringert</h4><p class="sub">Heilung am Ziel wirkt schwächer.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Solange der Effekt wirkt, ist jede Heilung am Ziel um den Wert der Fähigkeit kleiner, auch Lebensraub und Erneuerung. Reinigen entfernt ihn.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Sofortwirkungen</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Heilung</h4><p class="sub">Stellt sofort Leben wieder her.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Heilung stellt sofort einen Teil des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> des Ziels wieder her. Das <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> geht nie über das Maximum.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Lebensraub</h4><p class="sub">Heilt um einen Teil des verursachten Schadens.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Ein Teil des Schadens, den das Ovaling austeilt, kehrt mit jedem Treffer als <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> zu ihm zurück.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent des verursachten Schadens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Wiederbeleben</h4><p class="sub">Holt ein gefallenes Teammitglied zurück.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Wiederbeleben holt ein gefallenes Ovaling mit einem Teil seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> in den Kampf zurück. Jedes Ovaling lässt sich nur einmal je Kampf wiederbeleben.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent Leben danach, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, einmal je Kampf und Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Reinigen</h4><p class="sub">Entfernt alle Schwächungen.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Reinigen entfernt sofort alle Schwächungen vom Ziel, etwa Gift, Betäubung und jede Senkung von <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span>, <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> und <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span>. Stärkungen und Schilde bleiben.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Zugleiste füllen</h4><p class="sub">Füllt einen Teil der Zugleiste.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Zugleiste füllen gibt der Zugleiste des Ziels einen Prozentwert dazu, sein nächster Zug kommt früher.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent der Zugleiste, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Zugleiste leeren</h4><p class="sub">Leert einen Teil der Zugleiste.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Zugleiste leeren zieht einen Prozentwert von der Zugleiste des Ziels ab, sein nächster Zug kommt später.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent der Zugleiste, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Lebensopfer</h4><p class="sub">Kostet den Anwender Leben.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Manche starke Hilfe hat ihren Preis: der Anwender verliert einen Teil seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, am Schild vorbei, aber nie das letzte.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Sofortangriff</h4><p class="sub">Ein Verbündeter greift außer der Reihe an.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Der Verbündete schlägt sofort mit seinem Standardangriff zu, auf den Gegner mit dem wenigsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>. Spott gilt. Das zählt nicht als sein Zug, Abklingzeiten und Effekte laufen nicht weiter.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent des Angriffs, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Geteilter Lebensraub</h4><p class="sub">Der Schaden heilt das ganze Team.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Ein Teil des Schadens, den die Attacke austeilt, heilt jeden lebenden Verbündeten, den Angreifer eingeschlossen.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent des verursachten Schadens, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Giftentladung</h4><p class="sub">Gift macht seinen ganzen Schaden auf einmal.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Wirkung</summary>
+          <p>Jedes Gift am Ziel macht sofort seine Stärke mal die restlichen Züge als Schaden, danach ist das Gift weg. Ohne Gift passiert nichts. Lässt sich nicht abwehren.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>Regeln für Effekte</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>Jeder Schild mindert erhaltenen Schaden um mindestens 5 %, solange er steht. Alle Minderungen zusammen erreichen höchstens 50 %.</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="Hauptmenü">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Start</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Wissen</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">Ansehen</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Dungeons</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Tipps</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>Jedes Ovaling gibt es nur einmal.</p>
+    </div>
+    <div>
+      <h2>Spiel</h2>
+      <ul>
+<li><a href="../guide/">Spielwissen</a></li><li><a href="../dungeons/">Dungeons</a></li><li><a href="../campaign/">Kampagne</a></li><li><a href="../ovaling/">Ovaling ansehen</a></li><li><a href="../faq/">Häufige Fragen</a></li>      </ul>
+    </div>
+    <div>
+      <h2>Rechtliches</h2>
+      <ul>
+<li><a href="../../privacy-de.html">Datenschutzerklärung</a></li><li><a href="../../terms-de.html">Nutzungsbedingungen</a></li><li><a href="../../imprint-de.html">Impressum</a></li><li><a href="../../contact-de.html">Kontakt</a></li><li><a href="../../delete-account-de.html">Konto löschen</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>Sprachen</h2>
+      <ul class="langlist">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="./" hreflang="de" lang="de" data-lang="de" aria-current="true">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>Ohne Cookies und ohne Tracker</span>
+    <span>Schriften: Fredoka und Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>Stand 15.10.2026 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="Schließen"></button>
+  <h2 id="langtitle">Sprache wählen</h2>
+  <ul class="langchoice">
+<li><a href="../../en/battle/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="./" hreflang="de" lang="de" data-lang="de" class="on" aria-current="true">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>

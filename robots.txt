@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /3d/
+Disallow: /confirmed
+Disallow: /parents
+Disallow: /parents-de
+
+Sitemap: https://ovalings.app/sitemap.xml

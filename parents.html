@@ -1,62 +1,129 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ovalings · Purchase permission</title><style>
-:root { --bg: #f6f3f8; --fg: #1d1a24; --muted: #6a6478; --accent: #8e24aa; --line: #e3dcea; color-scheme: light }
-@media (prefers-color-scheme: dark) { :root { --bg: #14111b; --fg: #f1edf7; --muted: #a59db5; --accent: #c77ddb; --line: #2f2939; color-scheme: dark } }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif }
-main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px }
-h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px }
-h2 { font-size: 19px; margin: 32px 0 8px }
-p, li { color: var(--muted) }
-ul { padding-left: 20px }
-nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--line) }
-a { color: var(--accent) }
+<html lang="en" data-page="legal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Purchase permission · Ovalings</title>
+<meta name="description" content="Purchase permission">
+<meta name="robots" content="noindex"><link rel="alternate" hreflang="en" href="https://ovalings.app/parents">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/parents-de">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Purchase permission · Ovalings">
+<meta property="og:description" content="Purchase permission">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./favicon.png" sizes="32x32">
+<link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./site.webmanifest">
+<link rel="preload" href="assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top" id="top">
+  <a class="brand" href="en/" aria-label="Ovalings">
+    <img src="assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="Main menu">
+    <a class="navpill" href="en/guide/">
+      <img src="assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>Game guide</span>
+    </a>
+    <a class="navpill" href="en/dungeons/">
+      <img src="assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>Dungeons</span>
+    </a>
+    <a class="navpill" href="en/campaign/">
+      <img src="assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>Campaign</span>
+    </a>
+    <a class="navpill" href="en/ovaling/">
+      <img src="assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>View an Ovaling</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">English</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">Language</span>
+  </a>
+</header>
 
-form { display: grid; gap: 12px }
-label { display: grid; gap: 4px; font-weight: 600 }
-input, select, textarea { font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: var(--fg) }
-textarea { min-height: 160px; resize: vertical }
-button { font: inherit; font-weight: 700; padding: 12px; border: 0; border-radius: 14px; background: var(--accent); color: var(--bg); cursor: pointer }
-.trap { position: absolute; left: -9999px }
-#status { min-height: 1.6em }
-[hidden] { display: none !important }
-button.quiet { background: transparent; color: var(--accent); border: 1px solid var(--line) }
-</style></head><body><main><nav><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of use</a><a href="imprint.html">Imprint</a><a href="contact.html">Contact</a><a href="parents-de.html" lang="de">Deutsch</a></nav><h1>Permission for purchases in Ovalings</h1><p>Players under 18 can only spend real money in Ovalings with the consent of a parent. Diamonds can buy eggs that hatch random Ovalings, the odds are shown in the game right at the purchase. You decide here whether purchases are allowed and how much may be spent per month.</p><form id="ask" hidden onsubmit="return false"><p>Account: <strong id="name"></strong></p><label>Monthly limit<select id="limit"></select></label><button type="button" id="approve">Give permission</button><button type="button" id="decline" class="quiet">Decline</button></form><form id="withdraw" hidden onsubmit="return false"><p>Withdraw the permission for purchases. After that, purchases with real money are locked again.</p><button type="button" id="revoke">Withdraw permission</button></form><p id="status" role="status"></p><script>
-const T = {"title": "Permission for purchases in Ovalings", "intro": "Players under 18 can only spend real money in Ovalings with the consent of a parent. Diamonds can buy eggs that hatch random Ovalings, the odds are shown in the game right at the purchase. You decide here whether purchases are allowed and how much may be spent per month.", "account": "Account", "limit": "Monthly limit", "approve": "Give permission", "decline": "Decline", "loading": "Loading …", "approved": "Thank you. Purchases are allowed up to the chosen limit per month. Your email address has been deleted. You can withdraw the permission at any time with the second link in the email.", "declined": "Purchases stay locked. Your email address has been deleted.", "revoke_text": "Withdraw the permission for purchases. After that, purchases with real money are locked again.", "revoke": "Withdraw permission", "revoked": "The permission has been withdrawn. Purchases are locked.", "invalid": "This link is no longer valid. It may have expired or already been used.", "missing": "This link is incomplete. Please open the link from the email.", "failed": "That did not work. Please try again later.", "zero": "No purchases"}, LANG = "en", q = new URLSearchParams(location.search), t = q.get('t'), r = q.get('r');
-const $ = (id) => document.getElementById(id), status = $('status');
-// Sprachwechsel behält den Link aus der E-Mail
-document.querySelectorAll('nav a[lang]').forEach((a) => { a.href += location.search; });
-const euro = (c) => c === 0 ? T.zero : (c / 100).toLocaleString(LANG, {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
-async function call(body) {
-  const res = await fetch("https://kglxfxsccunylhbxquqz.supabase.co" + '/functions/v1/parental-consent', {
-    method: 'POST', headers: {'Content-Type': 'application/json', apikey: "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss"}, body: JSON.stringify(body)});
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || String(res.status));
-  return data;
-}
-const failed = (e) => { status.textContent = e.message === 'invalid_token' ? T.invalid : T.failed; };
-const done = (text) => { $('ask').hidden = true; $('withdraw').hidden = true; status.textContent = text; };
-async function busy(f) {
-  document.querySelectorAll('button').forEach((b) => b.disabled = true);
-  try { await f(); } catch (e) { failed(e); }
-  document.querySelectorAll('button').forEach((b) => b.disabled = false);
-}
-if (t) {
-  status.textContent = T.loading;
-  call({action: 'lookup', token: t}).then((d) => {
-    $('name').textContent = d.display_name || '';
-    for (const c of [0, 500, 1000, 2000, 3000, 5000].filter((c) => c <= d.max_limit_cents)) {
-      const o = new Option(euro(c), c, false, c === d.default_limit_cents);
-      $('limit').add(o);
-    }
-    $('ask').hidden = false;
-    status.textContent = '';
-  }, failed);
-  $('approve').onclick = () => busy(async () => { await call({action: 'confirm', token: t, limit_cents: Number($('limit').value)}); done(T.approved); });
-  $('decline').onclick = () => busy(async () => { await call({action: 'revoke', token: t}); done(T.declined); });
-} else if (r) {
-  $('withdraw').hidden = false;
-  $('revoke').onclick = () => busy(async () => { await call({action: 'revoke', token: r}); done(T.revoked); });
-} else {
-  status.textContent = T.missing;
-}
-</script></main></body></html>
+<main id="main">
+<div class="wrap legalwrap">
+  <article class="card legal formpage">
+    <nav class="legalnav" aria-label="Legal">
+<a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of use</a><a href="imprint.html">Imprint</a><a href="contact.html">Contact</a><a href="parents-de.html" lang="de" hreflang="de" data-keep-query>Deutsch</a>    </nav>
+    <h1>Permission for purchases in Ovalings</h1><p>Players under 18 can only spend real money in Ovalings with the consent of a parent. Diamonds can buy eggs that hatch random Ovalings, the odds are shown in the game right at the purchase. You decide here whether purchases are allowed and how much may be spent per month.</p><form id="ask" hidden><p>Account: <strong id="name"></strong></p><label>Monthly limit<select id="limit"></select></label><button type="button" id="approve">Give permission</button><button type="button" id="decline" class="quiet">Decline</button></form><form id="withdraw" hidden><p>Withdraw the permission for purchases. After that, purchases with real money are locked again.</p><button type="button" id="revoke">Withdraw permission</button></form><p id="status" role="status"></p>
+  </article>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="Main menu">
+  <a class="tab" href="en/">
+    <span class="tabicon"><img src="assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Start</span>
+  </a>
+  <a class="tab" href="en/guide/">
+    <span class="tabicon"><img src="assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Guide</span>
+  </a>
+  <a class="tab center" href="en/ovaling/">
+    <span class="tabicon"><img src="assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">View</span>
+  </a>
+  <a class="tab" href="en/dungeons/">
+    <span class="tabicon"><img src="assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Dungeons</span>
+  </a>
+  <a class="tab" href="en/tips/">
+    <span class="tabicon"><img src="assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Tips</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="en/"><img src="assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>Every Ovaling exists only once.</p>
+    </div>
+    <div>
+      <h2>Game</h2>
+      <ul>
+<li><a href="en/guide/">Game guide</a></li><li><a href="en/dungeons/">Dungeons</a></li><li><a href="en/campaign/">Campaign</a></li><li><a href="en/ovaling/">View an Ovaling</a></li><li><a href="en/faq/">Questions and answers</a></li>      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+<li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms of use</a></li><li><a href="imprint.html">Imprint</a></li><li><a href="contact.html">Contact</a></li><li><a href="delete-account.html">Delete account</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>Languages</h2>
+      <ul class="langlist">
+<li><a href="parents.html" hreflang="en" lang="en" data-lang="en" aria-current="true">English</a></li><li><a href="parents-de.html" hreflang="de" lang="de" data-lang="de">Deutsch</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>No cookies and no trackers</span>
+    <span>Fonts: Fredoka and Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>Version of 2026-10-15 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="Close"></button>
+  <h2 id="langtitle">Choose your language</h2>
+  <ul class="langchoice">
+<li><a href="parents.html" hreflang="en" lang="en" data-lang="en" class="on" aria-current="true">English</a></li><li><a href="parents-de.html" hreflang="de" lang="de" data-lang="de">Deutsch</a></li>  </ul>
+</div>
+<script type="application/json" id="cfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "en", "text": {"title": "Permission for purchases in Ovalings", "intro": "Players under 18 can only spend real money in Ovalings with the consent of a parent. Diamonds can buy eggs that hatch random Ovalings, the odds are shown in the game right at the purchase. You decide here whether purchases are allowed and how much may be spent per month.", "account": "Account", "limit": "Monthly limit", "approve": "Give permission", "decline": "Decline", "loading": "Loading …", "approved": "Thank you. Purchases are allowed up to the chosen limit per month. Your email address has been deleted. You can withdraw the permission at any time with the second link in the email.", "declined": "Purchases stay locked. Your email address has been deleted.", "revoke_text": "Withdraw the permission for purchases. After that, purchases with real money are locked again.", "revoke": "Withdraw permission", "revoked": "The permission has been withdrawn. Purchases are locked.", "invalid": "This link is no longer valid. It may have expired or already been used.", "missing": "This link is incomplete. Please open the link from the email.", "failed": "That did not work. Please try again later.", "zero": "No purchases"}}</script><script src="assets/site.a111075e.js" defer></script>
+<script src="assets/parents.97d45d86.js" defer></script></body>
+</html>

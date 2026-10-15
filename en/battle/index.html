@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en" data-page="battle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Battle and effects · Ovalings</title>
+<meta name="description" content="How battles in Ovalings work: turn meter, critical hits, basic attacks and every buff and debuff.">
+<link rel="canonical" href="https://ovalings.app/en/battle/"><link rel="alternate" hreflang="en" href="https://ovalings.app/en/battle/">
+<link rel="alternate" hreflang="de" href="https://ovalings.app/de/battle/">
+<link rel="alternate" hreflang="es" href="https://ovalings.app/es/battle/">
+<link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/battle/">
+<link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/battle/">
+<link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/battle/">
+<link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/battle/">
+<link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/battle/">
+<link rel="alternate" hreflang="id" href="https://ovalings.app/id/battle/">
+<link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/battle/">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3f8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14111b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ovalings">
+<meta property="og:title" content="Battle and effects · Ovalings">
+<meta property="og:description" content="How battles in Ovalings work: turn meter, critical hits, basic attacks and every buff and debuff.">
+<meta property="og:url" content="https://ovalings.app/en/battle/"><meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ovalings.app/assets/og.1f91aef9.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.png" sizes="32x32">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="Ovalings">
+    <img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="36" height="36">
+    <span>Ovalings</span>
+  </a>
+  <nav class="sections" aria-label="Main menu">
+    <a class="navpill on" href="../guide/" aria-current="page">
+      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="26" height="26"><span>Game guide</span>
+    </a>
+    <a class="navpill" href="../dungeons/">
+      <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="26" height="26"><span>Dungeons</span>
+    </a>
+    <a class="navpill" href="../campaign/">
+      <img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="26" height="26"><span>Campaign</span>
+    </a>
+    <a class="navpill" href="../ovaling/">
+      <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="26" height="26"><span>View an Ovaling</span>
+    </a>
+  </nav>
+  <a class="langpill" href="#languages" id="langpill" aria-haspopup="dialog" aria-controls="langdialog">
+    <img src="../../assets/art/nav/globe-192.043d2d9a.webp" alt="" aria-hidden="true" width="28" height="28">
+    <span class="langname">English</span>
+    <span class="chev" aria-hidden="true"></span>
+    <span class="sr">Language</span>
+  </a>
+</header>
+
+<main id="main">
+<section class="head head-night ">
+  <div class="wrap headin">
+    <div class="headtext">
+      <h1 class="on-image">Battle</h1>
+<p class="lead on-image">Battles are turn based. You pick a move, or let the team fight on its own.</p>    </div>
+<img class="headicon float" src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
+</section>
+<div class="wrap">
+  <section class="section reveal" aria-labelledby="flow">
+    <h2 class="stitle" id="flow"><span>How a battle runs</span></h2>
+    <ul class="grid2 flow">
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/speed-192.2f91723d.webp" alt="" aria-hidden="true" width="48" height="48"><p>Each fighter fills its turn meter by its <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Speed</span>. Whoever fills it first acts next.</p></li>
+      <li class="card withicon"><img class="staticon" src="../../assets/art/stat/crit_rate-192.b3e13015.webp" alt="" aria-hidden="true" width="48" height="48"><p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit chance</span> decides how often a hit is critical, <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Crit damage</span> how hard it hits.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/gear-192.f0e1c772.webp" alt="" aria-hidden="true" width="48" height="48"><p>With Auto the team fights on its own, and the speed button makes the battle run faster.</p></li>
+      <li class="card withicon"><img src="../../assets/art/nav/fastForward-192.4a62e1ba.webp" alt="" aria-hidden="true" width="48" height="48"><p>In the campaign, stages won with 3 stars can be skipped with a Fast Forward Token.</p></li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="basic">
+    <h2 class="stitle" id="basic"><span>Basic attacks</span></h2>
+    <p class="read">Slot 1 always holds the basic attack of the family. Both are equally strong.</p>
+    <div class="grid2">
+      <article class="card movecard" data-family="light" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/beam-192.4201034b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Beam</h3>
+<p class="sub">Light</p>    </div>
+  </div>
+  <p class="short">one enemy · power 1 · no cooldown</p>
+  <details class="expander">
+    <summary>Effect</summary>
+    <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 100 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>none</dd></div></dl>
+  </details>
+</article>
+      <article class="card movecard" data-family="shadow" data-rarity="basic">
+  <div class="movehead">
+    <span class="frame r-basic s64"><img src="../../assets/art/move/standard-192.770ab224.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+    <div>
+      <h3>Strike</h3>
+<p class="sub">Shadow</p>    </div>
+  </div>
+  <p class="short">one enemy · power 1 · no cooldown</p>
+  <details class="expander">
+    <summary>Effect</summary>
+    <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 100 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>none</dd></div></dl>
+  </details>
+</article>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-labelledby="effects">
+    <h2 class="stitle" id="effects"><span>Effects</span></h2>
+    <p class="read">The strength of an effect always comes from the ability that applies it. Effects of the same kind do not stack: the stronger value and the longer duration apply. Buffs help your own team, debuffs hit the enemy. Tap an effect to learn more.</p>
+    <h3 class="subtitle">Buffs</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Attack Up</h4><p class="sub">Raises attack, so its hits do more damage.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Attack Up raises the <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Attack</span> by a percentage while it lasts. All damage the Ovaling deals grows with it.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Defense Up</h4><p class="sub">Raises defense, so it takes less damage.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Defense Up raises the <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Defense</span> by a percentage while it lasts. Every hit on the Ovaling does less damage.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Speed Up</h4><p class="sub">Raises speed, so it acts more often.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Speed Up raises the <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Speed</span> by a percentage while it lasts. The turn meter fills faster, so the Ovaling gets its turn sooner and more often.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Regeneration</h4><p class="sub">Heals at the start of each of its turns.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>At the start of each of its own turns, the Ovaling heals a part of its highest <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>, until the effect runs out.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent of the highest health per turn, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Shield</h4><p class="sub">Soaks up damage before health is lost.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>A shield is a cushion made of a part of the highest <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>. Damage hits the shield first and only then the <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>. A shield has no duration and stays until it is used up. Every shield also reduces all damage taken by at least 5 % as long as something is left of it. Then the damage reduction icon shows.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>Until used up</dd></div><div><dt>Strength</dt><dd>Percent of the highest health, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the bigger shield applies</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Damage Reduction</h4><p class="sub">All damage taken is lower.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>All damage taken is lower by the value. Every shield brings its own damage reduction while it holds, but it can also come as an effect of its own with a duration. All reductions together at most 50 %.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Taunt</h4><p class="sub">Draws all single attacks of the enemies.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>While taunt lasts, enemies must use single attacks on the taunter. If several Ovalings taunt, a random one of them is hit. Area attacks still hit everyone.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Guard Bond</h4><p class="sub">A protector takes part of the hits.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>The user is bound to the target and takes part of every direct hit on it. Poison and other damage over time is not shared.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent of the damage dealt, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Block Debuffs</h4><p class="sub">New debuffs have no effect.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>While it lasts, all new debuffs bounce off. Debuffs already in place stay, cleanse removes those.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Counterattack</h4><p class="sub">Answers every direct hit.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>When the Ovaling takes a direct hit, it strikes back at once with its basic attack, on every hit. A counterattack never triggers another. Poison and reflected damage do not count as hits.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent of attack, per ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Unkillable</h4><p class="sub">Health cannot drop below 1.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>While it lasts, the Ovaling cannot fall. Damage and poison bring its <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span> down to 1 at most. Once it ends, every hit counts again.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Crit Chance Up</h4><p class="sub">Higher chance of critical hits.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit chance</span> rises by as many percentage points as the ability states. Critical hits deal damage equal to the Ovaling's <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">crit damage</span>.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percentage points, per ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/crit_dmg_up-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Crit Damage Up</h4><p class="sub">Critical hits deal more damage.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Crit damage</span> rises by as many percentage points as the ability states while the effect lasts.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Buff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percentage points, per ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Debuffs</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Attack Down</h4><p class="sub">Lowers attack, so its hits do less damage.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Attack Down lowers the <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Attack</span> by a percentage while it lasts. All damage the Ovaling deals shrinks with it. Some bosses are immune.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Defense Down</h4><p class="sub">Lowers defense, so it takes more damage.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Defense Down lowers the <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Defense</span> by a percentage while it lasts. Every hit on the Ovaling does more damage.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Speed Down</h4><p class="sub">Lowers speed, so it acts less often.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Speed Down lowers the <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Speed</span> by a percentage while it lasts. The turn meter fills more slowly, so the Ovaling gets its turn later and less often.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Poison</h4><p class="sub">Deals damage at the start of each of its turns.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>At the start of each of its own turns, the poisoned Ovaling loses a part of its highest <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>. Poison goes past <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span>. A shield absorbs it first, like any other damage. It ends after the stated number of turns.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent of the highest health per turn, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Stun</h4><p class="sub">Skips its next turn.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>A stunned Ovaling skips its turn and can do nothing. Bosses are often immune to stun, and some Ovalings can fend it off with a passive.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Heal Reduction</h4><p class="sub">Healing on the target is weaker.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>While it lasts, every heal on the target is smaller by the value of the ability, including lifesteal and regeneration. Cleanse removes it.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Debuff</dd></div><div><dt>Duration</dt><dd>A few turns, set by the ability</dd></div><div><dt>Strength</dt><dd>Percent, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, the stronger value and the longer duration apply</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Instant effects</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Heal</h4><p class="sub">Restores health at once.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Heal restores a part of the target's highest <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span> immediately. <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Health</span> never goes above the maximum.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the highest health, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Lifesteal</h4><p class="sub">Heals by a share of the damage dealt.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>A share of the damage the attacker deals comes back to it as <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>, with every hit.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the damage dealt, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Revive</h4><p class="sub">Brings a fallen ally back.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Revive brings a fallen Ovaling back into the battle with a part of its <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>. Each Ovaling can be revived only once per battle.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent health after revival, set by the ability</dd></div><div><dt>Stacking</dt><dd>No, once per battle and Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Cleanse</h4><p class="sub">Removes all debuffs.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Cleanse removes every debuff from the target at once, for example poison, stun and all reductions of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>, <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span> and <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span>. Buffs and shields stay.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Turn Meter Up</h4><p class="sub">Fills part of the turn meter.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Turn Meter Up adds a percentage to the target's turn meter, so its next turn comes sooner.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the turn meter, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/meter_drain-96.0a1d8780.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Turn Meter Down</h4><p class="sub">Empties part of the turn meter.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Turn Meter Down takes a percentage off the target's turn meter, so its next turn comes later.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the turn meter, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Life Cost</h4><p class="sub">Costs the user health.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Some strong help has a price: the user loses part of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>, ignoring shields, but never the last point.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the highest health, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/ally_strike-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Ally Attack</h4><p class="sub">An ally attacks out of turn.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>The ally strikes at once with its basic attack, at the enemy with the least <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">health</span>. Taunt applies. It does not count as its turn, cooldowns and effects do not tick.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of attack, per ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/team_lifesteal-96.59840825.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Shared Lifesteal</h4><p class="sub">The damage heals the whole team.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Part of the damage the attack deals heals every living ally, the attacker included.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>Percent of the damage dealt, set by the ability</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <div class="effecthead">
+          <img src="../../assets/art/effect/detonate-96.ccc32e99.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Venom Release</h4><p class="sub">Poison deals all its damage at once.</p></div>
+        </div>
+        <details class="expander">
+          <summary>Effect</summary>
+          <p>Every poison on the target deals its strength times the remaining turns as damage right away, then the poison is gone. Without poison nothing happens. Cannot be blocked.</p>
+          <dl class="rows"><div><dt>Type</dt><dd>Instant effect</dd></div><div><dt>Duration</dt><dd>Instant</dd></div><div><dt>Strength</dt><dd>None</dd></div><div><dt>Stacking</dt><dd>Yes, every use takes effect on its own</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section reveal" aria-labelledby="rules">
+    <h2 class="stitle" id="rules"><span>Rules for effects</span></h2>
+    <div class="card withicon"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="44" height="44"><p>Every shield lowers damage taken by at least 5 % while it stands. All reductions together reach at most 50 %.</p></div>
+  </section>
+</div>
+</main>
+
+<nav class="tabbar" aria-label="Main menu">
+  <a class="tab" href="../">
+    <span class="tabicon"><img src="../../assets/art/nav/home-192.f4d7dd09.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Start</span>
+  </a>
+  <a class="tab on" href="../guide/" aria-current="page">
+    <span class="tabicon"><img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Guide</span>
+  </a>
+  <a class="tab center" href="../ovaling/">
+    <span class="tabicon"><img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="46" height="46"></span>
+    <span class="tablabel">View</span>
+  </a>
+  <a class="tab" href="../dungeons/">
+    <span class="tabicon"><img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Dungeons</span>
+  </a>
+  <a class="tab" href="../tips/">
+    <span class="tabicon"><img src="../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tablabel">Tips</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <div class="wrap footgrid">
+    <div class="footbrand">
+      <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="40" height="40"><span>Ovalings</span></a>
+      <p>Every Ovaling exists only once.</p>
+    </div>
+    <div>
+      <h2>Game</h2>
+      <ul>
+<li><a href="../guide/">Game guide</a></li><li><a href="../dungeons/">Dungeons</a></li><li><a href="../campaign/">Campaign</a></li><li><a href="../ovaling/">View an Ovaling</a></li><li><a href="../faq/">Questions and answers</a></li>      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+<li><a href="../../privacy.html">Privacy policy</a></li><li><a href="../../terms.html">Terms of use</a></li><li><a href="../../imprint.html">Imprint</a></li><li><a href="../../contact.html">Contact</a></li><li><a href="../../delete-account.html">Delete account</a></li>      </ul>
+    </div>
+    <div id="languages">
+      <h2>Languages</h2>
+      <ul class="langlist">
+<li><a href="./" hreflang="en" lang="en" data-lang="en" aria-current="true">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>      </ul>
+    </div>
+  </div>
+  <div class="wrap footnote">
+    <span>No cookies and no trackers</span>
+    <span>Fonts: Fredoka and Nunito Sans, SIL Open Font License</span>
+    <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
+    <span>Version of 2026-10-15 · 4ca0b70</span>
+  </div>
+</footer>
+
+<div class="barrier" id="langbarrier" hidden></div>
+<div class="glass dialog" id="langdialog" role="dialog" aria-modal="true" aria-labelledby="langtitle" hidden>
+  <button class="close" type="button" id="langclose" aria-label="Close"></button>
+  <h2 id="langtitle">Choose your language</h2>
+  <ul class="langchoice">
+<li><a href="./" hreflang="en" lang="en" data-lang="en" class="on" aria-current="true">English</a></li><li><a href="../../de/battle/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/battle/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/battle/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/battle/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/battle/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/battle/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/battle/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/battle/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
+</div>
+<script src="../../assets/site.a111075e.js" defer></script>
+</body>
+</html>
