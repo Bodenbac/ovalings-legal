@@ -1,0 +1,11 @@
+{
+  // Ovalings: Rechtstexte, Kontakt und Bestätigungsseite als statische Seite auf Cloudflare Workers (15.10.2026).
+  // Die HTML-Dateien liegen im Wurzelordner des Repos (GitHub Pages liefert sie weiter unter bodenbac.github.io aus).
+  "name": "ovalings-legal",
+  "compatibility_date": "2026-10-13",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
