@@ -30,7 +30,7 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -67,21 +67,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>던전</a></p>
       <h1 class="on-image">고요의 호수</h1>
-      <p class="lead on-image">Ovaling 딱 1마리.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/monk-720.4e31fccf.webp" srcset="../../../assets/boss/monk-360.b3461e16.webp 360w, ../../../assets/boss/monk-720.4e31fccf.webp 720w" sizes="(min-width: 900px) 360px, 60vw" alt="침묵의 수도승" width="720" height="536">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="이 페이지에서">
-<a class="navchip" href="#guide">한눈에 보기</a><a class="navchip" href="#abilities">보스의 능력</a><a class="navchip" href="#rules">보스의 규칙</a><a class="navchip" href="#strength">스테이지별 강함</a><a class="navchip" href="#loot">승리당 전리품</a><a class="navchip" href="#ultra">울트라 폼</a>  </nav>
+<a class="navchip" href="#guide">한눈에 보기</a><a class="navchip" href="#abilities">보스의 능력</a><a class="navchip" href="#rules">보스의 패시브</a><a class="navchip" href="#strength">스테이지별 강함</a><a class="navchip" href="#loot">승리당 전리품</a><a class="navchip" href="#ultra">울트라 폼</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>한눈에 보기</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">나의 팀</h3>
-        <p class="guideteam">Ovaling 하나만</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">정보</h3>
         <dl class="rows">
+          <div><dt>보스</dt><dd>침묵의 수도승</dd></div>
           <div><dt>난이도</dt><dd><span class="chip diff diff-medium">보통</span></dd></div>
           <div><dt>해금</dt><dd>플레이어 레벨 10</dd></div>
           <div><dt>도전당 에너지</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>8</span><span class="sr">에너지</span></span></dd></div>
@@ -89,35 +88,38 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">팁</span></h3>
-        <p>싸울 수 있는 건 Ovaling 하나뿐이에요. 보스가 알을 던지고, 다시 채울 때마다 영구히 강해지니 전투가 길수록 힘들어져요.</p>
+        <p class="tiprule">이 던전에는 Ovaling 하나만 데려갈 수 있어요. 패밀리는 상관없어요.</p>
+        <p>보스가 내 Ovaling에게 알을 던지고, 다시 채울 때마다 영구히 강해지니 전투가 길수록 힘들어져요.</p>
       </div>
     </div>
   </section>
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>보스의 능력</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/monk_eggs-192.73780dc1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>알 폭격</h3></div>
+          <h3>알 폭격</h3>
         </div>
-        <p class="short">적 1명 · 위력 0.7 · 알 1~4개, 각각 무작위 적에게 · 쿨타임 없음</p>
         <details class="expander">
           <summary>효과</summary>
-          <dl class="rows"><div><dt>대상</dt><dd>적 1명</dd></div></dl>
+          <dl class="facts">
+<div><dt>대상:</dt><dd>적 1명</dd></div>            <div><dt>쿨타임:</dt><dd><span class="factline">없음</span></dd></div>
+          </dl>
           <ul class="lines"><li>알을 1~4개 던져요. 각 알은 무작위 적에게 <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>의 70%로 1회 타격해요. 던진 알은 사라져요.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/monk_recharge-192.098157a7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>재충전</h3></div>
+          <h3>재충전</h3>
         </div>
-        <p class="short">자신 · 알이 없을 때만: 알을 모두 되찾고 공격력과 체력 영구 10% 증가 · 쿨타임 없음</p>
         <details class="expander">
           <summary>효과</summary>
-          <dl class="rows"><div><dt>대상</dt><dd>자신</dd></div></dl>
+          <dl class="facts">
+<div><dt>대상:</dt><dd>자신</dd></div>            <div><dt>쿨타임:</dt><dd><span class="factline">없음</span></dd></div>
+          </dl>
           <ul class="lines"><li>남은 알이 없을 때만: 공격을 건너뛰고 알 12개를 모두 되찾으며 전투가 끝날 때까지 <strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>과 <span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">체력</span>이 10% 증가</strong>해요.</li></ul>
         </details>
       </article>
@@ -125,7 +127,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>보스의 규칙</span></h2>
+    <h2 class="stitle" id="rules"><span>보스의 패시브</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -155,9 +157,13 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">스테이지</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">기술</th><td>6.92%</td><td>12%</td><td>21%</td><td>39%</td></tr>
-          <tr><th scope="row">XP 물약</th><td>6.48%</td><td>7.89%</td><td>10%</td><td>14%</td></tr>
-<tr><th scope="row">패시브</th><td>1.15%</td><td>1.44%</td><td>1.85%</td><td>2.38%</td></tr>          <tr><th scope="row">첫 승리 다이아</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">다이아</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">일반 기술</a></span></th><td>6%</td><td>10%</td><td>18%</td><td>33%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">희귀 기술</a></span></th><td>0.75%</td><td>1.27%</td><td>2.27%</td><td>4.06%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">영웅 기술</a></span></th><td>0.15%</td><td>0.31%</td><td>0.71%</td><td>1.61%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">전설 기술</a></span></th><td>0.01%</td><td>0.05%</td><td>0.16%</td><td>0.57%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XP 물약</span></span></th><td>6.48%</td><td>7.89%</td><td>10%</td><td>14%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-passive"><span class="frame s32 r-passive"><img src="../../../assets/art/slot/passive-96.fda7b45c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#passives">패시브</a></span></th><td>1.15%</td><td>1.44%</td><td>1.85%</td><td>2.38%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>첫 승리 다이아</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">다이아</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -174,7 +180,8 @@
       </div>
       <div class="ultrabody">
         <h3>영원한 침묵의 수도승</h3>
-        <p>스테이지 30 이후, 주 1회. 능력은 같고 능력치가 더 강해요.</p>
+        <p>스테이지 31. 주 1회 처치할 수 있고, 운이 좋으면 아주 좋은 보상을 줘요.</p>
+        <p>'침묵의 수도승'의 강화된 모습이에요.</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_monk_eggs-192.7d3ed456.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>영원한 알 폭격</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_monk_recharge-192.cebda568.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>영원한 재충전</span></li>        </ul>
         <h4 class="minor">그 주의 승리마다</h4>
@@ -247,7 +254,7 @@
     <span>쿠키와 추적기 없음</span>
     <span>글꼴: Fredoka와 Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>2026.10.15 버전 · d329ba7</span>
+    <span>2026.10.15 버전 · 266c3a4</span>
   </div>
 </footer>
 
@@ -258,6 +265,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/solo/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/solo/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/solo/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/solo/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/solo/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/solo/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/solo/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="./" hreflang="ko" lang="ko" data-lang="ko" class="on" aria-current="true">한국어</a></li><li><a href="../../../id/dungeons/solo/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

@@ -170,6 +170,16 @@
       if (el && el.hasAttribute('data-card') && el.hidden) { clear(); el.scrollIntoView(); }
     };
     window.addEventListener('hashchange', reveal);
+    // Adresse auf eine Pille der Filter (#rarity-<stufe>, Links aus der Beute der Dungeons): Filter vorwählen. Zur Pille
+    // scrollt der Browser selbst, der gewählte Filter steht dann oben, die Liste darunter
+    var preset = function () {
+      var id = decodeURIComponent(location.hash.slice(1));
+      var pill = id && document.getElementById(id);
+      if (!pill || !bar.contains(pill) || !pill.closest('[data-filter]')) return;
+      pill.click();
+    };
+    preset();
+    window.addEventListener('hashchange', preset);
     // Link einer Karte kopieren
     if (navigator.clipboard && window.isSecureContext) {
       document.querySelectorAll('[data-copy]').forEach(function (b) {

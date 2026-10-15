@@ -30,7 +30,7 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -67,21 +67,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>ダンジョン</a></p>
       <h1 class="on-image">静寂の湖</h1>
-      <p class="lead on-image">Ovaling1体のみ。</p>
     </div>
     <img class="headboss" src="../../../assets/boss/monk-720.4e31fccf.webp" srcset="../../../assets/boss/monk-360.b3461e16.webp 360w, ../../../assets/boss/monk-720.4e31fccf.webp 720w" sizes="(min-width: 900px) 360px, 60vw" alt="沈黙の僧" width="720" height="536">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="このページの内容">
-<a class="navchip" href="#guide">ひと目でわかる</a><a class="navchip" href="#abilities">ボスの能力</a><a class="navchip" href="#rules">ボスのルール</a><a class="navchip" href="#strength">ステージごとの強さ</a><a class="navchip" href="#loot">勝利ごとのドロップ</a><a class="navchip" href="#ultra">ウルトラ形態</a>  </nav>
+<a class="navchip" href="#guide">ひと目でわかる</a><a class="navchip" href="#abilities">ボスの能力</a><a class="navchip" href="#rules">ボスのパッシブ</a><a class="navchip" href="#strength">ステージごとの強さ</a><a class="navchip" href="#loot">勝利ごとのドロップ</a><a class="navchip" href="#ultra">ウルトラ形態</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>ひと目でわかる</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">チーム</h3>
-        <p class="guideteam">Ovaling 1体のみ</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">情報</h3>
         <dl class="rows">
+          <div><dt>ボス</dt><dd>沈黙の僧</dd></div>
           <div><dt>難易度</dt><dd><span class="chip diff diff-medium">ふつう</span></dd></div>
           <div><dt>開放</dt><dd>プレイヤーレベル10</dd></div>
           <div><dt>1回のエネルギー</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>8</span><span class="sr">エネルギー</span></span></dd></div>
@@ -89,35 +88,38 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">ヒント</span></h3>
-        <p>戦えるのはOvaling 1体だけ。ボスはエッグを投げ、補充するたびにずっと強くなるので、長いバトルほど厳しくなります。</p>
+        <p class="tiprule">このダンジョンに連れて行けるのはOvaling 1体だけです。ファミリーは問いません。</p>
+        <p>ボスはあなたのOvalingにエッグを投げ、補充するたびにずっと強くなるので、長いバトルほど厳しくなります。</p>
       </div>
     </div>
   </section>
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>ボスの能力</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/monk_eggs-192.73780dc1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>エッグ乱射</h3></div>
+          <h3>エッグ乱射</h3>
         </div>
-        <p class="short">敵単体 · 威力0.7 · エッグ1〜4個、それぞれランダムな敵へ · クールタイムなし</p>
         <details class="expander">
           <summary>効果</summary>
-          <dl class="rows"><div><dt>対象</dt><dd>敵単体</dd></div></dl>
+          <dl class="facts">
+<div><dt>対象:</dt><dd>敵単体</dd></div>            <div><dt>クールタイム:</dt><dd><span class="factline">なし</span></dd></div>
+          </dl>
           <ul class="lines"><li>エッグを1〜4個投げ、それぞれランダムな敵に<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の70%のダメージを与える。投げたエッグはなくなる。</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/monk_recharge-192.098157a7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>リチャージ</h3></div>
+          <h3>リチャージ</h3>
         </div>
-        <p class="short">自分 · エッグがない時のみ：エッグがすべて戻り、攻撃とHPが10%永続アップ · クールタイムなし</p>
         <details class="expander">
           <summary>効果</summary>
-          <dl class="rows"><div><dt>対象</dt><dd>自分</dd></div></dl>
+          <dl class="facts">
+<div><dt>対象:</dt><dd>自分</dd></div>            <div><dt>クールタイム:</dt><dd><span class="factline">なし</span></dd></div>
+          </dl>
           <ul class="lines"><li>エッグが残っていない時のみ：攻撃を行わず、エッグ12個がすべて戻り、バトル終了まで<strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>と<span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が10%アップ</strong>。</li></ul>
         </details>
       </article>
@@ -125,7 +127,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>ボスのルール</span></h2>
+    <h2 class="stitle" id="rules"><span>ボスのパッシブ</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -155,9 +157,13 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">ステージ</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">技</th><td>6.92%</td><td>12%</td><td>21%</td><td>39%</td></tr>
-          <tr><th scope="row">XPポーション</th><td>6.48%</td><td>7.89%</td><td>10%</td><td>14%</td></tr>
-<tr><th scope="row">パッシブ</th><td>1.15%</td><td>1.44%</td><td>1.85%</td><td>2.38%</td></tr>          <tr><th scope="row">初勝利のダイヤ</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">ダイヤ</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">ノーマルの技</a></span></th><td>6%</td><td>10%</td><td>18%</td><td>33%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">レアの技</a></span></th><td>0.75%</td><td>1.27%</td><td>2.27%</td><td>4.06%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">エピックの技</a></span></th><td>0.15%</td><td>0.31%</td><td>0.71%</td><td>1.61%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">レジェンドの技</a></span></th><td>0.01%</td><td>0.05%</td><td>0.16%</td><td>0.57%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XPポーション</span></span></th><td>6.48%</td><td>7.89%</td><td>10%</td><td>14%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-passive"><span class="frame s32 r-passive"><img src="../../../assets/art/slot/passive-96.fda7b45c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#passives">パッシブ</a></span></th><td>1.15%</td><td>1.44%</td><td>1.85%</td><td>2.38%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>初勝利のダイヤ</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">ダイヤ</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -174,7 +180,8 @@
       </div>
       <div class="ultrabody">
         <h3>永遠の沈黙の僧</h3>
-        <p>ステージ30のあと、週に1回。同じ能力で、ステータスが強くなっています。</p>
+        <p>ステージ31。週に1回倒せて、運が良ければとても良い報酬が手に入ります。</p>
+        <p>「沈黙の僧」の強化された姿です。</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_monk_eggs-192.7d3ed456.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>永遠のエッグ乱射</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_monk_recharge-192.cebda568.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>永遠のリチャージ</span></li>        </ul>
         <h4 class="minor">その週の勝利ごとに</h4>
@@ -247,7 +254,7 @@
     <span>Cookieもトラッカーもありません</span>
     <span>フォント：FredokaとNunito Sans、SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>2026.10.15版 · d329ba7</span>
+    <span>2026.10.15版 · 266c3a4</span>
   </div>
 </footer>
 
@@ -258,6 +265,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/solo/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/solo/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/solo/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/solo/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/solo/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/solo/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true">日本語</a></li><li><a href="../../../ko/dungeons/solo/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/solo/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

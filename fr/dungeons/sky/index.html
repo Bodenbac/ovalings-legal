@@ -30,8 +30,8 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="preload" href="../../../assets/fonts/Fredoka.469d2081.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="preload" href="../../../assets/fonts/Fredoka.4ee80a30.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -68,21 +68,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>Donjons</a></p>
       <h1 class="on-image">Sentier céleste</h1>
-      <p class="lead on-image">Lumière et Ombre ensemble.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/dragon-720.0e939430.webp" srcset="../../../assets/boss/dragon-360.dad2d1b1.webp 360w, ../../../assets/boss/dragon-720.0e939430.webp 720w" sizes="(min-width: 900px) 360px, 60vw" alt="Le Dragon céleste" width="720" height="619">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="Sur cette page">
-<a class="navchip" href="#guide">En bref</a><a class="navchip" href="#abilities">Capacités du boss</a><a class="navchip" href="#rules">Règles du boss</a><a class="navchip" href="#strength">Force selon les niveaux</a><a class="navchip" href="#loot">Butin par victoire</a><a class="navchip" href="#ultra">Forme Ultra</a>  </nav>
+<a class="navchip" href="#guide">En bref</a><a class="navchip" href="#abilities">Capacités du boss</a><a class="navchip" href="#rules">Passifs du boss</a><a class="navchip" href="#strength">Force par niveau</a><a class="navchip" href="#loot">Butin par victoire</a><a class="navchip" href="#ultra">Forme Ultra</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>En bref</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">Ton équipe</h3>
-        <p class="guideteam">Équipe jusqu’à 5 · Lumière et Ombre</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">Infos</h3>
         <dl class="rows">
+          <div><dt>Boss</dt><dd>Le Dragon céleste</dd></div>
           <div><dt>Difficulté</dt><dd><span class="chip diff diff-hard">Difficile</span></dd></div>
           <div><dt>Débloqué au</dt><dd>Niveau de joueur 20</dd></div>
           <div><dt>Énergie par essai</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>10</span><span class="sr">Énergie</span></span></dd></div>
@@ -90,6 +89,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">Astuce</span></h3>
+        <p class="tiprule">Dans ce donjon, tu peux emmener ensemble des Ovalings des familles Lumière et Ombre, jusqu’à 5 par combat.</p>
         <p>Le boss ralentit ton équipe et fait reculer la jauge de tour. Dès le niveau 10, il enrage à mi-vie et agit plus vite.</p>
       </div>
     </div>
@@ -97,41 +97,43 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>Capacités du boss</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_claw-192.ddc610a7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Griffe de tempête</h3></div>
+          <h3>Griffe de tempête</h3>
         </div>
-        <p class="short">un ennemi · puissance 0,7 · 2 coups · sans recharge</p>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>un ennemi</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>un ennemi</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">aucune</span></dd></div>
+          </dl>
           <ul class="lines"><li>2 coups de 70 % de l’<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span> chacun.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_breath-192.3d3eb780.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Souffle de tempête</h3></div>
+          <h3>Souffle de tempête</h3>
         </div>
-        <p class="short">tous les ennemis · puissance 0,55 · 70 % Baisse de vitesse 30 % pendant 2 tours · recharge 3</p>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>tous les ennemis</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>tous les ennemis</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">3 tours</span></dd></div>
+          </dl>
           <ul class="lines"><li>Frappe tous les ennemis avec 55 % de l’<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span>.</li><li>70 % de chances de <strong class="debuff">réduire</strong> la <strong class="debuff"><span class="statmark"><img src="../../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">vitesse</span></strong> de tous les ennemis <strong class="debuff">de 30 %</strong> pendant 2 tours.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_wing-192.51fd5f71.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Battement d’ailes</h3></div>
+          <h3>Battement d’ailes</h3>
         </div>
-        <p class="short">tous les ennemis · Baisse de jauge de tour 30 % · 100 % Hausse de vitesse 30 % pendant 2 tours · recharge 5</p>
-        <ul class="cdlist"><li>Recharge 4 tours dès le niveau 10</li><li>Recharge 3 tours dès le niveau 20</li></ul>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>tous les ennemis</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>tous les ennemis</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">5 tours dès le niveau 1</span><span class="factline">4 tours dès le niveau 10</span><span class="factline">3 tours dès le niveau 20</span></dd></div>
+          </dl>
           <ul class="lines"><li>Réduit la <strong class="debuff">jauge de tour</strong> de tous les ennemis de 30 %.</li><li>Augmente sa propre <strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">vitesse</span></strong> <strong class="buff">de 30 %</strong> pendant 2 tours.</li></ul>
         </details>
       </article>
@@ -139,7 +141,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>Règles du boss</span></h2>
+    <h2 class="stitle" id="rules"><span>Passifs du boss</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -157,7 +159,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="strength">
-    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Force selon les niveaux</span></h2>
+    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Force par niveau</span></h2>
     <div class="tablewrap card">
       <table class="table stages c4">
         <thead><tr><th scope="col">Niveau</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
@@ -177,13 +179,16 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">Niveau</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Attaque</th><td>9,22 %</td><td>16 %</td><td>28 %</td><td>52 %</td></tr>
-          <tr><th scope="row">Œuf normal</th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Œuf rare</th><td>1 %</td><td>1,68 %</td><td>3 %</td><td>5,34 %</td></tr>
-          <tr><th scope="row">Œuf épique</th><td>0,04 %</td><td>0,09 %</td><td>0,25 %</td><td>0,65 %</td></tr>
-          <tr><th scope="row">Œuf légendaire</th><td>0,04 %</td><td>0,08 %</td><td>0,18 %</td><td>0,4 %</td></tr>
-          <tr><th scope="row">Potion d’XP</th><td>8,64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Diamants à la première victoire</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamants</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">Attaque normale</a></span></th><td>8 %</td><td>14 %</td><td>24 %</td><td>43 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">Attaque rare</a></span></th><td>1 %</td><td>1,69 %</td><td>3,03 %</td><td>5,42 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">Attaque épique</a></span></th><td>0,2 %</td><td>0,42 %</td><td>0,95 %</td><td>2,15 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">Attaque légendaire</a></span></th><td>0,02 %</td><td>0,06 %</td><td>0,22 %</td><td>0,77 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf normal</span></span></th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf rare</span></span></th><td>1 %</td><td>1,68 %</td><td>3 %</td><td>5,34 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/epic-352.f82d1a4a.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf épique</span></span></th><td>0,04 %</td><td>0,09 %</td><td>0,25 %</td><td>0,65 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/legendary-352.ce88d2bb.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf légendaire</span></span></th><td>0,04 %</td><td>0,08 %</td><td>0,18 %</td><td>0,4 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Potion d’XP</span></span></th><td>8,64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>Diamants à la première victoire</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamants</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -200,10 +205,11 @@
       </div>
       <div class="ultrabody">
         <h3>Le Dragon céleste des Tempêtes éternelles</h3>
-        <p>Dès le niveau 30, une fois par semaine. Les mêmes capacités avec des stats plus fortes.</p>
+        <p>Niveau 31, peut être vaincue une fois par semaine et, avec un peu de chance, rapporte de très bonnes récompenses.</p>
+        <p>C’est une forme améliorée du boss « Le Dragon céleste ».</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_claw-192.2fce2e10.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Griffe des tempêtes éternelles</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_breath-192.2fdb5d97.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Souffle des tempêtes éternelles</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_wing-192.302124c7.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Battement des tempêtes éternelles</span></li>        </ul>
-        <h4 class="minor">Règles en plus</h4>
+        <h4 class="minor">Passifs en plus</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/shield_all_at_half-192.6c9820fb.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Une fois sous la moitié de sa vie : bouclier de 20 %.</p></li>        </ul>
         <h4 class="minor">Chaque victoire de la semaine</h4>
@@ -276,7 +282,7 @@
     <span>Sans cookies et sans traceurs</span>
     <span>Polices : Fredoka et Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Version du 15.10.2026 · d329ba7</span>
+    <span>Version du 15.10.2026 · 266c3a4</span>
   </div>
 </footer>
 
@@ -287,6 +293,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/sky/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/sky/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/sky/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/sky/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="./" hreflang="fr" lang="fr" data-lang="fr" class="on" aria-current="true">Français</a></li><li><a href="../../../tr/dungeons/sky/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/sky/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../../ko/dungeons/sky/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/sky/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

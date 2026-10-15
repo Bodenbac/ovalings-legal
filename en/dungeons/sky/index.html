@@ -30,8 +30,8 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="preload" href="../../../assets/fonts/Fredoka.469d2081.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="preload" href="../../../assets/fonts/Fredoka.4ee80a30.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -68,21 +68,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>Dungeons</a></p>
       <h1 class="on-image">Sky Path</h1>
-      <p class="lead on-image">Light and Shadow together.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/dragon-720.0e939430.webp" srcset="../../../assets/boss/dragon-360.dad2d1b1.webp 360w, ../../../assets/boss/dragon-720.0e939430.webp 720w" sizes="(min-width: 900px) 360px, 60vw" alt="The Sky Dragon" width="720" height="619">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="On this page">
-<a class="navchip" href="#guide">At a glance</a><a class="navchip" href="#abilities">Abilities of the boss</a><a class="navchip" href="#rules">Rules of the boss</a><a class="navchip" href="#strength">Strength over the stages</a><a class="navchip" href="#loot">Loot per win</a><a class="navchip" href="#ultra">Ultra form</a>  </nav>
+<a class="navchip" href="#guide">At a glance</a><a class="navchip" href="#abilities">Abilities of the boss</a><a class="navchip" href="#rules">Passives of the boss</a><a class="navchip" href="#strength">Strength per stage</a><a class="navchip" href="#loot">Loot per win</a><a class="navchip" href="#ultra">Ultra form</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>At a glance</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">Your team</h3>
-        <p class="guideteam">Team up to 5 · Light and Shadow</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">Info</h3>
         <dl class="rows">
+          <div><dt>Boss</dt><dd>The Sky Dragon</dd></div>
           <div><dt>Difficulty</dt><dd><span class="chip diff diff-hard">Hard</span></dd></div>
           <div><dt>Unlocked at</dt><dd>Player level 20</dd></div>
           <div><dt>Energy per try</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>10</span><span class="sr">Energy</span></span></dd></div>
@@ -90,6 +89,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">Tip</span></h3>
+        <p class="tiprule">In this dungeon you can bring Ovalings from Light and Shadow together, up to 5 per battle.</p>
         <p>The boss slows your team and pushes back the turn meter. From stage 10 it rages at half health and acts faster.</p>
       </div>
     </div>
@@ -97,41 +97,43 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>Abilities of the boss</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_claw-192.ddc610a7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Storm Claw</h3></div>
+          <h3>Storm Claw</h3>
         </div>
-        <p class="short">one enemy · power 0.7 · 2 hits · no cooldown</p>
         <details class="expander">
           <summary>Effect</summary>
-          <dl class="rows"><div><dt>Target</dt><dd>one enemy</dd></div></dl>
+          <dl class="facts">
+<div><dt>Target:</dt><dd>one enemy</dd></div>            <div><dt>Cooldown:</dt><dd><span class="factline">none</span></dd></div>
+          </dl>
           <ul class="lines"><li>2 hits of 70 % <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_breath-192.3d3eb780.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Storm Breath</h3></div>
+          <h3>Storm Breath</h3>
         </div>
-        <p class="short">all enemies · power 0.55 · 70 % Speed Down 30 % for 2 turns · cooldown 3</p>
         <details class="expander">
           <summary>Effect</summary>
-          <dl class="rows"><div><dt>Target</dt><dd>all enemies</dd></div></dl>
+          <dl class="facts">
+<div><dt>Target:</dt><dd>all enemies</dd></div>            <div><dt>Cooldown:</dt><dd><span class="factline">3 turns</span></dd></div>
+          </dl>
           <ul class="lines"><li>Hits all enemies with 55 % <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>70 % chance to <strong class="debuff">lower</strong> all enemies' <strong class="debuff"><span class="statmark"><img src="../../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="debuff">by 30 %</strong> for 2 turns.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/dragon_wing-192.51fd5f71.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Wingbeat</h3></div>
+          <h3>Wingbeat</h3>
         </div>
-        <p class="short">all enemies · Turn Meter Down 30 % · 100 % Speed Up 30 % for 2 turns · cooldown 5</p>
-        <ul class="cdlist"><li>Cooldown 4 turns from stage 10</li><li>Cooldown 3 turns from stage 20</li></ul>
         <details class="expander">
           <summary>Effect</summary>
-          <dl class="rows"><div><dt>Target</dt><dd>all enemies</dd></div></dl>
+          <dl class="facts">
+<div><dt>Target:</dt><dd>all enemies</dd></div>            <div><dt>Cooldown:</dt><dd><span class="factline">5 turns from stage 1</span><span class="factline">4 turns from stage 10</span><span class="factline">3 turns from stage 20</span></dd></div>
+          </dl>
           <ul class="lines"><li>Lowers all enemies' <strong class="debuff">turn meter</strong> by 30 %.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 30 %</strong> for 2 turns.</li></ul>
         </details>
       </article>
@@ -139,7 +141,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>Rules of the boss</span></h2>
+    <h2 class="stitle" id="rules"><span>Passives of the boss</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -157,7 +159,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="strength">
-    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Strength over the stages</span></h2>
+    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Strength per stage</span></h2>
     <div class="tablewrap card">
       <table class="table stages c4">
         <thead><tr><th scope="col">Stage</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
@@ -177,13 +179,16 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">Stage</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Move</th><td>9.22 %</td><td>16 %</td><td>28 %</td><td>52 %</td></tr>
-          <tr><th scope="row">Normal Egg</th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Rare Egg</th><td>1 %</td><td>1.68 %</td><td>3 %</td><td>5.34 %</td></tr>
-          <tr><th scope="row">Epic Egg</th><td>0.04 %</td><td>0.09 %</td><td>0.25 %</td><td>0.65 %</td></tr>
-          <tr><th scope="row">Legendary Egg</th><td>0.04 %</td><td>0.08 %</td><td>0.18 %</td><td>0.4 %</td></tr>
-          <tr><th scope="row">XP potion</th><td>8.64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Diamonds on the first win</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamonds</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">Normal move</a></span></th><td>8 %</td><td>14 %</td><td>24 %</td><td>43 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">Rare move</a></span></th><td>1 %</td><td>1.69 %</td><td>3.03 %</td><td>5.42 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">Epic move</a></span></th><td>0.2 %</td><td>0.42 %</td><td>0.95 %</td><td>2.15 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">Legendary move</a></span></th><td>0.02 %</td><td>0.06 %</td><td>0.22 %</td><td>0.77 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Normal Egg</span></span></th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Rare Egg</span></span></th><td>1 %</td><td>1.68 %</td><td>3 %</td><td>5.34 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/epic-352.f82d1a4a.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Epic Egg</span></span></th><td>0.04 %</td><td>0.09 %</td><td>0.25 %</td><td>0.65 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/legendary-352.ce88d2bb.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Legendary Egg</span></span></th><td>0.04 %</td><td>0.08 %</td><td>0.18 %</td><td>0.4 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XP potion</span></span></th><td>8.64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>Diamonds on the first win</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamonds</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamonds</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -200,10 +205,11 @@
       </div>
       <div class="ultrabody">
         <h3>The Sky Dragon of Eternal Storms</h3>
-        <p>From stage 30 on, once per week. The same abilities with stronger stats.</p>
+        <p>Stage 31, can be defeated once a week, and with some luck brings very good rewards.</p>
+        <p>An improved form of “The Sky Dragon”.</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_claw-192.2fce2e10.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Claw of Eternal Storms</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_breath-192.2fdb5d97.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Breath of Eternal Storms</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_dragon_wing-192.302124c7.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Wingbeat of Eternal Storms</span></li>        </ul>
-        <h4 class="minor">Extra rules</h4>
+        <h4 class="minor">Extra passives</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/shield_all_at_half-192.6c9820fb.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Once below half health: shield of 20 %.</p></li>        </ul>
         <h4 class="minor">Every weekly win</h4>
@@ -276,7 +282,7 @@
     <span>No cookies and no trackers</span>
     <span>Fonts: Fredoka and Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Version of 2026-10-15 · d329ba7</span>
+    <span>Version of 2026-10-15 · 266c3a4</span>
   </div>
 </footer>
 
@@ -287,6 +293,6 @@
   <ul class="langchoice">
 <li><a href="./" hreflang="en" lang="en" data-lang="en" class="on" aria-current="true">English</a></li><li><a href="../../../de/dungeons/sky/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/sky/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/sky/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/sky/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/sky/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/sky/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../../ko/dungeons/sky/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/sky/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -67,21 +67,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>ダンジョン</a></p>
       <h1 class="on-image">天使の塔</h1>
-      <p class="lead on-image">影のOvalingsのみ。</p>
     </div>
     <img class="headboss" src="../../../assets/boss/warden-475.d40b2fff.webp" srcset="../../../assets/boss/warden-360.b9f0eb34.webp 360w, ../../../assets/boss/warden-475.d40b2fff.webp 475w" sizes="(min-width: 900px) 360px, 60vw" alt="光の守護者" width="475" height="628">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="このページの内容">
-<a class="navchip" href="#guide">ひと目でわかる</a><a class="navchip" href="#abilities">ボスの能力</a><a class="navchip" href="#rules">ボスのルール</a><a class="navchip" href="#strength">ステージごとの強さ</a><a class="navchip" href="#loot">勝利ごとのドロップ</a><a class="navchip" href="#ultra">ウルトラ形態</a>  </nav>
+<a class="navchip" href="#guide">ひと目でわかる</a><a class="navchip" href="#abilities">ボスの能力</a><a class="navchip" href="#rules">ボスのパッシブ</a><a class="navchip" href="#strength">ステージごとの強さ</a><a class="navchip" href="#loot">勝利ごとのドロップ</a><a class="navchip" href="#ultra">ウルトラ形態</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>ひと目でわかる</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">チーム</h3>
-        <p class="guideteam">影のみ</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">情報</h3>
         <dl class="rows">
+          <div><dt>ボス</dt><dd>光の守護者</dd></div>
           <div><dt>難易度</dt><dd><span class="chip diff diff-entry">入門</span></dd></div>
           <div><dt>開放</dt><dd>プレイヤーレベル1</dd></div>
           <div><dt>1回のエネルギー</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>5</span><span class="sr">エネルギー</span></span></dd></div>
@@ -89,6 +88,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">ヒント</span></h3>
+        <p class="tiprule">このダンジョンに連れて行けるのは影のOvalingだけで、1回のバトルにつき最大5体です。</p>
         <p>ボスはHPが減ると回復してシールドを張ります。シールドの前に強く攻めましょう。<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の高い影のOvalingがおすすめです。</p>
       </div>
     </div>
@@ -96,29 +96,30 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>ボスの能力</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/warden_wave-192.4134935c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>衝撃波</h3></div>
+          <h3>衝撃波</h3>
         </div>
-        <p class="short">敵全体 · 威力0.5 · クールタイムなし</p>
         <details class="expander">
           <summary>効果</summary>
-          <dl class="rows"><div><dt>対象</dt><dd>敵全体</dd></div></dl>
+          <dl class="facts">
+<div><dt>対象:</dt><dd>敵全体</dd></div>            <div><dt>クールタイム:</dt><dd><span class="factline">なし</span></dd></div>
+          </dl>
           <ul class="lines"><li><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の50%で敵全体を攻撃。</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/warden_heal-192.32c8aa18.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>聖なる光</h3></div>
+          <h3>聖なる光</h3>
         </div>
-        <p class="short">自分 · 回復 15% · クールタイム4</p>
-        <ul class="cdlist"><li>ステージ10からクールダウン3ターン</li><li>ステージ20からクールダウン2ターン</li></ul>
         <details class="expander">
           <summary>効果</summary>
-          <dl class="rows"><div><dt>対象</dt><dd>自分</dd></div></dl>
+          <dl class="facts">
+<div><dt>対象:</dt><dd>自分</dd></div>            <div><dt>クールタイム:</dt><dd><span class="factline">ステージ1から4ターン</span><span class="factline">ステージ10から3ターン</span><span class="factline">ステージ20から2ターン</span></dd></div>
+          </dl>
           <ul class="lines"><li>自分を最大<span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の15%<strong class="buff">回復</strong>。</li></ul>
         </details>
       </article>
@@ -126,7 +127,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>ボスのルール</span></h2>
+    <h2 class="stitle" id="rules"><span>ボスのパッシブ</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -164,12 +165,15 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">ステージ</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">技</th><td>4.61%</td><td>7.84%</td><td>14%</td><td>26%</td></tr>
-          <tr><th scope="row">ノーマルエッグ</th><td>5%</td><td>5.96%</td><td>7.25%</td><td>8.82%</td></tr>
-          <tr><th scope="row">レアエッグ</th><td>0.5%</td><td>0.84%</td><td>1.5%</td><td>2.67%</td></tr>
-          <tr><th scope="row">ブライトエッグ</th><td>0.02%</td><td>0.05%</td><td>0.12%</td><td>0.32%</td></tr>
-          <tr><th scope="row">XPポーション</th><td>4.32%</td><td>5.26%</td><td>6.76%</td><td>9.15%</td></tr>
-          <tr><th scope="row">初勝利のダイヤ</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">ダイヤ</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">ノーマルの技</a></span></th><td>4%</td><td>6.76%</td><td>12%</td><td>22%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">レアの技</a></span></th><td>0.5%</td><td>0.84%</td><td>1.51%</td><td>2.71%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">エピックの技</a></span></th><td>0.1%</td><td>0.21%</td><td>0.47%</td><td>1.08%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">レジェンドの技</a></span></th><td>0.01%</td><td>0.03%</td><td>0.11%</td><td>0.38%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>ノーマルエッグ</span></span></th><td>5%</td><td>5.96%</td><td>7.25%</td><td>8.82%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>レアエッグ</span></span></th><td>0.5%</td><td>0.84%</td><td>1.5%</td><td>2.67%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/bright-352.ec969fdd.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>ブライトエッグ</span></span></th><td>0.02%</td><td>0.05%</td><td>0.12%</td><td>0.32%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XPポーション</span></span></th><td>4.32%</td><td>5.26%</td><td>6.76%</td><td>9.15%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>初勝利のダイヤ</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">ダイヤ</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">ダイヤ</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -186,10 +190,11 @@
       </div>
       <div class="ultrabody">
         <h3>始まりの光の守護者</h3>
-        <p>ステージ30のあと、週に1回。同じ能力で、ステータスが強くなっています。</p>
+        <p>ステージ31。週に1回倒せて、運が良ければとても良い報酬が手に入ります。</p>
+        <p>「光の守護者」の強化された姿です。</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_warden_wave-192.c6c2f3cc.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>天頂の衝撃波</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_warden_heal-192.873fffd2.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>天頂の聖なる光</span></li>        </ul>
-        <h4 class="minor">追加ルール</h4>
+        <h4 class="minor">追加パッシブ</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/enrage_at_half-192.cd4f40fc.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>HP半分未満で激怒、素早さ+30%。</p></li><li><img src="../../../assets/art/boss_rule/fury_at_quarter-192.b29896fa.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>HP4分の1未満で攻撃+25%。</p></li>        </ul>
         <h4 class="minor">その週の勝利ごとに</h4>
@@ -262,7 +267,7 @@
     <span>Cookieもトラッカーもありません</span>
     <span>フォント：FredokaとNunito Sans、SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>2026.10.15版 · d329ba7</span>
+    <span>2026.10.15版 · 266c3a4</span>
   </div>
 </footer>
 
@@ -273,6 +278,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/angel/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/angel/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/angel/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/angel/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/angel/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/angel/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true">日本語</a></li><li><a href="../../../ko/dungeons/angel/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/angel/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

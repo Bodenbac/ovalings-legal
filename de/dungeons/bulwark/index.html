@@ -30,8 +30,8 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="preload" href="../../../assets/fonts/Fredoka.469d2081.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="preload" href="../../../assets/fonts/Fredoka.4ee80a30.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
@@ -68,21 +68,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>Dungeons</a></p>
       <h1 class="on-image">Eherne Feste</h1>
-      <p class="lead on-image">Nur kritische Treffer kommen durch.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/bulwark-461.3f297b0c.webp" srcset="../../../assets/boss/bulwark-360.a99999fc.webp 360w, ../../../assets/boss/bulwark-461.3f297b0c.webp 461w" sizes="(min-width: 900px) 360px, 60vw" alt="Der Schildkoloss" width="461" height="498">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="Auf dieser Seite">
-<a class="navchip" href="#guide">Auf einen Blick</a><a class="navchip" href="#abilities">Fähigkeiten des Bosses</a><a class="navchip" href="#rules">Regeln des Bosses</a><a class="navchip" href="#strength">Stärke über die Stufen</a><a class="navchip" href="#loot">Beute je Sieg</a><a class="navchip" href="#ultra">Ultra-Form</a>  </nav>
+<a class="navchip" href="#guide">Auf einen Blick</a><a class="navchip" href="#abilities">Fähigkeiten des Bosses</a><a class="navchip" href="#rules">Passiven des Bosses</a><a class="navchip" href="#strength">Stärke je Stufe</a><a class="navchip" href="#loot">Beute je Sieg</a><a class="navchip" href="#ultra">Ultra-Form</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>Auf einen Blick</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">Dein Team</h3>
-        <p class="guideteam">Team bis 5 · Licht und Schatten</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">Info</h3>
         <dl class="rows">
+          <div><dt>Boss</dt><dd>Der Schildkoloss</dd></div>
           <div><dt>Schwierigkeit</dt><dd><span class="chip diff diff-hard">Schwer</span></dd></div>
           <div><dt>Freigeschaltet ab</dt><dd>Spielerlevel 30</dd></div>
           <div><dt>Energie je Versuch</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>12</span><span class="sr">Energie</span></span></dd></div>
@@ -90,6 +89,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">Tipp</span></h3>
+        <p class="tiprule">In diesem Dungeon darfst du Ovalings aus Licht und Schatten gemeinsam mitnehmen, bis zu 5 je Kampf.</p>
         <p>Nur kritische Treffer verletzen den Boss, und sein Panzer senkt deine <span class="statmark"><img src="../../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span>. Nimm Ovalings mit hoher <span class="statmark"><img src="../../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> und Passiven mit, die sie erhöhen.</p>
       </div>
     </div>
@@ -97,41 +97,43 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>Fähigkeiten des Bosses</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_ram-192.07a34aad.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Schildstoß</h3></div>
+          <h3>Schildstoß</h3>
         </div>
-        <p class="short">ein Gegner · Stärke 0,8 · Zugleiste leeren 25 % · keine Abklingzeit</p>
         <details class="expander">
           <summary>Wirkung</summary>
-          <dl class="rows"><div><dt>Ziel</dt><dd>ein Gegner</dd></div></dl>
+          <dl class="facts">
+<div><dt>Ziel:</dt><dd>ein Gegner</dd></div>            <div><dt>Abklingzeit:</dt><dd><span class="factline">keine</span></dd></div>
+          </dl>
           <ul class="lines"><li>Verursacht 80 % <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> als Schaden.</li><li>Senkt die <strong class="debuff">Zugleiste</strong> des Gegners um 25 %.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_quake-192.01b8e4dd.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Wallbeben</h3></div>
+          <h3>Wallbeben</h3>
         </div>
-        <p class="short">alle Gegner · Stärke 0,5 · 60 % Angriff runter 25 % für 2 Züge · Abklingzeit 3</p>
         <details class="expander">
           <summary>Wirkung</summary>
-          <dl class="rows"><div><dt>Ziel</dt><dd>alle Gegner</dd></div></dl>
+          <dl class="facts">
+<div><dt>Ziel:</dt><dd>alle Gegner</dd></div>            <div><dt>Abklingzeit:</dt><dd><span class="factline">3 Züge</span></dd></div>
+          </dl>
           <ul class="lines"><li>Trifft alle Gegner mit 50 % <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span>.</li><li>60 % Chance, den <strong class="debuff"><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> aller Gegner für 2 Züge <strong class="debuff">um 25 % zu senken</strong>.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_brace-192.ae63ba20.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Panzerschluss</h3></div>
+          <h3>Panzerschluss</h3>
         </div>
-        <p class="short">selbst · 100 % Verteidigung hoch 40 % für 2 Züge · Abklingzeit 5</p>
-        <ul class="cdlist"><li>Abklingzeit 4 Züge ab Stufe 10</li><li>Abklingzeit 3 Züge ab Stufe 20</li></ul>
         <details class="expander">
           <summary>Wirkung</summary>
-          <dl class="rows"><div><dt>Ziel</dt><dd>selbst</dd></div></dl>
+          <dl class="facts">
+<div><dt>Ziel:</dt><dd>selbst</dd></div>            <div><dt>Abklingzeit:</dt><dd><span class="factline">5 Züge ab Stufe 1</span><span class="factline">4 Züge ab Stufe 10</span><span class="factline">3 Züge ab Stufe 20</span></dd></div>
+          </dl>
           <ul class="lines"><li>Erhöht die eigene <strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span></strong> für 2 Züge <strong class="buff">um 40 %</strong>.</li></ul>
         </details>
       </article>
@@ -139,7 +141,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>Regeln des Bosses</span></h2>
+    <h2 class="stitle" id="rules"><span>Passiven des Bosses</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/crit_only-192.4ab75438.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -157,7 +159,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="strength">
-    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Stärke über die Stufen</span></h2>
+    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Stärke je Stufe</span></h2>
     <div class="tablewrap card">
       <table class="table stages c4">
         <thead><tr><th scope="col">Stufe</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
@@ -177,13 +179,16 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">Stufe</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Attacke</th><td>9,22 %</td><td>16 %</td><td>28 %</td><td>52 %</td></tr>
-          <tr><th scope="row">Normales Ei</th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Seltenes Ei</th><td>1 %</td><td>1,68 %</td><td>3 %</td><td>5,34 %</td></tr>
-          <tr><th scope="row">Episches Ei</th><td>0,04 %</td><td>0,09 %</td><td>0,25 %</td><td>0,65 %</td></tr>
-          <tr><th scope="row">Legendäres Ei</th><td>0,04 %</td><td>0,08 %</td><td>0,18 %</td><td>0,4 %</td></tr>
-          <tr><th scope="row">XP-Trank</th><td>8,64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
-          <tr><th scope="row">Diamanten beim ersten Sieg</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamanten</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">Normale Attacke</a></span></th><td>8 %</td><td>14 %</td><td>24 %</td><td>43 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">Seltene Attacke</a></span></th><td>1 %</td><td>1,69 %</td><td>3,03 %</td><td>5,42 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">Epische Attacke</a></span></th><td>0,2 %</td><td>0,42 %</td><td>0,95 %</td><td>2,15 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">Legendäre Attacke</a></span></th><td>0,02 %</td><td>0,06 %</td><td>0,22 %</td><td>0,77 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Normales Ei</span></span></th><td>10 %</td><td>12 %</td><td>15 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Seltenes Ei</span></span></th><td>1 %</td><td>1,68 %</td><td>3 %</td><td>5,34 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/epic-352.f82d1a4a.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Episches Ei</span></span></th><td>0,04 %</td><td>0,09 %</td><td>0,25 %</td><td>0,65 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/legendary-352.ce88d2bb.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Legendäres Ei</span></span></th><td>0,04 %</td><td>0,08 %</td><td>0,18 %</td><td>0,4 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XP-Trank</span></span></th><td>8,64 %</td><td>11 %</td><td>14 %</td><td>18 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>Diamanten beim ersten Sieg</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamanten</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamanten</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -200,10 +205,11 @@
       </div>
       <div class="ultrabody">
         <h3>Der Schildkoloss der Tausend Wälle</h3>
-        <p>Ab Stufe 30, einmal je Woche. Dieselben Fähigkeiten mit stärkeren Werten.</p>
+        <p>Stufe 31, kann einmal die Woche besiegt werden, bringt mit etwas Glück sehr gute Belohnungen.</p>
+        <p>Ist eine verbesserte Form von „Der Schildkoloss“.</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_ram-192.213ce83b.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Schildstoß der Tausend Wälle</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_quake-192.ed8cbbd7.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Wallbeben der Tausend Wälle</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_brace-192.c0005614.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Panzerschluss der Tausend Wälle</span></li>        </ul>
-        <h4 class="minor">Zusätzliche Regeln</h4>
+        <h4 class="minor">Zusätzliche Passiven</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/defense_at_half-192.0c95b553.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Unter halbem Leben: Verteidigung plus 30 %.</p></li>        </ul>
         <h4 class="minor">Jeder Sieg der Woche</h4>
@@ -276,7 +282,7 @@
     <span>Ohne Cookies und ohne Tracker</span>
     <span>Schriften: Fredoka und Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Stand 15.10.2026 · d329ba7</span>
+    <span>Stand 15.10.2026 · 266c3a4</span>
   </div>
 </footer>
 
@@ -287,6 +293,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/bulwark/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="./" hreflang="de" lang="de" data-lang="de" class="on" aria-current="true">Deutsch</a></li><li><a href="../../../es/dungeons/bulwark/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/bulwark/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/bulwark/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/bulwark/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/bulwark/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../../ko/dungeons/bulwark/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/bulwark/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

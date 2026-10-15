@@ -147,6 +147,8 @@
   --c-soft: #deefe1;
   --chip-bg: #2e9e44;
   --chip-fg: #2a1a3e;
+  --c-ink: #2d7642;
+  --c-ink-dark: #6ed383;
 }
 .r-rare {
   --c: #1e88e5;
@@ -156,6 +158,8 @@
   --c-soft: #dbecfb;
   --chip-bg: #2072c4;
   --chip-fg: #ffffff;
+  --c-ink: #216dbb;
+  --c-ink-dark: #6cb6f5;
 }
 .r-epic {
   --c: #8e24aa;
@@ -165,6 +169,8 @@
   --c-soft: #eddcf1;
   --chip-bg: #8e24aa;
   --chip-fg: #ffffff;
+  --c-ink: #8e24aa;
+  --c-ink-dark: #c77ddb;
 }
 .r-legendary {
   --c: #eda100;
@@ -174,6 +180,8 @@
   --c-soft: #fcf0d6;
   --chip-bg: #eda100;
   --chip-fg: #1a1a1a;
+  --c-ink: #8c5e1f;
+  --c-ink-dark: #ffc23d;
 }
 .r-basic {
   --c: #7b7589;
@@ -192,6 +200,8 @@
   --c-soft: #d8edec;
   --chip-bg: #107d7b;
   --chip-fg: #ffffff;
+  --c-ink: #117878;
+  --c-ink-dark: #4fd8cc;
 }
 .r-rule {
   --c: #e2a425;
@@ -480,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.469d2081.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.e1a813fb.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.4ee80a30.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.e8ce2396.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -985,7 +995,8 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
 .guide { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr)); align-items: stretch; }
 .guidehead { display: flex; align-items: center; gap: var(--s-s); font-size: 20px; margin-bottom: var(--s-s); }
 .guidehead img { width: 40px; height: 40px; flex: none; }
-.guideteam { font: 600 18px/1.3 var(--display); margin-bottom: var(--s-xs); }
+/* Tipp: zuerst die Teamregel des Dungeons, dann der Tipp zum Boss (Luis 15.10.2026) */
+.tiprule { font-weight: 700; }
 .nextcard { display: flex !important; align-items: center; gap: var(--s-l); padding: var(--s-s) var(--s-l); background: linear-gradient(90deg, var(--g0), var(--g-mid) 55%, var(--g1)); color: var(--white); }
 a.nextcard:hover { color: var(--white); }
 .nextcard img { width: 96px; height: auto; max-height: 110px; object-fit: contain; flex: none; filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--black) 45%, transparent)); }
@@ -1073,7 +1084,24 @@ a.nextcard:hover { color: var(--white); }
 .factgrid { display: grid; gap: var(--s-m); grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); }
 .factgrid dt { font: 800 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 6px; }
 .factgrid dd { font-weight: 700; font-size: 17px; }
-.cdlist { margin-top: var(--s-xs); color: var(--text-muted); font-size: 14px; font-weight: 600; }
+/* Fähigkeiten des Bosses: alle Kästen gleich groß mit Bild und Name, aufgeklappt „Bezeichnung: Wert“ wie die Infobox der
+   App, die Stufen der Abklingzeit untereinander in der Spalte der Werte (Luis 15.10.2026) */
+.bossmove .movehead { min-height: 64px; }
+.bossmove .movehead h3 { margin: 0; }
+.bossmove .expander { margin-top: var(--s-m); padding-top: 0; }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px var(--s-s); margin: var(--s-m) 0 var(--s-s); }
+.facts > div { display: contents; }
+.facts dt { color: var(--text-muted); }
+.facts dd { font-weight: 700; }
+.factline { display: block; }
+/* Beute je Sieg: je Zeile Symbol und Name, Attacken in der Farbe ihrer Seltenheit (Schrift hell und dunkel lesbar, --c-ink) */
+.lootname { display: flex; align-items: center; gap: var(--s-s); }
+.frame.s32 { width: 32px; height: 32px; border-width: 2.5px; border-radius: 9px; box-shadow: 0 2px 0 var(--card-edge); }
+.lootegg { width: 32px; height: 36px; object-fit: contain; flex: none; }
+.lootitem { width: 32px; height: 32px; object-fit: contain; flex: none; }
+.rtext a { color: var(--c-ink); font-weight: 800; }
+.rtext a:hover { color: var(--c-ink); text-decoration-thickness: 2px; }
+@media (prefers-color-scheme: dark) { .rtext a, .rtext a:hover { color: var(--c-ink-dark); } }
 .rules { display: grid; gap: var(--s-m); grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
 .rule { display: flex; align-items: center; gap: var(--s-m); }
 .rule img { width: 64px; height: 64px; flex: none; }

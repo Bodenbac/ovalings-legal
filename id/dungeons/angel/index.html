@@ -30,8 +30,8 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="preload" href="../../../assets/fonts/Fredoka.469d2081.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="preload" href="../../../assets/fonts/Fredoka.4ee80a30.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">Lompat ke isi</a>
@@ -68,21 +68,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>Dungeon</a></p>
       <h1 class="on-image">Menara Malaikat</h1>
-      <p class="lead on-image">Hanya Ovalings Bayangan.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/warden-475.d40b2fff.webp" srcset="../../../assets/boss/warden-360.b9f0eb34.webp 360w, ../../../assets/boss/warden-475.d40b2fff.webp 475w" sizes="(min-width: 900px) 360px, 60vw" alt="Penjaga Cahaya" width="475" height="628">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="Di halaman ini">
-<a class="navchip" href="#guide">Sekilas</a><a class="navchip" href="#abilities">Kemampuan bos</a><a class="navchip" href="#rules">Aturan bos</a><a class="navchip" href="#strength">Kekuatan per tahap</a><a class="navchip" href="#loot">Jarahan per kemenangan</a><a class="navchip" href="#ultra">Wujud Ultra</a>  </nav>
+<a class="navchip" href="#guide">Sekilas</a><a class="navchip" href="#abilities">Kemampuan bos</a><a class="navchip" href="#rules">Pasif bos</a><a class="navchip" href="#strength">Kekuatan per tahap</a><a class="navchip" href="#loot">Jarahan per kemenangan</a><a class="navchip" href="#ultra">Wujud Ultra</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>Sekilas</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">Timmu</h3>
-        <p class="guideteam">Hanya Bayangan</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">Info</h3>
         <dl class="rows">
+          <div><dt>Bos</dt><dd>Penjaga Cahaya</dd></div>
           <div><dt>Kesulitan</dt><dd><span class="chip diff diff-entry">Pemula</span></dd></div>
           <div><dt>Terbuka di</dt><dd>Level pemain 1</dd></div>
           <div><dt>Energi per percobaan</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>5</span><span class="sr">Energi</span></span></dd></div>
@@ -90,6 +89,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">Tips</span></h3>
+        <p class="tiprule">Di dungeon ini kamu hanya boleh membawa Ovalings Bayangan, sampai 5 per pertarungan.</p>
         <p>Bos memulihkan diri dan memasang perisai saat nyawanya turun. Serang keras sebelum perisai dan bawa Ovalings Bayangan dengan <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Serangan</span> tinggi.</p>
       </div>
     </div>
@@ -97,29 +97,30 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>Kemampuan bos</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/warden_wave-192.4134935c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Gelombang Kejut</h3></div>
+          <h3>Gelombang Kejut</h3>
         </div>
-        <p class="short">semua musuh · kekuatan 0,5 · tanpa cooldown</p>
         <details class="expander">
           <summary>Efek</summary>
-          <dl class="rows"><div><dt>Target</dt><dd>semua musuh</dd></div></dl>
+          <dl class="facts">
+<div><dt>Target:</dt><dd>semua musuh</dd></div>            <div><dt>Cooldown:</dt><dd><span class="factline">tidak ada</span></dd></div>
+          </dl>
           <ul class="lines"><li>Menyerang semua musuh dengan 50 % <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">serangan</span>.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/warden_heal-192.32c8aa18.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Cahaya Suci</h3></div>
+          <h3>Cahaya Suci</h3>
         </div>
-        <p class="short">diri sendiri · Pemulihan 15 % · cooldown 4</p>
-        <ul class="cdlist"><li>Jeda 3 giliran mulai tahap 10</li><li>Jeda 2 giliran mulai tahap 20</li></ul>
         <details class="expander">
           <summary>Efek</summary>
-          <dl class="rows"><div><dt>Target</dt><dd>diri sendiri</dd></div></dl>
+          <dl class="facts">
+<div><dt>Target:</dt><dd>diri sendiri</dd></div>            <div><dt>Cooldown:</dt><dd><span class="factline">4 giliran mulai tahap 1</span><span class="factline">3 giliran mulai tahap 10</span><span class="factline">2 giliran mulai tahap 20</span></dd></div>
+          </dl>
           <ul class="lines"><li><strong class="buff">Memulihkan</strong> dirinya sendiri sebesar 15 % dari <span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">nyawa</span> maks.</li></ul>
         </details>
       </article>
@@ -127,7 +128,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>Aturan bos</span></h2>
+    <h2 class="stitle" id="rules"><span>Pasif bos</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -165,12 +166,15 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">Tahap</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Jurus</th><td>4,61 %</td><td>7,84 %</td><td>14 %</td><td>26 %</td></tr>
-          <tr><th scope="row">Telur Normal</th><td>5 %</td><td>5,96 %</td><td>7,25 %</td><td>8,82 %</td></tr>
-          <tr><th scope="row">Telur Langka</th><td>0,5 %</td><td>0,84 %</td><td>1,5 %</td><td>2,67 %</td></tr>
-          <tr><th scope="row">Telur Terang</th><td>0,02 %</td><td>0,05 %</td><td>0,12 %</td><td>0,32 %</td></tr>
-          <tr><th scope="row">Ramuan XP</th><td>4,32 %</td><td>5,26 %</td><td>6,76 %</td><td>9,15 %</td></tr>
-          <tr><th scope="row">Berlian di kemenangan pertama</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Berlian</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">Jurus normal</a></span></th><td>4 %</td><td>6,76 %</td><td>12 %</td><td>22 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">Jurus langka</a></span></th><td>0,5 %</td><td>0,84 %</td><td>1,51 %</td><td>2,71 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">Jurus epik</a></span></th><td>0,1 %</td><td>0,21 %</td><td>0,47 %</td><td>1,08 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">Jurus legendaris</a></span></th><td>0,01 %</td><td>0,03 %</td><td>0,11 %</td><td>0,38 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Telur Normal</span></span></th><td>5 %</td><td>5,96 %</td><td>7,25 %</td><td>8,82 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Telur Langka</span></span></th><td>0,5 %</td><td>0,84 %</td><td>1,5 %</td><td>2,67 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/bright-352.ec969fdd.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Telur Terang</span></span></th><td>0,02 %</td><td>0,05 %</td><td>0,12 %</td><td>0,32 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Ramuan XP</span></span></th><td>4,32 %</td><td>5,26 %</td><td>6,76 %</td><td>9,15 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>Berlian di kemenangan pertama</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Berlian</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Berlian</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -187,10 +191,11 @@
       </div>
       <div class="ultrabody">
         <h3>Penjaga Cahaya Pertama</h3>
-        <p>Setelah tahap 30, sekali seminggu. Kemampuan yang sama dengan stat lebih kuat.</p>
+        <p>Tahap 31, bisa dikalahkan sekali seminggu, dan dengan sedikit keberuntungan memberi hadiah yang sangat bagus.</p>
+        <p>Ini adalah wujud yang ditingkatkan dari bos “Penjaga Cahaya”.</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_warden_wave-192.c6c2f3cc.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Gelombang Kejut Zenit</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_warden_heal-192.873fffd2.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Cahaya Suci Zenit</span></li>        </ul>
-        <h4 class="minor">Aturan tambahan</h4>
+        <h4 class="minor">Pasif tambahan</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/enrage_at_half-192.cd4f40fc.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Di bawah separuh nyawa: mengamuk, kecepatan +30 %.</p></li><li><img src="../../../assets/art/boss_rule/fury_at_quarter-192.b29896fa.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Di bawah seperempat nyawa: serangan +25 %.</p></li>        </ul>
         <h4 class="minor">Setiap kemenangan minggu itu</h4>
@@ -263,7 +268,7 @@
     <span>Tanpa cookie dan tanpa pelacak</span>
     <span>Font: Fredoka dan Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Versi 15.10.2026 · d329ba7</span>
+    <span>Versi 15.10.2026 · 266c3a4</span>
   </div>
 </footer>
 
@@ -274,6 +279,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/angel/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/angel/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/angel/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/angel/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/angel/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/angel/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/angel/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../../ko/dungeons/angel/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="./" hreflang="id" lang="id" data-lang="id" class="on" aria-current="true">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

@@ -30,8 +30,8 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="preload" href="../../../assets/fonts/Fredoka.469d2081.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="preload" href="../../../assets/fonts/Fredoka.4ee80a30.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -68,21 +68,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>Donjons</a></p>
       <h1 class="on-image">Marais empoisonné</h1>
-      <p class="lead on-image">Lumière et Ombre ensemble.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/toad-605.3822c75a.webp" srcset="../../../assets/boss/toad-360.82840b28.webp 360w, ../../../assets/boss/toad-605.3822c75a.webp 605w" sizes="(min-width: 900px) 360px, 60vw" alt="Reine Crapaud" width="605" height="560">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="Sur cette page">
-<a class="navchip" href="#guide">En bref</a><a class="navchip" href="#abilities">Capacités du boss</a><a class="navchip" href="#rules">Règles du boss</a><a class="navchip" href="#strength">Force selon les niveaux</a><a class="navchip" href="#loot">Butin par victoire</a><a class="navchip" href="#ultra">Forme Ultra</a>  </nav>
+<a class="navchip" href="#guide">En bref</a><a class="navchip" href="#abilities">Capacités du boss</a><a class="navchip" href="#rules">Passifs du boss</a><a class="navchip" href="#strength">Force par niveau</a><a class="navchip" href="#loot">Butin par victoire</a><a class="navchip" href="#ultra">Forme Ultra</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>En bref</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">Ton équipe</h3>
-        <p class="guideteam">Équipe jusqu’à 5 · Lumière et Ombre</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">Infos</h3>
         <dl class="rows">
+          <div><dt>Boss</dt><dd>Reine Crapaud</dd></div>
           <div><dt>Difficulté</dt><dd><span class="chip diff diff-easy">Facile</span></dd></div>
           <div><dt>Débloqué au</dt><dd>Niveau de joueur 5</dd></div>
           <div><dt>Énergie par essai</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>8</span><span class="sr">Énergie</span></span></dd></div>
@@ -90,6 +89,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">Astuce</span></h3>
+        <p class="tiprule">Dans ce donjon, tu peux emmener ensemble des Ovalings des familles Lumière et Ombre, jusqu’à 5 par combat.</p>
         <p>Le boss est immunisé contre le poison, et son propre poison se cumule jusqu’à trois fois. La purification l’enlève avant la détonation, et ses spores affaiblissent les soins.</p>
       </div>
     </div>
@@ -97,41 +97,43 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>Capacités du boss</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/toad_tongue-192.5aee248a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Langue venimeuse</h3></div>
+          <h3>Langue venimeuse</h3>
         </div>
-        <p class="short">un ennemi · puissance 1,2 · 60 % Poison 5 % pendant 2 tours · sans recharge</p>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>un ennemi</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>un ennemi</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">aucune</span></dd></div>
+          </dl>
           <ul class="lines"><li>Inflige 120 % de l’<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span> en dégâts.</li><li>60 % de chances d’<strong class="debuff">empoisonner</strong> l’ennemi pendant 2 tours (5 % de la <span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max par tour).</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/toad_spores-192.fa3786cc.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Pluie de spores</h3></div>
+          <h3>Pluie de spores</h3>
         </div>
-        <p class="short">tous les ennemis · puissance 0,6 · 80 % Poison 5 % pendant 2 tours · 100 % Réduction de soins 50 % pendant 2 tours · recharge 3</p>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>tous les ennemis</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>tous les ennemis</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">3 tours</span></dd></div>
+          </dl>
           <ul class="lines"><li>Frappe tous les ennemis avec 60 % de l’<span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attaque</span>.</li><li>80 % de chances d’<strong class="debuff">empoisonner</strong> tous les ennemis pendant 2 tours (5 % de la <span class="statmark"><img src="../../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vie</span> max par tour).</li><li>Donne à tous les ennemis <strong class="debuff">Réduction de soins</strong> pendant 2 tours : les soins sont 50 % plus faibles.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/toad_detonate-192.d697de9b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>Explosion toxique</h3></div>
+          <h3>Explosion toxique</h3>
         </div>
-        <p class="short">tous les ennemis · Décharge de venin · recharge 4</p>
-        <ul class="cdlist"><li>Recharge 3 tours dès le niveau 10</li><li>Recharge 2 tours dès le niveau 20</li></ul>
         <details class="expander">
           <summary>Effet</summary>
-          <dl class="rows"><div><dt>Cible</dt><dd>tous les ennemis</dd></div></dl>
+          <dl class="facts">
+<div><dt>Cible:</dt><dd>tous les ennemis</dd></div>            <div><dt>Recharge:</dt><dd><span class="factline">4 tours dès le niveau 1</span><span class="factline">3 tours dès le niveau 10</span><span class="factline">2 tours dès le niveau 20</span></dd></div>
+          </dl>
           <ul class="lines"><li><strong class="debuff">Décharge de venin</strong> : chaque poison sur tous les ennemis inflige d’un coup tous ses dégâts restants, puis disparaît.</li></ul>
         </details>
       </article>
@@ -139,7 +141,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>Règles du boss</span></h2>
+    <h2 class="stitle" id="rules"><span>Passifs du boss</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/stun_immune-192.dbebdf8c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -161,7 +163,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="strength">
-    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Force selon les niveaux</span></h2>
+    <h2 class="stitle" id="strength"><img src="../../../assets/art/nav/podium-192.9c4e7ef4.webp" alt="" aria-hidden="true" width="40" height="40"><span>Force par niveau</span></h2>
     <div class="tablewrap card">
       <table class="table stages c4">
         <thead><tr><th scope="col">Niveau</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
@@ -181,12 +183,16 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">Niveau</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Attaque</th><td>6,92 %</td><td>12 %</td><td>21 %</td><td>39 %</td></tr>
-          <tr><th scope="row">Œuf normal</th><td>7,5 %</td><td>8,95 %</td><td>11 %</td><td>13 %</td></tr>
-          <tr><th scope="row">Œuf rare</th><td>0,75 %</td><td>1,26 %</td><td>2,25 %</td><td>4 %</td></tr>
-          <tr><th scope="row">Œuf épique</th><td>0,03 %</td><td>0,07 %</td><td>0,19 %</td><td>0,48 %</td></tr>
-          <tr><th scope="row">Potion d’XP</th><td>6,48 %</td><td>7,89 %</td><td>10 %</td><td>14 %</td></tr>
-<tr><th scope="row">Passif</th><td>1,15 %</td><td>1,44 %</td><td>1,85 %</td><td>2,38 %</td></tr>          <tr><th scope="row">Diamants à la première victoire</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamants</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">Attaque normale</a></span></th><td>6 %</td><td>10 %</td><td>18 %</td><td>33 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">Attaque rare</a></span></th><td>0,75 %</td><td>1,27 %</td><td>2,27 %</td><td>4,06 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">Attaque épique</a></span></th><td>0,15 %</td><td>0,31 %</td><td>0,71 %</td><td>1,61 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">Attaque légendaire</a></span></th><td>0,01 %</td><td>0,05 %</td><td>0,16 %</td><td>0,57 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf normal</span></span></th><td>7,5 %</td><td>8,95 %</td><td>11 %</td><td>13 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf rare</span></span></th><td>0,75 %</td><td>1,26 %</td><td>2,25 %</td><td>4 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/epic-352.f82d1a4a.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Œuf épique</span></span></th><td>0,03 %</td><td>0,07 %</td><td>0,19 %</td><td>0,48 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>Potion d’XP</span></span></th><td>6,48 %</td><td>7,89 %</td><td>10 %</td><td>14 %</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-passive"><span class="frame s32 r-passive"><img src="../../../assets/art/slot/passive-96.fda7b45c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#passives">Passif</a></span></th><td>1,15 %</td><td>1,44 %</td><td>1,85 %</td><td>2,38 %</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>Diamants à la première victoire</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">Diamants</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">Diamants</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -203,10 +209,11 @@
       </div>
       <div class="ultrabody">
         <h3>Impératrice Crapaud</h3>
-        <p>Dès le niveau 30, une fois par semaine. Les mêmes capacités avec des stats plus fortes.</p>
+        <p>Niveau 31, peut être vaincue une fois par semaine et, avec un peu de chance, rapporte de très bonnes récompenses.</p>
+        <p>C’est une forme améliorée du boss « Reine Crapaud ».</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_toad_tongue-192.35af0a1a.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Langue venimeuse impériale</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_toad_spores-192.e5f812a0.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Pluie de spores impériale</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_toad_detonate-192.ecd98844.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>Explosion toxique impériale</span></li>        </ul>
-        <h4 class="minor">Règles en plus</h4>
+        <h4 class="minor">Passifs en plus</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/enrage_at_half-192.cd4f40fc.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>Sous la moitié de sa vie : enragé, vitesse +30 %.</p></li>        </ul>
         <h4 class="minor">Chaque victoire de la semaine</h4>
@@ -279,7 +286,7 @@
     <span>Sans cookies et sans traceurs</span>
     <span>Polices : Fredoka et Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Version du 15.10.2026 · d329ba7</span>
+    <span>Version du 15.10.2026 · 266c3a4</span>
   </div>
 </footer>
 
@@ -290,6 +297,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/swamp/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/swamp/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/swamp/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/swamp/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="./" hreflang="fr" lang="fr" data-lang="fr" class="on" aria-current="true">Français</a></li><li><a href="../../../tr/dungeons/swamp/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/swamp/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../../ko/dungeons/swamp/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../../id/dungeons/swamp/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>

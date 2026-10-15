@@ -30,7 +30,7 @@
 <link rel="icon" href="../../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
 <link rel="manifest" href="../../../site.webmanifest">
-<link rel="stylesheet" href="../../../assets/site.78b0c211.css">
+<link rel="stylesheet" href="../../../assets/site.ec3104a2.css">
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -67,21 +67,20 @@
     <div class="headtext">
       <p class="kicker backlink on-image"><a href="../"><span class="backarrow" aria-hidden="true"></span>던전</a></p>
       <h1 class="on-image">강철 요새</h1>
-      <p class="lead on-image">치명타만 통해요.</p>
     </div>
     <img class="headboss" src="../../../assets/boss/bulwark-461.3f297b0c.webp" srcset="../../../assets/boss/bulwark-360.a99999fc.webp 360w, ../../../assets/boss/bulwark-461.3f297b0c.webp 461w" sizes="(min-width: 900px) 360px, 60vw" alt="방패 거신" width="461" height="498">
   </div>
 </section>
 <div class="wrap">
   <nav class="onpage" aria-label="이 페이지에서">
-<a class="navchip" href="#guide">한눈에 보기</a><a class="navchip" href="#abilities">보스의 능력</a><a class="navchip" href="#rules">보스의 규칙</a><a class="navchip" href="#strength">스테이지별 강함</a><a class="navchip" href="#loot">승리당 전리품</a><a class="navchip" href="#ultra">울트라 폼</a>  </nav>
+<a class="navchip" href="#guide">한눈에 보기</a><a class="navchip" href="#abilities">보스의 능력</a><a class="navchip" href="#rules">보스의 패시브</a><a class="navchip" href="#strength">스테이지별 강함</a><a class="navchip" href="#loot">승리당 전리품</a><a class="navchip" href="#ultra">울트라 폼</a>  </nav>
   <section class="section reveal" aria-labelledby="guide">
     <h2 class="stitle" id="guide"><img src="../../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="40" height="40"><span>한눈에 보기</span></h2>
     <div class="guide">
       <div class="card guidecard">
-        <h3 class="guidehead"><img src="../../../assets/art/nav/friends-192.04815514.webp" alt="" aria-hidden="true" width="40" height="40">나의 팀</h3>
-        <p class="guideteam">팀 최대 5 · 빛과 그림자</p>
+        <h3 class="guidehead"><img src="../../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="40" height="40">정보</h3>
         <dl class="rows">
+          <div><dt>보스</dt><dd>방패 거신</dd></div>
           <div><dt>난이도</dt><dd><span class="chip diff diff-hard">어려움</span></dd></div>
           <div><dt>해금</dt><dd>플레이어 레벨 30</dd></div>
           <div><dt>도전당 에너지</dt><dd><span class="amount"><img src="../../../assets/art/currency/energy_small-48.7dae2b6a.webp" alt="" aria-hidden="true" width="22" height="22"><span>12</span><span class="sr">에너지</span></span></dd></div>
@@ -89,6 +88,7 @@
       </div>
       <div class="card guidecard tip">
         <h3 class="guidehead"><img src="../../../assets/art/nav/quest-192.8404fecc.webp" alt="" aria-hidden="true" width="40" height="40"><span id="tip">팁</span></h3>
+        <p class="tiprule">이 던전에는 빛 및 그림자 Ovaling을 함께 데려갈 수 있어요. 전투마다 최대 5마리까지예요.</p>
         <p>보스에게는 치명타만 피해를 줘요. 갑옷이 <span class="statmark"><img src="../../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">치명타 확률</span>을 낮추니, <span class="statmark"><img src="../../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">치명타 확률</span>이 높은 Ovaling과 그것을 올려 주는 패시브를 데려가세요.</p>
       </div>
     </div>
@@ -96,41 +96,43 @@
 
   <section class="section reveal" aria-labelledby="abilities">
     <h2 class="stitle" id="abilities"><span>보스의 능력</span></h2>
-    <div class="cards">
-      <article class="card movecard">
+    <div class="cards bosscards">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_ram-192.07a34aad.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>방패 돌진</h3></div>
+          <h3>방패 돌진</h3>
         </div>
-        <p class="short">적 1명 · 위력 0.8 · 턴 게이지 감소 25% · 쿨타임 없음</p>
         <details class="expander">
           <summary>효과</summary>
-          <dl class="rows"><div><dt>대상</dt><dd>적 1명</dd></div></dl>
+          <dl class="facts">
+<div><dt>대상:</dt><dd>적 1명</dd></div>            <div><dt>쿨타임:</dt><dd><span class="factline">없음</span></dd></div>
+          </dl>
           <ul class="lines"><li><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>의 80%만큼 피해를 입혀요.</li><li>적의 <strong class="debuff">턴 게이지</strong>를 25% 줄여요.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_quake-192.01b8e4dd.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>성벽 지진</h3></div>
+          <h3>성벽 지진</h3>
         </div>
-        <p class="short">모든 적 · 위력 0.5 · 60% 공격력 감소 25% 2턴 · 쿨타임 3</p>
         <details class="expander">
           <summary>효과</summary>
-          <dl class="rows"><div><dt>대상</dt><dd>모든 적</dd></div></dl>
+          <dl class="facts">
+<div><dt>대상:</dt><dd>모든 적</dd></div>            <div><dt>쿨타임:</dt><dd><span class="factline">3턴</span></dd></div>
+          </dl>
           <ul class="lines"><li>모든 적을 <span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span>의 50%로 공격해요.</li><li>60% 확률로 2턴 동안 모든 적의 <strong class="debuff"><span class="statmark"><img src="../../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">공격력</span></strong>을 <strong class="debuff">25%</strong> <strong class="debuff">낮춰요</strong>.</li></ul>
         </details>
       </article>
-      <article class="card movecard">
+      <article class="card movecard bossmove">
         <div class="movehead">
           <span class="frame r-legendary s64"><img src="../../../assets/art/move/bulwark_brace-192.ae63ba20.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
-          <div><h3>방어 태세</h3></div>
+          <h3>방어 태세</h3>
         </div>
-        <p class="short">자신 · 100% 방어력 증가 40% 2턴 · 쿨타임 5</p>
-        <ul class="cdlist"><li>스테이지 10부터 재사용 대기 4턴</li><li>스테이지 20부터 재사용 대기 3턴</li></ul>
         <details class="expander">
           <summary>효과</summary>
-          <dl class="rows"><div><dt>대상</dt><dd>자신</dd></div></dl>
+          <dl class="facts">
+<div><dt>대상:</dt><dd>자신</dd></div>            <div><dt>쿨타임:</dt><dd><span class="factline">스테이지 1부터 5턴</span><span class="factline">스테이지 10부터 4턴</span><span class="factline">스테이지 20부터 3턴</span></dd></div>
+          </dl>
           <ul class="lines"><li>2턴 동안 자신의 <strong class="buff"><span class="statmark"><img src="../../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">방어력</span></strong>을 <strong class="buff">40%</strong> 올려요.</li></ul>
         </details>
       </article>
@@ -138,7 +140,7 @@
   </section>
 
   <section class="section reveal" aria-labelledby="rules">
-    <h2 class="stitle" id="rules"><span>보스의 규칙</span></h2>
+    <h2 class="stitle" id="rules"><span>보스의 패시브</span></h2>
     <ul class="rules">
       <li class="card rule">
         <img src="../../../assets/art/boss_rule/crit_only-192.4ab75438.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -176,13 +178,16 @@
       <table class="table stages c4">
         <thead><tr><th scope="col">스테이지</th><th scope="col">1</th><th scope="col">10</th><th scope="col">20</th><th scope="col">30</th></tr></thead>
         <tbody>
-          <tr><th scope="row">기술</th><td>9.22%</td><td>16%</td><td>28%</td><td>52%</td></tr>
-          <tr><th scope="row">일반 알</th><td>10%</td><td>12%</td><td>15%</td><td>18%</td></tr>
-          <tr><th scope="row">희귀 알</th><td>1%</td><td>1.68%</td><td>3%</td><td>5.34%</td></tr>
-          <tr><th scope="row">영웅 알</th><td>0.04%</td><td>0.09%</td><td>0.25%</td><td>0.65%</td></tr>
-          <tr><th scope="row">전설 알</th><td>0.04%</td><td>0.08%</td><td>0.18%</td><td>0.4%</td></tr>
-          <tr><th scope="row">XP 물약</th><td>8.64%</td><td>11%</td><td>14%</td><td>18%</td></tr>
-          <tr><th scope="row">첫 승리 다이아</th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">다이아</span></span></td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-normal"><span class="frame s32 r-normal"><img src="../../../assets/art/slot/attack_normal-96.ea833d0c.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-normal">일반 기술</a></span></th><td>8%</td><td>14%</td><td>24%</td><td>43%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-rare"><span class="frame s32 r-rare"><img src="../../../assets/art/slot/attack_rare-96.ecdafa5d.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-rare">희귀 기술</a></span></th><td>1%</td><td>1.69%</td><td>3.03%</td><td>5.42%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-epic"><span class="frame s32 r-epic"><img src="../../../assets/art/slot/attack_epic-96.af18f447.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-epic">영웅 기술</a></span></th><td>0.2%</td><td>0.42%</td><td>0.95%</td><td>2.15%</td></tr>
+          <tr><th scope="row"><span class="lootname rtext r-legendary"><span class="frame s32 r-legendary"><img src="../../../assets/art/slot/attack_legendary-96.0e418936.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"></span><a href="../../moves/#rarity-legendary">전설 기술</a></span></th><td>0.02%</td><td>0.06%</td><td>0.22%</td><td>0.77%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>일반 알</span></span></th><td>10%</td><td>12%</td><td>15%</td><td>18%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/rare-352.6650fcac.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>희귀 알</span></span></th><td>1%</td><td>1.68%</td><td>3%</td><td>5.34%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/epic-352.f82d1a4a.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>영웅 알</span></span></th><td>0.04%</td><td>0.09%</td><td>0.25%</td><td>0.65%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/art/egg/legendary-352.ce88d2bb.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>전설 알</span></span></th><td>0.04%</td><td>0.08%</td><td>0.18%</td><td>0.4%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootegg" src="../../../assets/loot/xp_potion_small-72.51f1e997.webp" alt="" aria-hidden="true" width="32" height="36" loading="lazy"><span>XP 물약</span></span></th><td>8.64%</td><td>11%</td><td>14%</td><td>18%</td></tr>
+          <tr><th scope="row"><span class="lootname"><img class="lootitem" src="../../../assets/art/currency/diamonds-192.9cb1cbad.webp" alt="" aria-hidden="true" width="32" height="32" loading="lazy"><span>첫 승리 다이아</span></span></th><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>25</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>140</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>240</span><span class="sr">다이아</span></span></td><td><span class="amount"><img src="../../../assets/art/currency/diamonds_small-48.05db0884.webp" alt="" aria-hidden="true" width="18" height="18"><span>340</span><span class="sr">다이아</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -199,10 +204,11 @@
       </div>
       <div class="ultrabody">
         <h3>천 겹 성벽의 방패 거신</h3>
-        <p>스테이지 30 이후, 주 1회. 능력은 같고 능력치가 더 강해요.</p>
+        <p>스테이지 31. 주 1회 처치할 수 있고, 운이 좋으면 아주 좋은 보상을 줘요.</p>
+        <p>'방패 거신'의 강화된 모습이에요.</p>
         <ul class="ultramoves">
 <li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_ram-192.213ce83b.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>천 겹 성벽의 돌진</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_quake-192.ed8cbbd7.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>천 겹 성벽의 지진</span></li><li><span class="frame r-legendary s40"><img src="../../../assets/art/move/ultra_bulwark_brace-192.c0005614.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"></span><span>천 겹 성벽의 방어 태세</span></li>        </ul>
-        <h4 class="minor">추가 규칙</h4>
+        <h4 class="minor">추가 패시브</h4>
         <ul class="rules compact">
 <li><img src="../../../assets/art/boss_rule/defense_at_half-192.0c95b553.webp" alt="" aria-hidden="true" width="40" height="40" loading="lazy"><p>체력 절반 이하: 방어력 +30%.</p></li>        </ul>
         <h4 class="minor">그 주의 승리마다</h4>
@@ -275,7 +281,7 @@
     <span>쿠키와 추적기 없음</span>
     <span>글꼴: Fredoka와 Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>2026.10.15 버전 · d329ba7</span>
+    <span>2026.10.15 버전 · 266c3a4</span>
   </div>
 </footer>
 
@@ -286,6 +292,6 @@
   <ul class="langchoice">
 <li><a href="../../../en/dungeons/bulwark/" hreflang="en" lang="en" data-lang="en">English</a></li><li><a href="../../../de/dungeons/bulwark/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../../es/dungeons/bulwark/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../../pt/dungeons/bulwark/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../../fr/dungeons/bulwark/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../../tr/dungeons/bulwark/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../../ja/dungeons/bulwark/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="./" hreflang="ko" lang="ko" data-lang="ko" class="on" aria-current="true">한국어</a></li><li><a href="../../../id/dungeons/bulwark/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../../assets/site.a111075e.js" defer></script>
+<script src="../../../assets/site.59f925bf.js" defer></script>
 </body>
 </html>
