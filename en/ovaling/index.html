@@ -30,9 +30,9 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.8123410a.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.06c05bb2.css">
-</head>
+<link rel="preload" href="../../assets/fonts/Fredoka.dcf036f6.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.2ef8fbc0.css">
+<link rel="stylesheet" href="../../assets/viewer.37fb5758.css"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top" id="top">
@@ -63,31 +63,145 @@
 </header>
 
 <main id="main">
-<section class="head head-sky ">
+<section class="head head-sky vhead">
   <div class="wrap headin">
     <div class="headtext">
       <h1 class="on-image">View an Ovaling</h1>
-<p class="lead on-image">Enter the ID you copied in the app.</p>    </div>
-<img class="headicon float" src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="160" height="160">  </div>
-</section>
-<div class="wrap section">
-  <div class="card viewcard">
-    <div class="viewtext">
-      <form class="idform" action="./" method="get" data-codes="1,2,3,4,5,6">
-        <label class="field">
-          <span class="fieldlabel">ID of the Ovaling</span>
-          <input data-id-input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="for example 2c41a5f0-…" maxlength="64" required aria-describedby="viewer-id-error">
-        </label>
-        <p class="hint error" id="viewer-id-error" role="alert" data-error hidden>This is not a valid ID. It has 36 characters with hyphens.</p>
-        <div class="buttons">
-          <button class="ob" type="submit">View</button>
-        </div>
-      </form>
-      <p class="note">The 3D view of single Ovalings follows soon.</p>
-      <p class="small"><a href="../faq/#faq-id">Where do I find the ID?</a></p>
+      <p class="lead on-image">Enter the ID you copied in the app.</p>
     </div>
-    <img class="viewmascot float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="220" height="220">
+    <img class="headicon float" src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="160" height="160">
   </div>
+</section>
+
+<div class="wrap vwrap">
+  <form class="card idform vform" action="./" method="get" data-codes="1,2,3,4,5,6" data-viewer-form>
+    <label class="field" for="vid">
+      <span class="fieldlabel">ID of the Ovaling</span>
+    </label>
+    <div class="vinputrow">
+      <input id="vid" data-id-input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="2c41a5f0-…" maxlength="64" required aria-describedby="viewer-id-error">
+      <button class="ob medium" type="submit">View</button>
+    </div>
+    <p class="hint error" id="viewer-id-error" role="alert" data-error hidden>This is not a valid ID. It has 36 characters with hyphens.</p>
+    <div class="vformlinks">
+      <button class="linkish" type="button" data-paste hidden>Paste</button>
+      <a href="../faq/#faq-id">Where do I find the ID?</a>
+    </div>
+  </form>
+
+  <div class="card vstart" data-start hidden>
+    <img class="vstartmascot float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="200" height="200">
+    <div class="vstarttext">
+      <h2>No ID at hand yet?</h2>
+      <p>Then look at one of the examples. Drag to turn the Ovaling, zoom with two fingers or the mouse wheel.</p>
+      <div class="buttons"><a class="ob secondary" href="#example">View an example</a></div>
+    </div>
+  </div>
+
+  <div class="card vmsg" data-msg role="status" aria-live="polite" data-offline="No connection. Check your network and try again." hidden>
+    <img class="vmsgart" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="120" height="120">
+    <div>
+      <p class="vmsgtext" data-msg-text></p>
+      <div class="buttons"><button class="ob medium" type="button" data-retry hidden>Try again</button></div>
+    </div>
+  </div>
+
+  <div class="vgrid" data-view hidden>
+    <div class="vstagecol">
+      <div class="vstage" data-stage>
+        <div class="vloading" data-loading>
+          <img class="vloadegg" src="../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="72" height="94">
+          <span>Loading …</span>
+        </div>
+        <div class="vno3d" data-no3d hidden>
+          <img class="vegg" data-no3d-egg src="../../assets/art/egg/normal-352.e251ef0b.webp" alt="" aria-hidden="true" width="88" height="114">
+          <p class="glass" data-no3d-text>This device cannot show 3D.</p>
+        </div>
+        <p class="sr" data-live role="status" aria-live="polite"></p>
+        <div class="vtop">
+          <h2 class="vname on-image" data-name hidden></h2>
+          <span class="vlevelpill" data-level-pill hidden></span>
+        </div>
+        <button class="vfull glass" type="button" data-full data-on="Full screen" data-off="Leave full screen" hidden>Full screen</button>
+      </div>
+    </div>
+
+    <div class="vinfo" data-info>
+      <div class="card vexample" data-example hidden>
+        <p>Examples show only the look.</p>
+        <p class="sr" data-ex-count aria-live="polite"></p>
+        <div class="vexnav">
+          <button class="vexbtn prev" type="button" data-ex-prev aria-label="Previous example"><span class="vchev" aria-hidden="true"></span></button>
+          <ol class="vdots" data-ex-dots aria-hidden="true"></ol>
+          <button class="vexbtn next" type="button" data-ex-next aria-label="Next example"><span class="vchev" aria-hidden="true"></span></button>
+        </div>
+      </div>
+
+      <div class="vdetails" data-details hidden>
+        <div class="card rarity vcard" data-card>
+          <div class="vchips">
+            <span class="chip rar" data-rarity></span>
+            <span class="chip fam vfam" data-family><span data-family-name></span><span class="vsep" aria-hidden="true"></span><img class="vfamicon" data-bonus-icon alt="" aria-hidden="true" width="16" height="16"><span data-bonus></span></span>
+          </div>
+          <div class="vscore">
+            <span class="label">Gene Score</span>
+            <strong data-score></strong>
+          </div>
+          <div class="vlevel">
+            <div class="vlevelhead"><strong data-level></strong><span class="muted" data-xp></span></div>
+            <div class="vtrack" aria-hidden="true"><span class="vfill" data-xp-bar></span></div>
+          </div>
+        </div>
+
+        <section class="panel vpanel" data-slots-panel aria-labelledby="vslotstitle">
+          <h2 class="minor" id="vslotstitle">Moves and passive</h2>
+          <ul class="vslots" data-slots></ul>
+        </section>
+
+        <section class="panel vpanel" data-stats-panel aria-labelledby="vstatstitle">
+          <h2 class="minor" id="vstatstitle">Stats</h2>
+          <ul class="vstats" data-stats></ul>
+        </section>
+
+        <details class="expander vexp" data-hex-box>
+          <summary>Stats as a chart</summary>
+          <div class="vhex" data-hex></div>
+        </details>
+
+        <section class="card vprofile" data-profile hidden aria-labelledby="vprofiletitle">
+          <h2 id="vprofiletitle">Profile</h2>
+          <p data-profile-text></p>
+          <p class="note" data-profile-en hidden>Only available in English.</p>
+        </section>
+
+        <details class="expander vexp" data-more>
+          <summary>More info</summary>
+          <dl class="rows vrows">
+            <div><dt>Skin</dt><dd data-skin></dd></div>
+            <div><dt>Egg</dt><dd data-egg></dd></div>
+            <div><dt>Hatched on</dt><dd data-hatched></dd></div>
+            <div><dt>Rules version</dt><dd data-rules></dd></div>
+          </dl>
+          <div class="vidbox">
+            <span class="label">ID</span>
+            <code data-id></code>
+            <div class="buttons">
+              <button class="ob small secondary" type="button" data-copy-id data-done="Copied" hidden>Copy</button>
+              <button class="ob small secondary" type="button" data-share data-done="Copied" hidden>Share link</button>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+  <noscript><p class="card vnojs">Turn on JavaScript to view Ovalings.</p></noscript>
+</div>
+
+<div class="barrier" id="vbarrier" hidden></div>
+<div class="glass dialog vdialog" id="vdialog" role="dialog" aria-modal="true" aria-labelledby="vdialogtitle" hidden>
+  <button class="close" type="button" id="vdialogclose" aria-label="Close"></button>
+  <div class="vdialoghead" data-dialog-head></div>
+  <div class="vdialogbody" data-dialog-body></div>
 </div>
 </main>
 
@@ -140,7 +254,7 @@
     <span>No cookies and no trackers</span>
     <span>Fonts: Fredoka and Nunito Sans, SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>Version of 2026-10-15 · 4ca0b70</span>
+    <span>Version of 2026-10-15 · 6bb4be9</span>
   </div>
 </footer>
 
@@ -151,6 +265,6 @@
   <ul class="langchoice">
 <li><a href="./" hreflang="en" lang="en" data-lang="en" class="on" aria-current="true">English</a></li><li><a href="../../de/ovaling/" hreflang="de" lang="de" data-lang="de">Deutsch</a></li><li><a href="../../es/ovaling/" hreflang="es" lang="es" data-lang="es">Español</a></li><li><a href="../../pt/ovaling/" hreflang="pt-BR" lang="pt-BR" data-lang="pt">Português</a></li><li><a href="../../fr/ovaling/" hreflang="fr" lang="fr" data-lang="fr">Français</a></li><li><a href="../../tr/ovaling/" hreflang="tr" lang="tr" data-lang="tr">Türkçe</a></li><li><a href="../../ja/ovaling/" hreflang="ja" lang="ja" data-lang="ja">日本語</a></li><li><a href="../../ko/ovaling/" hreflang="ko" lang="ko" data-lang="ko">한국어</a></li><li><a href="../../id/ovaling/" hreflang="id" lang="id" data-lang="id">Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../assets/site.a111075e.js" defer></script>
-</body>
+<script type="application/json" id="viewercfg">{"api": "https://kglxfxsccunylhbxquqz.supabase.co/functions/v1/ovaling-view", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "en", "data": "../../assets/data/viewer.en.e8a0a853.json", "frame": "../../3d/viewer/#v", "root": "../../"}</script><script src="../../assets/site.a111075e.js" defer></script>
+<script src="../../assets/viewer.d23eb8e7.js" defer></script></body>
 </html>
