@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="stylesheet" href="../../assets/site.c68f21cc.css">
-<link rel="stylesheet" href="../../assets/viewer.37fb5758.css"></head>
+<link rel="stylesheet" href="../../assets/site.c6ba4193.css">
+<link rel="stylesheet" href="../../assets/viewer.41378aa5.css"></head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
 <header class="top" id="top">
@@ -66,14 +66,21 @@
   <div class="wrap headin">
     <div class="headtext">
       <h1 class="on-image">Ovalingを見る</h1>
-      <p class="lead on-image">アプリでコピーしたIDを入力してください。</p>
     </div>
-    <img class="headicon float" src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="160" height="160">
   </div>
 </section>
 
 <div class="wrap vwrap">
+  <div class="vmodes" role="group" aria-label="表示を選ぶ" data-modes data-on="own">
+    <button class="vmode" type="button" data-mode="own" aria-pressed="true">自分のOvaling</button>
+    <button class="vmode" type="button" data-mode="examples" aria-pressed="false">サンプルのOvaling</button>
+  </div>
+
   <form class="card idform vform" action="./" method="get" data-codes="1,2,3,4,5,6" data-viewer-form>
+    <div class="vownhead">
+      <img class="vownmascot float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="200" height="200">
+      <p class="vowntext">ゲームの配信が始まったら、ここにOvalingのIDを入力すると、3Dと全画面で見られます。</p>
+    </div>
     <label class="field" for="vid">
       <span class="fieldlabel">OvalingのID</span>
     </label>
@@ -88,15 +95,6 @@
     </div>
   </form>
 
-  <div class="card vstart" data-start hidden>
-    <img class="vstartmascot float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="200" height="200">
-    <div class="vstarttext">
-      <h2>IDがまだありませんか？</h2>
-      <p>それならサンプルを見てみましょう。ドラッグで回転、2本の指またはマウスホイールでズームします。</p>
-      <div class="buttons"><a class="ob secondary" href="#example">例を見る</a></div>
-    </div>
-  </div>
-
   <div class="card vmsg" data-msg role="status" aria-live="polite" data-offline="接続がありません。ネットワークを確認して、もう一度お試しください。" hidden>
     <img class="vmsgart" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="120" height="120">
     <div>
@@ -106,6 +104,14 @@
   </div>
 
   <div class="vgrid" data-view hidden>
+    <div class="vfams" role="group" aria-label="ファミリー" data-fams hidden>
+      <button class="vfambtn fam-light" type="button" data-fam="light" aria-pressed="false">
+<img src="../../assets/ovaling/2d91ce5c-180.fcee1fec.webp" alt="" aria-hidden="true" width="360" height="350">        <span class="on-image">光</span>
+      </button>
+      <button class="vfambtn fam-shadow" type="button" data-fam="shadow" aria-pressed="false">
+<img src="../../assets/ovaling/308b297a-180.f86fcef1.webp" alt="" aria-hidden="true" width="360" height="326">        <span class="on-image">影</span>
+      </button>
+    </div>
     <div class="vstagecol">
       <div class="vstage" data-stage>
         <div class="vloading" data-loading>
@@ -121,6 +127,9 @@
           <h2 class="vname on-image" data-name hidden></h2>
           <span class="vlevelpill" data-level-pill hidden></span>
         </div>
+        <button class="vexbtn glass prev" type="button" data-ex-prev aria-label="前のサンプル" hidden><span class="vchev" aria-hidden="true"></span></button>
+        <button class="vexbtn glass next" type="button" data-ex-next aria-label="次のサンプル" hidden><span class="vchev" aria-hidden="true"></span></button>
+        <ol class="vdots glass" data-ex-dots aria-hidden="true" hidden></ol>
         <button class="vfull glass" type="button" data-full data-on="全画面" data-off="全画面を終了" hidden>全画面</button>
       </div>
     </div>
@@ -129,11 +138,6 @@
       <div class="card vexample" data-example hidden>
         <p>サンプルは見た目だけを表示します。</p>
         <p class="sr" data-ex-count aria-live="polite"></p>
-        <div class="vexnav">
-          <button class="vexbtn prev" type="button" data-ex-prev aria-label="前のサンプル"><span class="vchev" aria-hidden="true"></span></button>
-          <ol class="vdots" data-ex-dots aria-hidden="true"></ol>
-          <button class="vexbtn next" type="button" data-ex-next aria-label="次のサンプル"><span class="vchev" aria-hidden="true"></span></button>
-        </div>
       </div>
 
       <div class="vdetails" data-details hidden>
@@ -253,7 +257,7 @@
     <span>Cookieもトラッカーもありません</span>
     <span>フォント：FredokaとNunito Sans、SIL Open Font License</span>
     <a href="mailto:ovalings.support@proton.me">ovalings.support@proton.me</a>
-    <span>2026.10.16版 · de1bb3e</span>
+    <span>2026.10.16版 · 0a3b1d4</span>
   </div>
 </footer>
 
@@ -264,6 +268,6 @@
   <ul class="langchoice">
 <li><a href="../../en/ovaling/" hreflang="en" lang="en" data-lang="en"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" alt="" aria-hidden="true" width="38" height="20"></span>English</a></li><li><a href="../../de/ovaling/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" alt="" aria-hidden="true" width="33" height="20"></span>Deutsch</a></li><li><a href="../../es/ovaling/" hreflang="es" lang="es" data-lang="es"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/ovaling/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" alt="" aria-hidden="true" width="29" height="20"></span>Português</a></li><li><a href="../../fr/ovaling/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/ovaling/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="../../ko/ovaling/" hreflang="ko" lang="ko" data-lang="ko"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/ovaling/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script type="application/json" id="viewercfg">{"api": "https://kglxfxsccunylhbxquqz.supabase.co/functions/v1/ovaling-view", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "data": "../../assets/data/viewer.ja.1b179f7c.json", "frame": "../../3d/viewer/#v", "root": "../../"}</script><script src="../../assets/site.59f925bf.js" defer></script>
-<script src="../../assets/viewer.d23eb8e7.js" defer></script></body>
+<script type="application/json" id="viewercfg">{"api": "https://kglxfxsccunylhbxquqz.supabase.co/functions/v1/ovaling-view", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "data": "../../assets/data/viewer.ja.122da5e3.json", "frame": "../../3d/viewer/#v", "root": "../../"}</script><script src="../../assets/site.59f925bf.js" defer></script>
+<script src="../../assets/viewer.a757c563.js" defer></script></body>
 </html>

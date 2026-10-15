@@ -8,18 +8,68 @@
 @media (prefers-color-scheme: dark) { .vcard, .vpanel, .vtier, .vhex { --rt: var(--c-hi); } }
 .vsum { --rt: var(--c-hi); }
 
-/* ---------- Kopf und Eingabe ---------- */
-.vhead { padding-bottom: calc(var(--s-xxxl) + 44px); }
-.vhead .headin { min-height: 120px; }
-/* Mit Ovaling oder Beispiel (viewer.js setzt html.vopen): Kopf nur mit Titel, damit Name, Figur und Vollbild früher kommen */
-html.vopen .vhead { padding-top: calc(var(--head-h) + var(--s-l)); padding-bottom: calc(var(--s-l) + 48px); }
-html.vopen .vhead .headin { min-height: 0; }
-html.vopen .vhead .lead, html.vopen .vhead .headicon { display: none; }
-html.vopen .vhead .headtext { padding-right: 0; }
-.vwrap { position: relative; z-index: 1; margin-top: -48px; }
-.vform { max-width: 760px; padding: var(--s-l) var(--s-l) var(--s-s); }
+/* ---------- Kopf, Umschalter und Eingabe ---------- */
+/* Kopf nur mit Titel (beim Umschalten springt nichts), Umschalter liegt halb auf seiner Unterkante */
+.vhead { padding-top: calc(var(--head-h) + var(--s-l)); padding-bottom: calc(var(--s-l) + 30px); }
+.vhead .headin { min-height: 0; }
+.vwrap { position: relative; z-index: 1; margin-top: -30px; }
+
+/* Umschalter wie OvalSegmented: eingelassene Leiste, die gewählte Fläche (Verlauf, Glanz, Kante) gleitet unter den Eintrag.
+   Er steht ab dem ersten Bild da, damit die Eingabe darunter nicht springt, wenn viewer.js und die Daten kommen. Ohne JavaScript
+   wäre er ohne Wirkung und fehlt. Gleiten erst mit .live: die erste Wahl aus dem Fragment (viewer.js) springt ohne Bewegung */
+.vmodes {
+  position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px;
+  padding: 4px; border-radius: var(--r-full); border: 2px solid var(--ink); background: linear-gradient(var(--well-top), var(--well-bottom));
+  box-shadow: 0 4px 0 var(--card-edge);
+}
+@media (scripting: none) { .vmodes { display: none; } }
+.vmodes::before {
+  content: ""; position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: var(--r-full);
+  border: 2px solid var(--ink);
+  background: linear-gradient(color-mix(in srgb, var(--white) 40%, transparent), color-mix(in srgb, var(--white) 4%, transparent)) center 3px / 82% 40% no-repeat,
+    linear-gradient(var(--primary-top), var(--primary)) top / 100% calc(100% - 3px) no-repeat, var(--primary-edge);
+}
+.vmodes.live::before { transition: transform var(--t-medium) var(--spring); }
+.vmodes[data-on="examples"]::before { transform: translateX(100%); }
+.vmode {
+  min-height: 48px; padding: 4px 10px 7px; border: 0; border-radius: var(--r-full); background: none; cursor: pointer; color: var(--text-muted);
+  font: 700 clamp(14px, 3.9vw, 17px)/1.15 var(--display); text-align: center; transition: color var(--t-quick) var(--ease);
+}
+.vmode:hover { color: var(--text); }
+.vmode[aria-pressed="true"] { color: var(--white); text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent); cursor: default; }
+.vmode:focus-visible { border-radius: var(--r-full); outline-offset: 1px; }
+
+.vform { max-width: 760px; margin-top: var(--s-l); padding: var(--s-l) var(--s-l) var(--s-s); }
+.vwrap > .vform:first-child { margin-top: 0; }
 /* Ab 900 px so breit wie die Spalte der Bühne darunter (Raster 1,05 zu 1 mit Abstand xxl) */
 @media (min-width: 900px) { html.vopen .vform { max-width: calc((100% - var(--s-xxl)) * 1.05 / 2.05); } }
+/* Eigenes Ovaling: Maskottchen und Satz über der Eingabe, mit gezeigtem Ovaling oder Meldung nur noch die Eingabe */
+.vownhead { display: flex; align-items: center; gap: var(--s-m); margin-bottom: var(--s-m); }
+.vownmascot { width: 84px; height: auto; flex: none; filter: drop-shadow(0 8px 10px color-mix(in srgb, var(--black) 18%, transparent)); }
+.vowntext { margin: 0; font-weight: 700; font-size: 17px; line-height: 1.45; }
+.vform.compact .vownhead { display: none; }
+@media (max-width: 599px) { .vownmascot { width: 64px; } .vowntext { font-size: 16px; } }
+
+/* Beispiele: Licht und Schatten auf dem Bild ihrer Familie, nicht gewählt unter einem Schleier, gewählt mit Ring in der Farbe
+   der Familie (FamilyColors.accent) */
+.vfams { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(8px, 2.5vw, 16px); }
+.vfambtn {
+  position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; gap: var(--s-s); min-width: 0; min-height: 72px;
+  padding: 4px clamp(8px, 3vw, var(--s-m)) 4px 6px; border-radius: var(--r-l); border: 2.5px solid var(--ink); box-shadow: 0 4px 0 var(--card-edge);
+  background: var(--g1) center 35% / cover no-repeat; cursor: pointer; color: var(--white);
+  font: 600 clamp(16px, 4.6vw, 22px)/1.1 var(--display); text-align: left; transition: transform var(--t-quick) var(--spring), box-shadow var(--t-quick) var(--ease);
+}
+.vfambtn.fam-light { background-image: url("bg/family_light-1024.6a92649f.webp"); }
+.vfambtn.fam-shadow { background-image: url("bg/family_shadow-1024.ce783ae1.webp"); }
+.vfambtn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--bg) 58%, transparent); transition: opacity var(--t-quick) var(--ease); }
+.vfambtn img { flex: none; width: clamp(40px, 12vw, 60px); height: clamp(40px, 12vw, 60px); object-fit: contain; filter: grayscale(0.5) drop-shadow(0 4px 4px color-mix(in srgb, var(--black) 30%, transparent)); transition: filter var(--t-quick) var(--ease); }
+/* Ganze Wörter (Lumière, Bayangan), nur was gar nicht passt, bricht */
+.vfambtn span { min-width: 0; overflow-wrap: break-word; }
+.vfambtn:hover { transform: translateY(calc(-1 * var(--lift))); }
+.vfambtn[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--c), 0 4px 0 var(--card-edge); cursor: default; transform: none; }
+.vfambtn[aria-pressed="true"]::after { opacity: 0; }
+.vfambtn[aria-pressed="true"] img { filter: drop-shadow(0 4px 4px color-mix(in srgb, var(--black) 30%, transparent)); }
+.vfambtn:focus-visible { outline-offset: 5px; border-radius: var(--r-l); }
 /* Ziel des Sprunglinks (viewer.js gibt main tabindex -1): der Fokus springt hinein, ohne Rahmen um die ganze Seite */
 main[tabindex="-1"]:focus { outline: none; }
 .vinputrow { display: flex; align-items: flex-start; gap: var(--s-s); margin-top: 6px; }
@@ -35,25 +85,28 @@ main[tabindex="-1"]:focus { outline: none; }
 .vformlinks .linkish { padding: 0; }
 .vformlinks a:only-child, .vformlinks [hidden] + a { margin-left: auto; }
 
-/* ---------- Ohne ID, Meldungen ---------- */
-.vstart, .vmsg { display: flex; align-items: center; gap: var(--s-xl); margin-top: var(--s-xl); padding: var(--s-xl); max-width: 760px; }
-.vstartmascot { width: 150px; flex: none; filter: drop-shadow(0 10px 12px color-mix(in srgb, var(--black) 18%, transparent)); }
-.vstart h2 { font-size: 24px; margin-bottom: var(--s-xs); }
+/* ---------- Meldungen ---------- */
+.vmsg { display: flex; align-items: center; gap: var(--s-xl); margin-top: var(--s-xl); padding: var(--s-xl); max-width: 760px; }
 .vmsgart { width: 96px; flex: none; filter: grayscale(0.35) drop-shadow(0 8px 10px color-mix(in srgb, var(--black) 15%, transparent)); }
 .vmsgtext { font-weight: 700; font-size: 17px; }
 .vmsg .buttons:has([hidden]:only-child) { display: none; }
 .vnojs { margin-top: var(--s-xl); max-width: 760px; font-weight: 700; }
 @media (max-width: 599px) {
-  .vstart, .vmsg { flex-direction: column; text-align: center; gap: var(--s-m); }
-  .vstart .buttons, .vmsg .buttons { justify-content: center; }
-  .vstartmascot { width: 120px; }
+  .vmsg { flex-direction: column; text-align: center; gap: var(--s-m); }
+  .vmsg .buttons { justify-content: center; }
 }
 
 /* ---------- Bühne und Karte nebeneinander ab 900 px ---------- */
-.vgrid { display: grid; gap: var(--s-xl); margin-top: var(--s-xl); }
+/* Mit Beispiel (viewer.js setzt .ex) kommen die Knöpfe der Familien dazu: am Handy über der Bühne, ab 900 px rechts oben */
+.vgrid { display: grid; gap: var(--s-xl); margin-top: var(--s-xl); grid-template-areas: "stage" "info"; }
+.vgrid.ex { grid-template-areas: "fams" "stage" "info"; }
+.vfams { grid-area: fams; }
+.vstagecol { grid-area: stage; min-width: 0; }
+.vinfo { grid-area: info; }
 .vinfo, .vdetails { display: grid; gap: var(--s-l); align-content: start; min-width: 0; }
 @media (min-width: 900px) {
-  .vgrid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; gap: var(--s-xxl); }
+  .vgrid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; gap: var(--s-xxl); grid-template-areas: "stage info"; }
+  .vgrid.ex { grid-template-areas: "stage fams" "stage info"; grid-template-rows: auto 1fr; row-gap: var(--s-l); }
   .vstagecol { position: sticky; top: calc(var(--head-h) + var(--s-l)); }
 }
 
@@ -192,19 +245,26 @@ html.vfull .top, html.vfull .tabbar { visibility: hidden; }
 
 /* ---------- Beispiele ---------- */
 .vexample p { color: var(--text-muted); font-weight: 600; }
-.vexnav { display: flex; align-items: center; justify-content: space-between; gap: var(--s-m); margin-top: var(--s-m); }
+/* Pfeile links und rechts mittig auf der Bühne (Glas wie Vollbild), Punkte unten links, der gewählte in der Farbe der Familie */
 .vexbtn {
-  display: grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; color: var(--secondary-text);
-  background: linear-gradient(var(--secondary-top), var(--secondary)); border: 2.5px solid var(--ink); box-shadow: 0 3px 0 var(--secondary-edge);
-  transition: transform var(--t-quick) var(--spring);
+  position: absolute; z-index: 3; top: calc(50% - 24px); display: grid; place-items: center; width: 48px; height: 48px; padding: 0;
+  border-radius: 50%; cursor: pointer; transition: transform var(--t-quick) var(--spring), opacity var(--t-quick) var(--ease);
 }
-.vexbtn:hover { transform: translateY(calc(-1 * var(--lift))); }
-.vexbtn:disabled { opacity: 0.4; cursor: default; transform: none; }
-.vchev { width: 11px; height: 11px; margin-right: 4px; border-right: 3px solid currentColor; border-top: 3px solid currentColor; transform: rotate(45deg); }
-.prev .vchev { margin: 0 0 0 4px; transform: rotate(-135deg); }
-.vdots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.vdots li { width: 8px; height: 8px; border-radius: var(--r-full); background: var(--line); transition: width var(--t-medium) var(--ease); }
-.vdots li.on { width: 22px; background: var(--accent); }
+.vexbtn.prev { left: var(--s-s); }
+.vexbtn.next { right: var(--s-s); }
+.vexbtn:hover { transform: scale(1.08); border-color: var(--glass-text); }
+.vexbtn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.vexbtn:focus-visible { border-radius: 50%; }
+.vchev { width: 12px; height: 12px; margin-right: 5px; border-right: 3px solid currentColor; border-top: 3px solid currentColor; transform: rotate(45deg); }
+.prev .vchev { margin: 0 0 0 5px; transform: rotate(-135deg); }
+.vdots { position: absolute; z-index: 3; left: var(--s-m); bottom: var(--s-m); display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: var(--r-full); pointer-events: none; }
+.vdots li { width: 8px; height: 8px; border-radius: var(--r-full); background: color-mix(in srgb, var(--glass-text) 38%, transparent); transition: width var(--t-medium) var(--ease); }
+.vdots li.on { width: 22px; background: var(--c, var(--glass-text)); }
+.vstage.full .vexbtn.prev { left: max(var(--s-s), env(safe-area-inset-left)); }
+.vstage.full .vexbtn.next { right: max(var(--s-s), env(safe-area-inset-right)); }
+/* Ohne Figur steht unten der Satz, warum (die Punkte lägen darauf) */
+.vstage.no3d .vdots { visibility: hidden; }
+.vstage.full .vdots { bottom: calc(var(--s-m) + env(safe-area-inset-bottom)); left: max(var(--s-m), env(safe-area-inset-left)); }
 
 /* ---------- Glasfenster der Plätze und Werte ---------- */
 .vdialog { width: min(460px, calc(100vw - 2 * var(--page))); }

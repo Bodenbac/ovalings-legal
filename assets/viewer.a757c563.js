@@ -2,7 +2,10 @@
 // Liest die ID aus dem Fragment (#<uuid>, ?id= wird ins Fragment verschoben), fragt die Edge Function ovaling-view und zeigt
 // Name, Level, Seltenheit, Familie mit Bonus, Gene Score, Plätze, Werte mit Rechnung, Sechseck, Steckbrief und Mehr Infos. Die
 // Figur baut die 3D-Seite /3d/viewer/ im iframe (Nachrichten als JSON-Zeichenkette, nur zwischen Seite und eigenem Rahmen).
-// #example und #example-<n> zeigen die eingefrorenen Beispiele aus welcome.json ohne Server. Keine Speicherung der IDs im Browser.
+// Oben schaltet ein Umschalter zwischen „Eigenes Ovaling“ (Eingabe der ID) und „Beispiel-Ovalings“ (Wunsch Luis 15.10.2026).
+// Beispiele sind die Ovalings der Startseite je Familie: #example-light-<n> und #example-shadow-<n> (n ab 0, ohne Zahl das
+// erste), die 3D-Seite baut sie aus der ID wie echte, ohne Server. Alte Adressen #example und #example-<n> zählen durch Licht,
+// dann Schatten. Keine Speicherung der IDs im Browser.
 // Texte vom Server (Beiname, Steckbrief, ID) gehen nur als textContent in die Seite, HTML kommt nur aus dem Bau der Website.
 // Auf localhost schaltet ?mock=<name> den Server ab: <name>.json unter mock/ (nur der Prüfserver von shoot_site.py liefert
 // diesen Ordner aus, er liegt in tool/site/mock), dazu mock=offline und mock=timeout.
@@ -14,7 +17,9 @@
   var $ = function (sel) { return document.querySelector(sel); };
   var el = {
     form: $('[data-viewer-form]'), input: $('#vid'), error: $('[data-viewer-form] [data-error]'), paste: $('[data-paste]'),
-    start: $('[data-start]'), msg: $('[data-msg]'), msgText: $('[data-msg-text]'), retry: $('[data-retry]'),
+    modes: $('[data-modes]'), modeBtns: Array.prototype.slice.call(document.querySelectorAll('[data-mode]')),
+    fams: $('[data-fams]'), famBtns: Array.prototype.slice.call(document.querySelectorAll('[data-fam]')),
+    msg: $('[data-msg]'), msgText: $('[data-msg-text]'), retry: $('[data-retry]'),
     view: $('[data-view]'), stage: $('[data-stage]'), loading: $('[data-loading]'), no3d: $('[data-no3d]'), no3dEgg: $('[data-no3d-egg]'),
     no3dText: $('[data-no3d-text]'), live: $('[data-live]'),
     name: $('[data-name]'), levelPill: $('[data-level-pill]'), full: $('[data-full]'),
@@ -93,11 +98,30 @@
   function readHash() { return rawHash().toLowerCase(); }
   // Muster aus OvalingId und gültige Eicodes (wie site.js)
   var ID = /^([0-9a-f])[0-9a-f]{7}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-  var EXAMPLE = /^example(?:-(\d+))?$/;
+  var EXAMPLE = /^example(?:-(light|shadow))?(?:-(\d+))?$/;
   function validId(v) {
     var m = ID.exec(v);
     return !!m && D.codes.indexOf(parseInt(m[1], 16)) >= 0;
   }
+  // Beispiel aus dem Fragment: Familie, Nummer und die gültige Schreibweise (#example-light, #example-shadow-3). Ohne Familie
+  // (alte Adressen) zählt n durch alle Beispiele, erst Licht, dann Schatten. Zu große Nummern gelten als die letzte.
+  function exampleOf(hash) {
+    var m = EXAMPLE.exec(hash), groups = D.examples;
+    if (!m || !groups.length) return null;
+    var g = null, n = m[2] ? parseInt(m[2], 10) : 0;
+    if (m[1]) {
+      groups.forEach(function (x) { if (x.family === m[1]) g = x; });
+    } else {
+      for (var i = 0; i < groups.length && !g; i++) {
+        if (n < groups[i].list.length || i === groups.length - 1) g = groups[i];
+        else n -= groups[i].list.length;
+      }
+    }
+    if (!g) { g = groups[0]; n = 0; }
+    n = Math.max(0, Math.min(g.list.length - 1, n));
+    return { group: g, n: n, hash: exampleHash(g.family, n) };
+  }
+  function exampleHash(fam, n) { return 'example-' + fam + (n ? '-' + n : ''); }
   // Sprung in der Seite (Sprunglink #main, #languages im Fuß): kein Beispiel, nichts in der Form einer ID, und es gibt ein
   // Element mit diesem Namen. Solche Fragmente ändern die Anzeige nie.
   function pageAnchor(raw) {
@@ -489,18 +513,32 @@
   // Name oben links auf der Bühne, ohne Namen keine leere Überschrift
   function setName(text) { el.name.textContent = text || ''; el.name.hidden = !text; }
   function setFamily(fam) { setClass(el.stage, 'fam-', fam); }
+  // Umschalter oben: „own“ zeigt die Eingabe (und Meldungen, eigene Ovalings), „examples“ die Knöpfe der Familien
+  var mode = 'own';
+  function setMode(m) {
+    mode = m;
+    // Pfeile und Punkte der Beispiele liegen auf der Bühne, nur mit Beispiel zu sehen
+    [el.exPrev, el.exNext, el.exDots].forEach(function (n) { n.hidden = m !== 'examples'; });
+    el.modes.setAttribute('data-on', m);
+    el.modeBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-mode') === m)); });
+    el.form.hidden = m !== 'own';
+    el.fams.hidden = m !== 'examples';
+    el.view.classList.toggle('ex', m === 'examples');
+  }
   function showOnly(which) {
-    el.start.hidden = which !== 'start';
     el.msg.hidden = which !== 'msg';
     el.view.hidden = which !== 'view';
-    // Mit Ovaling oder Beispiel wird der Kopf kleiner (ohne Einleitung und Kopfbild), damit die Bühne früher beginnt
+    // Mit Ovaling oder Beispiel: Eingabe so breit wie die Bühne (viewer.css). Mit Ovaling oder Meldung ohne Maskottchen und Satz
+    // über der Eingabe (die Meldung hat ihr eigenes Maskottchen)
     document.documentElement.classList.toggle('vopen', which === 'view');
+    el.form.classList.toggle('compact', which !== 'start');
     if (which !== 'view' && full) setFull(false);
     if (which !== 'view') el.live.textContent = '';
     syncActive();
   }
   function showStart() {
     state = 'start'; shown = null;
+    setMode('own');
     setTitle(null);
     showOnly('start');
   }
@@ -509,6 +547,7 @@
   var retryTimer = 0, retryUntil = 0;
   function showMessage(text, retry, wait) {
     state = 'error'; shown = null;
+    setMode('own');
     setTitle(null);
     el.msgText.textContent = text;
     clearInterval(retryTimer);
@@ -539,39 +578,49 @@
     var top = head ? head.getBoundingClientRect().bottom : 0, bottom = window.innerHeight;
     if (bar && getComputedStyle(bar).display !== 'none') bottom = Math.min(bottom, bar.getBoundingClientRect().top);
     if (r.top >= top && r.bottom <= bottom) return;
-    var y = window.pageYOffset + r.top - top - 8;
+    // Nur so weit wie nötig: passt die Bühne, bleibt darüber stehen, was noch Platz hat (Umschalter, Familien, Eingabe)
+    var y = window.pageYOffset + (r.top < top || r.height > bottom - top - 16 ? r.top - top - 8 : r.bottom - bottom + 8);
+    // Ab 40 px wird der Kopf zu Glas (site.js): darunter stünde der Titel halb unter dem noch durchsichtigen Kopf
+    if (y > 0 && y < 48) y = 48;
     try { window.scrollTo({ top: Math.max(0, y), behavior: reduced ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); }
   }
   // Ohne die Daten der Sprache (Laden gescheitert) lädt Erneut versuchen die ganze Seite neu
   el.retry.addEventListener('click', function () { if (D) route(true, true); else location.reload(); });
 
-  function renderExample(n, reveal) {
-    var count = D.examples.length;
-    n = Math.max(0, Math.min(count - 1, n));
+  // Zuletzt gezeigtes Beispiel je Familie und zuletzt gezeigte Familie: der Umschalter und die Knöpfe der Familien kehren dorthin
+  // zurück. Nur im Speicher der Seite, nichts im Browser
+  var exFam = null, exAt = {};
+  function renderExample(ex, reveal) {
+    var g = ex.group, n = ex.n, count = g.list.length, o = g.list[n];
     state = 'example'; shown = null;
-    var look = D.examples[n];
+    exFam = g.family; exAt[g.family] = n;
+    setMode('examples');
+    el.famBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-fam') === g.family)); });
     showOnly('view');
     el.example.hidden = false;
     el.details.hidden = true;
     el.levelPill.hidden = true;
-    setName(D.t.example);
-    setTitle(D.t.example);
-    setFamily(look.family);
-    el.no3dEgg.src = (D.eggs[look.egg] || D.eggs.normal || {}).art || el.no3dEgg.src;
+    // Name wie bei echten Ovalings: Beiname aus der ID, ohne ihn (alter Export) „Beispiel 3 von 8“
+    var counter = fill(D.t.exampleCount, { n: num(n + 1), count: num(count) }), name = o.name || counter;
+    setName(name);
+    setTitle(name);
+    setFamily(g.family);
+    el.no3dEgg.src = (D.eggs[o.egg] || D.eggs.normal || {}).art || el.no3dEgg.src;
     clear(el.exDots);
     for (var i = 0; i < count; i++) el.exDots.appendChild(h('li', i === n ? 'on' : null));
-    // Die Punkte sind nur Bild, Bildschirmleser hören die Nummer (aria-live, auch beim Blättern)
-    el.exCount.textContent = fill(D.t.exampleCount, { n: num(n + 1), count: num(count) });
+    // Die Punkte sind nur Bild, Bildschirmleser hören Name und Nummer (aria-live, auch beim Blättern)
+    el.exCount.textContent = o.name ? o.name + ', ' + counter : counter;
     el.exPrev.disabled = n === 0;
     el.exNext.disabled = n === count - 1;
-    el.exPrev.onclick = function () { goExample(n - 1, el.exPrev); };
-    el.exNext.onclick = function () { goExample(n + 1, el.exNext); };
+    el.exPrev.onclick = function () { goExample(g.family, n - 1, el.exPrev); };
+    el.exNext.onclick = function () { goExample(g.family, n + 1, el.exNext); };
     el.full.hidden = deviceNo3d;
-    send3d(withGround({ kind: 'ovaling', look: look, room: 'family', entrance: true }, look.family));
+    send3d(withGround({ kind: 'ovaling', id: o.id, room: 'family', entrance: true }, g.family));
     if (reveal) revealStage();
   }
-  function goExample(n, btn) {
-    history.replaceState(null, '', location.pathname + location.search + '#example' + (n ? '-' + n : ''));
+  // Blättern und Familie wechseln ersetzen den Eintrag im Verlauf (Zurück führt nicht durch jedes Beispiel)
+  function goExample(fam, n, btn) {
+    history.replaceState(null, '', location.pathname + location.search + '#' + exampleHash(fam, n));
     route();
     // Am Ende der Beispiele wird der Pfeil gesperrt: der Fokus geht auf den anderen statt verloren
     if (btn && btn.disabled) (btn === el.exNext ? el.exPrev : el.exNext).focus();
@@ -579,6 +628,7 @@
 
   function render(o) {
     shown = o; state = 'shown';
+    setMode('own');
     var name = (o.epithet && (cfg.lang === 'de' ? o.epithet.de : o.epithet.en)) || (o.epithet && o.epithet.en) || 'Ovaling';
     setTitle(name);
     showOnly('view');
@@ -688,6 +738,7 @@
   }
   function loadOvaling(id, mine, reveal) {
     state = 'loading'; shown = null;
+    setMode('own');
     showOnly('view');
     el.example.hidden = true;
     el.details.hidden = true;
@@ -726,6 +777,7 @@
     var keep = routed && (EXAMPLE.test(routed) || validId(routed)) ? '#' + routed : '';
     langLinks.forEach(function (a) { a.setAttribute('href', a.getAttribute('data-href') + keep); });
   }
+  var lastOwn = '';      // zuletzt gezeigtes Fragment unter „Eigenes Ovaling“ (leer, ID oder ungültige Eingabe)
   // reveal: nach dem Öffnen einer Adresse, Ansehen oder Erneut versuchen die Bühne in den Blick holen
   function route(force, reveal) {
     var raw = rawHash(), hash = raw.toLowerCase();
@@ -734,6 +786,12 @@
       history.replaceState(null, '', location.pathname + location.search + (routed ? '#' + routed : ''));
       if (routed !== null) return;
       hash = '';
+    }
+    // Beispiele in der gültigen Schreibweise: alte Adressen (#example, #example-4) und zu große Nummern ersetzen den Eintrag
+    var ex = exampleOf(hash);
+    if (ex && ex.hash !== hash) {
+      history.replaceState(null, '', location.pathname + location.search + '#' + ex.hash);
+      hash = ex.hash;
     }
     if (!force && hash === routed && state !== 'start') return;
     routed = hash;
@@ -744,9 +802,10 @@
     el.error.hidden = true;
     el.input.removeAttribute('aria-invalid');
     syncLangLinks();
+    if (ex) { renderExample(ex, reveal); return; }
+    // Eigenes Ovaling (auch leer oder ungültig): dorthin kehrt der Umschalter zurück
+    lastOwn = hash;
     if (!hash) { showStart(); return; }
-    var ex = EXAMPLE.exec(hash);
-    if (ex) { renderExample(ex[1] ? parseInt(ex[1], 10) : 0, reveal); return; }
     el.input.value = hash;
     if (!validId(hash)) {
       el.input.setAttribute('aria-invalid', 'true');
@@ -756,6 +815,40 @@
     }
     loadOvaling(hash, gen, reveal);
   }
+  // Umschalter: neuer Eintrag im Verlauf (Zurück führt zur vorigen Ansicht), zurück zum zuletzt Gezeigten der Ansicht.
+  // Knöpfe der Familien: wie Blättern, mit dem zuletzt gezeigten Beispiel dieser Familie
+  function go(hash, push) {
+    var url = location.pathname + location.search + (hash ? '#' + hash : '');
+    if (push) history.pushState(null, '', url); else history.replaceState(null, '', url);
+    route();
+  }
+  // Vor den Daten (der Umschalter steht ab dem ersten Bild da): die Wahl gleich zeigen und ins Fragment schreiben, boot() zeigt
+  // dann das Gewählte. Beispiele ohne Familie im Fragment (#example) werden dort zur ersten Familie
+  function goEarly(hash, push) {
+    var url = location.pathname + location.search + (hash ? '#' + hash : '');
+    if (push) history.pushState(null, '', url); else history.replaceState(null, '', url);
+    earlyView(hash);
+  }
+  el.modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-mode');
+      if (m === mode) return;
+      // Der Umschalter bleibt, wo er angetippt wurde, auch wenn die Seite darunter kürzer oder länger wird
+      var before = el.modes.getBoundingClientRect().top;
+      var fam = exFam || (D ? D.examples[0].family : null);
+      var hash = m === 'own' ? lastOwn : (fam ? exampleHash(fam, exAt[fam] || 0) : 'example');
+      if (D) go(hash, true); else goEarly(hash, true);
+      var shift = el.modes.getBoundingClientRect().top - before;
+      if (Math.abs(shift) > 1) window.scrollBy(0, shift);
+    });
+  });
+  el.famBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var fam = b.getAttribute('data-fam');
+      if (D && state === 'example' && fam === exFam) return;
+      if (D) go(exampleHash(fam, exAt[fam] || 0), false); else goEarly(exampleHash(fam, 0), false);
+    });
+  });
   // Sprunglink (#main) und andere Anker in der Seite: springen und fokussieren, ohne das Fragment zu ändern. Sonst hielte
   // route() „main“ für eine ID und blendete das gezeigte Ovaling aus.
   document.addEventListener('click', function (e) {
@@ -821,20 +914,59 @@
     var q = params.toString();
     history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + '#' + qid.trim().toLowerCase());
   }
+  // Erste Ansicht schon vor den Daten (Fund der Koordination 15.10.2026): bis viewer.<code>.json da ist (rund 110 KB), steht die
+  // Seite schon so, wie sie danach aussieht, und nichts springt mehr. Der Umschalter steht ab dem ersten Bild da (viewer.css) und
+  // zeigt die Ansicht des Fragments. Beispiel: ohne Eingabe, Familien und Bühne mit dem Ei zum Laden. ID: Eingabe ohne
+  // Maskottchen und Satz, darunter die Bühne. Anderer Text: Eingabe mit dem Hinweis zur Form wie route(). Vorher schob der
+  // Umschalter die Eingabe mit den Daten um 60 px nach unten, und bei geteilten Links mit ID verschwanden Maskottchen und Satz
+  // wieder. Prüfung: node tool/site/viewer_shift_check.js
+  var codes = (el.form.getAttribute('data-codes') || '').split(',').map(Number);
+  var failed = false;     // Daten der Sprache nicht geladen: keine erste Ansicht mehr, nur der Hinweis
+  function earlyView(hash) {
+    var m = ID.exec(hash), ex = EXAMPLE.test(hash), id = !!m && codes.indexOf(parseInt(m[1], 16)) >= 0;
+    var bad = !!hash && !ex && !id && !pageAnchor(hash), fam = /^example-(light|shadow)/.exec(hash);
+    if (failed) return;
+    // Eigenes Ovaling (auch leer oder ungültig): dorthin kehrt der Umschalter zurück, wie in route()
+    if (!ex && !pageAnchor(hash)) lastOwn = hash;
+    setMode(ex ? 'examples' : 'own');
+    // Pfeile und Punkte erst mit dem Beispiel (renderExample), gewählt ist nur eine Familie, die im Fragment steht
+    [el.exPrev, el.exNext, el.exDots].forEach(function (n) { n.hidden = true; });
+    el.famBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(!!fam && b.getAttribute('data-fam') === fam[1])); });
+    el.form.classList.toggle('compact', id);
+    if (id || bad) el.input.value = hash;
+    el.error.hidden = !bad;
+    if (bad) el.input.setAttribute('aria-invalid', 'true'); else el.input.removeAttribute('aria-invalid');
+    el.view.hidden = !(ex || id);
+    document.documentElement.classList.toggle('vopen', ex || id);
+    setFamily(fam ? fam[1] : null);
+  }
+  earlyView(readHash());
+  // Gleiten erst ab jetzt: die erste Wahl steht ohne Bewegung (Stil einmal berechnen, dann .live)
+  void getComputedStyle(el.modes, '::before').transform;
+  el.modes.classList.add('live');
+  // Marke für Prüfwerkzeuge (viewer_shift_check.js): viewer.js läuft, die erste Ansicht steht
+  document.documentElement.setAttribute('data-viewer', 'early');
+  window.addEventListener('hashchange', function () { if (D) route(false, true); else earlyView(readHash()); });
+  // Zurück und Vor über Einträge des Umschalters (pushState): hashchange kommt dabei nicht in jedem Browser
+  window.addEventListener('popstate', function () { if (D) route(false, false); else earlyView(readHash()); });
 
   function boot() {
     fetch(cfg.data).then(function (r) { if (!r.ok) throw new Error('data'); return r.json(); }).then(function (data) {
       D = data;
-      window.addEventListener('hashchange', function () { route(false, true); });
       route(true, true);
       // Marke für Prüfwerkzeuge (shoot_viewer.py, keys_check.js): Daten geladen, erste Anzeige gewählt
       document.documentElement.setAttribute('data-viewer', 'ready');
     }, function () {
-      // Ohne die Texte der Sprache kein Betrachter: Hinweis wie offline, Erneut versuchen lädt die Seite neu
+      // Ohne die Texte der Sprache kein Betrachter: Hinweis wie offline, Erneut versuchen lädt die Seite neu. Umschalter und
+      // Bühne der ersten Ansicht gehen weg, ohne Daten zeigen sie nichts
+      failed = true;
       el.msgText.textContent = el.msg.getAttribute('data-offline');
       el.retry.hidden = false;
-      el.start.hidden = true;
       el.msg.hidden = false;
+      el.modes.hidden = true;
+      el.view.hidden = true;
+      document.documentElement.classList.remove('vopen');
+      el.form.classList.add('compact');
     });
   }
   boot();
