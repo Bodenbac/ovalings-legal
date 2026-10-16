@@ -7,4 +7,4 @@ Hier nichts von Hand bearbeiten. Die Quelle liegt im privaten App-Repo unter `to
 `python tool/site/build_site.py`, veröffentlicht mit `python tool/site/publish_site.py`. Dieses Repo ist nur der Spiegel
 des Baus.
 
-Stand: 2026-10-16T14:54:17+00:00, Commit 315ed52 im App-Repo.
+Stand: 2026-10-16T15:17:30+00:00, Commit 1e4d660 im App-Repo.
