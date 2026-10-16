@@ -8645,9 +8645,11 @@ function frame(now) {
   lookY += (lookGoal() - lookY) * Math.min(1, dt * 4); dist += (targetDist * zoom - dist) * Math.min(1, dt * 6);
   if (model) {
     const k = born < 0 ? 1 : Math.min(1, (now - born) / 420), s = k < 1 ? 1 + 0.12 * Math.sin(k * Math.PI) - 0.6 * Math.pow(1 - k, 3) : 1, rig = model.userData.rig;
-    // Mit Skelett atmen, blinzeln und pendeln die Figuren (Idle), „Bewegung reduzieren“ hält still (Ruhehaltung)
-    if (rig) { model.scale.setScalar(s); if (reducedMotion) Rig.rest(rig); else Rig.animate(rig, now / 1000, 'idle'); }
-    else { const w = reducedMotion ? 0 : Math.sin(now / 1000 * 2.6); model.scale.set(s * (1 - 0.012 * w), s * (1 + 0.02 * w), s * (1 - 0.012 * w)); }
+    // Mit Skelett atmen, blinzeln und pendeln die Figuren (Idle). Das Idle läuft auch bei „Bewegung reduzieren“ (Luis 16.10.2026:
+    // ohne wirkten die Beispiele wie tote Objekte, Windows meldet die Einstellung, sobald dort die Animationen aus sind), nur die
+    // Drehung von selbst und das Flackern des Raums halten dann still
+    if (rig) { model.scale.setScalar(s); Rig.animate(rig, now / 1000, 'idle'); }
+    else { const w = Math.sin(now / 1000 * 2.6); model.scale.set(s * (1 - 0.012 * w), s * (1 + 0.02 * w), s * (1 - 0.012 * w)); }
   }
   if (roomOn && rooms[roomOn] && !reducedMotion) rooms[roomOn].room.update(now / 1000);
   camera.position.set(0, lookY + Math.sin(tiltX) * dist, Math.cos(tiltX) * dist); camera.lookAt(0, lookY, 0);

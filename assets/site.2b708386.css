@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.b6331d71.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.bf3a69d7.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.640a5eb4.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.8ae920d5.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -578,6 +578,8 @@ main { display: block; padding-bottom: var(--s-huge); }
 }
 .langpill:hover { color: var(--text); filter: brightness(1.04); }
 .langpill img { width: 28px; height: 28px; }
+.langpill img.pillflag { width: 30px; height: 20px; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px var(--glass-rim); margin-left: 3px; }
+.langpill img.pillflag[data-flag="en"] { object-position: left center; }
 .chev { width: 8px; height: 8px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: translateY(-2px) rotate(45deg); margin-left: 2px; }
 @media (min-width: 900px) { .sections { display: flex; } .brand { margin-right: var(--s-l); } }
 @media (max-width: 420px) { .langname { max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
@@ -666,6 +668,7 @@ main { display: block; padding-bottom: var(--s-huge); }
 .intro { text-align: center; max-width: 780px; margin: 0 auto; }
 .bigtitle { font: 600 clamp(32px, 6vw, 54px)/1.05 var(--display); letter-spacing: -0.5px; margin: 0 0 var(--s-m); color: var(--text); }
 .introtext { font: 600 clamp(17px, 2.2vw, 20px)/1.5 var(--body); color: var(--text); margin: 0; }
+.familyline { text-align: center; font: 700 clamp(17px, 2.2vw, 20px)/1.4 var(--body); color: var(--text); margin: var(--s-l) auto var(--s-m); }
 .more { margin-top: var(--s-xxl); text-align: center; }
 
 /* Reihe der Ovalings vor den Bildern der Familien: links Licht, rechts Schatten (am Handy oben und unten) */
