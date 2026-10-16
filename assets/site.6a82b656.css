@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.50ac8080.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.acde6683.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.b6331d71.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.bf3a69d7.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1280,11 +1280,13 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 /* Flaggen vor den Sprachnamen (Luis 15.10.2026, Ausnahme von den Gestaltungsregeln nur hier): alle gleich hoch in einem Feld
    fester Breite (die breiteste Flagge, USA 10:19), die Flagge im echten Verhältnis mittig darin, damit die Namen bündig
    stehen. Feine helle Kontur, damit Schwarz und Weiß auf dem dunklen Grund (Glas, Fuß) als Fläche lesbar bleiben. */
-.flag { display: inline-flex; justify-content: center; align-items: center; flex: none; width: 38px; margin-right: var(--s-m); }
-.flag img { display: block; width: auto; height: 20px; max-width: 100%; border-radius: 3px; box-shadow: 0 0 0 1px var(--glass-rim); }
+/* Alle Flaggen gleich groß, 3 zu 2 (Luis 16.10.2026, A): füllen das Feld und werden beschnitten, nie verzerrt, USA links ausgerichtet */
+.flag { display: inline-flex; justify-content: center; align-items: center; flex: none; width: 30px; margin-right: var(--s-m); }
+.flag img { display: block; width: 30px; height: 20px; object-fit: cover; object-position: center; border-radius: 3px; box-shadow: 0 0 0 1px var(--glass-rim); }
+.flag img[data-flag="en"] { object-position: left center; }
 .foot .langlist a { display: inline-flex; align-items: center; }
-.langlist .flag { width: 27px; margin-right: var(--s-s); }
-.langlist .flag img { height: 14px; border-radius: 2px; }
+.langlist .flag { width: 21px; margin-right: var(--s-s); }
+.langlist .flag img { width: 21px; height: 14px; border-radius: 2px; }
 
 /* ---------- Rechtsseiten ---------- */
 .legalwrap { padding-top: calc(var(--head-h) + var(--s-xl)); }
