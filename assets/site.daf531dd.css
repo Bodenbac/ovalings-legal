@@ -268,9 +268,9 @@
   --c-on: #3a0f5c;
 }
 .egg-legendary {
-  --g0: #4a1a08;
-  --g1: #140402;
-  --c-on: #ffd08a;
+  --g0: #fff0e0;
+  --g1: #f6c99a;
+  --c-on: #4a2106;
 }
 .egg-bright {
   --g0: #dfe6f7;
@@ -278,9 +278,9 @@
   --c-on: #1c2440;
 }
 .egg-dark {
-  --g0: #2a1f3a;
-  --g1: #0b0812;
-  --c-on: #e6dcf5;
+  --g0: #f1f0f4;
+  --g1: #c6c4ce;
+  --c-on: #26232e;
 }
 .tower-angel {
   --g0: #2c3270;
@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.640a5eb4.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.8ae920d5.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.003d0024.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.c02ccb59.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -727,16 +727,23 @@ main { display: block; padding-bottom: var(--s-huge); }
 .eggbubble img { width: 40px; height: auto; }
 .eggrow a:hover { color: var(--text); }
 .eggrow a:hover .eggbubble { transform: translateY(-3px) rotate(-4deg); }
+.eggrow a.on .eggbubble { box-shadow: 0 0 0 3px var(--accent), 0 3px 0 var(--card-edge); }
+.hatchegg.swap { animation: eggpop 420ms var(--spring); }
+@keyframes eggpop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
 /* Bosse der Dungeons: dunkles Band, Bosse nebeneinander, am Handy zum Wischen */
 .bosses { margin-top: clamp(56px, 9vw, 104px); padding-bottom: var(--s-huge); background: linear-gradient(var(--night), var(--night-2) 55%, var(--night-3)); color: var(--night-text); border-radius: var(--r-xxl); }
 .bosses .bigtitle { color: var(--white); }
 .bosses .introtext { color: var(--night-text); text-shadow: none; }
-.bossrow { display: flex; gap: var(--s-m); max-width: calc(1180px + 2 * var(--page)); margin: var(--s-xxl) auto 0; padding: 0 var(--page); }
+.bossrow { display: flex; gap: var(--s-m); max-width: calc(1440px + 2 * var(--page)); margin: var(--s-xxl) auto 0; padding: 0 var(--page); }
 /* Breite Bosse (Seitenverhältnis über 1,45, etwa der Herr der Schatten mit Flügeln) bekommen mehr Breite, damit sie so groß wirken
    wie die anderen (Luis 15.10.2026) */
+/* Breite je Seitenverhältnis des Bildes, damit jeder Boss die Höhe der Bühne füllt (Luis 16.10.2026: Kröte, Mönch und Drache
+   wirkten zu klein, seitlich war Platz) */
 .bossrow li { flex: 1 1 0; min-width: 0; }
-.bossrow li.wide { flex-grow: 1.6; }
+.bossrow li.r2 { flex-grow: 1.3; }
+.bossrow li.r3 { flex-grow: 1.55; }
+.bossrow li.r4 { flex-grow: 1.85; }
 .bossrow a { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--night-text); text-align: center; padding-bottom: var(--s-s); }
 .bossstage { display: flex; align-items: flex-end; justify-content: center; width: 100%; height: clamp(170px, 18vw, 230px); background: radial-gradient(ellipse 40% 12% at 50% 90%, color-mix(in srgb, var(--c) 60%, transparent), transparent); margin-bottom: var(--s-s); transition: transform var(--t-medium) var(--spring); }
 .bossstage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 10px 16px color-mix(in srgb, var(--black) 55%, transparent)); }

@@ -242,6 +242,21 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
+  // ---------- Startseite: Ei antippen zeigt es im Bild der Brutkammer (Luis 16.10.2026) ----------
+  var hatchEgg = document.querySelector('.hatchegg');
+  if (hatchEgg) {
+    document.querySelectorAll('.eggrow a[data-egg]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelectorAll('.eggrow a[data-egg]').forEach(function (o) { o.classList.remove('on'); o.removeAttribute('aria-current'); });
+        a.classList.add('on'); a.setAttribute('aria-current', 'true');
+        hatchEgg.src = a.getAttribute('data-egg');
+        hatchEgg.classList.remove('swap'); void hatchEgg.offsetWidth; hatchEgg.classList.add('swap');
+      });
+    });
+    hatchEgg.addEventListener('animationend', function (e) { if (e.animationName === 'eggpop') hatchEgg.classList.remove('swap'); });
+  }
+
   // ---------- 404: Text in der Sprache der Adresse oder des Browsers ----------
   if (doc.getAttribute('data-page') === '404') {
     var fromPath = location.pathname.split('/')[1];
