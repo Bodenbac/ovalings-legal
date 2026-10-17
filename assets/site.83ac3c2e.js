@@ -32,40 +32,58 @@
     }
   }
 
-  // ---------- Sprachauswahl ----------
-  var pill = document.getElementById('langpill'), dialog = document.getElementById('langdialog');
-  var barrier = document.getElementById('langbarrier'), closeBtn = document.getElementById('langclose');
-  var lastFocus = null;
-  function focusables() { return dialog.querySelectorAll('a[href], button'); }
-  function openDialog(e) {
+  // ---------- Anmelden oder Profil (18.10.2026): nur ein Blick in den Speicher, kein Abruf ----------
+  var acct = document.querySelector('[data-acct]');
+  if (acct) {
+    var signed = false;
+    try { signed = !!localStorage.getItem('ovalings.session'); } catch (e) { /* ohne Speicher bleibt Anmelden */ }
+    if (signed) {
+      acct.setAttribute('data-out-href', acct.getAttribute('href'));
+      acct.setAttribute('data-out-label', acct.querySelector('[data-acct-label]').textContent);
+      acct.href = acct.getAttribute('data-in-href');
+      acct.querySelector('[data-acct-label]').textContent = acct.getAttribute('data-in-label');
+    }
+  }
+
+  // ---------- Fenster (Sprachauswahl, „Bald im Store“) ----------
+  // Ein Fenster zur Zeit, eine Barriere für alle. Öffnen über die Sprachwahl oder ein Element mit data-opens="<id>"
+  var pill = document.getElementById('langpill'), barrier = document.getElementById('langbarrier');
+  var open = null, lastFocus = null;
+  function focusables(d) { return d.querySelectorAll('a[href], button'); }
+  function openDialog(d, e) {
     if (e) e.preventDefault();
-    lastFocus = document.activeElement;
-    dialog.hidden = false;
-    barrier.hidden = false;
-    var current = dialog.querySelector('a[aria-current]') || focusables()[0];
+    if (!d || !barrier) return;
+    if (open) closeDialog();
+    lastFocus = document.activeElement; open = d;
+    d.hidden = false; barrier.hidden = false;
+    var current = d.querySelector('a[aria-current]') || d.querySelector('a[href]') || focusables(d)[0];
     if (current) current.focus();
     document.addEventListener('keydown', onKey);
   }
   function closeDialog() {
-    dialog.hidden = true;
-    barrier.hidden = true;
+    if (!open) return;
+    open.hidden = true; barrier.hidden = true; open = null;
     document.removeEventListener('keydown', onKey);
     if (lastFocus) lastFocus.focus();
   }
   function onKey(e) {
     if (e.key === 'Escape') { e.preventDefault(); closeDialog(); return; }
-    if (e.key !== 'Tab') return;
-    var list = focusables(), first = list[0], last = list[list.length - 1];
+    if (e.key !== 'Tab' || !open) return;
+    var list = focusables(open), first = list[0], last = list[list.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
-  if (pill && dialog) {
+  var langDialog = document.getElementById('langdialog');
+  if (pill && langDialog) {
     pill.setAttribute('role', 'button');
-    pill.addEventListener('click', openDialog);
-    pill.addEventListener('keydown', function (e) { if (e.key === ' ') openDialog(e); });
-    barrier.addEventListener('click', closeDialog);
-    closeBtn.addEventListener('click', closeDialog);
+    pill.addEventListener('click', function (e) { openDialog(langDialog, e); });
+    pill.addEventListener('keydown', function (e) { if (e.key === ' ') openDialog(langDialog, e); });
   }
+  document.querySelectorAll('[data-opens]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) { openDialog(document.getElementById(btn.getAttribute('data-opens')), e); });
+  });
+  document.querySelectorAll('.dialog .close').forEach(function (b) { b.addEventListener('click', closeDialog); });
+  if (barrier) barrier.addEventListener('click', closeDialog);
   document.querySelectorAll('a[data-lang]').forEach(function (a) {
     a.addEventListener('click', function () { remember(a.getAttribute('data-lang')); });
   });

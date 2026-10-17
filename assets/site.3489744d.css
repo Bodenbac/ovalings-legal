@@ -229,28 +229,28 @@
   --chip-fg: #ffffff;
 }
 .fam-light {
-  --c: #e0609a;
-  --c-hi: #e0609a;
-  --c-soft: #ffeaf3;
-  --c-on: #a0487a;
-  --c-deep: #a0487a;
-  --g0: #fff7fb;
-  --g1: #ffd3e6;
+  --c: #3fa4f2;
+  --c-hi: #3fa4f2;
+  --c-soft: #e8f4fe;
+  --c-on: #376daa;
+  --c-deep: #3874b3;
+  --g0: #f6fbff;
+  --g1: #cde6fb;
   --edge: #b4cdf5;
-  --chip-bg: #e0609a;
+  --chip-bg: #3fa4f2;
   --chip-fg: #2a1a3e;
 }
 .fam-shadow {
-  --c: #9a7cf0;
-  --c-hi: #9a7cf0;
-  --c-soft: #2a2140;
+  --c: #3a3178;
+  --c-hi: #3a3178;
+  --c-soft: #201a3a;
   --c-on: #e6dcf5;
-  --c-deep: #735ab2;
-  --g0: #5b4592;
-  --g1: #16102a;
+  --c-deep: #342964;
+  --g0: #3a3178;
+  --g1: #0f0c22;
   --edge: #161129;
-  --chip-bg: #9a7cf0;
-  --chip-fg: #2a1a3e;
+  --chip-bg: #3a3178;
+  --chip-fg: #ffffff;
 }
 .egg-normal {
   --g0: #f3f9ea;
@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.7832cfcf.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.ace08c92.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.02b94fc2.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.9760b5a2.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1364,8 +1364,93 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 /* Discord neben der Sprachwahl (18.10.2026): runder Knopf wie die Sprachwahl, Zeichen in Textfarbe, beim Überfahren Akzent */
 .discordpill { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; border-radius: var(--r-full); background: var(--counter-fill); border: 2.5px solid var(--counter-rim); color: var(--text); }
 .discordpill:hover { color: var(--accent); filter: brightness(1.04); }
-.discordpill + .langpill { margin-left: 8px; }
+.discordpill + .langpill, .storepill + .langpill { margin-left: 8px; }
+.storepill { margin-left: 8px; cursor: pointer; font: inherit; padding: 0; }
+/* Auf schmalen Handys nur Discord im Kopf, die Stores stehen im Abschnitt „Bald im Store“ und im Fuß */
+@media (max-width: 699px) { .storepill { display: none; } }
+/* Ab 900 px kommt die Leiste mit den Bereichen dazu, bis 1319 px ist für die Stores kein Platz mehr, bis 1099 px auch nicht für
+   die Namen von Anmelden und Sprache (Messung 18.10.2026 mit Anmelde-Knopf) */
+@media (min-width: 900px) and (max-width: 1319px) { .storepill { display: none; } }
+@media (min-width: 900px) and (max-width: 1099px) { .discordpill + .langpill .langname, .storepill + .langpill .langname { display: none; } .acctpill { width: 44px; padding: 0; justify-content: center; } .acctname { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 /* Schmale Handys mit Discord-Knopf: Sprachwahl nur mit Flagge, sonst ragt „Bahasa Indonesia“ über den Rand (18.10.2026) */
-@media (max-width: 399px) { .discordpill + .langpill .langname { display: none; } }
+@media (max-width: 499px) { .discordpill + .langpill .langname, .storepill + .langpill .langname { display: none; } }
+#storedialog p { color: var(--glass-text); }
+/* Familiennamen im Satz über der Parade als Schilder (18.10.2026), Farben aus den Familien-Tokens */
+.famword { display: inline-block; padding: 0 12px; border-radius: var(--r-full); background: var(--chip-bg); color: var(--chip-fg); line-height: 1.6; }
+.famword.fam-shadow { box-shadow: 0 0 0 1.5px var(--glass-rim); }
+
+/* ---------- Anmelden, Registrieren und Profil (18.10.2026) ---------- */
+/* Knopf oben rechts wie die Sprachwahl, vor Discord und Sprache. Unter 600 px nur das Bild */
+.acctpill {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px 0 7px; flex: none;
+  border-radius: var(--r-full); background: var(--counter-fill); border: 2.5px solid var(--counter-rim);
+  color: var(--text); text-decoration: none; font: 700 15px/1 var(--body);
+}
+.acctpill:hover { color: var(--text); filter: brightness(1.04); }
+.acctpill.on { border-color: var(--accent); }
+.acctpill img { width: 28px; height: 28px; }
+.acctpill + .langpill, .acctpill + .discordpill { margin-left: 8px; }
+@media (max-width: 599px) { .acctpill { width: 44px; padding: 0; justify-content: center; } .acctname { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+/* Umschalter Anmelden und Registrieren wie OvalSegmented (gleich dem Betrachter) */
+.acwrap { padding-top: var(--s-xl); padding-bottom: var(--s-xxl); max-width: calc(640px + 2 * var(--page)); }
+.prwrap { max-width: calc(1120px + 2 * var(--page)); }
+.segs {
+  position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: var(--s-l);
+  padding: 4px; border-radius: var(--r-full); border: 2px solid var(--ink); background: linear-gradient(var(--well-top), var(--well-bottom));
+  box-shadow: 0 4px 0 var(--card-edge);
+}
+.segs[hidden] { display: none; }
+.segs::before {
+  content: ""; position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: var(--r-full);
+  border: 2px solid var(--ink);
+  background: linear-gradient(color-mix(in srgb, var(--white) 40%, transparent), color-mix(in srgb, var(--white) 4%, transparent)) center 3px / 82% 40% no-repeat,
+    linear-gradient(var(--primary-top), var(--primary)) top / 100% calc(100% - 3px) no-repeat, var(--primary-edge);
+}
+.segs.live::before { transition: transform var(--t-medium) var(--spring); }
+.segs[data-on="register"]::before { transform: translateX(100%); }
+.seg {
+  min-height: 48px; padding: 4px 10px 7px; border: 0; border-radius: var(--r-full); background: none; cursor: pointer; color: var(--text-muted);
+  font: 700 clamp(14px, 3.9vw, 17px)/1.15 var(--display); text-align: center;
+}
+.seg:hover { color: var(--text); }
+.seg[aria-pressed="true"] { color: var(--white); text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent); cursor: default; }
+.acform { display: grid; gap: var(--s-m); }
+.acform[hidden] { display: none; }
+.acform h2 { font-size: 24px; }
+.acform h3 { font-size: 20px; margin: 0; }
+.acform .buttons { margin-top: 0; }
+.aclinks { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--s-l); }
+.acart { width: 112px; height: 112px; object-fit: contain; justify-self: center; }
+.ob.danger { --top: color-mix(in srgb, var(--danger) 80%, var(--white)); --base: var(--danger); --edge: color-mix(in srgb, var(--danger) 70%, var(--black)); }
+/* Profil: Ovalings als Kacheln mit Porträt und Rand in der Farbe der Seltenheit */
+.prsection { padding-top: var(--s-xl); }
+.prhead { display: flex; align-items: center; gap: var(--s-m); margin-bottom: var(--s-m); }
+.prhead h2, .prsection > h2 { font-size: clamp(26px, 5vw, 34px); }
+.prsection > h2 { margin-bottom: var(--s-m); }
+.prgrid { list-style: none; margin: 0 0 var(--s-m); padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--s-m); }
+.prtile {
+  display: grid; justify-items: center; gap: 6px; padding: var(--s-s) var(--s-s) var(--s-m); text-decoration: none; color: var(--text);
+  background: linear-gradient(var(--card-top), var(--card-bottom)); border: var(--stroke-rarity) solid var(--c, var(--ink)); border-radius: var(--r-l);
+  box-shadow: 0 4px 0 var(--card-edge); transition: transform var(--t-quick) var(--ease);
+}
+.prtile:hover { color: var(--text); transform: translateY(calc(-1 * var(--lift))); }
+.prpic { display: grid; place-items: center; width: 100%; aspect-ratio: 1; }
+.prpic img { width: 100%; height: 100%; object-fit: contain; }
+.prpic img.egg { width: 46%; height: auto; opacity: 0.7; animation: prwobble 1.6s var(--ease) infinite; }
+@media (prefers-reduced-motion: reduce) { .prpic img.egg { animation: none; } }
+@keyframes prwobble { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.prname { font: 700 15px/1.2 var(--body); text-align: center; overflow-wrap: anywhere; }
+.prempty { display: grid; justify-items: center; gap: var(--s-s); text-align: center; margin-bottom: var(--s-m); }
+.prcards { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
+.prrows { margin-top: 0; }
+.prrows dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; text-align: right; }
+.prdelete { border-color: var(--danger); margin-bottom: var(--s-l); }
+.prmsg { margin-bottom: var(--s-l); }
+.prloading { display: grid; justify-items: center; gap: var(--s-s); padding: var(--s-xxl) 0; color: var(--text-muted); font-weight: 700; }
+.prloading[hidden] { display: none; }
+.prloading img { animation: prwobble 1.2s var(--ease) infinite; }
+/* Rahmen für die Porträts: gezeichnet, aber außerhalb des Bildes */
+.prstage { position: fixed; left: -10000px; top: 0; width: 320px; height: 320px; overflow: hidden; pointer-events: none; }
+.prstage iframe { width: 320px; height: 320px; border: 0; }
 
 .w0{width:0%}.w1{width:1%}.w2{width:2%}.w3{width:3%}.w4{width:4%}.w5{width:5%}.w6{width:6%}.w7{width:7%}.w8{width:8%}.w9{width:9%}.w10{width:10%}.w11{width:11%}.w12{width:12%}.w13{width:13%}.w14{width:14%}.w15{width:15%}.w16{width:16%}.w17{width:17%}.w18{width:18%}.w19{width:19%}.w20{width:20%}.w21{width:21%}.w22{width:22%}.w23{width:23%}.w24{width:24%}.w25{width:25%}.w26{width:26%}.w27{width:27%}.w28{width:28%}.w29{width:29%}.w30{width:30%}.w31{width:31%}.w32{width:32%}.w33{width:33%}.w34{width:34%}.w35{width:35%}.w36{width:36%}.w37{width:37%}.w38{width:38%}.w39{width:39%}.w40{width:40%}.w41{width:41%}.w42{width:42%}.w43{width:43%}.w44{width:44%}.w45{width:45%}.w46{width:46%}.w47{width:47%}.w48{width:48%}.w49{width:49%}.w50{width:50%}.w51{width:51%}.w52{width:52%}.w53{width:53%}.w54{width:54%}.w55{width:55%}.w56{width:56%}.w57{width:57%}.w58{width:58%}.w59{width:59%}.w60{width:60%}.w61{width:61%}.w62{width:62%}.w63{width:63%}.w64{width:64%}.w65{width:65%}.w66{width:66%}.w67{width:67%}.w68{width:68%}.w69{width:69%}.w70{width:70%}.w71{width:71%}.w72{width:72%}.w73{width:73%}.w74{width:74%}.w75{width:75%}.w76{width:76%}.w77{width:77%}.w78{width:78%}.w79{width:79%}.w80{width:80%}.w81{width:81%}.w82{width:82%}.w83{width:83%}.w84{width:84%}.w85{width:85%}.w86{width:86%}.w87{width:87%}.w88{width:88%}.w89{width:89%}.w90{width:90%}.w91{width:91%}.w92{width:92%}.w93{width:93%}.w94{width:94%}.w95{width:95%}.w96{width:96%}.w97{width:97%}.w98{width:98%}.w99{width:99%}.w100{width:100%}

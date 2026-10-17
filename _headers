@@ -11,6 +11,12 @@
   Cache-Control: public, max-age=31536000, immutable
 /confirmed
   X-Robots-Tag: noindex
+/*/account/*
+  X-Robots-Tag: noindex
+  Cache-Control: no-cache
+/*/profile/*
+  X-Robots-Tag: noindex
+  Cache-Control: no-cache
 /parents*
   X-Robots-Tag: noindex
 /404.html

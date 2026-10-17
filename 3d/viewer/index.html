@@ -10248,6 +10248,8 @@ function enqueue(b) {
   // Ohne WebGL (Meldung webgl ist schon raus) bleibt jeder Befehl ohne Wirkung
   if (!b || typeof b !== 'object' || !renderer) return;
   // Sichtbarkeit, Drehen und Zurücksetzen wirken sofort, auch während ein Ovaling entsteht
+  // Porträts (Profil der Website, 18.10.2026) stehen in derselben Reihe wie die Bauten, sie halten den Hauptthread ebenso an
+  if (b.kind === 'portrait') { cmdQueue = cmdQueue.then(() => portrait(b)).catch(x => { console.warn('Porträt', x); send({ type: 'portrait', ref: b.ref, error: 'build' }); }); return; }
   if (b.kind !== 'ovaling') { cmd(b); return; }
   const seq = ++ovalingSeq;
   cmdQueue = cmdQueue.then(() => showOvaling(b, seq)).catch(x => { console.warn('Betrachter', x); if (!superseded(seq)) send({ type: 'error', code: 'build' }); });
@@ -10304,8 +10306,8 @@ renderer.domElement.addEventListener('webglcontextlost', e => { e.preventDefault
 renderer.domElement.addEventListener('webglcontextrestored', () => location.reload(), false);
 
 // Licht je Familie ohne Raum (wie setLights der Bühne). Im Raum bringt der Raum sein Licht mit
-function setLights(fam) {
-  const L = lights;
+function setLights(fam, group) {
+  const L = group || lights;
   while (L.children.length) L.remove(L.children[0]);
   if (fam === 'light') { L.add(new THREE.HemisphereLight(0xffffff, 0xffc9e2, 0.92)); const d = new THREE.DirectionalLight(0xffffff, 0.5); d.position.set(3, 6, 7); L.add(d); }
   else if (fam === 'shadow') { L.add(new THREE.HemisphereLight(0x9a86c8, 0x0a0612, 0.75)); const d = new THREE.DirectionalLight(0xfff0dd, 0.55); d.position.set(2, 5, 6); L.add(d); const r = new THREE.DirectionalLight(0xb18cff, 0.7); r.position.set(-4, 3, -6); L.add(r); }
@@ -10550,6 +10552,34 @@ async function showOvaling(b, seq) {
   fit(sz.y, Math.max(sz.x, sz.z)); lookY = targetLook; dist = targetDist;
   stir(1500);
   send({ type: 'built', id: e.seed, family: fam, ms: Math.round(ms) });
+}
+
+// Porträt (Profil der Website, 18.10.2026): Figur von vorne ohne Raum auf durchsichtigem Grund wie der Befehl portrait der
+// Bühne, eigene Szene, die gezeigte Figur bleibt unberührt. Gezeichnet einmal in die Zeichenfläche in Größe px und sofort als
+// WebP gelesen (im selben Schritt, ohne preserveDrawingBuffer), danach Größe und Auflösung zurück. Antwort portrait mit ref
+function portrait(b) {
+  const got = lookOf(b);
+  if (got.error) { send({ type: 'portrait', ref: b.ref, error: got.error }); return; }
+  const e = got.look;
+  let built;
+  try { built = rigged(build2(figure(e)), true); } catch (x) { console.warn('Porträt', x); send({ type: 'portrait', ref: b.ref, error: 'build' }); return; }
+  const px = clamp(Math.round(+b.size || 256), 64, 512);
+  const sc = new THREE.Scene(), light = new THREE.Group(), g = built.group;
+  setLights(e.family, light); sc.add(light);
+  const sz = built.box.getSize(V(0, 0, 0));
+  g.position.y = -built.box.min.y; sc.add(g);
+  if (g.userData.rig) Rig.animate(g.userData.rig, 0, 'idle');
+  const cam = new THREE.PerspectiveCamera(26, 1, 0.1, 200), half = Math.max(sz.y / 2, Math.max(sz.x, sz.z) / 2) + 0.12;
+  const d = half / Math.tan(13 * Math.PI / 180) * 1.04;
+  cam.position.set(0, sz.y / 2, d); cam.lookAt(0, sz.y / 2, 0);
+  const ratio = renderer.getPixelRatio();
+  renderer.setPixelRatio(1); renderer.setSize(px, px, false);
+  renderer.render(sc, cam);
+  let data = renderer.domElement.toDataURL('image/webp', 0.86);
+  if (data.indexOf('data:image/webp') !== 0) data = renderer.domElement.toDataURL('image/png');
+  renderer.setPixelRatio(ratio); size();
+  dispose(g);
+  send({ type: 'portrait', ref: b.ref, id: e.seed, data: data });
 }
 
 function cmd(b) {
