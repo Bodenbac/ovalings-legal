@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.02b94fc2.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.9760b5a2.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.e63181b9.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.b1be8e87.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1169,10 +1169,10 @@ a.nextcard:hover { color: var(--white); }
 .withegg { display: flex; align-items: center; gap: var(--s-s); font-weight: 700; }
 .alpharules { margin-top: var(--s-xs); }
 .alpharules p { font-size: 14px; }
-.goal { display: flex; flex-direction: column; gap: var(--s-s); align-items: flex-start; }
-.goalstars { display: flex; gap: 2px; }
-.goalitems { display: grid; gap: 4px; }
-.goalitems li { display: flex; align-items: center; gap: var(--s-s); font-weight: 600; }
+.chestcard { display: flex; flex-direction: column; gap: var(--s-s); align-items: flex-start; }
+.chestpic { display: block; }
+.chestitems { display: grid; gap: 4px; }
+.chestitems li { display: flex; align-items: center; gap: var(--s-s); font-weight: 600; }
 .droplist { display: grid; gap: 6px; max-width: 680px; }
 .droplist li { display: flex; align-items: center; gap: var(--s-s); font-weight: 700; padding: 4px 0; border-bottom: 1px dashed var(--line); }
 .droplist li:last-child { border-bottom: 0; }
