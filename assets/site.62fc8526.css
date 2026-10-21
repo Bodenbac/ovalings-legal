@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.86e0cb27.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.48532301.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.d29a534b.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.2fabc6d6.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -661,6 +661,16 @@ main { display: block; padding-bottom: var(--s-huge); }
 .platforms { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-s); width: min(440px, 100%); }
 .platform { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px 8px; border-radius: var(--r-m); border: 2px solid color-mix(in srgb, var(--white) 70%, transparent); background: color-mix(in srgb, var(--white) 94%, transparent); color: var(--primary); font: 800 13px/1.2 var(--body); text-decoration: none; cursor: pointer; }
 .platform:hover { filter: brightness(1.05); color: var(--accent); }
+/* Glas zum Ausprobieren (Luis 21.10.2026, Vorbild Apples „Liquid Glass“): glass-a Seifenblase (klar, starke Unschärfe, Glanzkante,
+   weiße Schrift, Standard), glass-b Milchglas (heller, dunkle Schrift), ohne Klasse der weiße Knopf von vorher. Umschalten über
+   ?glas=a, ?glas=b oder ?glas=0, site.js merkt sich die Wahl im Browser */
+.platforms.glass-a .platform, .platforms.glass-b .platform { position: relative; overflow: hidden; -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); transition: background var(--t-quick) var(--ease), transform var(--t-quick) var(--spring); }
+.platforms.glass-a .platform { background: color-mix(in srgb, var(--white) 16%, transparent); border: 1.5px solid color-mix(in srgb, var(--white) 78%, transparent); color: var(--white); text-shadow: 0 1px 3px color-mix(in srgb, var(--black) 40%, transparent); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--white) 90%, transparent), inset 0 -10px 18px color-mix(in srgb, var(--white) 12%, transparent), 0 8px 20px color-mix(in srgb, var(--black) 18%, transparent); }
+.platforms.glass-a .platform::before { content: ""; position: absolute; left: 10%; right: 10%; top: 3px; height: 38%; border-radius: var(--r-m); background: linear-gradient(color-mix(in srgb, var(--white) 60%, transparent), transparent); pointer-events: none; }
+.platforms.glass-a .platform svg { filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--black) 35%, transparent)); }
+.platforms.glass-a .platform:hover { background: color-mix(in srgb, var(--white) 28%, transparent); color: var(--white); filter: none; transform: translateY(-2px); }
+.platforms.glass-b .platform { -webkit-backdrop-filter: blur(18px) saturate(130%); backdrop-filter: blur(18px) saturate(130%); background: color-mix(in srgb, var(--white) 42%, transparent); border: 1.5px solid color-mix(in srgb, var(--white) 92%, transparent); color: var(--primary); box-shadow: inset 0 1px 0 var(--white), 0 6px 16px color-mix(in srgb, var(--black) 15%, transparent); }
+.platforms.glass-b .platform:hover { background: color-mix(in srgb, var(--white) 58%, transparent); filter: none; transform: translateY(-2px); }
 .herodivider { width: min(440px, 100%); height: 0; margin: var(--s-xs) 0; border: 0; border-top: 1.5px solid color-mix(in srgb, var(--white) 55%, transparent); }
 /* Video im Kopfbild: stumm in Schleife, Knopf zum Anhalten, bei „Animationen reduzieren“ nur das Standbild */
 .videotoggle { position: absolute; z-index: 2; right: max(var(--page), env(safe-area-inset-right)); bottom: var(--s-xl); width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--glass-rim); background: var(--glass); cursor: pointer; display: grid; place-items: center; }
@@ -760,7 +770,6 @@ main { display: block; padding-bottom: var(--s-huge); }
 .bossrow a:hover .bossstage { transform: translateY(-6px); }
 .bossname { font: 600 19px/1.15 var(--display); color: var(--white); }
 .bosstower { font-size: 14px; font-weight: 700; color: var(--night-muted); margin-bottom: 4px; }
-.newchip { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--ink); border: 2px solid var(--ink); text-transform: uppercase; letter-spacing: 0.5px; }
 .bosses .more .ob { --top: var(--secondary-top); --base: var(--secondary); --edge: var(--secondary-edge); --fg: var(--secondary-text); text-shadow: none; }
 @media (max-width: 899px) {
   .bossrow { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--s-m); padding-bottom: var(--s-s); scrollbar-width: thin; }
@@ -778,6 +787,46 @@ main { display: block; padding-bottom: var(--s-huge); }
 @media (max-width: 899px) {
   .islandrow { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--s-m); padding-bottom: var(--s-s); scrollbar-width: thin; }
   .islandrow li { flex: 0 0 42%; scroll-snap-align: center; }
+}
+/* Startseite lebendiger (Luis 21.10.2026). Ei: 3D-Ei wie in der App über dem Bild der Brutkammer (site.js, 3d/home/#egg). Das Bild
+   des Eis bleibt stehen, bis das 3D-Ei da ist, ohne WebGL bleibt es ganz */
+/* color-scheme normal am Rahmen: mit dunklem Schema der Seite und ohne Angabe in der 3D-Seite malt Chromium den Rahmen sonst weiß
+   (Schema von Rahmen und Inhalt verschieden, Fund der Koordination 21.10.2026) */
+.hatchframe, .bossframe { color-scheme: normal; }
+.hatchframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; opacity: 0; transition: opacity var(--t-medium) var(--ease); }
+.hatchpic.live .hatchframe { opacity: 1; }
+.hatchpic.live .hatchegg { visibility: hidden; }
+.hatchpic .hatchagain { position: absolute; left: 50%; bottom: 5%; transform: translateX(-50%); z-index: 1; white-space: nowrap; }
+/* Bosse in 3D: ein Bild für alle über der Reihe, ohne Zeiger (die Karten darunter bleiben Links). Das Bild eines Bosses verschwindet,
+   sobald seine Figur steht. Zwei Reihen zu je drei, rund 2,2 mal so hoch wie früher (Luis 21.10.2026, 2b) */
+.bosstrack { position: relative; }
+.bossframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; pointer-events: none; z-index: 1; }
+.bossrow li.live .bossstage img { visibility: hidden; }
+.bossrow li.live a:hover .bossstage { transform: none; }
+.bosses .bossrow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s-xl); max-width: calc(1240px + 2 * var(--page)); }
+.bosses .bossstage { height: clamp(260px, 34vw, 500px); }
+@media (max-width: 899px) {
+  .bosses .bossrow { display: flex; }
+  .bosses .bossrow li { flex: 0 0 64%; }
+  .bosses .bossstage { height: 300px; }
+}
+/* Kampagne (3b): gestrichelte Route durch die Inseln, die Inseln versetzt. Maus darüber oder am Handy die Insel in der Mitte: sie hebt
+   sich, leuchtet und das Schild nimmt die Farbe der Insel an */
+.islandtrack { position: relative; max-width: calc(1180px + 2 * var(--page)); margin: var(--s-xxl) auto 0; }
+.islandtrack .islandrow { position: relative; z-index: 1; margin: 0 auto; }
+.route { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.route path { fill: none; stroke: color-mix(in srgb, var(--text) 30%, transparent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 11; }
+.islandrow li:nth-child(even) img { margin-top: calc(var(--s-xxl) * 1.6); }
+.islandrow a { transition: transform var(--t-medium) var(--spring); }
+.islandrow img { transition: filter var(--t-medium) var(--ease); }
+.islandname { transition: background var(--t-quick) var(--ease), transform var(--t-medium) var(--spring); }
+.islandrow a:hover, .islandrow a:focus-visible, .islandrow li.near a { transform: translateY(-14px); }
+.islandrow a:hover img, .islandrow a:focus-visible img, .islandrow li.near img { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--c-node, var(--gold)) 75%, transparent)) drop-shadow(0 18px 16px color-mix(in srgb, var(--black) 22%, transparent)); }
+.islandrow a:hover .islandname, .islandrow a:focus-visible .islandname, .islandrow li.near .islandname { background: var(--c-node, var(--gold)); color: var(--ink); transform: scale(1.06); }
+@media (max-width: 899px) {
+  .islandtrack { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; padding-top: 16px; }
+  .islandtrack .islandrow { overflow: visible; width: max-content; padding-bottom: var(--s-s); }
+  .islandtrack .islandrow li { flex: 0 0 min(42vw, 220px); }
 }
 .world.wide { aspect-ratio: 20 / 9; margin-top: var(--s-xxl); }
 .world.wide::after { display: none; }
@@ -1054,12 +1103,18 @@ a.nextcard:hover { color: var(--white); }
 .famimg { position: relative; height: 190px; display: flex; align-items: flex-end; justify-content: space-between; padding: var(--s-l); background-size: cover; background-position: center 70%; }
 .famimg-light { background-image: url("bg/family_light-1024.6a92649f.webp"); }
 .famimg-shadow { background-image: url("bg/family_shadow-1024.ce783ae1.webp"); }
-.famimg img { width: 124px; height: 124px; border-radius: 50%; border: 4px solid var(--white); object-fit: cover; box-shadow: 0 6px 16px color-mix(in srgb, var(--black) 30%, transparent); order: 2; }
+/* 4b (Luis 21.10.2026): das Ovaling steht frei auf der Bühne der Karte, ohne Kreis und Rahmen */
+.famimg { height: 230px; }
+.famimg img { position: absolute; right: 12%; bottom: 22px; width: auto; height: 82%; max-width: 50%; object-fit: contain; filter: drop-shadow(0 10px 12px color-mix(in srgb, var(--black) 30%, transparent)); }
+.famimg strong { position: relative; z-index: 1; }
 .famimg strong { font: 600 32px/1 var(--display); }
 .famtext { padding: var(--s-l); }
-.strip { display: flex; gap: var(--s-m); overflow-x: auto; padding: var(--s-xs) 2px var(--s-m); scroll-snap-type: x mandatory; margin: var(--s-l) 0; scrollbar-width: thin; }
-.strip li { flex: none; scroll-snap-align: start; }
-.strip img { width: 140px; height: 140px; border-radius: var(--r-l); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--card-edge); display: block; }
+/* Aussehen (Luis 21.10.2026, 4b): Raster statt Wischreihe, Kachel hell für Licht, dunkel für Schatten */
+.lookgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--s-s); margin: var(--s-l) 0; }
+.lookgrid li { aspect-ratio: 1; display: grid; place-items: center; border-radius: var(--r-l); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--card-edge); background: radial-gradient(circle at 50% 40%, var(--card-top), var(--card-bottom)); overflow: hidden; }
+.lookgrid li.fam-shadow { background: radial-gradient(circle at 50% 40%, var(--night-2), var(--night)); }
+.lookgrid img { width: 88%; height: 88%; object-fit: contain; display: block; }
+@media (max-width: 599px) { .lookgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .parts { display: grid; gap: var(--s-s); grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); margin-top: var(--s-l); }
 .part { padding: var(--s-m); display: flex; flex-direction: column; }
 .part span { color: var(--text-muted); font-size: 14px; font-weight: 700; }

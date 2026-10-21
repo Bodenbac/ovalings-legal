@@ -246,19 +246,165 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
-  // ---------- Startseite: Ei antippen zeigt es im Bild der Brutkammer (Luis 16.10.2026) ----------
+  // ---------- Startseite: Glas der Plattform-Knöpfe zum Ausprobieren (Luis 21.10.2026) ----------
+  // ?glas=a Seifenblase (Standard), ?glas=b Milchglas, ?glas=0 weiß wie vorher. Die Wahl bleibt im Browser, bis eine andere kommt
+  var glassBox = document.querySelector('[data-glass]');
+  if (glassBox) {
+    var glassPick = (location.search.match(/[?&]glas=([ab0])\b/) || [])[1];
+    try {
+      if (glassPick) localStorage.setItem('ovalings.glas', glassPick);
+      else glassPick = localStorage.getItem('ovalings.glas');
+    } catch (e) { /* ohne Speicher gilt nur die Adresse */ }
+    if (glassPick === 'b' || glassPick === '0') { glassBox.classList.remove('glass-a'); if (glassPick === 'b') glassBox.classList.add('glass-b'); }
+  }
+
+  // ---------- Startseite: 3D für Ei und Bosse (Luis 21.10.2026) ----------
+  // Beide laden dieselbe 3D-Seite (3d/home/, gleiche Herkunft) als Rahmen, erst wenn der Abschnitt fast im Bild ist, und schicken ihr
+  // active false, sobald er aus dem Bild ist (dann zeichnet sie nichts). Ohne WebGL meldet sie error, dann bleiben die Bilder
+  function frame3d(host, cls, title, onMessage) {
+    var src = host.getAttribute('data-home3d');
+    if (!src || !('IntersectionObserver' in window)) return null;
+    var f = null, ready = false, queue = [], visible = false;
+    var api = {
+      send: function (b) {
+        if (!f || !ready) { queue.push(b); return; }
+        try { if (f.contentWindow.ovalingsHome) { f.contentWindow.ovalingsHome(b); return; } } catch (e) { /* fremde Herkunft: Nachricht */ }
+        f.contentWindow.postMessage(JSON.stringify(b), location.origin);
+      }
+    };
+    window.addEventListener('message', function (e) {
+      if (!f || e.source !== f.contentWindow || typeof e.data !== 'string' || e.data.charAt(0) !== '{') return;
+      var m; try { m = JSON.parse(e.data); } catch (x) { return; }
+      if (m.type === 'ready') {
+        ready = true; api.send({kind: 'active', on: visible});
+        var q = queue; queue = []; q.forEach(api.send);
+      }
+      onMessage(m);
+    });
+    new IntersectionObserver(function (entries) {
+      var hit = entries[0].isIntersecting;
+      if (hit && !f) {
+        f = document.createElement('iframe');
+        f.className = cls; f.src = src; f.title = title || '';
+        if (!title) { f.setAttribute('aria-hidden', 'true'); f.tabIndex = -1; }
+        host.appendChild(f);
+      }
+      visible = hit;
+      if (ready) api.send({kind: 'active', on: hit});
+    }, {rootMargin: '300px 0px'}).observe(host);
+    return api;
+  }
+
+  // Ei: Tippen bis es schlüpft wie in der App. Die Leiste wählt die Eisorte, danach „Noch ein Ei“ derselben Sorte
+  var hatchPic = document.querySelector('.hatchpic[data-home3d]');
   var hatchEgg = document.querySelector('.hatchegg');
-  if (hatchEgg) {
+  if (hatchPic && hatchEgg) {
+    var again = hatchPic.querySelector('.hatchagain');
+    var tier = 'normal';
+    // Lage im Nest der Brutkammer (Boden bei 72 % der Höhe, Ei 29 % hoch, etwas kleiner als das Bild des Eis, site.css .hatchegg)
+    var LAYOUT = {ground: 0.72, eggShare: 0.29};
+    var egg3d = frame3d(hatchPic, 'hatchframe', hatchPic.getAttribute('data-title'), function (m) {
+      if (m.type === 'egg') hatchPic.classList.add('live');
+      else if (m.type === 'error' && (m.code === 'webgl' || m.code === 'context_lost')) hatchPic.classList.remove('live');
+      else if (m.type === 'hatched' && again) again.hidden = false;
+    });
+    var showEgg = function () { if (again) again.hidden = true; if (egg3d) egg3d.send({kind: 'egg', tier: tier, layout: LAYOUT}); };
+    showEgg();
+    if (again) again.addEventListener('click', showEgg);
     document.querySelectorAll('.eggrow a[data-egg]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelectorAll('.eggrow a[data-egg]').forEach(function (o) { o.classList.remove('on'); o.removeAttribute('aria-current'); });
         a.classList.add('on'); a.setAttribute('aria-current', 'true');
+        tier = a.getAttribute('data-tier') || 'normal';
         hatchEgg.src = a.getAttribute('data-egg');
-        hatchEgg.classList.remove('swap'); void hatchEgg.offsetWidth; hatchEgg.classList.add('swap');
+        if (!hatchPic.classList.contains('live')) { hatchEgg.classList.remove('swap'); void hatchEgg.offsetWidth; hatchEgg.classList.add('swap'); }
+        showEgg();
       });
     });
     hatchEgg.addEventListener('animationend', function (e) { if (e.animationName === 'eggpop') hatchEgg.classList.remove('swap'); });
+  }
+
+  // Bosse: Idle in 3D, Maus darüber spielt einen Angriff. Am Handy spielt das erste Antippen den Angriff, ein zweites Antippen
+  // derselben Karte öffnet den Dungeon
+  var bossTrack = document.querySelector('.bosstrack[data-home3d]');
+  if (bossTrack) {
+    var cards = Array.prototype.slice.call(bossTrack.querySelectorAll('.bossrow li[data-boss]'));
+    var row = bossTrack.querySelector('.bossrow');
+    var boss3d = frame3d(bossTrack, 'bossframe', '', function (m) {
+      if (m.type === 'boss' && m.ok && cards[m.index]) cards[m.index].classList.add('live');
+      else if (m.type === 'error') cards.forEach(function (c) { c.classList.remove('live'); });
+    });
+    if (boss3d) {
+      var slots = function () {
+        var base = bossTrack.getBoundingClientRect();
+        return cards.map(function (c) {
+          var r = c.querySelector('.bossstage').getBoundingClientRect();
+          return {kind: c.getAttribute('data-boss'), x: Math.round(r.left - base.left), y: Math.round(r.top - base.top), w: Math.round(r.width), h: Math.round(r.height)};
+        });
+      };
+      var pending = false;
+      var place = function () {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function () { pending = false; boss3d.send({kind: 'slots', slots: slots()}); });
+      };
+      place();
+      window.addEventListener('resize', place);
+      if (row) row.addEventListener('scroll', place, {passive: true});
+      var armed = null, armedAt = 0;
+      cards.forEach(function (c, i) {
+        var a = c.querySelector('a');
+        a.addEventListener('mouseenter', function () { boss3d.send({kind: 'act', index: i}); });
+        a.addEventListener('focus', function () { boss3d.send({kind: 'act', index: i}); });
+        a.addEventListener('pointerup', function (e) { a.dataset.touch = e.pointerType === 'mouse' ? '' : '1'; });
+        a.addEventListener('click', function (e) {
+          if (a.dataset.touch !== '1') return;
+          a.dataset.touch = '';
+          if (armed === a && Date.now() - armedAt < 6000) return;
+          e.preventDefault(); armed = a; armedAt = Date.now();
+          boss3d.send({kind: 'act', index: i});
+        });
+      });
+    }
+  }
+
+  // Kampagne (3b): gestrichelte Route durch die Mitten der Inseln, am Handy hebt sich die Insel in der Mitte der Wischreihe
+  var islandTrack = document.querySelector('.islandtrack');
+  if (islandTrack) {
+    var routeSvg = islandTrack.querySelector('.route');
+    var routePath = routeSvg.querySelector('path');
+    var isles = Array.prototype.slice.call(islandTrack.querySelectorAll('.islandrow li'));
+    var drawRoute = function () {
+      var ul = islandTrack.querySelector('.islandrow');
+      var w = ul.scrollWidth, h = ul.offsetHeight, base = ul.getBoundingClientRect();
+      routeSvg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      routeSvg.style.width = w + 'px'; routeSvg.style.height = h + 'px';
+      routeSvg.style.left = ul.offsetLeft + 'px'; routeSvg.style.top = ul.offsetTop + 'px';
+      var pts = isles.map(function (li) {
+        var r = li.querySelector('img').getBoundingClientRect();
+        return [r.left - base.left + ul.scrollLeft + r.width / 2, r.top - base.top + r.height * 0.62];
+      });
+      if (pts.length < 2) { routePath.setAttribute('d', ''); return; }
+      var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+      for (var k = 1; k < pts.length; k++) {
+        var p0 = pts[k - 1], p1 = pts[k], mx = (p0[0] + p1[0]) / 2;
+        d += ' C' + mx.toFixed(1) + ' ' + p0[1].toFixed(1) + ' ' + mx.toFixed(1) + ' ' + p1[1].toFixed(1) + ' ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1);
+      }
+      routePath.setAttribute('d', d);
+    };
+    var near = function () {
+      if (islandTrack.scrollWidth <= islandTrack.clientWidth + 2) { isles.forEach(function (li) { li.classList.remove('near'); }); return; }
+      var box = islandTrack.getBoundingClientRect(), mid = box.left + box.width / 2, best = null, bestD = 1e9;
+      isles.forEach(function (li) { var r = li.getBoundingClientRect(), dd = Math.abs(r.left + r.width / 2 - mid); if (dd < bestD) { bestD = dd; best = li; } });
+      isles.forEach(function (li) { li.classList.toggle('near', li === best); });
+    };
+    var later = function () { requestAnimationFrame(function () { drawRoute(); near(); }); };
+    later();
+    window.addEventListener('resize', later);
+    window.addEventListener('load', later);
+    isles.forEach(function (li) { var img = li.querySelector('img'); if (img && !img.complete) img.addEventListener('load', later); });
+    islandTrack.addEventListener('scroll', function () { requestAnimationFrame(near); }, {passive: true});
   }
 
   // ---------- 404: Text in der Sprache der Adresse oder des Browsers ----------
