@@ -198,21 +198,7 @@
     };
     preset();
     window.addEventListener('hashchange', preset);
-    // Link einer Karte kopieren
-    if (navigator.clipboard && window.isSecureContext) {
-      document.querySelectorAll('[data-copy]').forEach(function (b) {
-        var label = b.textContent;
-        b.hidden = false;
-        b.addEventListener('click', function () {
-          var url = location.href.split('#')[0] + '#' + b.getAttribute('data-copy');
-          navigator.clipboard.writeText(url).then(function () {
-            b.textContent = b.getAttribute('data-done');
-            b.classList.add('done');
-            setTimeout(function () { b.textContent = label; b.classList.remove('done'); }, 2200);
-          }, function () { /* ohne Erlaubnis bleibt der Knopf, wie er ist */ });
-        });
-      });
-    }
+    // Knopf „Link kopieren“ entfällt (UX Website 38, Luis 21.10.2026), die Karten behalten ihre Anker
   }
 
   // ---------- Video im Kopfbild: anhalten und weiter ----------

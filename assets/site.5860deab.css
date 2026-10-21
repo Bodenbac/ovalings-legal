@@ -490,8 +490,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.e63181b9.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.b1be8e87.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.86e0cb27.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.48532301.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -632,6 +632,12 @@ main { display: block; padding-bottom: var(--s-huge); }
   .headtext { padding-right: 70px; }
   .head-tower .headtext, .head-banner .headtext { padding-right: 0; }
   .headart { order: -1; }
+  /* Niedrigere Kopfbilder am Handy (UX Website D3, Luis 21.10.2026): rund 160 statt 270 Pixel, der Inhalt beginnt im ersten
+     Bildschirm. Die Seite eines Dungeons behält ihren Boss im Kopf */
+  .head:not(.head-tower) { padding: calc(var(--head-h) + var(--s-m)) 0 var(--s-l); }
+  .head:not(.head-tower) .headin { min-height: 0; }
+  .head:not(.head-tower) .headicon { width: 64px; top: -4px; }
+  .head-banner .headin { min-height: 160px; padding-bottom: var(--s-l); }
 }
 
 /* ---------- Startseite: Präsentation (Leitbild Luis 15.10.2026) ---------- */
@@ -648,16 +654,14 @@ main { display: block; padding-bottom: var(--s-huge); }
 .heroin { position: relative; z-index: 1; text-align: center; padding-top: calc(var(--head-h) + clamp(8px, 3.5vh, 36px)); padding-bottom: var(--s-xxl); }
 .herotitle { font: 600 clamp(56px, 13vw, 104px)/0.95 var(--display); letter-spacing: -1px; margin: 0; }
 .herotag { font: 700 clamp(18px, 3.4vw, 26px)/1.3 var(--body); margin: var(--s-s) 0 var(--s-l); }
-.heroactions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-m) var(--s-l); }
-.heroactions .soon { margin: 0; }
-.soon {
-  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px 6px 8px; border-radius: var(--r-full);
-  background: var(--accent-soft); color: var(--accent); font: 800 13px/1.2 var(--body);
-  border: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
-}
-.hero .soon { background: color-mix(in srgb, var(--white) 94%, transparent); color: var(--primary); padding: 9px 16px 9px 10px; font-size: 14px; }
-.soon img { width: 22px; height: 22px; }
-@media (max-width: 420px) { .hero .soon { font-size: 13px; padding: 8px 12px 8px 8px; } }
+.heroactions { display: flex; flex-direction: column; align-items: center; gap: var(--s-m); }
+/* UX Website 1 (Luis 20.10.2026): ein Satz ohne Rahmen, darunter vier Plattformen als Knöpfe mit Zeichen und Wort, ein Trennstrich,
+   dann „Was ist Ovalings?“ */
+.herosoon { margin: 0; font: 800 clamp(15px, 2.6vw, 18px)/1.35 var(--body); }
+.platforms { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-s); width: min(440px, 100%); }
+.platform { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px 8px; border-radius: var(--r-m); border: 2px solid color-mix(in srgb, var(--white) 70%, transparent); background: color-mix(in srgb, var(--white) 94%, transparent); color: var(--primary); font: 800 13px/1.2 var(--body); text-decoration: none; cursor: pointer; }
+.platform:hover { filter: brightness(1.05); color: var(--accent); }
+.herodivider { width: min(440px, 100%); height: 0; margin: var(--s-xs) 0; border: 0; border-top: 1.5px solid color-mix(in srgb, var(--white) 55%, transparent); }
 /* Video im Kopfbild: stumm in Schleife, Knopf zum Anhalten, bei „Animationen reduzieren“ nur das Standbild */
 .videotoggle { position: absolute; z-index: 2; right: max(var(--page), env(safe-area-inset-right)); bottom: var(--s-xl); width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--glass-rim); background: var(--glass); cursor: pointer; display: grid; place-items: center; }
 .videotoggle span { position: relative; width: 16px; height: 18px; }
@@ -785,24 +789,6 @@ main { display: block; padding-bottom: var(--s-huge); }
 .videocard video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-m); background: var(--night); }
 .videocard h3 { font-size: 19px; margin: var(--s-s) var(--s-xs) var(--s-xs); }
 
-/* Datenbank: Kacheln mit Bildern und Zahlen */
-.dbtiles { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); margin-top: var(--s-xxl); }
-.dbtile { display: flex !important; align-items: center; gap: var(--s-l); height: 100%; padding: var(--s-m) var(--s-l) var(--s-m) var(--s-m); }
-.dbart { position: relative; flex: none; width: 150px; height: 92px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-l); background: linear-gradient(var(--well-top), var(--well-bottom)); border: 1.5px solid color-mix(in srgb, var(--ink) 25%, transparent); }
-.dbart > * + * { margin-left: -14px; }
-.dbart img { width: 54px; height: 54px; object-fit: contain; }
-.dbart .frame.s56 { width: 52px; height: 52px; border-width: 3px; border-radius: 12px; }
-@media (max-width: 420px) { .dbart { width: 118px; height: 80px; } .dbart img { width: 44px; height: 44px; } .dbart .frame.s56 { width: 44px; height: 44px; } .dbart-egg img { height: 44px; } .dbart-boss img { height: 74px; } .dbtile { gap: var(--s-m); } }
-.dbart .frame { box-shadow: 0 2px 0 var(--card-edge); }
-.dbart .frame:nth-child(2) { transform: translateY(-6px) rotate(4deg); position: relative; z-index: 1; }
-.dbart .frame:first-child { transform: rotate(-5deg); }
-.dbart-egg img { width: auto; height: 54px; }
-.dbart-egg > * + * { margin-left: -10px; }
-.dbart-boss { overflow: hidden; align-items: flex-end; }
-.dbart-boss img { width: auto; height: 86px; }
-.dbtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-.dbtext strong { font: 600 21px/1.2 var(--display); }
-.dbtext span { color: var(--text-muted); font-weight: 700; font-size: 15px; }
 
 /* Ovaling ansehen */
 .viewcard { display: flex; align-items: center; gap: var(--s-xl); padding: var(--s-xl); }
@@ -814,24 +800,17 @@ main { display: block; padding-bottom: var(--s-huge); }
 .idform + .small, .idform + .note { margin-top: var(--s-m); }
 .buttons { display: flex; flex-wrap: wrap; gap: var(--s-m); margin-top: var(--s-m); }
 
-/* Bald für iOS und Android: Abschluss in der Nacht, Arena als Ausblick */
+/* Bald verfügbar: Abschluss in der Nacht (UX Website 6: ohne Arena-Kachel) */
 .soonband { padding-bottom: var(--s-s); }
-.sooncard { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 360px); gap: var(--s-xl) var(--s-xxl); align-items: center; padding: var(--s-xxl); border-radius: var(--r-xxl); border: 2px solid var(--ink); box-shadow: 0 6px 0 var(--card-edge); background: radial-gradient(circle at 12% 40%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 55%), linear-gradient(var(--night-2), var(--night)); color: var(--night-text); }
+.sooncard { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-xl) var(--s-xxl); align-items: center; padding: var(--s-xxl); border-radius: var(--r-xxl); border: 2px solid var(--ink); box-shadow: 0 6px 0 var(--card-edge); background: radial-gradient(circle at 12% 40%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 55%), linear-gradient(var(--night-2), var(--night)); color: var(--night-text); }
 .soonmascot { width: clamp(140px, 16vw, 200px); filter: drop-shadow(0 12px 14px color-mix(in srgb, var(--black) 45%, transparent)); }
 .soontext .bigtitle { color: var(--white); text-align: left; }
 .soontext .introtext { color: var(--night-text); text-shadow: none; }
 .soontext .buttons { margin-top: var(--s-l); }
-.arenateaser { position: relative; display: block; border-radius: var(--r-l); overflow: hidden; border: 2px solid var(--ink); aspect-ratio: 20 / 9; }
-.arenateaser img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.4) brightness(0.85); }
-.arenateaser::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, color-mix(in srgb, var(--black) 60%, transparent)); }
-.arenatext { position: absolute; left: var(--s-m); right: var(--s-m); bottom: var(--s-s); z-index: 1; display: flex; flex-direction: column; font-weight: 700; font-size: 14px; line-height: 1.3; }
-.arenatext strong { font: 600 22px/1.1 var(--display); }
-.arenateaser .soon { position: absolute; top: var(--s-s); right: var(--s-s); z-index: 1; }
 @media (max-width: 899px) {
   .sooncard { grid-template-columns: 1fr; text-align: center; justify-items: center; padding: var(--s-xl) var(--s-l); }
   .soontext .bigtitle { text-align: center; }
   .soontext .buttons { justify-content: center; }
-  .arenateaser { width: 100%; max-width: 420px; }
 }
 
 .stitle { display: flex; align-items: center; gap: var(--s-m); font-size: clamp(26px, 4.6vw, 34px); margin-bottom: var(--s-l); color: var(--text); }
@@ -862,7 +841,6 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
 .panel { background: color-mix(in srgb, var(--c, var(--accent)) 7%, transparent); border: 1.5px solid color-mix(in srgb, var(--c, var(--accent)) 45%, transparent); border-radius: var(--r-l); padding: var(--s-m); }
 .grid2 { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); margin-top: var(--s-l); }
 .grid3 { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
-.grid4 { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); margin-top: var(--s-l); }
 .grid2.flow { margin-top: 0; }
 .flow .withicon { align-items: center; }
 .cards { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); align-items: start; }
@@ -897,6 +875,11 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
 .chip.rar { background: var(--chip-bg); color: var(--chip-fg); }
 .chip.fam { background: var(--c-soft); color: var(--c-on); border: 1px solid color-mix(in srgb, var(--c) 50%, transparent); }
 .chip.soft { background: var(--accent-soft); color: var(--text); font-weight: 700; }
+/* Herkunft (UX Website 20): Pille nur, wenn sie zu einer Seite führt, sonst schlichter Text */
+a.chip.link { text-decoration: none; border: 1.5px solid color-mix(in srgb, var(--accent) 40%, transparent); }
+a.chip.link:hover { color: var(--accent); }
+a.chip.link .arrow { width: 7px; height: 7px; border-right: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.chip.plain { padding-left: 2px; padding-right: 2px; font-weight: 700; color: var(--text-muted); }
 .chip.ok { background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--text); font-weight: 700; }
 .chip.diff { background: var(--chip-bg); color: var(--chip-fg); border: 2px solid var(--ink); }
 /* Schwierigkeit in festen Farben, in beiden Modi gleich (Klassen .diff-<stufe> in tokens.css) */
@@ -936,6 +919,13 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
 .expander > summary::after { content: ""; width: 9px; height: 9px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform var(--t-quick) var(--ease); flex: none; }
 .expander[open] > summary::after { transform: translateY(2px) rotate(225deg); }
 .expander[open] > :not(summary) { animation: open var(--t-medium) var(--ease); }
+/* UX Website 21: ganze Kopfzeile der Karte klappt auf, kein Streifen, nur der Pfeil rechts */
+.cardexp > summary { background: transparent; border: 0; padding: 0; min-height: 0; text-transform: none; letter-spacing: 0; font: inherit; color: inherit; position: relative; padding-right: 28px; display: block; }
+.cardexp > summary.movehead, .cardexp > summary.effecthead { display: flex; }
+.cardexp > summary::after { position: absolute; right: 4px; top: 22px; color: var(--accent); }
+.cardexp > summary:hover h3, .cardexp > summary:hover h4 { color: var(--accent); }
+.cardexp > summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: var(--r-m); }
+.cardexp[open] > summary { margin-bottom: var(--s-s); }
 @keyframes open { from { opacity: 0; transform: translateY(-6px); } }
 .lines { display: grid; gap: 4px; margin-top: var(--s-s); }
 .lines li { padding-left: 14px; position: relative; }
@@ -980,6 +970,13 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
   .dbbar .pill { flex: none; }
 }
 .dbsearch { max-width: 560px; margin-bottom: var(--s-s); }
+/* Mehr Filter (UX Website 36): Art und Effekt klappen auf, die Zeilen darin sehen aus wie die übrigen */
+.morefilters { display: grid; gap: var(--s-s); }
+.morefilters > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 800; color: var(--accent); width: max-content; }
+.morefilters > summary::-webkit-details-marker { display: none; }
+.morefilters > summary::after { content: ""; width: 8px; height: 8px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform var(--t-quick) var(--ease); }
+.morefilters[open] > summary::after { transform: translateY(2px) rotate(225deg); }
+.morefilters[open] { gap: var(--s-s); }
 .searchbox { position: relative; display: block; }
 .searchfield .searchbox input { padding-left: 46px; }
 /* Lupe aus Ring und Griff (kein Kreuz) */
@@ -1002,20 +999,12 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
 .effectchips li { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 4px; border-radius: var(--r-full); background: var(--surface-raised); border: 1px solid var(--line); font-size: 13px; font-weight: 700; }
 .effectchips img { width: 22px; height: 22px; }
 .movecard .expander { margin-top: auto; padding-top: var(--s-s); }
-.linkbtn { align-self: flex-end; margin-top: var(--s-xs); background: none; border: 0; padding: 4px 6px; min-height: 44px; min-width: 44px; color: var(--text-muted); font: 700 13px/1 var(--body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
-.linkbtn:hover { color: var(--accent); }
-.linkbtn.done { color: var(--success); text-decoration: none; }
-.itembody .linkbtn { display: block; margin-left: auto; }
 
 /* Leitfaden der Dungeons */
-.onpage { display: flex; flex-wrap: wrap; gap: var(--s-s); padding-top: var(--s-xl); }
-.navchip { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--r-full); background: var(--surface); border: 1.5px solid var(--line); color: var(--text); font: 700 14px/1.1 var(--body); text-decoration: none; }
-.navchip:hover { border-color: var(--accent); color: var(--accent); }
 .guide { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr)); align-items: stretch; }
 .guidehead { display: flex; align-items: center; gap: var(--s-s); font-size: 20px; margin-bottom: var(--s-s); }
 .guidehead img { width: 40px; height: 40px; flex: none; }
 /* Tipp: zuerst die Teamregel des Dungeons, dann der Tipp zum Boss (Luis 15.10.2026) */
-.tiprule { font-weight: 700; }
 .nextcard { display: flex !important; align-items: center; gap: var(--s-l); padding: var(--s-s) var(--s-l); background: linear-gradient(90deg, var(--g0), var(--g-mid) 55%, var(--g1)); color: var(--white); }
 a.nextcard:hover { color: var(--white); }
 .nextcard img { width: 96px; height: auto; max-height: 110px; object-fit: contain; flex: none; filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--black) 45%, transparent)); }
@@ -1026,6 +1015,7 @@ a.nextcard:hover { color: var(--white); }
 
 /* Kacheln der Übersicht */
 .tiles { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+@media (min-width: 900px) { .guidegroup .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .tile { display: flex !important; align-items: center; gap: var(--s-m); height: 100%; }
 .bubble { width: 72px; height: 72px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent); }
 .bubble img { width: 56px; height: 56px; }
@@ -1034,9 +1024,32 @@ a.nextcard:hover { color: var(--white); }
 .tiletext strong { font: 600 20px/1.2 var(--display); }
 .tiletext span { color: var(--text-muted); font-size: 15px; }
 .arrow { width: 10px; height: 10px; border-right: 3px solid var(--accent); border-top: 3px solid var(--accent); transform: rotate(45deg); flex: none; margin-right: 4px; }
+/* Weiterleitung (UX Website D1): Textlink mit Pfeil, gleich auf der ganzen Seite */
+.morelink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font: 800 17px/1.2 var(--body); color: var(--accent); text-decoration: none; }
+.morelink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.morelink .arrow { margin: 0; }
+.on-image .morelink, .night .morelink { color: var(--white); }
 
 /* Grundlagen */
-.raritycard .chip { margin-bottom: var(--s-xs); }
+/* Seltenheit auf Grundlagen (UX Website 13): Kurven des Gene Score und kleine Tabelle */
+.raritychart { margin: var(--s-l) 0 0; padding: var(--s-m); }
+.raritychart svg { display: block; width: 100%; height: auto; }
+.raritychart .axis { stroke: var(--text-muted); stroke-width: 1.5; }
+.raritychart .tick { fill: var(--text-muted); font: 700 13px var(--body); }
+.raritychart polyline { fill: none; stroke: var(--c); stroke-width: 3; stroke-linejoin: round; }
+.raritychart .peak { fill: var(--c-deep, var(--c)); font: 800 14px var(--body); }
+.raritytable { margin-top: var(--s-m); padding: var(--s-s) var(--s-m); overflow-x: auto; }
+.raritytable table { width: 100%; border-collapse: collapse; }
+.raritytable th, .raritytable td { padding: 6px 8px; text-align: right; white-space: nowrap; }
+.raritytable tbody th { text-align: left; font-weight: 700; }
+.raritytable tbody tr + tr > * { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); }
+.raritytable + .minorhead { margin-top: var(--s-l); }
+@media (max-width: 599px) {
+  .raritytable { padding: var(--s-xs) var(--s-s); }
+  .raritytable th, .raritytable td { padding: 6px 3px; font-size: 13px; }
+  .raritytable tbody th { white-space: normal; }
+  .raritytable .chip { padding: 2px 6px; font-size: 11px; }
+}
 .famcard { padding: 0; overflow: hidden; }
 .famimg { position: relative; height: 190px; display: flex; align-items: flex-end; justify-content: space-between; padding: var(--s-l); background-size: cover; background-position: center 70%; }
 .famimg-light { background-image: url("bg/family_light-1024.6a92649f.webp"); }
@@ -1083,9 +1096,12 @@ a.nextcard:hover { color: var(--white); }
 
 /* Gegenstände */
 .items { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
-.itemcard { display: flex; gap: var(--s-l); align-items: flex-start; }
-.itembody { flex: 1; min-width: 0; }
-@media (max-width: 420px) { .itemcard { flex-direction: column; } .itemcard .itempic { width: 100%; height: 132px; } }
+.itemcard { display: grid; gap: var(--s-s); align-content: start; }
+.itemhead { display: flex; align-items: center; gap: var(--s-m); }
+.itemhead h3 { margin: 0; }
+.itempic.small { width: 64px; height: 64px; border-radius: var(--r-m); border-width: 1.5px; }
+.itempic.small img { width: 54px; height: 54px; }
+.itembody { min-width: 0; }
 
 /* Dungeons */
 .dungeons { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); grid-auto-rows: 1fr; }
@@ -1147,6 +1163,9 @@ a.nextcard:hover { color: var(--white); }
   .table.stages th, .table.stages td { border-bottom: 0; padding: 7px 4px; }
   .table.stages tbody th, .table.stages thead th:first-child { grid-column: 1 / -1; padding: 11px 4px 1px; }
   .table.stages td { font-size: 14px; }
+  /* Beute der Dungeons (UX Website 35): am Handy nur Stufe 1 und die letzte Stufe, die Spalten dazwischen bleiben am PC */
+  .table.stages.loot tr { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .table.stages.loot tr > :not(:first-child):not(:nth-child(2)):not(:last-child) { display: none; }
 }
 .ultra { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: var(--s-xl); padding: 0; overflow: hidden; }
 .ultrapic { display: flex; align-items: flex-end; justify-content: center; background: radial-gradient(circle at 50% 60%, var(--c), transparent 70%), linear-gradient(var(--g0), var(--g1)); padding: var(--s-l) var(--s-l) 0; border-right: 2px solid var(--ink); }
@@ -1200,6 +1219,12 @@ a.nextcard:hover { color: var(--white); }
 .productpic img { width: 112px; height: 112px; }
 .productbody .lines { margin-top: var(--s-xs); font-size: 15px; }
 .products.compact { grid-template-columns: repeat(auto-fill, minmax(min(46%, 170px), 1fr)); gap: var(--s-m); }
+/* Diamantpakete als kurze Liste (UX Website 44) */
+.productlist { display: grid; padding: var(--s-s) var(--s-l); }
+.productlist li { display: flex; align-items: center; gap: var(--s-m); padding: 6px 0; border-bottom: 1px dashed var(--line); font-weight: 700; }
+.productlist li:last-child { border-bottom: 0; }
+.productpic.mini { width: 48px; height: 48px; border-radius: 12px; }
+.productpic.mini img { width: 44px; height: 44px; }
 .products.compact .product { flex-direction: column; text-align: center; gap: var(--s-s); }
 .products.compact .productpic { width: 100%; height: auto; aspect-ratio: 1; }
 .products.compact .productpic img { width: 86%; height: auto; }
@@ -1211,7 +1236,6 @@ a.nextcard:hover { color: var(--white); }
   .products:not(.compact) .productpic img { width: 78px; height: 78px; }
   .productbody .lines { font-size: 14px; }
 }
-.soonbox { align-items: center; }
 .tips { display: grid; gap: var(--s-m); grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
 .tip > img { width: 48px; height: 48px; object-fit: contain; }
 
@@ -1259,7 +1283,12 @@ a.nextcard:hover { color: var(--white); }
 @media (min-width: 900px) { .foot { padding-bottom: var(--s-xxxl); } }
 .foot a { color: var(--night-text); text-decoration: none; }
 .foot a:hover { color: var(--night-accent); text-decoration: underline; }
-.footgrid { display: grid; gap: var(--s-xxl); grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+/* Kurzer Fuß (UX Website 10): Marke, dann je eine Zeile Community und Rechtliches, mit Punkten getrennt */
+.footshort { display: grid; gap: var(--s-l); }
+.footline { display: flex; flex-wrap: wrap; gap: 4px 0; }
+.footline a { padding: 3px 0; }
+.footline a + a::before { content: "·"; display: inline-block; margin: 0 10px; color: var(--night-muted); text-decoration: none; }
+.legalmeta { color: var(--text-muted); font-size: 14px; margin-top: var(--s-xl); }
 .footbrand p { color: var(--night-muted); margin-top: var(--s-s); }
 .foot h2 { font: 800 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 1px; color: var(--night-muted); margin-bottom: var(--s-m); }
 .foot ul { display: grid; gap: 6px; }
@@ -1351,7 +1380,9 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 /* ---------- Bewegung (Plan 6.7) ---------- */
 .float { animation: float 3360ms var(--breathe) infinite alternate; }
 @keyframes float { from { transform: translateY(0); } to { transform: translateY(-6px); } }
-.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--t-scene) var(--ease), transform var(--t-scene) var(--ease); }
+/* Einblenden beim Scrollen (UX Website D4, Luis 21.10.2026): volle Deckkraft von Anfang an, nur eine kleine Verschiebung,
+   damit Bilder der ganzen Seite, Vorschauen und Suchmaschinen alle Texte sehen */
+.js .reveal { transform: translateY(10px); transition: transform var(--t-scene) var(--ease); }
 .js .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
@@ -1359,25 +1390,17 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
   .js .reveal { opacity: 1; transform: none; }
 }
 /* Store-Knöpfe vor dem Start (18.10.2026): gesperrt mit „bald“ darunter */
-.ob.disabled { opacity: 0.6; pointer-events: none; flex-direction: column; line-height: 1.1; }
-.ob.disabled small { display: block; font-size: 0.7em; font-weight: 600; opacity: 0.85; }
 /* Discord neben der Sprachwahl (18.10.2026): runder Knopf wie die Sprachwahl, Zeichen in Textfarbe, beim Überfahren Akzent */
 .discordpill { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; border-radius: var(--r-full); background: var(--counter-fill); border: 2.5px solid var(--counter-rim); color: var(--text); }
 .discordpill:hover { color: var(--accent); filter: brightness(1.04); }
-.discordpill + .langpill, .storepill + .langpill { margin-left: 8px; }
-.storepill { margin-left: 8px; cursor: pointer; font: inherit; padding: 0; }
-/* Auf schmalen Handys nur Discord im Kopf, die Stores stehen im Abschnitt „Bald im Store“ und im Fuß */
-@media (max-width: 699px) { .storepill { display: none; } }
-/* Ab 900 px kommt die Leiste mit den Bereichen dazu, bis 1319 px ist für die Stores kein Platz mehr, bis 1099 px auch nicht für
-   die Namen von Anmelden und Sprache (Messung 18.10.2026 mit Anmelde-Knopf) */
-@media (min-width: 900px) and (max-width: 1319px) { .storepill { display: none; } }
-@media (min-width: 900px) and (max-width: 1099px) { .discordpill + .langpill .langname, .storepill + .langpill .langname { display: none; } .acctpill { width: 44px; padding: 0; justify-content: center; } .acctname { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+.discordpill + .langpill { margin-left: 8px; }
+/* Ab 900 px kommt die Leiste mit den Bereichen dazu, bis 1099 px ist kein Platz für die Namen von Anmelden und Sprache (Messung
+   18.10.2026 mit Anmelde-Knopf). Die Stores stehen seit UX Website 1 nicht mehr im Kopf */
+@media (min-width: 900px) and (max-width: 1099px) { .discordpill + .langpill .langname { display: none; } .acctpill { width: 44px; padding: 0; justify-content: center; } .acctname { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 /* Schmale Handys mit Discord-Knopf: Sprachwahl nur mit Flagge, sonst ragt „Bahasa Indonesia“ über den Rand (18.10.2026) */
-@media (max-width: 499px) { .discordpill + .langpill .langname, .storepill + .langpill .langname { display: none; } }
+@media (max-width: 499px) { .discordpill + .langpill .langname { display: none; } }
 #storedialog p { color: var(--glass-text); }
 /* Familiennamen im Satz über der Parade als Schilder (18.10.2026), Farben aus den Familien-Tokens */
-.famword { display: inline-block; padding: 0 12px; border-radius: var(--r-full); background: var(--chip-bg); color: var(--chip-fg); line-height: 1.6; }
-.famword.fam-shadow { box-shadow: 0 0 0 1.5px var(--glass-rim); }
 
 /* ---------- Anmelden, Registrieren und Profil (18.10.2026) ---------- */
 /* Knopf oben rechts wie die Sprachwahl, vor Discord und Sprache. Unter 600 px nur das Bild */

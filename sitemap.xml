@@ -1728,6 +1728,114 @@
     <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/community/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/community/"/>
   </url>
+  <url><loc>https://ovalings.app/en/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/de/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/es/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/pt/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/fr/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/tr/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/ja/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/ko/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
+  <url><loc>https://ovalings.app/id/clans/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/clans/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/clans/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/clans/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/clans/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/clans/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/clans/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/clans/"/>
+  </url>
   <url><loc>https://ovalings.app/en/progress/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/progress/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/progress/"/>
@@ -1835,6 +1943,114 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/progress/"/>
     <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/progress/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/progress/"/>
+  </url>
+  <url><loc>https://ovalings.app/en/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/de/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/es/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/pt/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/fr/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/tr/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/ja/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/ko/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
+  </url>
+  <url><loc>https://ovalings.app/id/shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/shop/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ovalings.app/de/shop/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ovalings.app/es/shop/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ovalings.app/pt/shop/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ovalings.app/fr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://ovalings.app/tr/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ovalings.app/ja/shop/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ovalings.app/ko/shop/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ovalings.app/id/shop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ovalings.app/en/shop/"/>
   </url>
   <url><loc>https://ovalings.app/en/tips/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ovalings.app/en/tips/"/>

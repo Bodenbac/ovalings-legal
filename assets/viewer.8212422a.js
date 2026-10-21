@@ -96,6 +96,10 @@
   }
   function rawHash() { return decode(location.hash.slice(1)).trim(); }
   function readHash() { return rawHash().toLowerCase(); }
+  // Vor dem Start hat niemand eine ID (UX Website 54, Luis 21.10.2026): ohne Anker öffnet die Seite mit den Beispielen
+  if (!location.hash && document.querySelector('[data-modes][data-start="examples"]') && window.history && history.replaceState) {
+    history.replaceState(null, '', location.pathname + location.search + '#example');
+  }
   // Muster aus OvalingId und gültige Eicodes (wie site.js)
   var ID = /^([0-9a-f])[0-9a-f]{7}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
   var EXAMPLE = /^example(?:-(light|shadow))?(?:-(\d+))?$/;

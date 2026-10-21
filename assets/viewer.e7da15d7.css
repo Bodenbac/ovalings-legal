@@ -31,6 +31,9 @@
 }
 .vmodes.live::before { transition: transform var(--t-medium) var(--spring); }
 .vmodes[data-on="examples"]::before { transform: translateX(100%); }
+/* Vor dem Start stehen die Beispiele links (UX Website 54): Markierung umgekehrt */
+.vmodes.first-examples[data-on="examples"]::before { transform: none; }
+.vmodes.first-examples[data-on="own"]::before { transform: translateX(100%); }
 .vmode {
   min-height: 48px; padding: 4px 10px 7px; border: 0; border-radius: var(--r-full); background: none; cursor: pointer; color: var(--text-muted);
   font: 700 clamp(14px, 3.9vw, 17px)/1.15 var(--display); text-align: center; transition: color var(--t-quick) var(--ease);
@@ -80,10 +83,16 @@ main[tabindex="-1"]:focus { outline: none; }
 .vinputrow input:focus { border: 2px solid var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent); }
 .vinputrow input[aria-invalid="true"] { border: 2px solid var(--danger); }
 .vinputrow .ob { flex: none; margin-top: -1px; }
+/* Einfügen rechts im Feld (UX Website 55) */
+.vinputbox { position: relative; flex: 1; min-width: 0; display: flex; }
+.vinputbox input { width: 100%; }
+.vinputbox .vpaste:not([hidden]) ~ input, .vinputbox:has(.vpaste:not([hidden])) input { padding-right: 52px; }
+.vpaste { position: absolute; right: 4px; top: 4px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: var(--r-m); background: none; color: var(--text-muted); cursor: pointer; }
+.vpaste:hover, .vpaste:focus-visible { color: var(--accent); }
 .vformlinks { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--s-l); font-size: 15px; font-weight: 700; }
 .vformlinks a { display: inline-flex; align-items: center; min-height: 44px; }
 .vformlinks .linkish { padding: 0; }
-.vformlinks a:only-child, .vformlinks [hidden] + a { margin-left: auto; }
+.vformlinks a { margin-left: auto; }
 
 /* ---------- Meldungen ---------- */
 .vmsg { display: flex; align-items: center; gap: var(--s-xl); margin-top: var(--s-xl); padding: var(--s-xl); max-width: 760px; }
