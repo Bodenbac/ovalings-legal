@@ -1,3 +1,5 @@
 /ovaling /en/ovaling/ 302
 /guide /en/guide/ 302
 /discord https://discord.gg/VqSPPpdz3T 302
+/i/:code /invite/?code=:code 302
+/invite /invite/ 301

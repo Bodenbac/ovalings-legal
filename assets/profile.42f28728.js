@@ -30,7 +30,7 @@
   function start() {
     var uid = A.user().id;
     Promise.all([
-      A.rest('players?select=display_name,friend_code,deletion_requested_at&id=eq.' + encodeURIComponent(uid)),
+      A.rest('players?select=display_name,deletion_requested_at&id=eq.' + encodeURIComponent(uid)),
       A.rest('monsters?select=id,name,rarity_id,family_id,egg_code,gene_overrides,rules_version,hatched_at,xp&order=hatched_at.desc&limit=1000')
     ]).then(function (r) {
       player = r[0][0] || {};
@@ -38,14 +38,31 @@
       showPlayer();
       showOvalings(r[1] || []);
       main.hidden = false; account.hidden = false;
+      loadRule();
+      loadInvite();
     }, fail);
+  }
+
+  // Regeln fürs Umbenennen (UX App 22): die erste Änderung gratis, danach Preis in Diamanten, frühestens alle 30 Tage. Ein Satz
+  // unter dem Feld wie in der App, solange gewartet werden muss, nur der Tag. Prüfen und buchen tut der Server.
+  var rule = null;
+  function day(iso) { return new Date(iso).toLocaleDateString(C.htmlLang, { day: 'numeric', month: 'long', year: 'numeric' }); }
+  function showRule() {
+    var el = $('[data-name-rule]');
+    if (!rule) { el.hidden = true; return; }
+    var wait = rule.next_at && new Date(rule.next_at) > new Date();
+    el.textContent = wait ? fill(T.nameWait, { date: day(rule.next_at) })
+      : rule.free ? fill(T.renameFree, { days: rule.days }) : fill(T.renamePaid, { price: num(rule.price), days: rule.days });
+    el.hidden = false;
+  }
+  function loadRule() {
+    A.rpc('name_change_info').then(function (r) { rule = r || null; showRule(); }, function () { rule = null; showRule(); });
   }
 
   function showPlayer() {
     var name = player.display_name;
     $('[data-hello]').textContent = name || T.profile;
     $('[name="name"]').value = name || '';
-    if (player.friend_code) { $('[data-code]').textContent = player.friend_code; $('[data-code-row]').hidden = false; }
     var u = A.user();
     $('[data-email]').textContent = u.email || '';
     var pend = $('[data-email-pending]');
@@ -189,8 +206,13 @@
     if (v === (player.display_name || '')) return status(nameForm, T.saved);
     busy(nameForm, true);
     A.fn('display-name', { name: v }).then(function (r) {
-      busy(nameForm, false); player.display_name = (r && r.display_name) || v; showPlayer(); status(nameForm, T.saved);
-    }, function (x) { busy(nameForm, false); status(nameForm, T.errors[x.code] || T.errors.unknown, true); });
+      busy(nameForm, false); player.display_name = (r && r.display_name) || v; showPlayer(); status(nameForm, T.saved); loadRule();
+    }, function (x) {
+      busy(nameForm, false);
+      // Warten: der Satz unter dem Feld nennt den Tag, deshalb hier kein zweiter Text
+      if (x.code === 'name_wait') { status(nameForm, ''); loadRule(); return; }
+      status(nameForm, T.errors[x.code] || T.errors.unknown, true);
+    });
   });
 
   // ---------- E-Mail ----------
@@ -255,6 +277,60 @@
       main.hidden = true; account.hidden = true; $('[data-deletion]').hidden = true;
       $('[data-msg-text]').textContent = T.deleteDone; $('[data-retry]').hidden = true; msg.hidden = false;
     }, function (x) { b.disabled = false; status(dialog, T.errors[x.code] || T.errors.unknown, true); });
+  });
+
+  // ---------- Freunde werben (E245) ----------
+  // Stand aus referral_mine: Link teilen oder kopieren, Zahlen mit Bezug, Einladungen mit Stand, wer mich eingeladen hat. Wer noch
+  // nachtragen darf (can_set: erste Tage nach dem Anlegen), bekommt das Feld mit Vorschlägen. Buchen tut nur der Server.
+  var RF = window.OvalReferral, inv = $('[data-invite]'), invForm = $('[data-form="inviter"]'), invUrl = '';
+  var invMsg = $('[data-inv-msg]');
+  function invNote(text) { invMsg.textContent = text || ''; invMsg.hidden = !text; }
+  RF.attach(invForm.inviter, $('[data-sugg]', invForm));
+  function showInvite(m) {
+    if (!m || !m.code) { inv.hidden = true; return; }
+    invUrl = RF.link(m.code);
+    var R = T.ref, level = m.min_level || C.minLevel;
+    $('[data-inv-qualified-label]').textContent = RF.fill(R.qualified, { level: level });
+    $('[data-inv-qualified]').textContent = num(m.qualified || 0);
+    $('[data-inv-confirmed]').textContent = num(m.confirmed || 0);
+    $('[data-inv-next]').textContent = RF.fill(R.nextBonus, { count: RF.nextBonus(m.qualified || 0), level: level });
+    var list = $('[data-inv-list]');
+    list.textContent = '';
+    (m.invites || []).forEach(function (i) {
+      var li = document.createElement('li'), name = document.createElement('span'), st = document.createElement('span');
+      name.textContent = i.name || R.unnamed;
+      if (!i.name) name.className = 'muted';
+      st.className = 'prinvstate' + (i.status === 'qualified' ? ' done' : '');
+      st.textContent = i.status === 'qualified' ? R.done : i.status === 'playing' ? RF.fill(R.playing, { level: i.level || 1, goal: level }) : R.waiting;
+      li.appendChild(name); li.appendChild(st); list.appendChild(li);
+    });
+    list.hidden = !(m.invites || []).length;
+    var by = $('[data-inv-by]');
+    by.hidden = !m.invited_by;
+    if (m.invited_by) by.textContent = RF.fill(R.invitedBy, { name: m.invited_by });
+    invForm.hidden = !!m.invited_by || !m.can_set;
+    inv.hidden = false;
+  }
+  function loadInvite() { A.rpc('referral_mine').then(showInvite, function () { inv.hidden = true; }); }
+  $('[data-inv-share]').addEventListener('click', function () {
+    if (invUrl) RF.share(invUrl).then(function (r) { invNote(r === 'copied' ? T.ref.copied : r === 'failed' ? invUrl : ''); });
+  });
+  $('[data-inv-copy]').addEventListener('click', function () {
+    if (invUrl) RF.copy(invUrl).then(function (r) { invNote(r === 'copied' ? T.ref.copied : invUrl); });
+  });
+  invForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = RF.norm(invForm.inviter.value);
+    if (!text) return;
+    status(invForm, ''); busy(invForm, true);
+    RF.resolve(text).then(function (name) { return A.rpc('referral_set', { p_name: name }); }).then(function (r) {
+      busy(invForm, false);
+      invNote(RF.fill(T.ref.setDone, { name: (r && r.name) || text }));
+      loadInvite();
+    }, function (x) {
+      busy(invForm, false);
+      status(invForm, T.errors[x && x.code] || T.errors.unknown, true);
+    });
   });
 
   start();

@@ -585,7 +585,7 @@ if (typeof module !== 'undefined') module.exports = Hatch;
 const build2 = (() => {
   // ---------------- Bewegung legendärer Teile: Formeln (Luis 17.10.2026) ----------------
   // V: Bewegung der Form im Raum des Teils, F: Bewegung der Farbe. uAT Zeit, uAP (Tempo, Stärke, Höhe, Takt), uAC Mitte, uAX Achse
-  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7, flickerWave: 8 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8 };
+  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7, flickerWave: 8 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8, pump: 9 };
   const ANIM_V = [
     '',
     // flicker: oben stärker, seitliches Züngeln, Höhe wechselt
@@ -623,11 +623,14 @@ const build2 = (() => {
     'gl_FragColor.rgb *= 0.8 + 0.9 * pow(0.5 + 0.5 * sin(uAT * uAP.x + uAP.w), 2.0);',
     // run: helle Wellen laufen vom Ansatz des Teils nach außen (Adern, Lichtklingen)
     '{ float dd = length(vAL.xy); float rw = 0.5 + 0.5 * sin(dd * uAP.z * 2.0 - uAT * uAP.x * 2.0 + uAP.w); gl_FragColor.rgb = gl_FragColor.rgb * (0.75 + 0.9 * pow(rw, 6.0)) + 0.35 * pow(rw, 14.0); }',
+    // pump (Adern der Dämonenflügel, Luis 22.10.2026): langsamer Herzschlag, ein Schub Helligkeit wandert von der Wurzel nach außen
+    // wie gepumptes Blut, ein kleinerer folgt. Tempo und Wellenzahl kommen aus uAP der Welle (ripple), damit die Ader dieselbe Welle trägt
+    '{ float dd = length(vAL.xy); float ph = fract(uAT * uAP.x * 0.255 - dd * uAP.z * 0.13 + uAP.w); float bt = exp(-pow((ph - 0.3) * 6.5, 2.0)) + 0.5 * exp(-pow((ph - 0.52) * 8.0, 2.0)); gl_FragColor.rgb = gl_FragColor.rgb * (0.6 + 1.1 * bt) + vec3(0.32, 0.06, 0.04) * bt; }',
         ];
   // attr false: Werte als Uniform (ein Teil, ein Netz). attr true: zusammengefasste Teile, Werte je Ecke (aAP, aAC, aAX) und der
   // Rahmen des einzelnen Teils (aO Ursprung, aFX und aFY Achsen) im Raum des Netzes. Die Formel rechnet im Raum des Teils wie vorher
   function animShader(sh, V2, F2, attr) {
-    const vary = F2 === 8 ? 'varying vec3 vAL;\n' : '';
+    const vary = F2 === 8 || F2 === 9 ? 'varying vec3 vAL;\n' : '';
     if (!attr) {
       const head = 'uniform float uAT; uniform vec4 uAP; uniform vec3 uAC; uniform vec3 uAX;\n';
       if (V2 || vary) sh.vertexShader = head + vary + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (vary ? 'vAL = transformed;\n' : '') + ANIM_V[V2]);
@@ -4870,6 +4873,8 @@ vec3 rareHue(vec3 c, float a) {
         const finishPart = (m, o) => { mark(m); if (o && o.noTex) m.userData.noTex = true; return m; };
         const c = {
           s, tilt: tl, rnd, P,
+          // eigener fester Zufall je Ovaling und Zweck (Adern der Dämonenflügel), jeder Aufruf beginnt von vorn: beide Seiten und Paare gleich
+          seeded: tag => random32(d.seed + tag),
           tint(hex, unlit) { const k = (unlit ? 'u' : 'c') + hex; if (!roleColor[k]) { roleColor[k] = hex; if (unlit) UNLIT[k] = 1; } return k; },
           flat(outline, depth, role, o) {
             o = o || {}; let geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); if (o.z) geo.translate(0, 0, o.z * w * s);
@@ -7776,8 +7781,8 @@ const Wings = (() => {
     },
 
     // 21 Dämonenflügel: spitze Haut zwischen vier Fingern, Krallen am Gelenk und an jeder Spitze, immer fast schwarz
-    // Bewegt (Luis 17.10.2026: cooler): eine Welle läuft durch Haut und Knochen nach außen, durch die Glutadern fließt Glut vom
-    // Gelenk zu den Rändern, an den Krallen der Spitzen brennt dunkles Feuer, Funken steigen auf, das Gelenk glüht
+    // Bewegt (Luis 17.10.2026: cooler): eine Welle läuft durch Haut und Knochen nach außen, verzweigte Adern pulsieren vom
+    // Gelenk zu den Rändern (22.10.2026), an den Krallen der Spitzen brennt dunkles Feuer, Funken steigen auf, das Gelenk glüht
     21(c) {
       const t = c.tilt, el = [0.3, 0.74 - t * 0.5], tips = [[1.08, 0.92 + t], [1.16, 0.28 + t * 0.5], [0.86, -0.32], [0.46, -0.56]];
       const o = [[0, 0], el, tips[0]];
@@ -7787,13 +7792,45 @@ const Wings = (() => {
       // Phase 0, weil flickerWave die Welle ohne eigene Phase rechnet), so bleiben sie aufeinander. Geprüft mit web3d/tools/wing_check.js
       const w = wOf(c), wave = { v: 'ripple', s: 2.4, a: 0.06 * w, h: 4.5 / w, seed: 0 };
       c.flat(o, 0.03, 'demon', { anim: wave });
-      const vein = c.tint('#ff2a48', true);
-      for (let i = 0; i < tips.length - 1; i++) {
-        const a = tips[i], b = tips[i + 1], m = [(a[0] + b[0]) / 2 * 0.7 + el[0] * 0.3, (a[1] + b[1]) / 2 * 0.8 + el[1] * 0.2], s0 = [el[0] + (m[0] - el[0]) * 0.12, el[1] + (m[1] - el[1]) * 0.12];
-        const dx = m[0] - s0[0], dy = m[1] - s0[1], L = Math.hypot(dx, dy), nx = -dy / L * 0.016, ny = dx / L * 0.016;
-        const strip = [[s0[0] + nx, s0[1] + ny], [(s0[0] + m[0]) / 2 + nx * 1.4 + dx * 0.04, (s0[1] + m[1]) / 2 + ny * 1.4], [m[0], m[1]], [(s0[0] + m[0]) / 2 - nx * 1.4 + dx * 0.04, (s0[1] + m[1]) / 2 - ny * 1.4], [s0[0] - nx, s0[1] - ny]];
-        for (const zz of [1, -1]) c.flat(strip, 0.004, vein, { noTex: true, z: 0.022 * zz, anim: Object.assign({}, wave, { f: 'run' }) });
-      }
+      // Adern (Luis 22.10.2026, statt des gestrichelten Streifens): je Feld zwischen zwei Streben eine Hauptader vom Gelenk zur Kerbe
+      // der Hinterkante, davon zweigen Äste zu den Kanten des Felds ab, manche gabeln sich noch einmal. Zahl, Lage, Biegung und Gabeln
+      // aus einem eigenen festen Zufall (immer 80 Zahlen, je Feld 19). Jeder Ast liegt im Dreieck aus Gelenk, Kerbe und Spitze, also nie über einer
+      // Strebe und nie über dem Rand. Flach auf beiden Seiten der Haut, mit derselben Welle, der Puls (pump) läuft von der Wurzel nach außen
+      const vr = c.seeded ? c.seeded('|flügeladern|') : (() => { let a = 0.37; return () => (a = (a * 9301 + 0.4927) % 1); })();
+      const R = Array.from({ length: 80 }, () => vr());
+      let ri = 0; const nx = () => R[ri++ % R.length];
+      const vein = c.tint('#c4142e', true), veinAnim = Object.assign({}, wave, { f: 'pump' });
+      const L2 = (p, q, u) => [p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u];
+      // Ader als flaches Band entlang einer leicht gebogenen Linie, Breite von r0 auf r1, das Ende spitz
+      const strand = (p, q, r0, r1, bend) => {
+        const dx = q[0] - p[0], dy = q[1] - p[1], L = Math.hypot(dx, dy); if (L < 0.03) return;
+        const ux = -dy / L, uy = dx / L, n = Math.max(4, Math.round(L / 0.05)), mid = [], l = [], rr = [];
+        for (let i = 0; i <= n; i++) { const u = i / n, k = Math.sin(Math.PI * u) * bend * L; mid.push([p[0] + dx * u + ux * k, p[1] + dy * u + uy * k]); }
+        for (let i = 0; i <= n; i++) { const u = i / n, wd = (r0 + (r1 - r0) * u) * (i === n ? 0.15 : 1), a = mid[Math.max(0, i - 1)], b = mid[Math.min(n, i + 1)], tx = b[0] - a[0], ty = b[1] - a[1], tl = Math.hypot(tx, ty) || 1; l.push([mid[i][0] - ty / tl * wd, mid[i][1] + tx / tl * wd]); rr.push([mid[i][0] + ty / tl * wd, mid[i][1] - tx / tl * wd]); }
+        // Haut ist 0,03 dick, mit Fase reicht sie bis 0,0255: die Ader liegt knapp darauf
+        const outl = l.concat(rr.slice().reverse());
+        for (const zz of [1, -1]) c.flat(outl, 0.004, vein, { noTex: true, z: 0.0295 * zz, anim: veinAnim });
+        return mid;
+      };
+      // ein Feld: Scheitel ap, Kerbe nt, Spitzen ta und tb. Hauptader von nahe ap zur Kerbe, Äste zu den Kanten nt-ta und nt-tb
+      const field = (ap, ta, nt, tb, size) => {
+        const s0 = L2(ap, nt, 0.1), s1 = L2(ap, nt, 0.9), bend = (nx() - 0.5) * 0.12;
+        strand(s0, s1, 0.017 * size, 0.008 * size, bend);
+        const nb = 2 + Math.floor(nx() * 2.999), first = nx() < 0.5 ? 1 : -1;
+        for (let j = 0; j < 4; j++) {
+          const r1 = nx(), r2 = nx(), r3 = nx(), r4 = nx(); if (j >= nb) continue;
+          const side = j % 2 ? -first : first, tip = side > 0 ? ta : tb;
+          // Abzweig auf der Hauptader (Biegung der Hauptader mitgerechnet), Ziel auf der Kante zwischen Kerbe und Spitze, nicht bis zur Strebe
+          const u = 0.22 + 0.6 * (j + 0.3 + 0.5 * r1) / nb, dx = s1[0] - s0[0], dy = s1[1] - s0[1], LL = Math.hypot(dx, dy), k = Math.sin(Math.PI * u) * bend * LL;
+          const from = [s0[0] + dx * u - dy / LL * k, s0[1] + dy * u + dx / LL * k], to = L2(from, L2(nt, tip, 0.2 + 0.42 * r2), 0.86);
+          const br = strand(from, to, 0.011 * size, 0.005 * size, (r3 - 0.5) * 0.25);
+          // Gabel: ein kürzerer Zweig von der Mitte des Asts zur Kante, weiter zur Spitze hin
+          if (br && r4 < 0.6) { const m0 = br[Math.round(br.length * (0.45 + 0.15 * r3))] || br[br.length >> 1]; strand(m0, L2(m0, L2(nt, tip, Math.min(0.68, 0.32 + 0.42 * r2 + 0.12)), 0.8), 0.007 * size, 0.004 * size, (0.5 - r3) * 0.2); }
+        }
+      };
+      for (let i = 0; i < tips.length - 1; i++) { const a = tips[i], b = tips[i + 1]; field(el, a, [(a[0] + b[0]) / 2 * 0.74 + el[0] * 0.2, (a[1] + b[1]) / 2 * 0.86 + el[1] * 0.12], b, 1); }
+      // unteres Feld zwischen der letzten Strebe und dem Ansatz: von der Wurzel aus
+      field([0.06, 0.02], tips[3], [0.2, -0.32], [0.04, -0.2], 0.8);
       c.glow(el[0], el[1], 0.8, '#c2183f', 0.5, 1);
       c.tube([[0, 0], [el[0] * 0.5, el[1] * 0.55], el], 0.075, 0.05, 'demonBone', { local: true, anim: wave });
       c.cone(el[0], el[1], Math.atan2(1, -0.35), 0.035, 0.16, 10, 'demonClaw', { local: true, anim: wave });

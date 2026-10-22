@@ -4,7 +4,7 @@
 // Anmeldung nur, solange die Seite offen ist.
 (function () {
   'use strict';
-  var A = window.OvalAuth, T = A.cfg.text;
+  var A = window.OvalAuth, T = A.cfg.text, R = window.OvalReferral;
   var views = document.querySelectorAll('[data-view]'), segs = document.querySelector('[data-segs]');
   var title = document.querySelector('[data-title]');
   var sentTo = '';
@@ -53,7 +53,7 @@
     if (!mail(email)) return errorOf(signin, T.errors.bad_email);
     if (!pw) return errorOf(signin, T.errors.enter_password);
     errorOf(signin, ''); busy(signin, true);
-    A.signIn(email, pw).then(function () { location.href = A.cfg.profile; }, function (x) {
+    A.signIn(email, pw, signin).then(function () { location.href = A.cfg.profile; }, function (x) {
       busy(signin, false);
       if (x.code === 'not_confirmed') { sentTo = email; document.querySelector('[data-email]').textContent = email; show('sent'); return; }
       errorOf(signin, message(x.code));
@@ -62,6 +62,32 @@
 
   // ----- Registrieren -----
   var reg = document.querySelector('[data-view="register"]');
+  // Wer hat dich eingeladen? (E245): Vorschläge beim Tippen, Name aus dem Einladungslink vorgefüllt
+  var inviter = reg.inviter, fromLink = reg.querySelector('[data-from-link]'), invite = R.readInvite();
+  var sugg = R.attach(inviter, reg.querySelector('[data-sugg]'));
+  function linkNote() {
+    var on = !!(invite && invite.name && R.norm(inviter.value).toLowerCase() === invite.name.toLowerCase());
+    fromLink.hidden = !on;
+    if (on) fromLink.textContent = R.fill(T.ref.fromLink, { name: invite.name });
+  }
+  inviter.addEventListener('input', linkNote);
+  inviter.addEventListener('change', linkNote);
+  function prefill() {
+    if (!invite) return;
+    var put = function (name) { if (name && !inviter.value) { inviter.value = name; linkNote(); } };
+    if (invite.name) { put(invite.name); return; }
+    R.nameForCode(invite.code).then(function (name) {
+      if (!name) return;
+      invite.name = name; R.saveInvite(invite); put(name);
+    });
+  }
+  // Angabe für die Metadaten: Code, solange der Name aus dem Link unverändert im Feld steht, sonst der geprüfte Name
+  function referral() {
+    var text = R.norm(inviter.value);
+    if (!text) return Promise.resolve(null);
+    if (invite && invite.name && text.toLowerCase() === invite.name.toLowerCase()) return Promise.resolve({ referred_by: invite.code });
+    return R.resolve(text).then(function (name) { return { referred_by_name: name }; });
+  }
   reg.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = reg.email.value.trim(), pw = reg.password.value, pw2 = reg.password2.value, y = reg.year.value.trim();
@@ -73,9 +99,15 @@
     if (!/^\d{4}$/.test(y) || +y < now - 120 || +y > now) return errorOf(reg, T.errors.year);
     // Wie AgeRules.canRegister: Alter aus dem Jahr allein (Jahr jetzt minus Geburtsjahr)
     if (now - +y < A.cfg.minAge) return errorOf(reg, T.errors.too_young);
-    errorOf(reg, ''); busy(reg, true);
-    A.signUp(email, pw, +y).then(function (b) {
+    errorOf(reg, ''); busy(reg, true); sugg.clear();
+    var extra = null;
+    referral().then(function (r) {
+      extra = r;
+      inviter.removeAttribute('aria-invalid');
+      return A.signUp(email, pw, +y, r, reg);
+    }, function (x) { inviter.setAttribute('aria-invalid', 'true'); inviter.focus(); throw x; }).then(function (b) {
       busy(reg, false);
+      if (extra && extra.referred_by) R.clearInvite();
       // Mit Sitzung (Bestätigung aus) gleich weiter, sonst Hinweis auf den Link
       if (b && b.access_token) { location.href = A.cfg.profile; return; }
       sentTo = email; document.querySelector('[data-email]').textContent = email; show('sent');
@@ -87,7 +119,7 @@
   resend.addEventListener('click', function () {
     if (!sentTo) return;
     resend.disabled = true;
-    A.resend(sentTo).then(function () { errorOf(sent, T.resent); }, function (x) { errorOf(sent, message(x.code)); });
+    A.resend(sentTo, sent).then(function () { errorOf(sent, T.resent); }, function (x) { errorOf(sent, message(x.code)); });
     var left = 60, base = resend.textContent;
     var tick = setInterval(function () {
       left--; resend.textContent = left > 0 ? T.resendWait.replace('{seconds}', String(left)) : base;
@@ -104,7 +136,7 @@
     if (!mail(email)) return errorOf(forgot, T.errors.bad_email);
     busy(forgot, true);
     // Immer dieselbe Antwort, ob es das Konto gibt oder nicht (wie die App)
-    A.recover(email).then(function () { busy(forgot, false); errorOf(forgot, ''); done('reset_sent'); },
+    A.recover(email, forgot).then(function () { busy(forgot, false); errorOf(forgot, ''); done('reset_sent'); },
       function (x) { busy(forgot, false); errorOf(forgot, message(x.code)); });
   });
 
@@ -129,7 +161,10 @@
     if (r && r.kind === 'email_half') { done('email_half'); return; }
     if (r) { done('confirmed'); return; }
     if (A.signedIn()) { location.replace(A.cfg.profile); return; }
-    show(want === 'register' ? 'register' : 'signin');
+    // Einladungslink (E245, ?invite=1 von join.js) oder gemerkte Einladung: gleich Registrieren mit vorgefülltem Namen
+    var invited = invite || /(^|[?&])invite=1(&|$)/.test(location.search.slice(1));
+    show(want === 'register' || invited ? 'register' : 'signin');
+    prefill();
     segs.classList.add('live');
   });
   // Link aus der Mail in einem schon offenen Tab (nur der Anker ändert sich): neu laden, damit takeLink ihn übernimmt

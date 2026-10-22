@@ -19,6 +19,10 @@
   function codeOf(status, body) {
     var c = (body && (body.error_code || body.code || body.error)) || '';
     var msg = ((body && (body.msg || body.message || body.error_description)) || '').toLowerCase();
+    // Freunde werben (E245, referral_set): Hinweise der Datenbank als eigene Codes
+    var hint = body && body.hint;
+    if (hint === 'not_found') return 'no_player';
+    if (hint === 'already' || hint === 'too_late' || hint === 'cycle' || hint === 'own_code') return hint;
     if (status === 429 || c === 'over_request_rate_limit' || c === 'over_email_send_rate_limit') return 'too_many';
     if (c === 'invalid_credentials' || msg.indexOf('invalid login') >= 0) return 'wrong_login';
     if (c === 'email_not_confirmed') return 'not_confirmed';
@@ -29,9 +33,11 @@
     if (c === 'signup_disabled' || c === 'email_provider_disabled') return 'disabled';
     if (c === 'user_banned') return 'banned';
     if (c === 'email_address_invalid' || c === 'validation_failed') return 'bad_email';
-    if (c === 'captcha_failed') return 'disabled';
+    if (c === 'captcha_failed') return 'captcha_failed';
     if (msg.indexOf('age') >= 0 || (body && body.hint === 'age') || msg.indexOf('too young') >= 0) return 'too_young';
     if (c === 'name_length' || c === 'name_phone' || c === 'name_rejected' || c === 'not_signed_in') return c;
+    // Eindeutige Namen und Regeln fürs Umbenennen (UX App 22, Edge Function display-name)
+    if (c === 'name_taken' || c === 'name_wait' || c === 'not_enough_diamonds') return c;
     if (status === 401 || status === 403 || c === 'bad_jwt' || c === 'session_not_found') return 'not_signed_in';
     if (status >= 500 && msg.indexOf('database error saving new user') >= 0) return 'too_young';
     return 'unknown';
@@ -94,6 +100,56 @@
     });
   }
 
+  // Öffentliche Aufrufe ohne Anmeldung (E245): referral_status, referral_board, Function referral-search
+  function anon(path, body) { return request(path, { method: 'POST', body: body || {} }); }
+
+  // Captcha (Cloudflare Turnstile, E245): nur mit Sitekey beim Bauen (cfg.turnstile) und nur, solange der Server es verlangt
+  // (referral_status.captcha, mit dem Start des Invite-Events). Ohne Antwort des Servers lieber mit Captcha. Das Widget steht im
+  // Kasten [data-captcha] des Formulars, das Token gilt einmal und geht als gotrue_meta_security.captcha_token an Supabase.
+  var tsLoad = null;
+  function loadTurnstile() {
+    if (window.turnstile) return Promise.resolve(window.turnstile);
+    if (!tsLoad) {
+      tsLoad = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        s.async = true;
+        s.onload = function () { resolve(window.turnstile); };
+        s.onerror = function () { tsLoad = null; reject(new Fail('captcha_offline', 0)); };
+        document.head.appendChild(s);
+      });
+    }
+    return tsLoad;
+  }
+  function captcha(form) {
+    if (!cfg.turnstile) return Promise.resolve(null);
+    return anon('/rest/v1/rpc/referral_status').then(function (st) { return !!(st && st.captcha); }, function () { return true; })
+      .then(function (on) {
+        if (!on) return null;
+        return loadTurnstile().then(function (ts) {
+          return new Promise(function (resolve, reject) {
+            var box = form && form.querySelector('[data-captcha]');
+            if (!box) {
+              box = document.createElement('div'); box.className = 'captchabox'; box.setAttribute('data-captcha', '');
+              (form || document.body).appendChild(box);
+            }
+            box.textContent = ''; box.hidden = false;
+            var slot = document.createElement('div'); box.appendChild(slot);
+            var dark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+              (!document.documentElement.getAttribute('data-theme') && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+            var done = function () { setTimeout(function () { box.hidden = true; box.textContent = ''; }, 0); };
+            ts.render(slot, {
+              sitekey: cfg.turnstile, language: cfg.lang, theme: dark ? 'dark' : 'light',
+              callback: function (t) { done(); resolve(t); },
+              'error-callback': function () { done(); reject(new Fail('captcha_failed', 0)); },
+              'timeout-callback': function () { done(); reject(new Fail('captcha_failed', 0)); }
+            });
+          });
+        });
+      });
+  }
+  function withCaptcha(body, token) { if (token) body.gotrue_meta_security = { captcha_token: token }; return body; }
+
   // Ohne eigenen Anker: Supabase hängt die Sitzung als Anker an (type sagt, welcher Link es war)
   function redirect() { return '?redirect_to=' + encodeURIComponent(cfg.redirect); }
 
@@ -122,16 +178,27 @@
     signedIn: function () { return !!session; },
     user: function () { return session && session.user; },
     takeLink: takeLink,
-    signIn: function (email, password) {
-      return request('/auth/v1/token?grant_type=password', { method: 'POST', body: { email: email, password: password } }).then(keep);
+    // form: Formular mit dem Kasten [data-captcha] für das Captcha (E245), sonst unten auf der Seite
+    signIn: function (email, password, form) {
+      return captcha(form).then(function (tk) {
+        return request('/auth/v1/token?grant_type=password', { method: 'POST', body: withCaptcha({ email: email, password: password }, tk) });
+      }).then(keep);
     },
-    // Metadaten wie die App (birth_year, locale), dazu signup_source: 'web', damit sich Konten aus der Werbephase zählen lassen
-    signUp: function (email, password, birthYear) {
-      return request('/auth/v1/signup' + redirect(), { method: 'POST', body: { email: email, password: password,
-        data: { birth_year: birthYear, locale: cfg.lang, signup_source: 'web' } } }).then(function (b) { keep(b); return b; });
+    // Metadaten wie die App (birth_year, locale), dazu signup_source: 'web', damit sich Konten aus der Werbephase zählen lassen.
+    // extra (E245): referred_by (Code aus dem Einladungslink) oder referred_by_name (Name aus dem Feld)
+    signUp: function (email, password, birthYear, extra, form) {
+      var data = { birth_year: birthYear, locale: cfg.lang, signup_source: 'web' };
+      if (extra) for (var k in extra) data[k] = extra[k];
+      return captcha(form).then(function (tk) {
+        return request('/auth/v1/signup' + redirect(), { method: 'POST', body: withCaptcha({ email: email, password: password, data: data }, tk) });
+      }).then(function (b) { keep(b); return b; });
     },
-    resend: function (email) { return request('/auth/v1/resend' + redirect(), { method: 'POST', body: { type: 'signup', email: email } }); },
-    recover: function (email) { return request('/auth/v1/recover' + redirect(), { method: 'POST', body: { email: email } }); },
+    resend: function (email, form) {
+      return captcha(form).then(function (tk) { return request('/auth/v1/resend' + redirect(), { method: 'POST', body: withCaptcha({ type: 'signup', email: email }, tk) }); });
+    },
+    recover: function (email, form) {
+      return captcha(form).then(function (tk) { return request('/auth/v1/recover' + redirect(), { method: 'POST', body: withCaptcha({ email: email }, tk) }); });
+    },
     setPassword: function (password) { return authed('/auth/v1/user', { method: 'PUT', body: { password: password } }); },
     // Neue E-Mail: Supabase schickt den Link (bei sicherem Wechsel an beide Adressen), gültig erst nach der Bestätigung
     setEmail: function (email) {
@@ -147,6 +214,15 @@
     signOutLocal: signOutLocal,
     rest: function (path) { return authed('/rest/v1/' + path); },
     rpc: function (name, args) { return authed('/rest/v1/rpc/' + name, { method: 'POST', body: args || {} }); },
+    // Öffentliche Funktion: angemeldet mit Token (dann auch der eigene Stand), sonst ohne
+    publicRpc: function (name, args) {
+      return session ? authed('/rest/v1/rpc/' + name, { method: 'POST', body: args || {} }).catch(function (e) {
+        if (e.code === 'not_signed_in') return anon('/rest/v1/rpc/' + name, args);
+        throw e;
+      }) : anon('/rest/v1/rpc/' + name, args);
+    },
+    // Edge Function ohne Anmeldung (referral-search)
+    publicFn: function (name, body) { return anon('/functions/v1/' + name, body); },
     fn: function (name, body) { return authed('/functions/v1/' + name, { method: 'POST', body: body || {} }); },
     portraits: {
       get: function (key) { try { return (JSON.parse(localStorage.getItem(PICS) || '{}'))[key] || null; } catch (e) { return null; } },

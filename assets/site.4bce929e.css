@@ -526,8 +526,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.73ed583a.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.a18f3415.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.afbeb09a.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.d4f977d2.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1567,9 +1567,6 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 .prfilter { display: flex; flex-wrap: wrap; gap: var(--s-s); }
 .prfilter[hidden] { display: none; }
 /* Konto: Freundescode offen, darunter drei Knöpfe, die nach unten aufklappen */
-.prcode { max-width: 640px; margin: 0 0 var(--s-m); padding: var(--s-s) var(--s-l); border-radius: var(--r-l); background: linear-gradient(var(--card-top), var(--card-bottom)); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--card-edge); }
-.prcode[hidden] { display: none; }
-.prcode code { font: 700 17px/1 var(--display); letter-spacing: 1px; }
 .pracc { display: grid; gap: var(--s-m); margin-bottom: var(--s-l); max-width: 640px; }
 .pritem { padding: 0; overflow: hidden; }
 .pritem h3 { margin: 0; font-size: inherit; }
@@ -1639,5 +1636,78 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 /* Spielwissen: Karte mit Link zum Chat */
 .askcard { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-m) var(--s-l); }
 .askcard p { margin: 0; font: 600 20px/1.2 var(--display); }
+
+/* ---------- Freunde werben und Invite-Event (E245, Luis 22.10.2026) ---------- */
+/* Namensvorschläge unter dem Feld „Wer hat dich eingeladen?“ (Registrieren, Profil) */
+.suggfield { position: relative; }
+.sugg { list-style: none; margin: 0; padding: 4px; display: grid; gap: 2px; border: 1.5px solid var(--line); border-radius: var(--r-m); background: var(--surface); }
+.sugg[hidden] { display: none; }
+.suggbtn { width: 100%; min-height: 44px; text-align: left; padding: 8px 12px; border: 0; border-radius: var(--r-s, 8px); background: none; color: var(--text); font: 700 16px/1.2 var(--body); cursor: pointer; }
+.suggbtn:hover, .suggbtn:focus-visible { background: var(--accent-soft); }
+/* Kasten für das Captcha (Turnstile), nur sichtbar, solange es läuft */
+.captchabox { min-height: 65px; display: flex; justify-content: center; }
+.captchabox[hidden] { display: none; }
+
+/* Medaille mit Platz: rund, Farben wie MedalColors der App, ab Platz 4 schlicht */
+.medal { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ink); background: var(--surface-raised); color: var(--text); font: 600 18px/1 var(--display); flex: none; }
+.medal.small { width: 30px; height: 30px; font-size: 14px; }
+.p1 .medal, .medal.m1 { background: var(--medal-gold); color: var(--ink); }
+.p2 .medal, .medal.m2 { background: var(--medal-silver); color: var(--ink); }
+.p3 .medal, .medal.m3 { background: var(--medal-bronze); color: var(--ink); }
+
+/* Event-Seite */
+.ivwrap { padding-top: var(--s-xl); padding-bottom: var(--s-xxl); max-width: calc(820px + 2 * var(--page)); }
+.ivshare { display: grid; gap: var(--s-s); }
+.ivshare .buttons { margin-top: 0; align-items: center; }
+.ivgifts { display: flex; flex-wrap: wrap; gap: var(--s-s) var(--s-l); }
+.ivboard h2, .ivinfo h2 { font-size: clamp(24px, 4.5vw, 32px); margin-bottom: var(--s-m); }
+.podium { list-style: none; margin: 0 0 var(--s-m); padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-s); align-items: end; }
+.podium[hidden] { display: none; }
+.podplace { display: grid; justify-items: center; gap: 6px; padding: var(--s-m) var(--s-xs); text-align: center; border: 2px solid var(--ink); border-radius: var(--r-l) var(--r-l) var(--r-s, 8px) var(--r-s, 8px); background: linear-gradient(var(--card-top), var(--card-bottom)); box-shadow: 0 4px 0 var(--card-edge); min-width: 0; }
+.podplace[hidden] { visibility: hidden; display: grid; }
+.podplace.p1 { padding-top: var(--s-xl); padding-bottom: var(--s-xl); border-color: var(--medal-gold); border-width: 3px; }
+.podplace.p2 { border-color: var(--medal-silver); border-width: 3px; }
+.podplace.p3 { border-color: var(--medal-bronze); border-width: 3px; }
+.podplace.p1 .medal { width: 52px; height: 52px; font-size: 22px; }
+.podplace.me { outline: 3px solid var(--accent); outline-offset: 2px; }
+.podname { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 17px/1.2 var(--display); }
+.podscore { color: var(--text-muted); font-size: 14px; font-weight: 700; }
+.ivlist { list-style: none; margin: 0; padding: var(--s-xs) 0; display: grid; }
+.ivlist[hidden] { display: none; }
+.ivlist li { display: flex; align-items: center; gap: var(--s-s); padding: 8px var(--s-m); }
+.ivlist li + li { border-top: 1px dashed var(--line); }
+.ivlist li.me, .ivmine { background: var(--accent-soft); }
+.ivname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.ivscore { font-weight: 800; white-space: nowrap; }
+.ivmine { display: flex; align-items: center; gap: var(--s-s); margin-top: var(--s-s); border-color: var(--accent); }
+.ivmine strong { flex: 1; }
+.ivmine[hidden] { display: none; }
+.ivinfo { display: grid; gap: var(--s-m); padding-top: var(--s-xl); }
+@media (min-width: 760px) { .ivinfo { grid-template-columns: 1fr 1fr; } }
+.ivbonus, .ivprizes { list-style: none; margin: 0 0 var(--s-s); padding: 0; display: grid; gap: var(--s-s); }
+.ivbonus li { display: flex; align-items: center; gap: var(--s-m); }
+.ivbonus li img { width: 34px; height: 44px; object-fit: contain; flex: none; }
+.ivbonus li > span { display: grid; }
+.ivprizes li { display: flex; align-items: center; gap: var(--s-s); font-weight: 700; }
+.ivprizes li > span:nth-child(2) { flex: 1; }
+/* Karte auf der Startseite */
+.ivhome { display: flex; align-items: center; gap: var(--s-l); max-width: 760px; margin: 0 auto; }
+.ivhome img { width: 62px; height: 80px; object-fit: contain; flex: none; }
+.ivhome h2 { font-size: clamp(24px, 4vw, 32px); margin: 0 0 var(--s-xs); }
+.ivhome p { margin: 0; }
+.ivhome .buttons { margin-top: var(--s-m); }
+/* Karte im Profil */
+.prinvite { gap: var(--s-s); }
+.prstats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-s); margin: 0; }
+.prstats > div { display: grid; justify-items: center; text-align: center; padding: var(--s-s); border-radius: var(--r-m); background: var(--surface-raised); border: 1px solid var(--line); }
+.prstats dt { order: 2; color: var(--text-muted); font-size: 13px; font-weight: 700; }
+.prstats dd { order: 1; margin: 0; font: 600 26px/1.1 var(--display); }
+.prinvites { list-style: none; margin: 0; padding: 0; display: grid; }
+.prinvites[hidden] { display: none; }
+.prinvites li { display: flex; justify-content: space-between; gap: var(--s-m); padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.prinvites li:last-child { border-bottom: 0; }
+.prinvites .muted { color: var(--text-muted); }
+.prinvstate { color: var(--text-muted); font-weight: 700; font-size: 14px; text-align: right; }
+.prinvstate.done { color: var(--success, var(--accent)); }
 
 .w0{width:0%}.w1{width:1%}.w2{width:2%}.w3{width:3%}.w4{width:4%}.w5{width:5%}.w6{width:6%}.w7{width:7%}.w8{width:8%}.w9{width:9%}.w10{width:10%}.w11{width:11%}.w12{width:12%}.w13{width:13%}.w14{width:14%}.w15{width:15%}.w16{width:16%}.w17{width:17%}.w18{width:18%}.w19{width:19%}.w20{width:20%}.w21{width:21%}.w22{width:22%}.w23{width:23%}.w24{width:24%}.w25{width:25%}.w26{width:26%}.w27{width:27%}.w28{width:28%}.w29{width:29%}.w30{width:30%}.w31{width:31%}.w32{width:32%}.w33{width:33%}.w34{width:34%}.w35{width:35%}.w36{width:36%}.w37{width:37%}.w38{width:38%}.w39{width:39%}.w40{width:40%}.w41{width:41%}.w42{width:42%}.w43{width:43%}.w44{width:44%}.w45{width:45%}.w46{width:46%}.w47{width:47%}.w48{width:48%}.w49{width:49%}.w50{width:50%}.w51{width:51%}.w52{width:52%}.w53{width:53%}.w54{width:54%}.w55{width:55%}.w56{width:56%}.w57{width:57%}.w58{width:58%}.w59{width:59%}.w60{width:60%}.w61{width:61%}.w62{width:62%}.w63{width:63%}.w64{width:64%}.w65{width:65%}.w66{width:66%}.w67{width:67%}.w68{width:68%}.w69{width:69%}.w70{width:70%}.w71{width:71%}.w72{width:72%}.w73{width:73%}.w74{width:74%}.w75{width:75%}.w76{width:76%}.w77{width:77%}.w78{width:78%}.w79{width:79%}.w80{width:80%}.w81{width:81%}.w82{width:82%}.w83{width:83%}.w84{width:84%}.w85{width:85%}.w86{width:86%}.w87{width:87%}.w88{width:88%}.w89{width:89%}.w90{width:90%}.w91{width:91%}.w92{width:92%}.w93{width:93%}.w94{width:94%}.w95{width:95%}.w96{width:96%}.w97{width:97%}.w98{width:98%}.w99{width:99%}.w100{width:100%}

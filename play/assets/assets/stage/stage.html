@@ -617,7 +617,7 @@ if (typeof module !== 'undefined') module.exports = Hatch;
 const build2 = (() => {
   // ---------------- Bewegung legendärer Teile: Formeln (Luis 17.10.2026) ----------------
   // V: Bewegung der Form im Raum des Teils, F: Bewegung der Farbe. uAT Zeit, uAP (Tempo, Stärke, Höhe, Takt), uAC Mitte, uAX Achse
-  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7, flickerWave: 8 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8 };
+  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7, flickerWave: 8 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8, pump: 9 };
   const ANIM_V = [
     '',
     // flicker: oben stärker, seitliches Züngeln, Höhe wechselt
@@ -655,11 +655,14 @@ const build2 = (() => {
     'gl_FragColor.rgb *= 0.8 + 0.9 * pow(0.5 + 0.5 * sin(uAT * uAP.x + uAP.w), 2.0);',
     // run: helle Wellen laufen vom Ansatz des Teils nach außen (Adern, Lichtklingen)
     '{ float dd = length(vAL.xy); float rw = 0.5 + 0.5 * sin(dd * uAP.z * 2.0 - uAT * uAP.x * 2.0 + uAP.w); gl_FragColor.rgb = gl_FragColor.rgb * (0.75 + 0.9 * pow(rw, 6.0)) + 0.35 * pow(rw, 14.0); }',
+    // pump (Adern der Dämonenflügel, Luis 22.10.2026): langsamer Herzschlag, ein Schub Helligkeit wandert von der Wurzel nach außen
+    // wie gepumptes Blut, ein kleinerer folgt. Tempo und Wellenzahl kommen aus uAP der Welle (ripple), damit die Ader dieselbe Welle trägt
+    '{ float dd = length(vAL.xy); float ph = fract(uAT * uAP.x * 0.255 - dd * uAP.z * 0.13 + uAP.w); float bt = exp(-pow((ph - 0.3) * 6.5, 2.0)) + 0.5 * exp(-pow((ph - 0.52) * 8.0, 2.0)); gl_FragColor.rgb = gl_FragColor.rgb * (0.6 + 1.1 * bt) + vec3(0.32, 0.06, 0.04) * bt; }',
         ];
   // attr false: Werte als Uniform (ein Teil, ein Netz). attr true: zusammengefasste Teile, Werte je Ecke (aAP, aAC, aAX) und der
   // Rahmen des einzelnen Teils (aO Ursprung, aFX und aFY Achsen) im Raum des Netzes. Die Formel rechnet im Raum des Teils wie vorher
   function animShader(sh, V2, F2, attr) {
-    const vary = F2 === 8 ? 'varying vec3 vAL;\n' : '';
+    const vary = F2 === 8 || F2 === 9 ? 'varying vec3 vAL;\n' : '';
     if (!attr) {
       const head = 'uniform float uAT; uniform vec4 uAP; uniform vec3 uAC; uniform vec3 uAX;\n';
       if (V2 || vary) sh.vertexShader = head + vary + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (vary ? 'vAL = transformed;\n' : '') + ANIM_V[V2]);
@@ -4902,6 +4905,8 @@ vec3 rareHue(vec3 c, float a) {
         const finishPart = (m, o) => { mark(m); if (o && o.noTex) m.userData.noTex = true; return m; };
         const c = {
           s, tilt: tl, rnd, P,
+          // eigener fester Zufall je Ovaling und Zweck (Adern der Dämonenflügel), jeder Aufruf beginnt von vorn: beide Seiten und Paare gleich
+          seeded: tag => random32(d.seed + tag),
           tint(hex, unlit) { const k = (unlit ? 'u' : 'c') + hex; if (!roleColor[k]) { roleColor[k] = hex; if (unlit) UNLIT[k] = 1; } return k; },
           flat(outline, depth, role, o) {
             o = o || {}; let geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); if (o.z) geo.translate(0, 0, o.z * w * s);
@@ -7808,8 +7813,8 @@ const Wings = (() => {
     },
 
     // 21 Dämonenflügel: spitze Haut zwischen vier Fingern, Krallen am Gelenk und an jeder Spitze, immer fast schwarz
-    // Bewegt (Luis 17.10.2026: cooler): eine Welle läuft durch Haut und Knochen nach außen, durch die Glutadern fließt Glut vom
-    // Gelenk zu den Rändern, an den Krallen der Spitzen brennt dunkles Feuer, Funken steigen auf, das Gelenk glüht
+    // Bewegt (Luis 17.10.2026: cooler): eine Welle läuft durch Haut und Knochen nach außen, verzweigte Adern pulsieren vom
+    // Gelenk zu den Rändern (22.10.2026), an den Krallen der Spitzen brennt dunkles Feuer, Funken steigen auf, das Gelenk glüht
     21(c) {
       const t = c.tilt, el = [0.3, 0.74 - t * 0.5], tips = [[1.08, 0.92 + t], [1.16, 0.28 + t * 0.5], [0.86, -0.32], [0.46, -0.56]];
       const o = [[0, 0], el, tips[0]];
@@ -7819,13 +7824,45 @@ const Wings = (() => {
       // Phase 0, weil flickerWave die Welle ohne eigene Phase rechnet), so bleiben sie aufeinander. Geprüft mit web3d/tools/wing_check.js
       const w = wOf(c), wave = { v: 'ripple', s: 2.4, a: 0.06 * w, h: 4.5 / w, seed: 0 };
       c.flat(o, 0.03, 'demon', { anim: wave });
-      const vein = c.tint('#ff2a48', true);
-      for (let i = 0; i < tips.length - 1; i++) {
-        const a = tips[i], b = tips[i + 1], m = [(a[0] + b[0]) / 2 * 0.7 + el[0] * 0.3, (a[1] + b[1]) / 2 * 0.8 + el[1] * 0.2], s0 = [el[0] + (m[0] - el[0]) * 0.12, el[1] + (m[1] - el[1]) * 0.12];
-        const dx = m[0] - s0[0], dy = m[1] - s0[1], L = Math.hypot(dx, dy), nx = -dy / L * 0.016, ny = dx / L * 0.016;
-        const strip = [[s0[0] + nx, s0[1] + ny], [(s0[0] + m[0]) / 2 + nx * 1.4 + dx * 0.04, (s0[1] + m[1]) / 2 + ny * 1.4], [m[0], m[1]], [(s0[0] + m[0]) / 2 - nx * 1.4 + dx * 0.04, (s0[1] + m[1]) / 2 - ny * 1.4], [s0[0] - nx, s0[1] - ny]];
-        for (const zz of [1, -1]) c.flat(strip, 0.004, vein, { noTex: true, z: 0.022 * zz, anim: Object.assign({}, wave, { f: 'run' }) });
-      }
+      // Adern (Luis 22.10.2026, statt des gestrichelten Streifens): je Feld zwischen zwei Streben eine Hauptader vom Gelenk zur Kerbe
+      // der Hinterkante, davon zweigen Äste zu den Kanten des Felds ab, manche gabeln sich noch einmal. Zahl, Lage, Biegung und Gabeln
+      // aus einem eigenen festen Zufall (immer 80 Zahlen, je Feld 19). Jeder Ast liegt im Dreieck aus Gelenk, Kerbe und Spitze, also nie über einer
+      // Strebe und nie über dem Rand. Flach auf beiden Seiten der Haut, mit derselben Welle, der Puls (pump) läuft von der Wurzel nach außen
+      const vr = c.seeded ? c.seeded('|flügeladern|') : (() => { let a = 0.37; return () => (a = (a * 9301 + 0.4927) % 1); })();
+      const R = Array.from({ length: 80 }, () => vr());
+      let ri = 0; const nx = () => R[ri++ % R.length];
+      const vein = c.tint('#c4142e', true), veinAnim = Object.assign({}, wave, { f: 'pump' });
+      const L2 = (p, q, u) => [p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u];
+      // Ader als flaches Band entlang einer leicht gebogenen Linie, Breite von r0 auf r1, das Ende spitz
+      const strand = (p, q, r0, r1, bend) => {
+        const dx = q[0] - p[0], dy = q[1] - p[1], L = Math.hypot(dx, dy); if (L < 0.03) return;
+        const ux = -dy / L, uy = dx / L, n = Math.max(4, Math.round(L / 0.05)), mid = [], l = [], rr = [];
+        for (let i = 0; i <= n; i++) { const u = i / n, k = Math.sin(Math.PI * u) * bend * L; mid.push([p[0] + dx * u + ux * k, p[1] + dy * u + uy * k]); }
+        for (let i = 0; i <= n; i++) { const u = i / n, wd = (r0 + (r1 - r0) * u) * (i === n ? 0.15 : 1), a = mid[Math.max(0, i - 1)], b = mid[Math.min(n, i + 1)], tx = b[0] - a[0], ty = b[1] - a[1], tl = Math.hypot(tx, ty) || 1; l.push([mid[i][0] - ty / tl * wd, mid[i][1] + tx / tl * wd]); rr.push([mid[i][0] + ty / tl * wd, mid[i][1] - tx / tl * wd]); }
+        // Haut ist 0,03 dick, mit Fase reicht sie bis 0,0255: die Ader liegt knapp darauf
+        const outl = l.concat(rr.slice().reverse());
+        for (const zz of [1, -1]) c.flat(outl, 0.004, vein, { noTex: true, z: 0.0295 * zz, anim: veinAnim });
+        return mid;
+      };
+      // ein Feld: Scheitel ap, Kerbe nt, Spitzen ta und tb. Hauptader von nahe ap zur Kerbe, Äste zu den Kanten nt-ta und nt-tb
+      const field = (ap, ta, nt, tb, size) => {
+        const s0 = L2(ap, nt, 0.1), s1 = L2(ap, nt, 0.9), bend = (nx() - 0.5) * 0.12;
+        strand(s0, s1, 0.017 * size, 0.008 * size, bend);
+        const nb = 2 + Math.floor(nx() * 2.999), first = nx() < 0.5 ? 1 : -1;
+        for (let j = 0; j < 4; j++) {
+          const r1 = nx(), r2 = nx(), r3 = nx(), r4 = nx(); if (j >= nb) continue;
+          const side = j % 2 ? -first : first, tip = side > 0 ? ta : tb;
+          // Abzweig auf der Hauptader (Biegung der Hauptader mitgerechnet), Ziel auf der Kante zwischen Kerbe und Spitze, nicht bis zur Strebe
+          const u = 0.22 + 0.6 * (j + 0.3 + 0.5 * r1) / nb, dx = s1[0] - s0[0], dy = s1[1] - s0[1], LL = Math.hypot(dx, dy), k = Math.sin(Math.PI * u) * bend * LL;
+          const from = [s0[0] + dx * u - dy / LL * k, s0[1] + dy * u + dx / LL * k], to = L2(from, L2(nt, tip, 0.2 + 0.42 * r2), 0.86);
+          const br = strand(from, to, 0.011 * size, 0.005 * size, (r3 - 0.5) * 0.25);
+          // Gabel: ein kürzerer Zweig von der Mitte des Asts zur Kante, weiter zur Spitze hin
+          if (br && r4 < 0.6) { const m0 = br[Math.round(br.length * (0.45 + 0.15 * r3))] || br[br.length >> 1]; strand(m0, L2(m0, L2(nt, tip, Math.min(0.68, 0.32 + 0.42 * r2 + 0.12)), 0.8), 0.007 * size, 0.004 * size, (0.5 - r3) * 0.2); }
+        }
+      };
+      for (let i = 0; i < tips.length - 1; i++) { const a = tips[i], b = tips[i + 1]; field(el, a, [(a[0] + b[0]) / 2 * 0.74 + el[0] * 0.2, (a[1] + b[1]) / 2 * 0.86 + el[1] * 0.12], b, 1); }
+      // unteres Feld zwischen der letzten Strebe und dem Ansatz: von der Wurzel aus
+      field([0.06, 0.02], tips[3], [0.2, -0.32], [0.04, -0.2], 0.8);
       c.glow(el[0], el[1], 0.8, '#c2183f', 0.5, 1);
       c.tube([[0, 0], [el[0] * 0.5, el[1] * 0.55], el], 0.075, 0.05, 'demonBone', { local: true, anim: wave });
       c.cone(el[0], el[1], Math.atan2(1, -0.35), 0.035, 0.16, 10, 'demonClaw', { local: true, anim: wave });
@@ -28729,7 +28766,8 @@ const Eggs = (() => {
 //   promo.clear      [[x, z, r], …]     Kreise ohne Blumen und Gras (um jede Figur)
 //   promo.flowers    [[x, z, r, n], …]  Blumengruppen am Rand (n Blüten im Kreis r)
 //   promo.path       [[x, z, s], …]     heller Steinweg (flache Steine, s Größe), sonst die fünf Trittsteine
-//   promo.doorOpen   Winkel der offenen Tür (Bogenmaß), drinnen warmes Licht, dazu promo.doorLight (Stärke des Lichts)
+//   promo.doorOpen   Winkel der offenen Tür (Bogenmaß), drinnen warmes Licht, dazu promo.doorLight (Stärke des Lichts) und
+//                    promo.doorDim (0 bis 1, Standard 1: Eingang gedämpft wie Licht hinter einem Fenster)
 //   promo.glow       0 bis 1, Fenster und Tür leuchten auch am Tag (Fenster sonst nur in der Dämmerung)
 //   promo.pond       false ohne Teich, { x, z, s, turn, y, stone, flat } derselbe Teich an anderer Stelle, um s vergrößert und um
 //                    turn gedreht, Ufersteine in der Größe stone (Standard s) und um flat flacher
@@ -28857,6 +28895,88 @@ float gKeep(vec2 p) { vec2 w = fwidth(p); return 1.0 - smoothstep(0.3, 0.9, max(
   diffuseColor.rgb = c;
 }`);
     };
+  }
+  // Werbe-Fassung (Kopfbild der Website, Luis 22.10.2026: „Bäume mit etwas Struktur in Rinde und Krone statt glatter Flächen“):
+  // Muster im Shader aus Rauschen in den Koordinaten des Teils (wächst mit dem Baum), keine Bildtextur. kind 'bark': Furchen längs
+  // des Stamms, dunkle Rillen und helle Grate, dazu Flecken. kind 'leaf': kleine Blattbüschel als helle Kuppen mit dunklen Lücken,
+  // unten und innen dunkler, oben heller. Feine Muster blenden über fwidth aus wie beim Gras. k: Stärke (promo.treeTex)
+  function treeShade(m, kind, k) {
+    if (!(k > 0)) return;
+    m.customProgramCacheKey = () => 'treeShade-' + kind;
+    m.onBeforeCompile = sh => {
+      sh.uniforms.uTreeK = { value: k };
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vTreeP;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTreeP = position;');
+      const head = `#include <common>
+varying vec3 vTreeP;
+uniform float uTreeK;
+float tHash(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+float tNoise(vec3 p) {
+  vec3 i = floor(p), f = fract(p), u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(tHash(i), tHash(i + vec3(1, 0, 0)), u.x), mix(tHash(i + vec3(0, 1, 0)), tHash(i + vec3(1, 1, 0)), u.x), u.y),
+             mix(mix(tHash(i + vec3(0, 0, 1)), tHash(i + vec3(1, 0, 1)), u.x), mix(tHash(i + vec3(0, 1, 1)), tHash(i + vec3(1, 1, 1)), u.x), u.y), u.z);
+}
+float tKeep(vec3 p) { vec3 w = fwidth(p); return 1.0 - smoothstep(0.35, 0.95, max(w.x, max(w.y, w.z))); }`;
+      const body = kind === 'bark' ? `
+{
+  // Stamm: Winkel um die Achse, Furchen längs, leicht gewunden
+  float a = atan(vTreeP.z, vTreeP.x);
+  vec3 q = vec3(a * 2.2 + vTreeP.y * 0.6, vTreeP.y * 1.6, 0.0);
+  float n = tNoise(vec3(q.x * 3.0, q.y * 0.35, 1.7)) * 0.65 + tNoise(vec3(q.x * 7.0, q.y * 0.8, 4.1)) * 0.35;
+  float groove = smoothstep(0.42, 0.62, n);
+  float keep = tKeep(vec3(q.x * 7.0, q.y * 0.8, 0.0));
+  vec3 c = diffuseColor.rgb;
+  c *= mix(1.0, mix(0.62, 1.12, groove), uTreeK * keep);
+  float spot = tNoise(vTreeP * 9.0 + 3.0);
+  c *= 1.0 + (spot - 0.5) * 0.18 * uTreeK * tKeep(vTreeP * 9.0);
+  diffuseColor.rgb = c;
+}` : `
+{
+  // Krone: Blattbüschel (Kuppen) mit dunklen Lücken, dazu feine Blätter
+  vec3 p = vTreeP;
+  float n1 = tNoise(p * 4.2 + 1.3);
+  float n2 = tNoise(p * 9.5 - 2.1);
+  float n3 = tNoise(p * 21.0 + 5.7);
+  vec3 c = diffuseColor.rgb;
+  float clump = smoothstep(0.3, 0.75, n1 * 0.6 + n2 * 0.4);
+  c *= mix(1.0, mix(0.7, 1.14, clump), uTreeK);
+  c *= 1.0 + (n3 - 0.5) * 0.28 * uTreeK * tKeep(p * 21.0);
+  // oben heller (Licht von oben), unten dunkler (Schatten in der Krone)
+  c *= mix(1.0, mix(0.78, 1.1, smoothstep(-0.8, 0.8, p.y)), uTreeK);
+  diffuseColor.rgb = c;
+}`;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', head).replace('#include <color_fragment>', '#include <color_fragment>' + body);
+    };
+  }
+  // Werbe-Fassung: Kugel mit Blattbüscheln als Beulen (aus der Richtung jeder Ecke, gleiche Ecken gleich verschoben), Normalen
+  // über alle Dreiecke an derselben Stelle gemittelt, damit die Krone weich bleibt
+  function lumpyGeo(detail, amp, freq, seed) {
+    const g = new THREE.IcosahedronGeometry(1, detail), p = g.attributes.position, v = new THREE.Vector3();
+    const bump = (x, y, z) => fbm(x * freq + seed, z * freq + y * freq * 0.7 - seed) * 0.6 + noise(y * freq * 1.9 + seed * 0.3, x * freq * 1.9 - z * freq) * 0.4;
+    for (let i = 0; i < p.count; i++) {
+      v.set(p.getX(i), p.getY(i), p.getZ(i)).normalize();
+      const d = 1 + (bump(v.x, v.y, v.z) - 0.5) * amp * 2;
+      p.setXYZ(i, v.x * d, v.y * d, v.z * d);
+    }
+    g.computeVertexNormals();
+    const nrm = g.attributes.normal, acc = new Map(), key = i => Math.round(p.getX(i) * 1e4) + ',' + Math.round(p.getY(i) * 1e4) + ',' + Math.round(p.getZ(i) * 1e4);
+    for (let i = 0; i < p.count; i++) { const k = key(i), a = acc.get(k) || [0, 0, 0]; a[0] += nrm.getX(i); a[1] += nrm.getY(i); a[2] += nrm.getZ(i); acc.set(k, a); }
+    for (let i = 0; i < p.count; i++) { const a = acc.get(key(i)), l = Math.hypot(a[0], a[1], a[2]) || 1; nrm.setXYZ(i, a[0] / l, a[1] / l, a[2] / l); }
+    return g;
+  }
+  // Werbe-Fassung: Stamm mit Furchen (Rillen nach innen, leicht gewunden), nach oben schlanker wie der Stamm der App
+  function barkGeo(seed) {
+    const g = new THREE.CylinderGeometry(0.16, 0.24, 1.6, 28, 10), p = g.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const x = p.getX(i), y = p.getY(i), z = p.getZ(i), r = Math.hypot(x, z);
+      if (r < 1e-4) continue;
+      const a = Math.atan2(z, x), n = noise(a * 2.2 * 3.0 + y * 1.8 + seed, y * 0.9);
+      const d = 1 - 0.07 * Math.pow(Math.abs(Math.sin(a * 7 + y * 0.9 + n * 2.5)), 3) + (n - 0.5) * 0.06;
+      p.setXYZ(i, x * d, y, z * d);
+    }
+    g.computeVertexNormals();
+    return g;
   }
   // Textur aus einer Formel: fn(u, v) gibt [r, g, b] von 0 bis 255 (sRGB), wiederholbar
   function dataTex(w, h, fn) {
@@ -29148,12 +29268,16 @@ float gKeep(vec2 p) { vec2 w = fwidth(p); return 1.0 - smoothstep(0.3, 0.9, max(
       if (open) {
         // Warmes Licht im Eingang: Bogenfläche knapp hinter der Tür (vor der Schale, die oben fast bis an die Tür reicht), unten
         // hell gelb, oben orange, dazu ein weicher Schein vor dem Bogen und ein Punktlicht, das Weg und Figuren davor streift
-        const inner = new THREE.ShapeGeometry(doorShape, 20), ip = inner.attributes.position, ic = [], hi = lin('#fff0b8'), lo = lin('#ffa040');
-        for (let i = 0; i < ip.count; i++) { const c = mix(hi, lo, Math.pow(ip.getY(i) / (H + W1), 1.3) * 0.85 + Math.abs(ip.getX(i)) / W1 * 0.25); ic.push(c.r, c.g, c.b); }
+        // promo.doorDim (0 bis 1, Standard 1 wie bisher): gedämpfter Eingang wie warmes Licht hinter einem Fenster statt einer Lampe
+        // (Kopf der Startseite, Luis 22.10.2026): Bogenfläche dunkler und orange statt fast weiß, Schein schwächer
+        const dim = P.doorDim != null ? P.doorDim : 1;
+        const inner = new THREE.ShapeGeometry(doorShape, 20), ip = inner.attributes.position, ic = [];
+        const hi = dim < 1 ? lin('#fff0b8').lerp(lin('#ffbf6a'), 1 - dim) : lin('#fff0b8'), lo = dim < 1 ? lin('#ffa040').lerp(lin('#c8601e'), 1 - dim) : lin('#ffa040'), dk = 0.55 + 0.45 * dim;
+        for (let i = 0; i < ip.count; i++) { const c = mix(hi, lo, Math.pow(ip.getY(i) / (H + W1), 1.3) * 0.85 + Math.abs(ip.getX(i)) / W1 * 0.25); if (dim < 1) c.multiplyScalar(dk); ic.push(c.r, c.g, c.b); }
         inner.setAttribute('color', new THREE.Float32BufferAttribute(ic, 3));
         const room = add(new THREE.Mesh(inner, new THREE.MeshBasicMaterial({ vertexColors: true, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })), hut);
         room.position.set(0, 0, 1.215);
-        const gl = glowSprite(0xffb050, 1.7); gl.material.opacity = 0.55; gl.position.set(0, 0.5, 1.45); hut.add(gl); glass.push({ sprite: gl, door: true });
+        const gl = glowSprite(0xffb050, 1.7); gl.material.opacity = 0.55; gl.position.set(0, 0.5, 1.45); hut.add(gl); glass.push({ sprite: gl, door: true, dim });
         const pl = new THREE.PointLight(0xffb258, P.doorLight != null ? P.doorLight : 1.6, 7, 2); pl.position.set(0, 0.62, 1.75); hut.add(pl);
       }
       if (!P || !P.path) { const step = add(new THREE.Mesh(rockGeo(7.7, false), vmat({ roughness: 0.95 })), hut); step.scale.set(0.5, 0.06, 0.24); step.position.set(0, 0.03, 1.48); }
@@ -29281,13 +29405,22 @@ float gKeep(vec2 p) { vec2 w = fwidth(p); return 1.0 - smoothstep(0.3, 0.9, max(
     {
       const leafG = new THREE.IcosahedronGeometry(1, 2), leafFar = new THREE.IcosahedronGeometry(1, 1), trunkM = mat('#8a5a34');
       const LEAVES = [['#4f9e3f', '#6cbf4c'], ['#3d8a3d', '#5cad48'], ['#5aa64a', '#86c95a'], ['#e88fb4', '#f6b6cf']];
+      // Werbe-Fassung mit promo.treeTex (Kopfbild der Website): Kronen aus Blattbüscheln, Stamm mit Furchen und Rindenmuster. Ohne
+      // treeTex wie bisher (App, Website, Bot-Banner), dieselbe Folge der Zufallszahlen in beiden Fällen
+      const TT = P && P.treeTex > 0 ? P.treeTex : 0;
+      const leafTT = TT ? [lumpyGeo(9, 0.13, 2.3, 1.7), lumpyGeo(9, 0.13, 2.3, 5.3), lumpyGeo(9, 0.13, 2.3, 9.1)] : null;
+      const barkTT = TT ? barkGeo(2.4) : null;
+      if (TT) treeShade(trunkM, 'bark', TT);
+      let ttN = 0;
       const tree = (x, z, s, kind, far, placed) => {
         if (!placed && P && P.keepTree && !P.keepTree(x, z, !!far, kind)) return;
         const t = new THREE.Group(), [c1, c2] = LEAVES[kind];
-        const tr = add(new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.24, 1.6, 10), trunkM), t); tr.position.y = 0.8;
+        const tr = add(new THREE.Mesh(TT ? barkTT : new THREE.CylinderGeometry(0.16, 0.24, 1.6, 10), trunkM), t); tr.position.y = 0.8;
         const blobs = 3 + Math.floor(rnd() * 3);
         for (let i = 0; i < blobs; i++) {
-          const a = i / blobs * Math.PI * 2 + rnd(), d = i === 0 ? 0 : 0.55, m = add(new THREE.Mesh(far ? leafFar : leafG, mat(i % 2 ? c1 : c2, { flatShading: false })), t);
+          const lm = mat(i % 2 ? c1 : c2, { flatShading: false });
+          if (TT) treeShade(lm, 'leaf', TT);
+          const a = i / blobs * Math.PI * 2 + rnd(), d = i === 0 ? 0 : 0.55, m = add(new THREE.Mesh(TT ? leafTT[ttN++ % 3] : far ? leafFar : leafG, lm), t);
           const r = i === 0 ? 1.0 : 0.65 + rnd() * 0.2; m.scale.setScalar(r); m.position.set(Math.cos(a) * d, 2.05 + (i === 0 ? 0.25 : rnd() * 0.3), Math.sin(a) * d);
         }
         t.position.set(x, heightAt(x, z) - 0.05, z); t.scale.setScalar(s); t.rotation.y = rnd() * 6; group.add(t);
@@ -29439,7 +29572,7 @@ float gKeep(vec2 p) { vec2 w = fwidth(p); return 1.0 - smoothstep(0.3, 0.9, max(
       // Werbe-Fassung: promo.glow lässt Fenster und offene Tür auch am Tag leuchten
       const lit = Math.max(night, P && P.glow != null ? P.glow : 0);
       for (const g of glass) {
-        if (g.door) { g.sprite.material.opacity = 0.25 + 0.4 * lit; continue; }
+        if (g.door) { g.sprite.material.opacity = (0.25 + 0.4 * lit) * (g.dim != null ? g.dim : 1); continue; }
         if (g.sprite) { g.sprite.material.opacity = 0.8 * lit; g.sprite.visible = lit > 0.02; }
         else g.color.copy(glassDay).lerp(glassNight, Math.min(1, lit * 1.3));
       }
@@ -40610,7 +40743,7 @@ window.ovalingsStage = b => { try { enqueue(typeof b === 'string' ? JSON.parse(b
 // Fünftel der Bauzeit. Sie wird einmal gerechnet, kompakt gepackt (Lage 16 Bit, Farben 8 Bit, Normalen werden neu
 // gerechnet) und von der App als Datei abgelegt. Der Schlüssel kommt aus den Eingaben des Baukastens und seinem Stand,
 // ändert sich der Baukasten, wird neu gerechnet.
-const BUILDER_HASH = 'cbfc489503';
+const BUILDER_HASH = 'dc0a7316d3';
 const SkinStore = (() => {
   // Grenze nach Größe statt Anzahl (Lina 14.10.2026): eine Haut belegt rund 400 KB, ihre Abstände fürs Skelett rund 290 KB. Mit 40
   // Einträgen passten nur noch 20 Figuren, seit auch die Porträts mit Skelett bauen, eine Sammlung rechnete dann alles neu
