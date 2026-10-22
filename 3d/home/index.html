@@ -16018,6 +16018,9 @@ function bossView() {
   function build(kind) {
     const mod = BOSS_MODULES[kind] && BOSS_MODULES[kind]();
     const opts = { env: bossEnv(), detail: 'battle' };
+    // Bosses.build baut für unbekannte Schlüssel still den Herrn der Schatten. Unbekannte deshalb abbrechen, dann bleibt das 2D-Bild
+    // stehen (Prüfung 21.10.2026). Ein neuer Boss braucht hier ein Modul und in build_pages.py seine Datei in _site_bosses
+    if (!mod && !['warden', 'nightlord', 'toad'].includes(kind)) throw new Error('Boss ohne 3D auf der Startseite: ' + kind);
     const boss = mod ? mod.build(opts) : Bosses.build(kind, opts);
     const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(24, 1, 0.1, 300);
     scene.add(lightRig(null)); scene.add(boss.group);

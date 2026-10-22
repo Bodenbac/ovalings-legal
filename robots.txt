@@ -4,5 +4,6 @@ Disallow: /3d/
 Disallow: /confirmed
 Disallow: /parents
 Disallow: /parents-de
+Disallow: /play/
 
 Sitemap: https://ovalings.app/sitemap.xml
