@@ -526,8 +526,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.0e235971.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.b9d0265a.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.73ed583a.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.a18f3415.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1554,8 +1554,41 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 @media (prefers-reduced-motion: reduce) { .prpic img.egg { animation: none; } }
 @keyframes prwobble { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
 .prname { font: 700 15px/1.2 var(--body); text-align: center; overflow-wrap: anywhere; }
+/* Karten wie die Sammlung der App (Luis 22.10.2026): Verlauf der Familie in beiden Modi, Licht hell, Schatten dunkel */
+.prgrid li[hidden] { display: none; }
+.prgrid .fam-light .prtile, .prgrid .fam-shadow .prtile { background: radial-gradient(circle at 50% 38%, var(--g0), var(--g1)); }
+.prgrid .fam-light .prtile, .prgrid .fam-light .prtile:hover { color: var(--ink); }
+.prgrid .fam-shadow .prtile, .prgrid .fam-shadow .prtile:hover { color: var(--night-text); }
+.prname { font-family: var(--display); font-weight: 600; font-size: 16px; }
+.prname.fit1 { font-size: 14px; }
+.prname.fit2 { font-size: 12px; }
+/* Filter Alle, Licht, Schatten neben der Überschrift, am Handy darunter */
+.prhead { flex-wrap: wrap; justify-content: space-between; gap: var(--s-s) var(--s-m); }
+.prfilter { display: flex; flex-wrap: wrap; gap: var(--s-s); }
+.prfilter[hidden] { display: none; }
+/* Konto: Freundescode offen, darunter drei Knöpfe, die nach unten aufklappen */
+.prcode { max-width: 640px; margin: 0 0 var(--s-m); padding: var(--s-s) var(--s-l); border-radius: var(--r-l); background: linear-gradient(var(--card-top), var(--card-bottom)); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--card-edge); }
+.prcode[hidden] { display: none; }
+.prcode code { font: 700 17px/1 var(--display); letter-spacing: 1px; }
+.pracc { display: grid; gap: var(--s-m); margin-bottom: var(--s-l); max-width: 640px; }
+.pritem { padding: 0; overflow: hidden; }
+.pritem h3 { margin: 0; font-size: inherit; }
+.prbtn {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-m); width: 100%; min-height: 60px; padding: var(--s-m) var(--s-l);
+  border: 0; background: none; color: var(--text); font: 600 19px/1.2 var(--display); text-align: left; cursor: pointer;
+}
+.prbtn:hover { color: var(--accent); }
+/* Winkel nach unten, offen nach oben gedreht */
+.prbtn::after {
+  content: ""; flex: none; width: 10px; height: 10px; margin: -4px 4px 0 0; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
+  transform: rotate(45deg); transition: transform var(--t-quick) var(--ease);
+}
+.prbtn[aria-expanded="true"]::after { transform: translateY(5px) rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) { .prbtn::after { transition: none; } }
+.prpanel { padding: 0 var(--s-l) var(--s-l); border-top: 1px dashed var(--line); padding-top: var(--s-m); }
+.prpanel[hidden] { display: none; }
+.prend { max-width: 640px; }
 .prempty { display: grid; justify-items: center; gap: var(--s-s); text-align: center; margin-bottom: var(--s-m); }
-.prcards { display: grid; gap: var(--s-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
 .prrows { margin-top: 0; }
 .prrows dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; text-align: right; }
 .prdelete { border-color: var(--danger); margin-bottom: var(--s-l); }

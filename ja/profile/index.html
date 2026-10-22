@@ -30,7 +30,7 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="stylesheet" href="../../assets/site.54eeef0d.css">
+<link rel="stylesheet" href="../../assets/site.f02c1585.css">
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -85,51 +85,63 @@
 
   <section class="section prsection" data-main hidden aria-labelledby="provtitle">
     <div class="prhead">
-      <h2 id="provtitle">あなたのOvalings</h2>      <span class="chip soft" data-count hidden></span>
+      <h2 id="provtitle">あなたのOvalings</h2>      <div class="prfilter" role="group" aria-labelledby="provtitle" data-filter hidden>
+        <button class="pill" type="button" data-fam="" aria-pressed="true">すべて<span data-n></span></button>
+<button class="pill fam-light" type="button" data-fam="light" aria-pressed="false">光<span data-n></span></button><button class="pill fam-shadow" type="button" data-fam="shadow" aria-pressed="false">影<span data-n></span></button>      </div>
     </div>
     <div class="card prempty" data-empty hidden>
       <img class="acart float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="120" height="120">
       <p>まだOvalingがいません。最初のタマゴが待っています。ゲームの配信が始まり、アプリでふ化させると、ここに表示されます。</p>
     </div>
     <ul class="prgrid" data-list></ul>
-    <p class="note" data-hint>Ovalingをタップすると3Dで見られます。ふ化とバトルはアプリで遊べます。</p>
   </section>
 
   <section class="section prsection" data-account hidden aria-labelledby="pracctitle">
     <h2 id="pracctitle">アカウント</h2>
-    <div class="prcards">
-      <form class="card acform" data-form="name" novalidate>
-        <label class="field"><span class="fieldlabel">表示名</span>
-          <input name="name" type="text" autocomplete="nickname" maxlength="24" placeholder="2〜24文字" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">保存</button></div>
-        <dl class="rows prrows" data-code-row hidden><div><dt>あなたのフレンドコード</dt><dd><code data-code></code></dd></div></dl>
-      </form>
-
-      <form class="card acform" data-form="email" novalidate>
-        <dl class="rows prrows"><div><dt>メールアドレス</dt><dd data-email></dd></div></dl>
-        <p class="note" data-email-pending hidden></p>
-        <label class="field"><span class="fieldlabel">新しいメールアドレス</span>
-          <input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">変更</button></div>
-      </form>
-
-      <form class="card acform" data-form="password" novalidate>
-        <h3>パスワードを変更</h3>
-        <label class="field"><span class="fieldlabel">パスワード</span>
-          <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8文字以上" required></label>
-        <label class="field"><span class="fieldlabel">パスワード（確認）</span>
-          <input name="password2" type="password" autocomplete="new-password" minlength="8" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">保存</button></div>
-      </form>
-
-      <div class="card acform">
-        <div class="buttons">
-          <button class="ob medium secondary" type="button" data-signout>ログアウト</button>
-          <button class="ob medium danger" type="button" data-delete>アカウント削除</button>
+    <dl class="rows prrows prcode" data-code-row hidden><div><dt>あなたのフレンドコード</dt><dd><code data-code></code></dd></div></dl>
+    <div class="pracc" data-acc>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-name" aria-expanded="false" aria-controls="prpanel-name">表示名を変更</button></h3>
+        <div class="prpanel" id="prpanel-name" role="region" aria-labelledby="prbtn-name" hidden>
+          <form class="acform" data-form="name" novalidate>
+            <label class="field"><span class="fieldlabel">表示名</span>
+              <input name="name" type="text" autocomplete="nickname" maxlength="24" placeholder="2〜24文字" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">保存</button></div>
+          </form>
         </div>
+      </div>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-email" aria-expanded="false" aria-controls="prpanel-email">メールアドレスを変更</button></h3>
+        <div class="prpanel" id="prpanel-email" role="region" aria-labelledby="prbtn-email" hidden>
+          <form class="acform" data-form="email" novalidate>
+            <dl class="rows prrows"><div><dt>メールアドレス</dt><dd data-email></dd></div></dl>
+            <p class="note" data-email-pending hidden></p>
+            <label class="field"><span class="fieldlabel">新しいメールアドレス</span>
+              <input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">変更</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-password" aria-expanded="false" aria-controls="prpanel-password">パスワードを変更</button></h3>
+        <div class="prpanel" id="prpanel-password" role="region" aria-labelledby="prbtn-password" hidden>
+          <form class="acform" data-form="password" novalidate>
+            <label class="field"><span class="fieldlabel">パスワード</span>
+              <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8文字以上" required></label>
+            <label class="field"><span class="fieldlabel">パスワード（確認）</span>
+              <input name="password2" type="password" autocomplete="new-password" minlength="8" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">保存</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card acform prend">
+      <div class="buttons">
+        <button class="ob medium secondary" type="button" data-signout>ログアウト</button>
+        <button class="ob medium danger" type="button" data-delete>アカウント削除</button>
       </div>
     </div>
   </section>
@@ -218,6 +230,6 @@
   <ul class="langchoice">
 <li><a href="../../en/profile/" hreflang="en" lang="en" data-lang="en"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" data-flag="en" alt="" aria-hidden="true" width="30" height="20"></span>English</a></li><li><a href="../../de/profile/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" data-flag="de" alt="" aria-hidden="true" width="30" height="20"></span>Deutsch</a></li><li><a href="../../es/profile/" hreflang="es" lang="es" data-lang="es"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" data-flag="es" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/profile/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" data-flag="pt" alt="" aria-hidden="true" width="30" height="20"></span>Português</a></li><li><a href="../../fr/profile/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" data-flag="fr" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/profile/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" data-flag="tr" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" data-flag="ja" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="../../ko/profile/" hreflang="ko" lang="ko" data-lang="ko"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" data-flag="ko" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/profile/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" data-flag="id" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script type="application/json" id="authcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "htmlLang": "ja", "redirect": "https://ovalings.app/ja/account/", "account": "../account/", "profile": "./", "viewer": "../ovaling/", "home": "../", "frame": "../../3d/viewer/#v", "minAge": 16, "nameMin": 2, "nameMax": 24, "portraitVersion": "b5464eaac4", "eggs": {"1": "../../assets/art/egg/normal-352.e251ef0b.webp", "2": "../../assets/art/egg/rare-352.6650fcac.webp", "3": "../../assets/art/egg/epic-352.f82d1a4a.webp", "4": "../../assets/art/egg/legendary-352.ce88d2bb.webp", "5": "../../assets/art/egg/bright-352.84e3a7f8.webp", "6": "../../assets/art/egg/dark-352.0f36951b.webp"}, "text": {"titles": {"signin": "ログイン", "register": "アカウント作成", "sent": "アカウント作成", "forgot": "パスワードをお忘れですか？", "recovery": "新しいパスワード", "done": "Ovalings"}, "errors": {"enter_email": "メールアドレスを入力してください。", "enter_password": "パスワードを入力してください。", "bad_email": "メールアドレスが正しくないようです。", "password_min": "8文字以上で入力してください。", "passwords_differ": "パスワードが一致しません。", "year": "生まれた年を4桁で入力してください。", "too_young": "Ovalingsは16歳以上の方向けです。", "wrong_login": "メールアドレスまたはパスワードが正しくありません。", "not_confirmed": "先にリンクからメールアドレスを確認してください。", "exists": "このメールアドレスのアカウントはすでに存在します。", "weak_password": "このパスワードは弱すぎるか、データ流出で知られています。別の長いパスワードを選んでください。", "same_password": "今のパスワードではなく、新しいパスワードを選んでください。", "reauth": "セキュリティのため、先にもう一度ログインしてください。", "disabled": "今は登録もログインもできません。後でもう一度お試しください。", "banned": "アカウントがブロックされています。設定のお問い合わせからメッセージを送ってください。", "too_many": "試行回数が多すぎます。少し待ってからお試しください。", "offline": "接続がありません。インターネットを確認して、もう一度お試しください。", "not_signed_in": "ログインが切れました。もう一度ログインしてください。", "unknown": "問題が発生しました。少し待ってからもう一度お試しください。", "name_length": "名前は2〜24文字で入力してください。", "name_phone": "名前に電話番号は使えません。", "name_rejected": "この名前は使えません。別の名前を選んでください。", "link_expired": "このリンクは期限切れか、すでに使われています。ログインするか、新しいリンクを送ってもらってください。"}, "done": {"confirmed": ["メールアドレスを確認しました", "Ovalingsへようこそ。アカウントの準備ができ、ログインしました。"], "reset_sent": ["パスワードをお忘れですか？", "このメールのアカウントがあれば、パスワード再設定のリンクを送りました。"], "password": ["保存しました", "新しいパスワードを保存しました。"], "email": ["新しいメールアドレスを確認しました", "これからは新しいメールアドレスでログインします。"], "email_half": ["リンクがもう1つあります", "もう一方のメールアドレスに送ったリンクもタップしてください。これで変更が完了します。"]}, "resent": "リンクをもう一度送りました。", "resendWait": "{seconds} 秒後にもう一度", "profile": "プロフィール", "saved": "保存しました", "passwordDone": "新しいパスワードを保存しました。", "emailPending": "{email}に送ったリンクをタップしてください。", "deletionText": "{date}に完全に削除されます。それまではすべてそのままアカウントを残せます。", "deletionCancelled": "おかえりなさい。アカウントは残ります。", "deleteDone": "アカウントは30日後に削除されます。残す場合はそれまでにログインしてください。", "count": "Ovalings {count}体", "open": "3Dで見る：{ovaling}", "frameTitle": "3DのOvaling。ドラッグで回転、2本の指またはマウスホイールでズームします。", "rarities": {"normal": "ノーマル", "rare": "レア", "epic": "エピック", "legendary": "レジェンド"}, "families": {"light": "光", "shadow": "影"}}}</script><script src="../../assets/site.b6c4becf.js" defer></script>
-<script src="../../assets/auth.c11e4736.js" defer></script><script src="../../assets/profile.5bed68df.js" defer></script></body>
+<script type="application/json" id="authcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "htmlLang": "ja", "redirect": "https://ovalings.app/ja/account/", "account": "../account/", "profile": "./", "viewer": "../ovaling/", "home": "../", "frame": "../../3d/viewer/#v", "minAge": 16, "nameMin": 2, "nameMax": 24, "portraitVersion": "9bcff9203a", "eggs": {"1": "../../assets/art/egg/normal-352.e251ef0b.webp", "2": "../../assets/art/egg/rare-352.6650fcac.webp", "3": "../../assets/art/egg/epic-352.f82d1a4a.webp", "4": "../../assets/art/egg/legendary-352.ce88d2bb.webp", "5": "../../assets/art/egg/bright-352.84e3a7f8.webp", "6": "../../assets/art/egg/dark-352.0f36951b.webp"}, "text": {"titles": {"signin": "ログイン", "register": "アカウント作成", "sent": "アカウント作成", "forgot": "パスワードをお忘れですか？", "recovery": "新しいパスワード", "done": "Ovalings"}, "errors": {"enter_email": "メールアドレスを入力してください。", "enter_password": "パスワードを入力してください。", "bad_email": "メールアドレスが正しくないようです。", "password_min": "8文字以上で入力してください。", "passwords_differ": "パスワードが一致しません。", "year": "生まれた年を4桁で入力してください。", "too_young": "Ovalingsは16歳以上の方向けです。", "wrong_login": "メールアドレスまたはパスワードが正しくありません。", "not_confirmed": "先にリンクからメールアドレスを確認してください。", "exists": "このメールアドレスのアカウントはすでに存在します。", "weak_password": "このパスワードは弱すぎるか、データ流出で知られています。別の長いパスワードを選んでください。", "same_password": "今のパスワードではなく、新しいパスワードを選んでください。", "reauth": "セキュリティのため、先にもう一度ログインしてください。", "disabled": "今は登録もログインもできません。後でもう一度お試しください。", "banned": "アカウントがブロックされています。設定のお問い合わせからメッセージを送ってください。", "too_many": "試行回数が多すぎます。少し待ってからお試しください。", "offline": "接続がありません。インターネットを確認して、もう一度お試しください。", "not_signed_in": "ログインが切れました。もう一度ログインしてください。", "unknown": "問題が発生しました。少し待ってからもう一度お試しください。", "name_length": "名前は2〜24文字で入力してください。", "name_phone": "名前に電話番号は使えません。", "name_rejected": "この名前は使えません。別の名前を選んでください。", "link_expired": "このリンクは期限切れか、すでに使われています。ログインするか、新しいリンクを送ってもらってください。"}, "done": {"confirmed": ["メールアドレスを確認しました", "Ovalingsへようこそ。アカウントの準備ができ、ログインしました。"], "reset_sent": ["パスワードをお忘れですか？", "このメールのアカウントがあれば、パスワード再設定のリンクを送りました。"], "password": ["保存しました", "新しいパスワードを保存しました。"], "email": ["新しいメールアドレスを確認しました", "これからは新しいメールアドレスでログインします。"], "email_half": ["リンクがもう1つあります", "もう一方のメールアドレスに送ったリンクもタップしてください。これで変更が完了します。"]}, "resent": "リンクをもう一度送りました。", "resendWait": "{seconds} 秒後にもう一度", "profile": "プロフィール", "saved": "保存しました", "passwordDone": "新しいパスワードを保存しました。", "emailPending": "{email}に送ったリンクをタップしてください。", "deletionText": "{date}に完全に削除されます。それまではすべてそのままアカウントを残せます。", "deletionCancelled": "おかえりなさい。アカウントは残ります。", "deleteDone": "アカウントは30日後に削除されます。残す場合はそれまでにログインしてください。", "open": "3Dで見る：{ovaling}", "all": "すべて", "frameTitle": "3DのOvaling。ドラッグで回転、2本の指またはマウスホイールでズームします。", "rarities": {"normal": "ノーマル", "rare": "レア", "epic": "エピック", "legendary": "レジェンド"}, "families": {"light": "光", "shadow": "影"}}}</script><script src="../../assets/site.b6c4becf.js" defer></script>
+<script src="../../assets/auth.c11e4736.js" defer></script><script src="../../assets/epithet.2d711eed.js" defer></script><script src="../../assets/profile.35fdf541.js" defer></script></body>
 </html>

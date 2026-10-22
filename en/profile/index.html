@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.0e235971.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.54eeef0d.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.73ed583a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.f02c1585.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -86,51 +86,63 @@
 
   <section class="section prsection" data-main hidden aria-labelledby="provtitle">
     <div class="prhead">
-      <h2 id="provtitle">Your Ovalings</h2>      <span class="chip soft" data-count hidden></span>
+      <h2 id="provtitle">Your Ovalings</h2>      <div class="prfilter" role="group" aria-labelledby="provtitle" data-filter hidden>
+        <button class="pill" type="button" data-fam="" aria-pressed="true">All<span data-n></span></button>
+<button class="pill fam-light" type="button" data-fam="light" aria-pressed="false">Light<span data-n></span></button><button class="pill fam-shadow" type="button" data-fam="shadow" aria-pressed="false">Shadow<span data-n></span></button>      </div>
     </div>
     <div class="card prempty" data-empty hidden>
       <img class="acart float" src="../../assets/mascot-357.9f251582.webp" alt="" aria-hidden="true" width="120" height="120">
       <p>No Ovalings yet. Your first egg is waiting for you. As soon as the game is out and you hatch it in the app, your Ovaling appears here.</p>
     </div>
     <ul class="prgrid" data-list></ul>
-    <p class="note" data-hint>Tap an Ovaling to see it in 3D. Hatching and battles happen in the app.</p>
   </section>
 
   <section class="section prsection" data-account hidden aria-labelledby="pracctitle">
     <h2 id="pracctitle">Account</h2>
-    <div class="prcards">
-      <form class="card acform" data-form="name" novalidate>
-        <label class="field"><span class="fieldlabel">Display name</span>
-          <input name="name" type="text" autocomplete="nickname" maxlength="24" placeholder="2 to 24 characters" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">Save</button></div>
-        <dl class="rows prrows" data-code-row hidden><div><dt>Your friend code</dt><dd><code data-code></code></dd></div></dl>
-      </form>
-
-      <form class="card acform" data-form="email" novalidate>
-        <dl class="rows prrows"><div><dt>Email</dt><dd data-email></dd></div></dl>
-        <p class="note" data-email-pending hidden></p>
-        <label class="field"><span class="fieldlabel">New email address</span>
-          <input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">Change</button></div>
-      </form>
-
-      <form class="card acform" data-form="password" novalidate>
-        <h3>Change password</h3>
-        <label class="field"><span class="fieldlabel">Password</span>
-          <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="at least 8 characters" required></label>
-        <label class="field"><span class="fieldlabel">Repeat password</span>
-          <input name="password2" type="password" autocomplete="new-password" minlength="8" required></label>
-        <p class="hint" role="status" data-error hidden></p>
-        <div class="buttons"><button class="ob small" type="submit">Save</button></div>
-      </form>
-
-      <div class="card acform">
-        <div class="buttons">
-          <button class="ob medium secondary" type="button" data-signout>Sign out</button>
-          <button class="ob medium danger" type="button" data-delete>Delete account</button>
+    <dl class="rows prrows prcode" data-code-row hidden><div><dt>Your friend code</dt><dd><code data-code></code></dd></div></dl>
+    <div class="pracc" data-acc>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-name" aria-expanded="false" aria-controls="prpanel-name">Change display name</button></h3>
+        <div class="prpanel" id="prpanel-name" role="region" aria-labelledby="prbtn-name" hidden>
+          <form class="acform" data-form="name" novalidate>
+            <label class="field"><span class="fieldlabel">Display name</span>
+              <input name="name" type="text" autocomplete="nickname" maxlength="24" placeholder="2 to 24 characters" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">Save</button></div>
+          </form>
         </div>
+      </div>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-email" aria-expanded="false" aria-controls="prpanel-email">Change email</button></h3>
+        <div class="prpanel" id="prpanel-email" role="region" aria-labelledby="prbtn-email" hidden>
+          <form class="acform" data-form="email" novalidate>
+            <dl class="rows prrows"><div><dt>Email</dt><dd data-email></dd></div></dl>
+            <p class="note" data-email-pending hidden></p>
+            <label class="field"><span class="fieldlabel">New email address</span>
+              <input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">Change</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="card pritem">
+        <h3><button class="prbtn" type="button" id="prbtn-password" aria-expanded="false" aria-controls="prpanel-password">Change password</button></h3>
+        <div class="prpanel" id="prpanel-password" role="region" aria-labelledby="prbtn-password" hidden>
+          <form class="acform" data-form="password" novalidate>
+            <label class="field"><span class="fieldlabel">Password</span>
+              <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="at least 8 characters" required></label>
+            <label class="field"><span class="fieldlabel">Repeat password</span>
+              <input name="password2" type="password" autocomplete="new-password" minlength="8" required></label>
+            <p class="hint" role="status" data-error hidden></p>
+            <div class="buttons"><button class="ob small" type="submit">Save</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card acform prend">
+      <div class="buttons">
+        <button class="ob medium secondary" type="button" data-signout>Sign out</button>
+        <button class="ob medium danger" type="button" data-delete>Delete account</button>
       </div>
     </div>
   </section>
@@ -219,6 +231,6 @@
   <ul class="langchoice">
 <li><a href="./" hreflang="en" lang="en" data-lang="en" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" data-flag="en" alt="" aria-hidden="true" width="30" height="20"></span>English</a></li><li><a href="../../de/profile/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" data-flag="de" alt="" aria-hidden="true" width="30" height="20"></span>Deutsch</a></li><li><a href="../../es/profile/" hreflang="es" lang="es" data-lang="es"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" data-flag="es" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/profile/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" data-flag="pt" alt="" aria-hidden="true" width="30" height="20"></span>Português</a></li><li><a href="../../fr/profile/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" data-flag="fr" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/profile/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" data-flag="tr" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="../../ja/profile/" hreflang="ja" lang="ja" data-lang="ja"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" data-flag="ja" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="../../ko/profile/" hreflang="ko" lang="ko" data-lang="ko"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" data-flag="ko" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/profile/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" data-flag="id" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script type="application/json" id="authcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "en", "htmlLang": "en", "redirect": "https://ovalings.app/en/account/", "account": "../account/", "profile": "./", "viewer": "../ovaling/", "home": "../", "frame": "../../3d/viewer/#v", "minAge": 16, "nameMin": 2, "nameMax": 24, "portraitVersion": "b5464eaac4", "eggs": {"1": "../../assets/art/egg/normal-352.e251ef0b.webp", "2": "../../assets/art/egg/rare-352.6650fcac.webp", "3": "../../assets/art/egg/epic-352.f82d1a4a.webp", "4": "../../assets/art/egg/legendary-352.ce88d2bb.webp", "5": "../../assets/art/egg/bright-352.84e3a7f8.webp", "6": "../../assets/art/egg/dark-352.0f36951b.webp"}, "text": {"titles": {"signin": "Sign in", "register": "Create account", "sent": "Create account", "forgot": "Forgot password?", "recovery": "New password", "done": "Ovalings"}, "errors": {"enter_email": "Please enter your email address.", "enter_password": "Please enter your password.", "bad_email": "This email address does not look right.", "password_min": "At least 8 characters.", "passwords_differ": "The passwords do not match.", "year": "Please enter your year of birth with four digits.", "too_young": "Ovalings is for players aged 16 and over.", "wrong_login": "Email or password is not correct.", "not_confirmed": "Please confirm your email first using the link.", "exists": "There is already an account for this email.", "weak_password": "This password is too weak or known from data leaks. Choose a different, longer one.", "same_password": "Choose a new password, not your current one.", "reauth": "For your security, please sign in again first.", "disabled": "Signing up and signing in is not possible right now. Please try again later.", "banned": "Your account is blocked. Write to us through Contact in the settings.", "too_many": "Too many attempts. Wait a moment and try again.", "offline": "No connection. Check your internet and try again.", "not_signed_in": "You are no longer signed in. Please sign in again.", "unknown": "Something went wrong. Please try again in a moment.", "name_length": "The name needs 2 to 24 characters.", "name_phone": "Phone numbers are not allowed in names.", "name_rejected": "This name is not allowed. Please choose another one.", "link_expired": "This link has expired or was already used. Sign in or ask for a new link."}, "done": {"confirmed": ["Email confirmed", "Welcome to Ovalings. Your account is ready and you are signed in."], "reset_sent": ["Forgot password?", "If there is an account for this email, we sent you a link to reset your password."], "password": ["Saved", "Your new password is saved."], "email": ["New email confirmed", "From now on you sign in with your new email address."], "email_half": ["One more link", "Now also tap the link we sent to your other email address. Then the change is done."]}, "resent": "We sent the link again.", "resendWait": "Again in {seconds} s", "profile": "Profile", "saved": "Saved", "passwordDone": "Your new password is saved.", "emailPending": "Tap the link sent to {email}.", "deletionText": "It will be deleted for good on {date}. Until then you can keep it, with everything in it.", "deletionCancelled": "Welcome back, your account stays.", "deleteDone": "Your account will be deleted in 30 days. Sign in before then to keep it.", "count": "{count} Ovalings", "open": "View in 3D: {ovaling}", "frameTitle": "The Ovaling in 3D. Drag to turn it, zoom with two fingers or the mouse wheel.", "rarities": {"normal": "Normal", "rare": "Rare", "epic": "Epic", "legendary": "Legendary"}, "families": {"light": "Light", "shadow": "Shadow"}}}</script><script src="../../assets/site.b6c4becf.js" defer></script>
-<script src="../../assets/auth.c11e4736.js" defer></script><script src="../../assets/profile.5bed68df.js" defer></script></body>
+<script type="application/json" id="authcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "en", "htmlLang": "en", "redirect": "https://ovalings.app/en/account/", "account": "../account/", "profile": "./", "viewer": "../ovaling/", "home": "../", "frame": "../../3d/viewer/#v", "minAge": 16, "nameMin": 2, "nameMax": 24, "portraitVersion": "9bcff9203a", "eggs": {"1": "../../assets/art/egg/normal-352.e251ef0b.webp", "2": "../../assets/art/egg/rare-352.6650fcac.webp", "3": "../../assets/art/egg/epic-352.f82d1a4a.webp", "4": "../../assets/art/egg/legendary-352.ce88d2bb.webp", "5": "../../assets/art/egg/bright-352.84e3a7f8.webp", "6": "../../assets/art/egg/dark-352.0f36951b.webp"}, "text": {"titles": {"signin": "Sign in", "register": "Create account", "sent": "Create account", "forgot": "Forgot password?", "recovery": "New password", "done": "Ovalings"}, "errors": {"enter_email": "Please enter your email address.", "enter_password": "Please enter your password.", "bad_email": "This email address does not look right.", "password_min": "At least 8 characters.", "passwords_differ": "The passwords do not match.", "year": "Please enter your year of birth with four digits.", "too_young": "Ovalings is for players aged 16 and over.", "wrong_login": "Email or password is not correct.", "not_confirmed": "Please confirm your email first using the link.", "exists": "There is already an account for this email.", "weak_password": "This password is too weak or known from data leaks. Choose a different, longer one.", "same_password": "Choose a new password, not your current one.", "reauth": "For your security, please sign in again first.", "disabled": "Signing up and signing in is not possible right now. Please try again later.", "banned": "Your account is blocked. Write to us through Contact in the settings.", "too_many": "Too many attempts. Wait a moment and try again.", "offline": "No connection. Check your internet and try again.", "not_signed_in": "You are no longer signed in. Please sign in again.", "unknown": "Something went wrong. Please try again in a moment.", "name_length": "The name needs 2 to 24 characters.", "name_phone": "Phone numbers are not allowed in names.", "name_rejected": "This name is not allowed. Please choose another one.", "link_expired": "This link has expired or was already used. Sign in or ask for a new link."}, "done": {"confirmed": ["Email confirmed", "Welcome to Ovalings. Your account is ready and you are signed in."], "reset_sent": ["Forgot password?", "If there is an account for this email, we sent you a link to reset your password."], "password": ["Saved", "Your new password is saved."], "email": ["New email confirmed", "From now on you sign in with your new email address."], "email_half": ["One more link", "Now also tap the link we sent to your other email address. Then the change is done."]}, "resent": "We sent the link again.", "resendWait": "Again in {seconds} s", "profile": "Profile", "saved": "Saved", "passwordDone": "Your new password is saved.", "emailPending": "Tap the link sent to {email}.", "deletionText": "It will be deleted for good on {date}. Until then you can keep it, with everything in it.", "deletionCancelled": "Welcome back, your account stays.", "deleteDone": "Your account will be deleted in 30 days. Sign in before then to keep it.", "open": "View in 3D: {ovaling}", "all": "All", "frameTitle": "The Ovaling in 3D. Drag to turn it, zoom with two fingers or the mouse wheel.", "rarities": {"normal": "Normal", "rare": "Rare", "epic": "Epic", "legendary": "Legendary"}, "families": {"light": "Light", "shadow": "Shadow"}}}</script><script src="../../assets/site.b6c4becf.js" defer></script>
+<script src="../../assets/auth.c11e4736.js" defer></script><script src="../../assets/epithet.2d711eed.js" defer></script><script src="../../assets/profile.35fdf541.js" defer></script></body>
 </html>

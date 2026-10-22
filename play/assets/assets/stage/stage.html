@@ -617,7 +617,7 @@ if (typeof module !== 'undefined') module.exports = Hatch;
 const build2 = (() => {
   // ---------------- Bewegung legendärer Teile: Formeln (Luis 17.10.2026) ----------------
   // V: Bewegung der Form im Raum des Teils, F: Bewegung der Farbe. uAT Zeit, uAP (Tempo, Stärke, Höhe, Takt), uAC Mitte, uAX Achse
-  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8 };
+  const ANIM_V2 = { flicker: 1, wave: 2, spin: 3, bob: 4, ripple: 5, rise: 6, shoot: 7, flickerWave: 8 }, ANIM_F2 = { pulse: 1, shimmer: 2, twinkle: 3, sparkle: 4, holo: 5, sheen: 6, flare: 7, run: 8 };
   const ANIM_V = [
     '',
     // flicker: oben stärker, seitliches Züngeln, Höhe wechselt
@@ -634,6 +634,10 @@ const build2 = (() => {
     '{ float ph = fract(uAT * uAP.x * 0.12 + uAP.w); transformed = uAC + (transformed - uAC) * (1.0 - ph) * min(ph * 6.0, 1.0) + uAX * ph * uAP.z; }',
     // shoot (Sternschnuppe): fliegt entlang uAX über uAP.z, wächst am Anfang, schrumpft am Ende, Pause dazwischen
     '{ float ph = fract(uAT * uAP.x * 0.1 + uAP.w) * 1.6; float k = ph < 1.0 ? sin(3.1416 * ph) : 0.0; transformed = uAC + (transformed - uAC) * k + uAX * (min(ph, 1.0) - 0.5) * uAP.z; }',
+    // flickerWave (Flammen auf einem bewegten Flügel, Luis 22.10.2026: Teile lösten sich): züngelt wie flicker, dann trägt es dieselbe
+    // Welle wie die Flughaut (ripple mit Phase 0). uAC ist der Ursprung des Teils im Raum des Flügels, uAX die Welle (Tempo, Stärke, Höhe)
+    '{ float hy = clamp(transformed.y / uAP.z, 0.0, 1.0); float tt = uAT * uAP.x + uAP.w; transformed.x += sin(tt * 1.3 + transformed.y * 9.0) * uAP.y * hy; transformed.z += cos(tt * 1.1 + transformed.y * 7.0) * uAP.y * hy * 0.7; transformed.y *= 1.0 + 0.14 * sin(tt * 1.7) * hy; ' +
+      'vec3 wq = transformed + uAC; float dd = length(wq.xy); float tw = uAT * uAX.x; wq.z += sin(tw - dd * uAX.z) * uAX.y * min(dd * 1.5, 1.0); wq.xy *= 1.0 + 0.04 * sin(tw * 0.7) * min(dd, 1.0); transformed = wq - uAC; }',
         ];
   const ANIM_F = [
     '',
@@ -678,7 +682,7 @@ const build2 = (() => {
       const m = c.material, sp = m.userData && m.userData.animSpec, ud = c.userData;
       if (!sp || !sp.solo || ud.mouthTag || ud.eyePivot || ud.mouthPivot || ud.surface || ud.outline || ud.mouthPart) continue;
       const col = x => (x && x.getHexString ? x.getHexString() : '');
-      const key = [m.type, col(m.color), col(m.emissive), m.opacity, m.transparent, m.side, m.flatShading, m.roughness, m.metalness, m.depthWrite, m.vertexColors, m.envMap ? m.envMap.uuid : '', sp.V2, sp.F2, c.renderOrder].join('|');
+      const key = [m.type, col(m.color), col(m.emissive), m.opacity, m.transparent, m.side, m.flatShading, m.roughness, m.metalness, m.depthWrite, m.vertexColors, m.envMap ? m.envMap.uuid : '', sp.V2, sp.F2, c.renderOrder, ud.wingPair || 0].join('|');
       if (!groups.has(key)) groups.set(key, []); groups.get(key).push(c);
     }
     let merged = 0;
@@ -998,6 +1002,36 @@ const ARM_FORMS = [{ old: 1 }, { old: 2 }, { old: 8 }, { mod: 3 }, { mod: 1 }, {
     const rim = [72, 72, 44, 32][LOD] || 72, cs = smooth ? Math.max(1, Math.min(10, Math.round(rim / p.length))) : LOD >= 2 ? 6 : 10;
     const g = new THREE.ExtrudeGeometry(sh, { depth, bevelEnabled: true, bevelThickness: depth * 0.35, bevelSize: depth * 0.35, bevelSegments: LOD >= 2 ? 1 : 2, curveSegments: cs });
     g.translate(0, 0, -depth / 2); g.computeVertexNormals();
+    return g;
+  }
+  // Feiner teilen (Luis 22.10.2026, Dämonenflügel): eine Fläche, die im Shader eine Welle trägt, bewegt nur ihre Ecken, dazwischen
+  // bleibt sie eben. Die Deckel aus ExtrudeGeometry haben nur Randpunkte und lange Dreiecke, die Welle fehlte also mitten in der Haut,
+  // während dichte Knochen und Adern ihr folgten (sie standen frei davor oder tauchten ein). Jede Kante länger als L wird in der
+  // Mitte geteilt, so lange, bis keine mehr zu lang ist. Ob geteilt wird, hängt nur an der Kante, Nachbarn teilen also gleich (keine Risse)
+  function densify(geo, L) {
+    const src = geo.index ? geo.toNonIndexed() : geo, names = Object.keys(src.attributes), A = names.map(n => src.attributes[n]);
+    let tris = [];
+    for (let i = 0; i < src.attributes.position.count; i += 3) tris.push([0, 1, 2].map(k => A.map(a => Array.from({ length: a.itemSize }, (_, c) => a.array[(i + k) * a.itemSize + c]))));
+    const pi = names.indexOf('position'), ni = names.indexOf('normal'), L2 = L * L;
+    const len2 = (a, b) => { const p = a[pi], q = b[pi]; return (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 + (p[2] - q[2]) ** 2; };
+    const mid = (a, b) => a.map((v, j) => { const m = v.map((x, c) => (x + b[j][c]) / 2); if (j === ni) { const l = Math.hypot(...m) || 1; return m.map(x => x / l); } return m; });
+    for (let it = 0; it < 10; it++) {
+      let changed = false; const out = [];
+      for (const [a, b, c] of tris) {
+        const sab = len2(a, b) > L2, sbc = len2(b, c) > L2, sca = len2(c, a) > L2, n = sab + sbc + sca;
+        if (!n) { out.push([a, b, c]); continue; }
+        changed = true;
+        if (n === 3) { const x = mid(a, b), y = mid(b, c), z = mid(c, a); out.push([a, x, z], [x, b, y], [z, y, c], [x, y, z]); continue; }
+        // eine oder zwei Kanten: Ecken im Umlauf so drehen, dass die erste geteilte Kante bei a beginnt
+        let [p, q, r, s1, s2] = sab ? (sca && !sbc ? [c, a, b, sca, sab] : [a, b, c, sab, sbc]) : sbc ? [b, c, a, sbc, sca] : [c, a, b, sca, sab];
+        const m1 = mid(p, q);
+        if (!s2) out.push([p, m1, r], [m1, q, r]);
+        else { const m2 = mid(q, r); out.push([m1, q, m2], [p, m1, m2], [p, m2, r]); }
+      }
+      tris = out; if (!changed) break;
+    }
+    const g = new THREE.BufferGeometry();
+    names.forEach((n, j) => { const sz = A[j].itemSize, arr = new Float32Array(tris.length * 3 * sz); let o = 0; for (const t of tris) for (const v of t) for (const x of v[j]) arr[o++] = x; g.setAttribute(n, new THREE.BufferAttribute(arr, sz)); });
     return g;
   }
   // Schlauch mit laufender Dicke für eingerollte Linien. tubeGeo erkennt dort den Umlaufsinn nicht sicher.
@@ -2748,7 +2782,8 @@ vec3 rareHue(vec3 c, float a) {
       const V2 = ANIM_V2[a.v] || 0, F2 = ANIM_F2[a.f] || 0;
       // ANIM_SPEED (Luis 17.10.2026: 40 % langsamer) gilt für alle bewegten Teile
       const u = { value: 0 }, P = new THREE.Vector4((a.s || 3) * ANIM_SPEED, a.a || 0.04, a.h || 0.4, a.seed != null ? a.seed : Math.random() * 6.28);
-      const C0 = a.c ? a.c.clone() : V(0, 0, 0), AX = (a.ax || V(0, 1, 0)).clone().normalize();
+      // flickerWave: uAX trägt die Welle des Flügels (Tempo wie alle mit ANIM_SPEED, Stärke, Höhe), keine Achse
+      const C0 = a.c ? a.c.clone() : V(0, 0, 0), AX = V2 === 8 ? V((a.wave.s || 3) * ANIM_SPEED, a.wave.a || 0, a.wave.h || 0) : (a.ax || V(0, 1, 0)).clone().normalize();
       m.userData.animU = u;
       const prev = m.onBeforeCompile;
       // Werte für das Zusammenfassen am Knochen (mergeAnim): nur Materialien, die außer der Bewegung nichts im Shader ändern
@@ -3832,12 +3867,20 @@ vec3 rareHue(vec3 c, float a) {
             earFeather();
             // Reihen: Zahl, Länge, Breite, Abstand vom Ansatz, Winkel von bis (vom Ohr nach oben außen), Rolle, Tiefe
             const rows = [[7, 0.95, 0.09, 0.12, 1.55, 0.2, 'featherTint', 0], [6, 0.6, 0.085, 0.08, 1.45, 0.3, 'limb', 1], [5, 0.32, 0.075, 0.05, 1.35, 0.4, 'limb', 2]];
+            // Ein Fächer, eine Bewegung (Luis 22.10.2026: einzelne Federn lösten sich vom Fächer). Vorher wehte jede Feder mit eigener
+            // Phase und Stärke in ihrem eigenen Raum, die goldenen Spitzen in einem dritten, Reihen und Spitzen liefen auseinander.
+            // Jetzt liegen alle Federn und Spitzen eines Ohrs im selben Raum (Ursprung eine halbe Fächerlänge unter dem Ansatz entlang
+            // der Hauptrichtung, so ruht der Ansatz), und dieselbe Welle läuft vom Ansatz nach außen durch den ganzen Fächer
+            const am = 0.9, yE = side.clone().multiplyScalar(Math.cos(am)).add(V(0, Math.sin(am), -0.15 * Math.cos(am))).normalize(), xE = yE.clone().cross(nz).normalize(), zE = xE.clone().cross(yE);
+            const hE = 0.6 * w, qE = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(xE, yE, zE)), pE = p0.clone().sub(yE.clone().multiplyScalar(hE));
+            const toFan = new THREE.Matrix4().compose(pE, qE, V(1, 1, 1)).invert(), fanWave = { v: 'wave', s: 2.6, a: 0.07, h: hE, seed: s > 0 ? 0 : 1.3 };
+            const inFan = (geo, pos, quat) => geo.applyMatrix4(new THREE.Matrix4().compose(pos, quat, V(1, 1, 1)).premultiply(toFan));
             for (const [n, l, b, r0, a0, a1, role, lay] of rows) for (let i = 0; i < n; i++) {
               const a = lerp(a0, a1, i / (n - 1)), dir = side.clone().multiplyScalar(Math.cos(a)).add(V(0, Math.sin(a), -0.15 * Math.cos(a))).normalize();
               const L = l * w * (1 - 0.18 * Math.abs(i / (n - 1) - 0.35)), c = p0.clone().add(dir.clone().multiplyScalar(r0 * w + L * 0.5)).add(nz.clone().multiplyScalar(0.03 * lay));
               const q = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(dir.clone().cross(nz).normalize(), dir, nz));
-              add(ellGeo(b * w, L * 0.55, 0.025), role, { pos: c, quat: q, th: 0.014, anim: { v: 'wave', s: 2.6, a: 0.07 * (1 + 0.5 * lay), h: L * 0.55, seed: i * 0.7 + lay } });
-              if (lay === 0) add(ellGeo(b * w * 0.85, L * 0.16, 0.03), 'gold', { anim: { v: 'wave', f: 'twinkle', s: 2.6, a: 0.07, h: L * 0.55, seed: i * 0.7 }, pos: p0.clone().add(dir.clone().multiplyScalar(r0 * w + L * 0.86)).add(nz.clone().multiplyScalar(0.008)), quat: q, outline: false });
+              add(inFan(ellGeo(b * w, L * 0.55, 0.025), c, q), role, { pos: pE, quat: qE, th: 0.014, anim: fanWave });
+              if (lay === 0) add(inFan(ellGeo(b * w * 0.85, L * 0.16, 0.03), p0.clone().add(dir.clone().multiplyScalar(r0 * w + L * 0.86)).add(nz.clone().multiplyScalar(0.008)), q), 'gold', { anim: Object.assign({ f: 'twinkle' }, fanWave), pos: pE, quat: qE, outline: false });
             }
             glow(p0.clone().add(V(s * 0.25 * w, 0.3 * w, 0)), 1.1 * w, roleColor.light, 0.45, 1);
             legendFx(p0.clone().add(V(s * 0.35 * w, 0.45 * w, 0)), 0.45 * w, GOLD, { motes: 4, sparks: 5, glow: 0, size: 0.022 });
@@ -4853,14 +4896,17 @@ vec3 rareHue(vec3 c, float a) {
         if (pr === 0) wingRoots[s > 0 ? 'L' : 'R'] = root.clone();
         const q = frame(out, V(0, 1, 0)), P = (x, y, z) => root.clone().add(V(x * w, y * w, (z || 0) * w * s).applyQuaternion(q));
         const planeQ = ang => q.clone().multiply(new THREE.Quaternion().setFromAxisAngle(V(0, 0, 1), ang));
-        const mark = m => { m.userData.wingPart = true; return m; };
+        // Seite und Paar stehen am Teil (Luis 22.10.2026): rig.js hängt es an den Knochen dieser Seite, die Prüfung wing_check liest beides
+        const side = s > 0 ? 'L' : 'R', mark = m => { m.userData.wingPart = true; m.userData.wingSide = side; m.userData.wingPair = pr + 1; return m; };
         const opt = o => ({ mat: Object.assign({ double: true }, o && o.alpha ? { alpha: o.alpha } : {}, o && o.anim ? { anim: o.anim } : {}), outline: false });
         const finishPart = (m, o) => { mark(m); if (o && o.noTex) m.userData.noTex = true; return m; };
         const c = {
           s, tilt: tl, rnd, P,
           tint(hex, unlit) { const k = (unlit ? 'u' : 'c') + hex; if (!roleColor[k]) { roleColor[k] = hex; if (unlit) UNLIT[k] = 1; } return k; },
           flat(outline, depth, role, o) {
-            o = o || {}; const geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); if (o.z) geo.translate(0, 0, o.z * w * s);
+            o = o || {}; let geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); if (o.z) geo.translate(0, 0, o.z * w * s);
+            // Fläche mit Welle im Shader: fein teilen, damit sie sich überall wie Knochen und Adern darauf verformt
+            if (o.anim && o.anim.v) geo = densify(geo, 0.07 * w);
             return finishPart(add(geo, role, Object.assign(opt(o), { pos: root, quat: q })), o);
           },
           // o.local (bewegte Flügel): Röhre im Raum des Flügels, damit die gleiche Welle wie auf der Haut sie mitnimmt
@@ -4877,7 +4923,7 @@ vec3 rareHue(vec3 c, float a) {
           star(x, y, z, r, role, o) { const geo = flatGeo(star2(5, r * w, r * w * 0.45), 0.01 * w, false); geo.translate(x * w, y * w, z * w * s); return finishPart(add(geo, role, { pos: root, quat: q, outline: false, mat: Object.assign({ double: true }, o && o.anim ? { anim: o.anim } : {}) }), { noTex: true }); },
           // Punkt im Raum des Flügels in Weltmaßen (Mitte für spin und shoot), w ist die Flügelgröße
           at(x, y, z) { return V(x * w, y * w, (z || 0) * w * s); }, w,
-          glow(x, y, size, color, op, pulse) { glow(P(x, y, 0.05), size * w, color === '#ff8a2a' ? FIRE.glow : color || roleColor.light, op, pulse); fx[fx.length - 1].userData.wingPart = true; },
+          glow(x, y, size, color, op, pulse) { glow(P(x, y, 0.05), size * w, color === '#ff8a2a' ? FIRE.glow : color || roleColor.light, op, pulse); mark(fx[fx.length - 1]); },
         };
         Wings.build(kind, c);
       }
@@ -5264,7 +5310,17 @@ vec3 rareHue(vec3 c, float a) {
       const roleOf = c => c.userData.role || c.userData.holeRole || c.userData.patchRole;
       const take = c => d.textureParts === 'soft' ? TEX_ROLES.has(roleOf(c)) : !!roleOf(c) && !FACE.has(roleOf(c));
       for (const c of g.children) if (c.isMesh && c !== skinMeshRef && !c.userData.outline && !c.userData.noTex && !UNLIT[roleOf(c)] && take(c)) {
-        const side = c.material.side; skinShader(c, null, null, null, texParts[0], null); c.material.side = side;
+        const side = c.material.side, an = c.material.userData.animSpec, au = c.material.userData.animU;
+        skinShader(c, null, null, null, texParts[0], null); c.material.side = side;
+        // Bewegte Teile behalten ihre Bewegung (Luis 22.10.2026: auf dem Dämonenflügel blieb die Haut mit Struktur stehen, während
+        // Knochen und Krallen ohne Struktur die Welle trugen, die Streben standen frei vor der Haut). skinShader ersetzt das Material
+        // samt onBeforeCompile, deshalb hier die Bewegung wieder anhängen, mit derselben Uhr (au, die das Teil vor dem Zeichnen stellt)
+        if (an && au && (an.V2 || an.F2)) {
+          const m = c.material, prevT = m.onBeforeCompile, keyT = m.customProgramCacheKey;
+          m.userData.animU = au; m.userData.animSpec = Object.assign({}, an, { solo: false });
+          m.onBeforeCompile = (sh, r) => { prevT(sh, r); sh.uniforms.uAT = au; sh.uniforms.uAP = { value: an.P }; sh.uniforms.uAC = { value: an.C0 }; sh.uniforms.uAX = { value: an.AX }; animShader(sh, an.V2, an.F2, false); };
+          m.customProgramCacheKey = () => keyT() + '|anim' + an.V2 + '.' + an.F2;
+        }
         // Schnauze und Bauch mit ausgestanztem Maul: das Loch bleibt, sonst deckt die Fläche das Maul zu
         const hl = c.userData.hole;
         if (hl) {
@@ -5289,7 +5345,7 @@ vec3 rareHue(vec3 c, float a) {
   build2.NAMES = NAMES; build2.bodyMixMax = bodyMixMax; build2.hornPlacement = hornPlacement; build2.matAxes = matAxes; build2.HORN_RANGE = HORN_RANGE; build2.EYE_PATTERNS = EYE_PATTERNS;
   // Arten der Struktur für die Werkstätten (Katalog)
   build2.TEX_KIND = TEX_KIND;
-  build2.skinTone = skinTone; build2.METAL = METAL; build2.metalEnvironment = metalEnvironment; build2.mergeAnim = mergeAnim;
+  build2.ANIM_V = ANIM_V; build2.skinTone = skinTone; build2.METAL = METAL; build2.metalEnvironment = metalEnvironment; build2.mergeAnim = mergeAnim;
   build2.lchFromHex = lchFromHex; build2.lchHex = lchHex; build2.MAT_COLOR = MAT_COLOR; build2.MAT_TONES = MAT_TONES; build2.matTone = matTone; build2.MAT_MOVING = MAT_MOVING; build2.MAT_NUM = MAT_KIND;
   return build2;
 })();
@@ -7759,8 +7815,9 @@ const Wings = (() => {
       const o = [[0, 0], el, tips[0]];
       for (let i = 0; i < tips.length - 1; i++) { const a = tips[i], b = tips[i + 1]; o.push([(a[0] + b[0]) / 2 * 0.74 + el[0] * 0.2, (a[1] + b[1]) / 2 * 0.86 + el[1] * 0.12], b); }
       o.push([0.2, -0.32], [0.04, -0.2]);
-      // Haut, Knochen, Adern und Krallen tragen dieselbe Welle (gleiche Werte), so bleiben sie aufeinander
-      const w = wOf(c), wave = { v: 'ripple', s: 2.4, a: 0.06 * w, h: 4.5 / w, seed: 0.4 };
+      // Haut, Knochen, Adern, Krallen und die Flammen an den Spitzen tragen dieselbe Welle (gleiche Werte, alle im Raum des Flügels,
+      // Phase 0, weil flickerWave die Welle ohne eigene Phase rechnet), so bleiben sie aufeinander. Geprüft mit web3d/tools/wing_check.js
+      const w = wOf(c), wave = { v: 'ripple', s: 2.4, a: 0.06 * w, h: 4.5 / w, seed: 0 };
       c.flat(o, 0.03, 'demon', { anim: wave });
       const vein = c.tint('#ff2a48', true);
       for (let i = 0; i < tips.length - 1; i++) {
@@ -7777,9 +7834,11 @@ const Wings = (() => {
       const f1 = c.tint('#8e0f2c', true), f2 = c.tint('#ff3b3b', true), f3 = c.tint('#ffc2a0', true);
       if (c.geo && typeof flameGeo === 'function') tips.forEach((tp, n) => {
         const ang = Math.atan2(tp[1] - el[1], tp[0] - el[0]), ex = tp[0] + Math.cos(ang) * 0.07, ey = tp[1] + Math.sin(ang) * 0.07, H = n < 2 ? 0.26 : 0.2;
-        const an = { v: 'flicker', f: 'pulse', s: 6 + n, a: 0.03 * w, h: H * w, seed: n * 2.1 };
-        c.geo(flameGeo(H, 0.075, 3, 0.03, n), ex, ey - 0.03, 0, 0, f1, { noTex: true, anim: an });
-        for (const zz of [1, -1]) { c.geo(flameGeo(H * 0.68, 0.05, 3, 0.02, n + 1), ex, ey - 0.03, 0.012 * zz, 0, f2, { noTex: true, anim: an }); c.geo(flameGeo(H * 0.38, 0.026, 1, 0, n + 2), ex, ey - 0.03, 0.02 * zz, 0, f3, { noTex: true, anim: an }); }
+        // flickerWave: züngelt und trägt dazu die Welle der Haut, c ist der Fuß der Flamme im Raum des Flügels (Luis 22.10.2026: die
+        // Flammen standen still, während die Krallen mit der Welle schwangen)
+        const an = z => ({ v: 'flickerWave', f: 'pulse', s: 6 + n, a: 0.03 * w, h: H * w, seed: n * 2.1, c: c.at(ex, ey - 0.03, z), wave });
+        c.geo(flameGeo(H, 0.075, 3, 0.03, n), ex, ey - 0.03, 0, 0, f1, { noTex: true, anim: an(0) });
+        for (const zz of [1, -1]) { c.geo(flameGeo(H * 0.68, 0.05, 3, 0.02, n + 1), ex, ey - 0.03, 0.012 * zz, 0, f2, { noTex: true, anim: an(0.012 * zz) }); c.geo(flameGeo(H * 0.38, 0.026, 1, 0, n + 2), ex, ey - 0.03, 0.02 * zz, 0, f3, { noTex: true, anim: an(0.02 * zz) }); }
         c.glow(ex, ey + 0.05, 0.45, '#ff2a48', 0.45, 1);
       });
       // Funken steigen von der Haut auf und vergehen
@@ -7848,7 +7907,9 @@ const Wings = (() => {
       const t = c.tilt, blade = (a, L, W) => { const o = [[0, 0]]; for (let i = 1; i <= 10; i++) { const u = i / 10; o.push([u * L, W * Math.sin(Math.PI * Math.pow(u, 0.5)) * (1 - u)]); } for (let i = 9; i > 0; i--) { const u = i / 10; o.push([u * L, -W * 0.4 * Math.sin(Math.PI * Math.pow(u, 0.5)) * (1 - u)]); } return o.map(p => [p[0] * Math.cos(a) - p[1] * Math.sin(a), p[0] * Math.sin(a) + p[1] * Math.cos(a)]); };
       const w = wOf(c);
       [[0.95, 1.05, 0.2], [0.35, 1.25, 0.22], [-0.25, 0.9, 0.18]].forEach(([a, L, W], i) => {
-        const an = { v: 'ripple', f: 'run', s: 2.2, a: 0.07 * w, h: 4 / w, seed: i * 1.1 };
+        // alle Klingen mit derselben Welle (Luis 22.10.2026): mit eigener Phase je Klinge schwangen sie am Ansatz, wo sie übereinander
+        // liegen, gegeneinander und tauchten ineinander
+        const an = { v: 'ripple', f: 'run', s: 2.2, a: 0.07 * w, h: 4 / w, seed: 0 };
         c.flat(blade(a + t, L, W), 0.012, 'light', { alpha: 0.75, noTex: true, smooth: true, z: -0.015 * i, anim: an });
         c.flat(blade(a + t, L * 0.85, W * 0.4), 0.012, c.tint('#ffffff', true), { alpha: 0.9, noTex: true, smooth: true, z: 0.01 - 0.015 * i, anim: an });
       });
@@ -8862,7 +8923,8 @@ const Rig = (() => {
       if (marked ? !c.userData.wingPart : !WING_ROLES[c.userData.role]) continue;
       const b = new THREE.Box3().setFromObject(c), cx = b.isEmpty() ? c.position.x : (b.min.x + b.max.x) / 2;
       if (!marked && Math.abs(cx) < 0.25) continue;
-      const s = cx > 0 ? 'L' : 'R'; if (!b.isEmpty()) wing[s] = wing[s] ? wing[s].union(b) : b.clone(); c.userData.wing = s;
+      // Seite aus dem Baukasten (wingSide), sonst aus der Lage: ein Teil, das über die Mitte ragt, landete sonst am anderen Flügel
+      const s = c.userData.wingSide || (cx > 0 ? 'L' : 'R'); if (!b.isEmpty()) wing[s] = wing[s] ? wing[s].union(b) : b.clone(); c.userData.wing = s;
     }
     for (const s of ['L', 'R']) {
       if (marked && R.wingRoots && R.wingRoots[s]) pivot['wing.' + s] = R.wingRoots[s].clone();
@@ -8879,6 +8941,19 @@ const Rig = (() => {
     };
     make('root'); make('body'); make('head');
     for (const k of Object.keys(pivot)) make(k);
+    // Flügel bleiben ein Stück (Luis 22.10.2026): der Rumpf atmet und staucht sich mit ungleicher Skalierung (breiter, flacher). Der
+    // Flügelknochen hängt am Rumpf und erbte sie, im gedrehten Flügel wurde daraus eine Scherung, Lagen aus Federn, Haut und Knochen
+    // verschoben sich gegeneinander. Der Ansatz wandert weiter mit der Oberfläche, die Skalierung des Rumpfs hebt der Flügel auf:
+    // Matrix = Lage * Rumpfskalierung⁻¹ * Drehung * eigene Skalierung (gilt für alle, die den Rumpf skalieren, auch Alphas und Bühne)
+    for (const s of ['L', 'R']) {
+      const wb = bones['wing.' + s]; if (!wb) continue;
+      wb.updateMatrix = function () {
+        this.matrix.compose(this.position, this.quaternion, this.scale);
+        const p = this.parent, e = this.matrix.elements;
+        if (p && p.scale) for (let c = 0; c < 3; c++) { e[c * 4] /= p.scale.x || 1; e[c * 4 + 1] /= p.scale.y || 1; e[c * 4 + 2] /= p.scale.z || 1; }
+        this.matrixWorldNeedsUpdate = true;
+      };
+    }
 
     // Gewichte: je Punkt die vier nächsten Gruppen, weich nach Abstand. Der Rumpf teilt sich nach der Höhe in Rumpf und Kopf
     const si = new Uint16Array(n * 4), sw = new Float32Array(n * 4), idx = k => list.indexOf(bones[k] || bones.body);
@@ -8943,6 +9018,14 @@ const Rig = (() => {
       g.add(sk); g.remove(c); sk.updateMatrixWorld(true); sk.bind(skeleton, sm.matrixWorld);
     }
 
+    // Ohr eines Zierteils: Seite aus dem Baukasten, sonst aus der Mitte des Teils wie bei den Hautteilen (groupOf)
+    const earBone = c => {
+      const sd = c.userData.side, b = new THREE.Box3().setFromObject(c), cx = b.isEmpty() ? c.position.x : (b.min.x + b.max.x) / 2;
+      const k = 'ear.' + (sd > 0 ? 'L' : sd < 0 ? 'R' : cx > SIDE ? 'L' : cx < -SIDE ? 'R' : 'C');
+      if (bones[k]) return k;
+      // ohne mittleres Ohr zur näheren Seite
+      const k2 = 'ear.' + (cx >= 0 ? 'L' : 'R'); return bones[k2] ? k2 : null;
+    };
     // Eigene Teile an den nächsten Knochen hängen, die Lage bleibt dabei gleich
     for (const c of rigid) {
       if (surface.includes(c)) continue;
@@ -8957,6 +9040,9 @@ const Rig = (() => {
       }
       if (c.userData.eyePivot || c.userData.mouthPivot) k = 'head';
       else if (c.userData.wing) k = 'wing.' + c.userData.wing;
+      // Zierteile der Ohren (Federn des Flügelohrs, Innenohr, Schmuck) ganz an den Knochen ihres Ohrs (Luis 22.10.2026: einzelne Federn
+      // hingen nach dem nächsten Abstand am Kopf und blieben stehen, wenn das Ohr zuckte)
+      else if (c.userData.sec === 'ear' && !c.isSprite && earBone(c)) k = earBone(c);
       else if ((c.userData.sec === 'arm' || c.userData.sec === 'leg') && c.userData.side && bones[c.userData.sec + (c.userData.side > 0 ? '.L' : '.R')]) k = c.userData.sec + (c.userData.side > 0 ? '.L' : '.R');
       else {
         const b = c.isSprite ? null : new THREE.Box3().setFromObject(c), p = b && !b.isEmpty() ? b.getCenter(V(0, 0, 0)) : c.position.clone();
@@ -9732,7 +9818,7 @@ const Rig = (() => {
         const g = o.geometry; if (!g.attributes.position || !g.attributes.normal || g.morphAttributes.position) continue;
         const attrs = Object.keys(g.attributes).filter(k => k !== 'color' && k !== 'uv' && k !== 'uv2').sort().join(',');
         if (attrs !== 'normal,position') continue;
-        const key = (tex ? 'tex|' + keyOf(o.material) + '|' : '') + sigOf(o.material) + '|' + o.renderOrder + '|' + o.frustumCulled;
+        const key = (tex ? 'tex|' + keyOf(o.material) + '|' : '') + sigOf(o.material) + '|' + o.renderOrder + '|' + o.frustumCulled + '|' + (o.userData.wingPair || 0);
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(o);
       }
@@ -40524,7 +40610,7 @@ window.ovalingsStage = b => { try { enqueue(typeof b === 'string' ? JSON.parse(b
 // Fünftel der Bauzeit. Sie wird einmal gerechnet, kompakt gepackt (Lage 16 Bit, Farben 8 Bit, Normalen werden neu
 // gerechnet) und von der App als Datei abgelegt. Der Schlüssel kommt aus den Eingaben des Baukastens und seinem Stand,
 // ändert sich der Baukasten, wird neu gerechnet.
-const BUILDER_HASH = '037d32224e';
+const BUILDER_HASH = 'cbfc489503';
 const SkinStore = (() => {
   // Grenze nach Größe statt Anzahl (Lina 14.10.2026): eine Haut belegt rund 400 KB, ihre Abstände fürs Skelett rund 290 KB. Mit 40
   // Einträgen passten nur noch 20 Figuren, seit auch die Porträts mit Skelett bauen, eine Sammlung rechnete dann alles neu

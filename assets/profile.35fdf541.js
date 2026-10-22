@@ -31,7 +31,7 @@
     var uid = A.user().id;
     Promise.all([
       A.rest('players?select=display_name,friend_code,deletion_requested_at&id=eq.' + encodeURIComponent(uid)),
-      A.rest('monsters?select=id,name,rarity_id,family_id,egg_code,gene_overrides,rules_version,hatched_at&order=hatched_at.desc&limit=1000')
+      A.rest('monsters?select=id,name,rarity_id,family_id,egg_code,gene_overrides,rules_version,hatched_at,xp&order=hatched_at.desc&limit=1000')
     ]).then(function (r) {
       player = r[0][0] || {};
       loading.hidden = true;
@@ -60,23 +60,43 @@
   }
 
   // ---------- Ovalings mit Porträt ----------
+  // Wie die Sammlung der App (Luis 22.10.2026): Name über ovalingTitle (Spitzname, sonst Beiname aus der ID), Reihenfolge wie
+  // sortStrongestFirst (Seltenheit, Level, Gene Score, zuletzt geschlüpft zuerst), Filter Alle, Licht, Schatten mit Anzahl.
+  // Beiname, Level und Gene Score rechnet epithet.js aus denselben Dart-Dateien wie die App (tool/site/epithet_web.dart)
+  var rank = Object.keys(T.rarities), family = '';
+  function card(m) {
+    var c = null;
+    try { var raw = window.ovalingsCard && window.ovalingsCard(m.id, m.xp || 0, C.lang); c = raw ? JSON.parse(raw) : null; } catch (e) { c = null; }
+    return c || { title: null, level: 1, geneScore: 0 };
+  }
+  // Lange Wörter werden kleiner statt mitten im Wort zu brechen, wie die Karten der App („Regenbogenknopf“)
+  function fitClass(label) {
+    var longest = Math.max.apply(null, label.split(/\s+/).map(function (w) { return Array.from(w).length; }));
+    return longest > 15 ? ' fit2' : longest > 12 ? ' fit1' : '';
+  }
+  function strongestFirst(a, b) {
+    return (rank.indexOf(b.rarity_id) - rank.indexOf(a.rarity_id)) || (b._c.level - a._c.level) || (b._c.geneScore - a._c.geneScore) ||
+      String(b.hatched_at || '').localeCompare(String(a.hatched_at || ''));
+  }
   var queue = [], frame = null, ready = false, waiting = {}, seq = 0;
   function showOvalings(list) {
-    var ul = $('[data-list]'), count = $('[data-count]');
+    var ul = $('[data-list]'), bar = $('[data-filter]');
     ul.textContent = '';
     $('[data-empty]').hidden = list.length > 0;
-    $('[data-hint]').hidden = !list.length;
-    count.hidden = !list.length;
-    count.textContent = fill(T.count, { count: num(list.length) });
+    bar.hidden = !list.length;
+    list.forEach(function (m) { m._c = card(m); });
+    list.sort(strongestFirst);
     var seen = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { seen.unobserve(e.target); want(e.target); } });
     }, { rootMargin: '200px' }) : null;
     list.forEach(function (m) {
       var li = document.createElement('li');
+      // Familie am Listeneintrag (Verlauf der Karte), Seltenheit an der Karte (Rahmen): beide setzen sonst --c
+      li.setAttribute('data-fam', m.family_id || ''); li.className = 'fam-' + (m.family_id || 'light');
       var a = document.createElement('a');
       a.className = 'prtile r-' + (m.rarity_id || 'normal');
       a.href = C.viewer + '#' + m.id;
-      var label = m.name || (T.rarities[m.rarity_id] || '') + ' · ' + (T.families[m.family_id] || '');
+      var label = m.name || m._c.title || (T.rarities[m.rarity_id] || '') + ' · ' + (T.families[m.family_id] || '');
       a.setAttribute('aria-label', fill(T.open, { ovaling: label }));
       var pic = document.createElement('span'); pic.className = 'prpic';
       var img = document.createElement('img');
@@ -84,7 +104,7 @@
       var egg = (C.eggs[m.egg_code] || C.eggs[1]);
       img.src = egg; img.className = 'egg';
       pic.appendChild(img);
-      var cap = document.createElement('span'); cap.className = 'prname'; cap.textContent = label;
+      var cap = document.createElement('span'); cap.className = 'prname' + fitClass(label); cap.textContent = label;
       a.appendChild(pic); a.appendChild(cap); li.appendChild(a); ul.appendChild(li);
       a._m = m; a._img = img;
       var key = cacheKey(m), have = A.portraits.get(key);
@@ -92,7 +112,23 @@
       else if (seen) seen.observe(a);
       else want(a);
     });
+    // Anzahl je Filter wie in der App („Alle 10“, „Licht 4“)
+    bar.querySelectorAll('[data-fam]').forEach(function (b) {
+      var f = b.getAttribute('data-fam');
+      var n = f ? list.filter(function (m) { return m.family_id === f; }).length : list.length;
+      $('[data-n]', b).textContent = ' ' + num(n);
+    });
+    applyFilter();
   }
+  function applyFilter() {
+    $('[data-filter]').querySelectorAll('[data-fam]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-fam') === family)); });
+    $('[data-list]').querySelectorAll('li').forEach(function (li) { li.hidden = !!family && li.getAttribute('data-fam') !== family; });
+  }
+  $('[data-filter]').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-fam]');
+    if (!b) return;
+    family = b.getAttribute('data-fam'); applyFilter();
+  });
   function cacheKey(m) { return C.portraitVersion + ':' + m.id + ':' + JSON.stringify(m.gene_overrides || {}); }
   function setPic(img, data) { img.src = data; img.className = ''; }
 
@@ -123,6 +159,25 @@
     running = false;
     if (tile && m.data) { setPic(tile._img, m.data); A.portraits.put(cacheKey(tile._m), m.data); }
     next();
+  });
+
+  // ---------- Konto: drei Knöpfe, die nach unten aufklappen, immer nur einer offen (Luis 22.10.2026) ----------
+  var accButtons = Array.prototype.slice.call(document.querySelectorAll('[data-acc] .prbtn'));
+  function openPanel(btn) {
+    accButtons.forEach(function (b) {
+      var on = b === btn && b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', String(on));
+      document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  accButtons.forEach(function (b, i) {
+    b.addEventListener('click', function () { openPanel(b); });
+    // Pfeiltasten, Pos1 und Ende springen zwischen den Knöpfen (Muster Akkordeon der WAI)
+    b.addEventListener('keydown', function (e) {
+      var n = accButtons.length, to = { ArrowDown: (i + 1) % n, ArrowUp: (i - 1 + n) % n, Home: 0, End: n - 1 }[e.key];
+      if (to == null) return;
+      e.preventDefault(); accButtons[to].focus();
+    });
   });
 
   // ---------- Anzeigename ----------
