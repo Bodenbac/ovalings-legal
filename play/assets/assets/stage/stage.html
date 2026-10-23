@@ -40895,6 +40895,10 @@ const el = $('stage');
 // („niedrig“ ohne, gilt ab dem nächsten Öffnen der Bühne). Pixeldichte je Stufe höchstens 2 / 1,5 / 1,25
 Detail.fromStore();
 const LEVEL_RATIO = { high: 2, medium: 1.5, low: 1.25 };
+// Höchstzahl gezeichneter Bildpunkte, nur in der Web-Fassung (`?px=`, Fehler 22.10.2026): am Desktop füllt die Bühne den ganzen
+// Bildschirm, bei 1875 × 920 und Pixeldichte 2 sind das 6,9 Millionen Bildpunkte statt rund 1,3 auf dem Handy. Dann sinkt die Dichte
+// so weit, dass die Fläche passt, auch unter 1 (höchstens auf 0,5). Android und iOS geben keinen Wert mit, dort gilt alles wie bisher
+const PX_BUDGET = +(new URLSearchParams(location.search).get('px')) || 0;
 const renderer = new THREE.WebGLRenderer({ antialias: Detail.level !== 'low', alpha: true });
 // WebGL verloren (Speichermangel): die App lädt die Seite neu und schickt den letzten Inhalt wieder (16.10.2026)
 renderer.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); send({ type: 'lost' }); }, false);
@@ -40913,7 +40917,7 @@ el.insertBefore(renderer.domElement, el.firstChild);
 const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100), lights = new THREE.Group(), pivot = new THREE.Group();
 scene.add(lights); scene.add(pivot);
 // Beim Start ist das Fenster manchmal noch 0 groß (eingebettet oder verborgen): dann nichts rechnen, sonst wird der Abstand NaN
-function size() { const w = el.clientWidth || innerWidth, h = el.clientHeight || innerHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); refit(); if (battle) battleResize(); if (homeView) homeResize(); }
+function size() { const w = el.clientWidth || innerWidth, h = el.clientHeight || innerHeight; if (!w || !h) return; if (PX_BUDGET) { const r = wantedRatio(); if (r !== quality.ratio) { quality.ratio = r; renderer.setPixelRatio(r); } } renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); refit(); if (battle) battleResize(); if (homeView) homeResize(); }
 new ResizeObserver(size).observe(el);
 
 // Licht je Familie, in die Bühne oder in eine andere Gruppe (Porträt)
@@ -43221,8 +43225,14 @@ function applyLevelQuality() {
   quality.base = quality.cap = Math.min(devicePixelRatio || 1, LEVEL_RATIO[Detail.level] || 2);
   applyQuality();
 }
-function applyQuality() {
+function wantedRatio() {
   const r = Math.max(Math.min(1, quality.base), Math.round(Math.min(quality.cap, quality.base * quality.heat) * 100) / 100);
+  if (!PX_BUDGET) return r;
+  const w = el.clientWidth || innerWidth, h = el.clientHeight || innerHeight;
+  return w && h ? Math.min(r, Math.max(0.5, Math.floor(Math.sqrt(PX_BUDGET / (w * h)) * 100) / 100)) : r;
+}
+function applyQuality() {
+  const r = wantedRatio();
   if (r === quality.ratio) return false;
   quality.ratio = r; renderer.setPixelRatio(r); size();
   return true;

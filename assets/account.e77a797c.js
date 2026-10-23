@@ -166,6 +166,9 @@
     show(want === 'register' || invited ? 'register' : 'signin');
     prefill();
     segs.classList.add('live');
+    // Der Anker #register lässt den Browser zum Formular springen, Überschrift und Reiter lägen dann unter der Kopfleiste
+    // (iPhone-Test 23.10.2026). Die Seite ist kurz, deshalb einfach oben beginnen.
+    if (want === 'register' || invited) window.scrollTo(0, 0);
   });
   // Link aus der Mail in einem schon offenen Tab (nur der Anker ändert sich): neu laden, damit takeLink ihn übernimmt
   window.addEventListener('hashchange', function () {
