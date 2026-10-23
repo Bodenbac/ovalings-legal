@@ -30,7 +30,7 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="stylesheet" href="../../assets/site.ca4e5a39.css">
+<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -181,6 +181,26 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/mirror-96.e5533f34.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>反射</h4><p class="sub">次の弱体効果を敵に跳ね返す。</p></div>
+          </summary>
+          <p>反射の効果中、敵がこのOvalingにかける次の弱体効果は跳ね返り、その敵にかかります。その後、反射は消えます。弱体無効と抵抗が先に効きます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>命の火</h4><p class="sub">倒れてもすぐに立ち上がる。</p></div>
+          </summary>
+          <p>効果中にOvalingが倒れると、最大<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>の一部ですぐに立ち上がります。これは復活として数えます。各Ovalingが復活できるのはバトルごとに1回だけです。ほかの効果とシールドは消えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>強化効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>復活後のHPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。バトルごとにOvaling1体につき1回</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>挑発</h4><p class="sub">敵の単体攻撃をすべて引き受ける。</p></div>
           </summary>
@@ -294,6 +314,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>出血</h4><p class="sub">自分のターン開始時にダメージを受ける。強さは相手の攻撃で決まる。</p></div>
+          </summary>
+          <p>出血状態のOvalingは、自分のターン開始時に、出血させた相手の<span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">攻撃</span>の一部のダメージを受けます。毒は対象の<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>で、出血は攻撃した相手で強さが決まります。出血は<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>を無視し、毒と同時にかかり、毒が効かない敵にも効きます。毒としては数えません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>弱体効果</dd></div><div><dt>効果時間</dt><dd>数ターン、スキルで決まる</dd></div><div><dt>強さ</dt><dd>毎ターン最大HPの割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。強いほうの値と長いほうの効果時間が適用</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>スタン</h4><p class="sub">次のターンを行動できない。</p></div>
           </summary>
@@ -377,6 +407,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>スキル封じ</h4><p class="sub">スキルが使えるまで長くなる。</p></div>
+          </summary>
+          <p>対象のクールタイムのあるスキルは、使った直後でも記載のターン数だけ長く使えなくなります。何度かかっても、使った直後よりこのターン数を超えて長くはなりません。通常攻撃はいつでも使えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>ターン数、スキルで決まる</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>HPコスト</h4><p class="sub">使用者のHPを消費する。</p></div>
           </summary>
@@ -412,6 +452,99 @@
           </summary>
           <p>対象にかかった毒がそれぞれ、強さに残りターン数をかけたダメージをすぐに与え、毒は消えます。毒がなければ何も起きません。防ぐことはできません。</p>
           <dl class="rows"><div><dt>種類</dt><dd>即時効果</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>する。使うたびに効果が出る</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">特殊攻撃</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_sure_crit-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>確定会心</h4><p class="sub">必ず会心攻撃になる。</p></div>
+          </summary>
+          <p>この攻撃は<span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">会心率</span>が低くても、必ず会心攻撃になります。<span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">会心ダメージ</span>の分だけダメージが増えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_crit_chain-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>会心連鎖</h4><p class="sub">会心攻撃のたびにもう一度攻撃する。</p></div>
+          </summary>
+          <p>会心攻撃が出ると、すぐにもう一度攻撃します。追加できる最大の回数はスキルに記載されています。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>追加攻撃の回数、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ignore_defense-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>防御無視</h4><p class="sub">防御の一部を無視する。</p></div>
+          </summary>
+          <p>この攻撃では相手の<span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">防御</span>の一部が数えられません。50%なら半分だけ数えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_shield_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>シールド破壊</h4><p class="sub">攻撃の前に相手のシールドをすべて破壊する。</p></div>
+          </summary>
+          <p>最初の攻撃の前に、相手のシールドがすべて消えます。その後の攻撃はシールドに防がれません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>なし</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_execute-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>処刑</h4><p class="sub">相手のHPが低いほどダメージアップ。</p></div>
+          </summary>
+          <p>相手の<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が減っているほど、攻撃が強くなります。HPが満タンならボーナスはなく、残りわずかならほぼ最大です。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_low_hp-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>HP半分未満へのボーナス</h4><p class="sub">HPが半分未満の相手にダメージアップ。</p></div>
+          </summary>
+          <p>相手の<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が半分未満なら、ダメージが増えます。半分以上ならボーナスはありません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_berserk-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>狂化</h4><p class="sub">自分のHPが低いほどダメージアップ。</p></div>
+          </summary>
+          <p>自分のOvalingの<span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>が減っているほど、攻撃が強くなります。HPが満タンならボーナスはありません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ramp_up-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>連撃強化</h4><p class="sub">2回目以降の攻撃は前の攻撃よりダメージが多い。</p></div>
+          </summary>
+          <p>複数回攻撃するスキルに有効です。20%なら2回目は20%、3回目は40%ダメージが増えます。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_poisoned-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>毒状態へのボーナス</h4><p class="sub">毒状態の相手にダメージアップ。</p></div>
+          </summary>
+          <p>相手が毒状態なら、ダメージが増えます。毒がなければボーナスはありません。</p>
+          <dl class="rows"><div><dt>種類</dt><dd>特殊攻撃</dd></div><div><dt>効果時間</dt><dd>即時</dd></div><div><dt>強さ</dt><dd>割合、スキルで決まる</dd></div><div><dt>重複</dt><dd>しない。この攻撃だけに有効</dd></div></dl>
         </details>
       </li>
     </ul>

@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.843332b0.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.ca4e5a39.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.c82aed2e.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
@@ -182,6 +182,26 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/mirror-96.e5533f34.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Spiegeln</h4><p class="sub">Die nächste Schwächung trifft den Gegner selbst.</p></div>
+          </summary>
+          <p>Solange Spiegeln wirkt, prallt die nächste Schwächung, die ein Gegner diesem Ovaling gibt, ab und trifft den Gegner selbst. Danach ist Spiegeln weg. Schwächungsschutz und Abwehr kommen zuerst.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Lebensfunke</h4><p class="sub">Steht nach einem Fall sofort wieder auf.</p></div>
+          </summary>
+          <p>Fällt das Ovaling, solange der Effekt wirkt, steht es sofort mit einem Teil seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> wieder auf. Das zählt als Wiederbeleben: Jedes Ovaling lässt sich nur einmal je Kampf wiederbeleben. Seine übrigen Effekte und Schilde sind dann weg.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Stärkung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent Leben danach, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, einmal je Kampf und Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Spott</h4><p class="sub">Zieht alle Einzelangriffe der Gegner auf sich.</p></div>
           </summary>
@@ -295,6 +315,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Blutung</h4><p class="sub">Verursacht zu Beginn jedes eigenen Zugs Schaden, je nach Angreifer.</p></div>
+          </summary>
+          <p>Zu Beginn jedes eigenen Zugs nimmt ein blutendes Ovaling Schaden: einen Teil des <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriffs</span> dessen, der die Blutung verursacht hat. Gift richtet sich nach dem <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> des Ziels, Blutung nach dem Angreifer. Sie geht an der <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> vorbei, wirkt neben Gift und auch bei Gegnern, denen Gift nichts tut. Sie zählt nicht als Gift.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Schwächung</dd></div><div><dt>Dauer</dt><dd>Einige Züge, je Fähigkeit</dd></div><div><dt>Stärke</dt><dd>Prozent des höchsten Lebens je Zug, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, der stärkere Wert und die längere Dauer gelten</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Betäubung</h4><p class="sub">Setzt den nächsten Zug aus.</p></div>
           </summary>
@@ -378,6 +408,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Unterbrechen</h4><p class="sub">Fähigkeiten brauchen länger, bis sie bereit sind.</p></div>
+          </summary>
+          <p>Jede Fähigkeit des Ziels mit Abklingzeit braucht so viele Züge länger, wie angegeben, auch direkt nach ihrem Einsatz. Mehrmals unterbrochen wartet sie höchstens so viele Züge länger als nach einem Einsatz. Der Grundangriff bleibt bereit.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Züge, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Lebensopfer</h4><p class="sub">Kostet den Anwender Leben.</p></div>
           </summary>
@@ -413,6 +453,99 @@
           </summary>
           <p>Jedes Gift am Ziel macht sofort seine Stärke mal die restlichen Züge als Schaden, danach ist das Gift weg. Ohne Gift passiert nichts. Lässt sich nicht abwehren.</p>
           <dl class="rows"><div><dt>Art</dt><dd>Sofortwirkung</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Ja, jede Anwendung wirkt einzeln</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Besondere Treffer</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_sure_crit-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Sicherer Krit</h4><p class="sub">Trifft immer kritisch.</p></div>
+          </summary>
+          <p>Jeder Treffer dieser Attacke ist kritisch, egal wie hoch die <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> ist. Er macht so viel mehr Schaden, wie der <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> angibt.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_crit_chain-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Krit-Kette</h4><p class="sub">Jeder kritische Treffer schlägt noch einmal zu.</p></div>
+          </summary>
+          <p>Trifft die Attacke kritisch, folgt sofort ein weiterer Treffer. Wie viele zusätzliche Treffer höchstens kommen, steht bei der Attacke.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Zusätzliche Treffer, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ignore_defense-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Ignoriert Verteidigung</h4><p class="sub">Geht zum Teil an der Verteidigung vorbei.</p></div>
+          </summary>
+          <p>Ein Teil der <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> des Ziels zählt bei diesem Treffer nicht. Bei 50 % zählt nur noch die Hälfte.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_shield_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Schilde zerstören</h4><p class="sub">Zerstört vor dem Treffer alle Schilde des Ziels.</p></div>
+          </summary>
+          <p>Vor dem ersten Treffer verschwindet jeder Schild des Ziels. Der Treffer kommt dann ohne Schild dazwischen an.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Keine</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_execute-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Hinrichtung</h4><p class="sub">Mehr Schaden, je weniger Leben das Ziel hat.</p></div>
+          </summary>
+          <p>Je mehr <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> dem Ziel fehlt, desto härter der Treffer. Bei vollem Leben gibt es nichts dazu, kurz vor dem Ende fast den ganzen Bonus.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_low_hp-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bonus unter halbem Leben</h4><p class="sub">Mehr Schaden gegen Ziele unter halbem Leben.</p></div>
+          </summary>
+          <p>Hat das Ziel weniger als die Hälfte seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, macht der Treffer mehr Schaden. Darüber gibt es nichts dazu.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_berserk-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Berserker</h4><p class="sub">Mehr Schaden, je weniger Leben dein Ovaling hat.</p></div>
+          </summary>
+          <p>Je mehr <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> deinem Ovaling fehlt, desto härter trifft es. Bei vollem Leben gibt es nichts dazu.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ramp_up-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Steigerung</h4><p class="sub">Jeder weitere Treffer macht mehr Schaden als der vorige.</p></div>
+          </summary>
+          <p>Gilt für Attacken mit mehreren Treffern. Bei 20 % macht der zweite Treffer 20 % mehr, der dritte 40 % mehr.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_poisoned-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bonus gegen Vergiftete</h4><p class="sub">Mehr Schaden gegen vergiftete Ziele.</p></div>
+          </summary>
+          <p>Ist das Ziel vergiftet, macht der Treffer mehr Schaden. Ohne Gift gibt es nichts dazu.</p>
+          <dl class="rows"><div><dt>Art</dt><dd>Besonderer Treffer</dd></div><div><dt>Dauer</dt><dd>Sofort</dd></div><div><dt>Stärke</dt><dd>Prozent, je Fähigkeit</dd></div><div><dt>Mehrfach</dt><dd>Nein, gilt nur für diese Attacke</dd></div></dl>
         </details>
       </li>
     </ul>

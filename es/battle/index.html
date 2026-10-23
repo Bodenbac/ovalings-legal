@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.843332b0.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.ca4e5a39.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.c82aed2e.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
 </head>
 <body>
 <a class="skip" href="#main">Ir al contenido</a>
@@ -182,6 +182,26 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/mirror-96.e5533f34.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Espejo</h4><p class="sub">El siguiente perjuicio rebota al enemigo.</p></div>
+          </summary>
+          <p>Mientras dura Espejo, el siguiente perjuicio que un enemigo pone a este Ovaling rebota y afecta a ese enemigo. Después, Espejo desaparece. Bloquear perjuicios y resistir van primero.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Chispa de vida</h4><p class="sub">Se levanta al instante tras caer.</p></div>
+          </summary>
+          <p>Si el Ovaling cae mientras dura el efecto, se levanta al instante con parte de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> máxima. Cuenta como revivir: cada Ovaling solo puede revivir una vez por combate. Sus demás efectos y escudos desaparecen.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Beneficio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de vida al revivir, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, una vez por combate y Ovaling</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Provocación</h4><p class="sub">Atrae todos los ataques individuales de los enemigos.</p></div>
           </summary>
@@ -295,6 +315,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Sangrado</h4><p class="sub">Hace daño al inicio de cada turno propio, según quien lo causó.</p></div>
+          </summary>
+          <p>Al inicio de cada turno propio, un Ovaling que sangra recibe daño: una parte del <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">ataque</span> de quien causó el sangrado. El veneno depende de la <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> del objetivo, el sangrado del atacante. Ignora la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span>, funciona junto al veneno y también contra enemigos a los que el veneno no daña. No cuenta como veneno.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Perjuicio</dd></div><div><dt>Duración</dt><dd>Unos turnos, según la habilidad</dd></div><div><dt>Fuerza</dt><dd>Porcentaje de la vida máxima por turno, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, valen el valor más fuerte y la duración más larga</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Aturdimiento</h4><p class="sub">Se salta su siguiente turno.</p></div>
           </summary>
@@ -378,6 +408,16 @@
       <li class="card effect">
         <details class="expander cardexp">
           <summary class="effecthead">
+          <img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Interrupción</h4><p class="sub">Las habilidades tardan más en estar listas.</p></div>
+          </summary>
+          <p>Cada habilidad del objetivo con recarga tarda los turnos indicados más, incluso justo después de usarla. Si se interrumpe otra vez, espera como mucho esos turnos más que tras usarla. El ataque básico sigue listo.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Turnos, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
           <img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
           <div><h4>Coste de vida</h4><p class="sub">Le cuesta vida al usuario.</p></div>
           </summary>
@@ -413,6 +453,99 @@
           </summary>
           <p>Cada veneno sobre el objetivo hace al instante su fuerza por los turnos restantes como daño, y luego desaparece. Sin veneno no pasa nada. No se puede bloquear.</p>
           <dl class="rows"><div><dt>Tipo</dt><dd>Efecto instantáneo</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>Sí, cada uso tiene efecto por sí solo</dd></div></dl>
+        </details>
+      </li>
+    </ul>
+    <h3 class="subtitle">Golpes especiales</h3>
+    <ul class="effects">
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_sure_crit-96.97e26583.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Crítico seguro</h4><p class="sub">Siempre asesta un golpe crítico.</p></div>
+          </summary>
+          <p>Cada golpe de este ataque es crítico, sea cual sea la <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">prob. crítica</span>. Hace tanto daño extra como indica el <span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">daño crítico</span>.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_crit_chain-96.ab7838a5.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Cadena crítica</h4><p class="sub">Cada golpe crítico vuelve a golpear.</p></div>
+          </summary>
+          <p>Si el ataque asesta un golpe crítico, sigue enseguida otro golpe. El ataque indica cuántos golpes extra puede sumar como máximo.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Golpes extra, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ignore_defense-96.39e781c9.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Ignora la defensa</h4><p class="sub">Atraviesa parte de la defensa.</p></div>
+          </summary>
+          <p>Una parte de la <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defensa</span> del objetivo no cuenta en este golpe. Con un 50 %, solo cuenta la mitad.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_shield_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Romper escudos</h4><p class="sub">Destruye todos los escudos del objetivo antes del golpe.</p></div>
+          </summary>
+          <p>Antes del primer golpe desaparece cada escudo del objetivo. Después el golpe llega sin escudo de por medio.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Ninguna</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_execute-96.3a83b82d.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Ejecución</h4><p class="sub">Más daño cuanta menos vida tenga el objetivo.</p></div>
+          </summary>
+          <p>Cuanta más <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> le falte al objetivo, más fuerte es el golpe. Con la vida llena no hay bonus, casi al final hay casi todo el bonus.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_low_hp-96.138c09fa.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bonus con menos de la mitad de vida</h4><p class="sub">Más daño contra objetivos con menos de la mitad de vida.</p></div>
+          </summary>
+          <p>Si el objetivo tiene menos de la mitad de su <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span>, el golpe hace más daño. Por encima no hay bonus.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_berserk-96.112f0845.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Frenesí</h4><p class="sub">Más daño cuanta menos vida tenga tu Ovaling.</p></div>
+          </summary>
+          <p>Cuanta más <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">vida</span> le falte a tu Ovaling, más fuerte golpea. Con la vida llena no hay bonus.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_ramp_up-96.3f505297.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Escalada</h4><p class="sub">Cada golpe siguiente hace más daño que el anterior.</p></div>
+          </summary>
+          <p>Vale para ataques con varios golpes. Con un 20 %, el segundo golpe hace un 20 % más y el tercero un 40 % más.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
+        </details>
+      </li>
+      <li class="card effect">
+        <details class="expander cardexp">
+          <summary class="effecthead">
+          <img src="../../assets/art/effect/hit_bonus_poisoned-96.7b9d97ec.webp" alt="" aria-hidden="true" width="44" height="44" loading="lazy">
+          <div><h4>Bonus contra envenenados</h4><p class="sub">Más daño contra objetivos envenenados.</p></div>
+          </summary>
+          <p>Si el objetivo está envenenado, el golpe hace más daño. Sin veneno no hay bonus.</p>
+          <dl class="rows"><div><dt>Tipo</dt><dd>Golpe especial</dd></div><div><dt>Duración</dt><dd>Instantáneo</dd></div><div><dt>Fuerza</dt><dd>Porcentaje, según la habilidad</dd></div><div><dt>Acumulación</dt><dd>No, solo vale para este ataque</dd></div></dl>
         </details>
       </li>
     </ul>

@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.843332b0.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.ca4e5a39.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.c82aed2e.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -98,10 +98,10 @@
       <label class="filterlabel" for="effect-filter">Effect</label>
       <span class="selectwrap"><select id="effect-filter" data-filter-select="effects">
         <option value="">All effects</option>
-<optgroup label="Buffs"><option value="strengthen">Attack Up</option><option value="defense_up">Defense Up</option><option value="haste">Speed Up</option><option value="regen">Regeneration</option><option value="shield">Shield</option><option value="taunt">Taunt</option><option value="guard_link">Guard Bond</option><option value="ward">Block Debuffs</option><option value="counter_attack">Counterattack</option><option value="immortal">Unkillable</option><option value="crit_up">Crit Chance Up</option><option value="crit_dmg_up">Crit Damage Up</option></optgroup><optgroup label="Debuffs"><option value="weaken">Attack Down</option><option value="armor_break">Defense Down</option><option value="slow">Speed Down</option><option value="poison">Poison</option><option value="stun">Stun</option></optgroup><optgroup label="Instant effects"><option value="heal">Heal</option><option value="lifesteal">Lifesteal</option><option value="revive">Revive</option><option value="cleanse">Cleanse</option><option value="meter_fill">Turn Meter Up</option><option value="meter_drain">Turn Meter Down</option><option value="self_damage">Life Cost</option><option value="ally_strike">Ally Attack</option><option value="team_lifesteal">Shared Lifesteal</option></optgroup>      </select></span>
+<optgroup label="Buffs"><option value="strengthen">Attack Up</option><option value="defense_up">Defense Up</option><option value="haste">Speed Up</option><option value="regen">Regeneration</option><option value="shield">Shield</option><option value="damage_reduction">Damage Reduction</option><option value="mirror">Mirror</option><option value="lifeline">Spark of Life</option><option value="taunt">Taunt</option><option value="guard_link">Guard Bond</option><option value="ward">Block Debuffs</option><option value="counter_attack">Counterattack</option><option value="immortal">Unkillable</option><option value="crit_up">Crit Chance Up</option><option value="crit_dmg_up">Crit Damage Up</option></optgroup><optgroup label="Debuffs"><option value="weaken">Attack Down</option><option value="armor_break">Defense Down</option><option value="slow">Speed Down</option><option value="poison">Poison</option><option value="bleed">Bleed</option><option value="stun">Stun</option><option value="heal_reduce">Heal Reduction</option></optgroup><optgroup label="Instant effects"><option value="heal">Heal</option><option value="lifesteal">Lifesteal</option><option value="revive">Revive</option><option value="cleanse">Cleanse</option><option value="meter_fill">Turn Meter Up</option><option value="meter_drain">Turn Meter Down</option><option value="interrupt">Interrupt</option><option value="self_damage">Life Cost</option><option value="ally_strike">Ally Attack</option><option value="team_lifesteal">Shared Lifesteal</option></optgroup>      </select></span>
     </div>
     </details>
-    <p class="dbstatus"><span class="count" data-count="all" data-template="Entries: #" aria-live="polite">Entries: 148</span>
+    <p class="dbstatus"><span class="count" data-count="all" data-template="Entries: #" aria-live="polite">Entries: 180</span>
       <button class="linkish" type="button" data-reset hidden>Reset filters</button></p>
   </section>
 
@@ -186,7 +186,7 @@
 <div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-spark_rain" data-card data-family="light" data-rarity="normal" data-kind="area" data-effects="" data-search="spark rain normal · light 2 random enemies · power 0.8 · cooldown 2">
+      <article class="card movecard dbcard" id="move-spark_rain" data-card data-family="light" data-rarity="normal" data-kind="area" data-effects="" data-search="spark rain normal · light 2 random enemies · power 1 · cooldown 2">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -199,7 +199,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>2 random enemies</dd></div></dl>
-<ul class="lines"><li>Hits 2 random enemies with 80 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
+<ul class="lines"><li>Hits 2 random enemies with 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
         </details>
@@ -324,7 +324,7 @@
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-vigilance" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="defense_up" data-search="vigilance normal · light self · 100 % defense up 25 % for 2 turns · cooldown 3 defense up">
+      <article class="card movecard dbcard" id="move-vigilance" data-card data-family="light" data-rarity="normal" data-kind="single" data-effects="defense_up" data-search="vigilance normal · light one enemy · power 0.9 · 100 % defense up 25 % for 2 turns · cooldown 3 defense up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -338,13 +338,13 @@
 <li><img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Defense Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 25 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 90 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 25 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-steadfast" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="strengthen defense_up" data-search="steadfast normal · light self · 100 % attack up 15 % for 2 turns · 100 % defense up 15 % for 2 turns · cooldown 3 attack up defense up">
+      <article class="card movecard dbcard" id="move-steadfast" data-card data-family="light" data-rarity="normal" data-kind="single" data-effects="strengthen defense_up" data-search="steadfast normal · light one enemy · power 0.9 · 100 % attack up 15 % for 2 turns · 100 % defense up 15 % for 2 turns · cooldown 3 attack up defense up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -358,13 +358,13 @@
 <li><img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Up</span></li><li><img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Defense Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 90 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-encourage" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="strengthen defense_up" data-search="encourage normal · light one ally · 100 % attack up 15 % for 2 turns · 100 % defense up 15 % for 2 turns · cooldown 3 attack up defense up">
+      <article class="card movecard dbcard" id="move-encourage" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="strengthen defense_up" data-search="encourage normal · light all allies · 100 % attack up 15 % for 2 turns · 100 % defense up 15 % for 2 turns · cooldown 3 attack up defense up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -378,13 +378,13 @@
 <li><img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Up</span></li><li><img src="../../assets/art/effect/defense_up-96.247ca763.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Defense Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Raises the ally's <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li><li>Raises the ally's <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-tailwind" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="haste" data-search="tailwind normal · light one ally · 100 % speed up 20 % for 2 turns · cooldown 3 speed up">
+      <article class="card movecard dbcard" id="move-tailwind" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="haste" data-search="tailwind normal · light all allies · 100 % speed up 20 % for 2 turns · cooldown 3 speed up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -398,13 +398,13 @@
 <li><img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Speed Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Raises the ally's <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-beacon" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="meter_fill" data-search="beacon normal · light one ally · turn meter up 40 % · cooldown 3 turn meter up">
+      <article class="card movecard dbcard" id="move-beacon" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="meter_fill heal" data-search="beacon normal · light one ally · turn meter up 40 % · heal 10 % · cooldown 3 turn meter up heal">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -415,11 +415,11 @@
           </div>
           </div>
           <ul class="effectchips">
-<li><img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Turn Meter Up</span></li>          </ul>
+<li><img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Turn Meter Up</span></li><li><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal</span></li>          </ul>
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Fills the ally's <strong class="buff">turn meter</strong> by 40 %.</li></ul>
+<ul class="lines"><li>Fills the ally's <strong class="buff">turn meter</strong> by 40 %.</li><li><strong class="buff">Heals</strong> the ally for 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -440,6 +440,66 @@
           <dl class="rows">
 <div><dt>Target</dt><dd>2 random allies</dd></div></dl>
 <ul class="lines"><li>Fills the <strong class="buff">turn meter</strong> of the chosen random allies by 20 %.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-stand_guard" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="taunt damage_reduction" data-search="stand guard normal · light self · 100 % taunt for 1 turn · 100 % damage reduction 15 % for 1 turn · cooldown 3 taunt damage reduction">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/stand_guard-192.3396b05b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Stand Guard</h3>
+            <p class="sub">Normal · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Taunt</span></li><li><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Damage Reduction</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>self</dd></div></dl>
+<ul class="lines"><li><strong class="buff">Taunt</strong> for 1 turn: all enemies must attack the user.</li><li>Gives itself <strong class="buff">Damage Reduction</strong> for 1 turn: all damage taken is 15 % lower.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-light_drops" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="regen" data-search="light drops normal · light all allies · 100 % regeneration 4 % for 2 turns · cooldown 4 regeneration">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/light_drops-192.efaced7c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Light Drops</h3>
+            <p class="sub">Normal · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/regen-96.eec7dcb8.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Regeneration</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Gives all allies <strong class="buff">regeneration</strong> for 2 turns: 4 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span> at the start of each own turn.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-keen_eye" data-card data-family="light" data-rarity="normal" data-kind="support" data-effects="crit_up" data-search="keen eye normal · light one ally · 100 % crit chance up 20 % for 2 turns · cooldown 3 crit chance up">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/keen_eye-192.42944eb4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Keen Eye</h3>
+            <p class="sub">Normal · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Crit Chance Up</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one ally</dd></div></dl>
+<ul class="lines"><li>Raises the ally's <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -608,7 +668,7 @@
 <div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-poison_fang" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="poison" data-search="poison fang normal · shadow one enemy · power 1.1 · 50 % poison 4 % for 2 turns · cooldown 2 poison">
+      <article class="card movecard dbcard" id="move-poison_fang" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="poison" data-search="poison fang normal · shadow one enemy · power 1.1 · 50 % poison 3 % for 2 turns · cooldown 2 poison">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -623,12 +683,12 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one enemy</dd></div></dl>
-<ul class="lines"><li>Deals 110 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>50 % chance to <strong class="debuff">poison</strong> the enemy for 2 turns (4 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span> per turn).</li></ul>
+<ul class="lines"><li>Deals 110 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>50 % chance to <strong class="debuff">poison</strong> the enemy for 2 turns (3 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span> per turn).</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-rage_cry" data-card data-family="shadow" data-rarity="normal" data-kind="support" data-effects="strengthen" data-search="rage cry normal · shadow self · 100 % attack up 25 % for 2 turns · cooldown 3 attack up">
+      <article class="card movecard dbcard" id="move-rage_cry" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="strengthen" data-search="rage cry normal · shadow one enemy · power 0.8 · 100 % attack up 25 % for 2 turns · cooldown 3 attack up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -642,13 +702,13 @@
 <li><img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 25 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 80 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 25 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-blood_pact" data-card data-family="shadow" data-rarity="normal" data-kind="support" data-effects="strengthen self_damage" data-search="blood pact normal · shadow self · 100 % attack up 35 % for 2 turns · life cost 8 % · cooldown 3 attack up life cost">
+      <article class="card movecard dbcard" id="move-blood_pact" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="strengthen self_damage" data-search="blood pact normal · shadow one enemy · power 1 · 100 % attack up 35 % for 2 turns · life cost 8 % · cooldown 3 attack up life cost">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -662,13 +722,13 @@
 <li><img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Up</span></li><li><img src="../../assets/art/effect/self_damage-96.112f0845.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Life Cost</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 35 %</strong> for 2 turns.</li><li>Costs the user 8 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 100 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 35 %</strong> for 2 turns.</li><li>Costs the user 8 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-sharpen" data-card data-family="shadow" data-rarity="normal" data-kind="support" data-effects="crit_up" data-search="sharpen normal · shadow self · 100 % crit chance up 30 % for 2 turns · cooldown 3 crit chance up">
+      <article class="card movecard dbcard" id="move-sharpen" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="crit_up" data-search="sharpen normal · shadow one enemy · power 0.8 · 100 % crit chance up 30 % for 2 turns · cooldown 3 crit chance up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -682,13 +742,13 @@
 <li><img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Crit Chance Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span></strong> <strong class="buff">by 30 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 80 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span></strong> <strong class="buff">by 30 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-lurk" data-card data-family="shadow" data-rarity="normal" data-kind="support" data-effects="haste" data-search="lurk normal · shadow self · 100 % speed up 20 % for 2 turns · cooldown 3 speed up">
+      <article class="card movecard dbcard" id="move-lurk" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="haste" data-search="lurk normal · shadow one enemy · power 0.8 · 100 % speed up 20 % for 2 turns · cooldown 3 speed up">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -702,8 +762,8 @@
 <li><img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Speed Up</span></li>          </ul>
           </summary>
           <dl class="rows">
-<div><dt>Target</dt><dd>self</dd></div></dl>
-<ul class="lines"><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li></ul>
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 80 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -766,6 +826,64 @@
 <ul class="lines"><li>Deals 110 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Heals itself for 20 % of the damage dealt (<strong class="buff">lifesteal</strong>).</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-gash" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="bleed" data-search="gash normal · shadow one enemy · power 1.1 · 40 % bleed 25 % for 2 turns · cooldown 2 bleed">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/gash-192.6c17074f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Gash</h3>
+            <p class="sub">Normal · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Bleed</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 110 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>40 % chance to make the enemy <strong class="debuff">bleed</strong> for 2 turns: 25 % of the user’s <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-disrupt" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="interrupt" data-search="disrupt normal · shadow one enemy · power 1 · interrupt 1 % · cooldown 3 interrupt">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/disrupt-192.e033503b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Disrupt</h3>
+            <p class="sub">Normal · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Interrupt</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 100 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>40 % chance to <strong class="debuff">interrupt</strong> the enemy: abilities with a cooldown need 1 turn longer to be ready.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-chain_bite" data-card data-family="shadow" data-rarity="normal" data-kind="single" data-effects="" data-search="chain bite normal · shadow one enemy · power 0.95 · crit chain +2 · cooldown 2">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-normal s64"><img src="../../assets/art/move/chain_bite-192.343697ca.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Chain Bite</h3>
+            <p class="sub">Normal · Shadow</p>
+          </div>
+          </div>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 95 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Every critical hit strikes again, up to 2 extra hits.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>2 turns</dd></div></dl>
         </details>
       </article>
       <article class="card movecard dbcard" id="move-shield_wall" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="shield" data-search="shield wall rare · light all allies · shield 10 %, reduces damage by 10 % · cooldown 4 shield">
@@ -848,7 +966,7 @@
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-clarity" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="cleanse heal" data-search="clarity rare · light one ally · cleanse · heal 10 % · cooldown 3 cleanse heal">
+      <article class="card movecard dbcard" id="move-clarity" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="cleanse heal" data-search="clarity rare · light one ally · cleanse · heal 20 % · cooldown 3 cleanse heal">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -863,12 +981,12 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Frees the ally from all <strong class="buff">debuffs</strong>.</li><li><strong class="buff">Heals</strong> the ally for 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<ul class="lines"><li>Frees the ally from all <strong class="buff">debuffs</strong>.</li><li><strong class="buff">Heals</strong> the ally for 20 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-wake_call" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="cleanse meter_fill" data-search="wake call rare · light one ally · cleanse · turn meter up 30 % · cooldown 3 cleanse turn meter up">
+      <article class="card movecard dbcard" id="move-wake_call" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="cleanse meter_fill heal" data-search="wake call rare · light one ally · cleanse · turn meter up 50 % · heal 10 % · cooldown 3 cleanse turn meter up heal">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -879,11 +997,11 @@
           </div>
           </div>
           <ul class="effectchips">
-<li><img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Cleanse</span></li><li><img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Turn Meter Up</span></li>          </ul>
+<li><img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Cleanse</span></li><li><img src="../../assets/art/effect/meter_fill-96.0ff22733.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Turn Meter Up</span></li><li><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal</span></li>          </ul>
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Frees the ally from all <strong class="buff">debuffs</strong>.</li><li>Fills the ally's <strong class="buff">turn meter</strong> by 30 %.</li></ul>
+<ul class="lines"><li>Frees the ally from all <strong class="buff">debuffs</strong>.</li><li>Fills the ally's <strong class="buff">turn meter</strong> by 50 %.</li><li><strong class="buff">Heals</strong> the ally for 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -968,7 +1086,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-guardian_bond" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="guard_link" data-search="guardian bond rare · light one ally · 100 % guard bond 50 % for 2 turns · cooldown 4 guard bond">
+      <article class="card movecard dbcard" id="move-guardian_bond" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="guard_link shield" data-search="guardian bond rare · light one ally · 100 % guard bond 50 % for 2 turns · shield 15 %, reduces damage by 5 % · cooldown 4 guard bond shield">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -979,11 +1097,11 @@
           </div>
           </div>
           <ul class="effectchips">
-<li><img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Guard Bond</span></li>          </ul>
+<li><img src="../../assets/art/effect/guard_link-96.17449753.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Guard Bond</span></li><li><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Shield</span></li>          </ul>
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li><strong class="buff">Guard bond</strong> with the ally for 2 turns: the user takes 50 % of every hit.</li></ul>
+<ul class="lines"><li><strong class="buff">Guard bond</strong> with the ally for 2 turns: the user takes 50 % of every hit.</li><li>Gives itself a <strong class="buff">shield</strong> of 15 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>. While it holds, it reduces all damage taken by 5 %.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1046,6 +1164,66 @@
 <ul class="lines"><li>Deals 130 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Heals itself for 30 % of the damage dealt (<strong class="buff">lifesteal</strong>).</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-mirror_veil" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="mirror heal" data-search="mirror veil rare · light one ally · 100 % mirror for 2 turns · heal 15 % · cooldown 3 mirror heal">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/mirror_veil-192.99db46c5.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Mirror Veil</h3>
+            <p class="sub">Rare · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/mirror-96.e5533f34.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Mirror</span></li><li><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one ally</dd></div></dl>
+<ul class="lines"><li>Gives the ally <strong class="buff">Mirror</strong> for 2 turns: the next debuff from an enemy bounces back and hits that enemy.</li><li><strong class="buff">Heals</strong> the ally for 15 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-brave_heart" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="taunt damage_reduction" data-search="brave heart rare · light self · 100 % taunt for 2 turns · 100 % damage reduction 25 % for 2 turns · cooldown 4 taunt damage reduction">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/brave_heart-192.7214f1fa.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Brave Heart</h3>
+            <p class="sub">Rare · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Taunt</span></li><li><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Damage Reduction</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>self</dd></div></dl>
+<ul class="lines"><li><strong class="buff">Taunt</strong> for 2 turns: all enemies must attack the user.</li><li>Gives itself <strong class="buff">Damage Reduction</strong> for 2 turns: all damage taken is 25 % lower.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-focus_light" data-card data-family="light" data-rarity="rare" data-kind="support" data-effects="crit_up" data-search="focusing light rare · light all allies · 100 % crit chance up 15 % for 2 turns · cooldown 4 crit chance up">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/focus_light-192.f63d1adc.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Focusing Light</h3>
+            <p class="sub">Rare · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/crit_up-96.97e26583.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Crit Chance Up</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
       <article class="card movecard dbcard" id="move-soul_rend" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="" data-search="soul rend rare · shadow one enemy · power 1.7 · ignores 25 % defense · cooldown 3">
@@ -1120,7 +1298,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-blade_rain" data-card data-family="shadow" data-rarity="rare" data-kind="area" data-effects="" data-search="blade rain rare · shadow 3 random enemies · power 0.4 · 2 hits · cooldown 3">
+      <article class="card movecard dbcard" id="move-blade_rain" data-card data-family="shadow" data-rarity="rare" data-kind="area" data-effects="" data-search="blade rain rare · shadow 3 random enemies · power 0.55 · 2 hits · cooldown 3">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1133,7 +1311,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>3 random enemies</dd></div></dl>
-<ul class="lines"><li>Hits 3 random enemies with 40 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
+<ul class="lines"><li>Hits 3 random enemies with 55 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -1176,7 +1354,7 @@
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-sacrifice_bite" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="self_damage" data-search="sacrifice bite rare · shadow one enemy · power 2.1 · life cost 10 % · cooldown 3 life cost">
+      <article class="card movecard dbcard" id="move-sacrifice_bite" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="self_damage" data-search="sacrifice bite rare · shadow one enemy · power 2.3 · life cost 5 % · cooldown 3 life cost">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1191,7 +1369,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one enemy</dd></div></dl>
-<ul class="lines"><li>Deals 210 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 10 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<ul class="lines"><li>Deals 230 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 5 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
@@ -1316,6 +1494,64 @@
 <div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
         </details>
       </article>
+      <article class="card movecard dbcard" id="move-rip" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="bleed" data-search="rip rare · shadow one enemy · power 0.7 · 2 hits · 50 % bleed 15 % for 2 turns · cooldown 3 bleed">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/rip-192.498f5b7f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Rip</h3>
+            <p class="sub">Rare · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Bleed</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>2 hits of 70 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li><li>50 % chance to make the enemy <strong class="debuff">bleed</strong> for 2 turns: 15 % of the user’s <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-rotting_bite" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="heal_reduce" data-search="rotting bite rare · shadow one enemy · power 1.4 · 70 % heal reduction 50 % for 2 turns · cooldown 3 heal reduction">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/rotting_bite-192.9ec6b708.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Rotting Bite</h3>
+            <p class="sub">Rare · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal Reduction</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 140 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>70 % chance to give the enemy <strong class="debuff">Heal Reduction</strong> for 2 turns: healing is 50 % weaker.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-blade_dance" data-card data-family="shadow" data-rarity="rare" data-kind="single" data-effects="" data-search="blade dance rare · shadow one enemy · power 1 · crit chain +4 · cooldown 3">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-rare s64"><img src="../../assets/art/move/blade_dance-192.9503113b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Blade Dance</h3>
+            <p class="sub">Rare · Shadow</p>
+          </div>
+          </div>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 100 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Every critical hit strikes again, up to 4 extra hits.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>3 turns</dd></div></dl>
+        </details>
+      </article>
       <article class="card movecard dbcard" id="move-holy_wall" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="shield" data-search="holy wall epic · light all allies · shield 15 %, reduces damage by 10 % · cooldown 4 shield">
         <details class="expander cardexp">
           <summary>
@@ -1416,7 +1652,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-ray_storm" data-card data-family="light" data-rarity="epic" data-kind="area" data-effects="slow" data-search="ray storm epic · light all enemies · power 0.7 · 40 % speed down 20 % for 2 turns · cooldown 4 speed down">
+      <article class="card movecard dbcard" id="move-ray_storm" data-card data-family="light" data-rarity="epic" data-kind="area" data-effects="slow" data-search="ray storm epic · light all enemies · power 0.7 · 60 % speed down 25 % for 2 turns · cooldown 4 speed down">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1431,7 +1667,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>all enemies</dd></div></dl>
-<ul class="lines"><li>Hits all enemies with 70 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>40 % chance to <strong class="debuff">lower</strong> all enemies' <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="debuff">by 20 %</strong> for 2 turns.</li></ul>
+<ul class="lines"><li>Hits all enemies with 70 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>60 % chance to <strong class="debuff">lower</strong> all enemies' <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="debuff">by 25 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1536,7 +1772,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-light_seal" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="ward heal" data-search="light seal epic · light one ally · 100 % block debuffs for 2 turns · heal 10 % · cooldown 4 block debuffs heal">
+      <article class="card movecard dbcard" id="move-light_seal" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="ward heal" data-search="light seal epic · light one ally · 100 % block debuffs for 2 turns · heal 20 % · cooldown 4 block debuffs heal">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1551,12 +1787,12 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Gives the ally <strong class="buff">Block Debuffs</strong> for 2 turns: new debuffs have no effect.</li><li><strong class="buff">Heals</strong> the ally for 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<ul class="lines"><li>Gives the ally <strong class="buff">Block Debuffs</strong> for 2 turns: new debuffs have no effect.</li><li><strong class="buff">Heals</strong> the ally for 20 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-retribution" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="counter_attack" data-search="retribution epic · light one ally · 100 % counterattack 100 % for 2 turns · cooldown 4 counterattack">
+      <article class="card movecard dbcard" id="move-retribution" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="counter_attack shield" data-search="retribution epic · light one ally · 100 % counterattack 100 % for 2 turns · shield 15 %, reduces damage by 5 % · cooldown 4 counterattack shield">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1567,11 +1803,11 @@
           </div>
           </div>
           <ul class="effectchips">
-<li><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Counterattack</span></li>          </ul>
+<li><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Counterattack</span></li><li><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Shield</span></li>          </ul>
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one ally</dd></div></dl>
-<ul class="lines"><li>Gives the ally <strong class="buff">Counterattack</strong> for 2 turns: every direct hit is answered with 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li></ul>
+<ul class="lines"><li>Gives the ally <strong class="buff">Counterattack</strong> for 2 turns: every direct hit is answered with 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>Gives the ally a <strong class="buff">shield</strong> of 15 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>. While it holds, it reduces all damage taken by 5 %.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1592,6 +1828,66 @@
           <dl class="rows">
 <div><dt>Target</dt><dd>one enemy</dd></div></dl>
 <ul class="lines"><li>Deals 150 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li><strong class="buff">Heals</strong> all allies by 30 % of the damage dealt.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-phoenix_feather" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="lifeline" data-search="phoenix feather epic · light one ally · 100 % spark of life 30 % for 3 turns · cooldown 5 spark of life">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/phoenix_feather-192.3103f145.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Phoenix Feather</h3>
+            <p class="sub">Epic · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Spark of Life</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one ally</dd></div></dl>
+<ul class="lines"><li>Gives the ally a <strong class="buff">Spark of Life</strong> for 3 turns: whoever falls gets right back up with 30 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span> (once per battle).</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-rally" data-card data-family="light" data-rarity="epic" data-kind="support" data-effects="strengthen haste" data-search="rally epic · light all allies · 100 % attack up 20 % for 2 turns · 100 % speed up 15 % for 2 turns · cooldown 5 attack up speed up">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/rally-192.79e7338e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Rally</h3>
+            <p class="sub">Epic · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/strengthen-96.3f505297.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Up</span></li><li><img src="../../assets/art/effect/haste-96.00e573d1.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Speed Up</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="buff">by 20 %</strong> for 2 turns.</li><li>Raises all allies' <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">speed</span></strong> <strong class="buff">by 15 %</strong> for 2 turns.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-dazzle" data-card data-family="light" data-rarity="epic" data-kind="area" data-effects="weaken" data-search="dazzle epic · light all enemies · power 0.5 · 100 % attack down 30 % for 2 turns · cooldown 4 attack down">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/dazzle-192.91b1dfe9.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Dazzle</h3>
+            <p class="sub">Epic · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Attack Down</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all enemies</dd></div></dl>
+<ul class="lines"><li>Hits all enemies with 50 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>Lowers all enemies' <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span></strong> <strong class="debuff">by 30 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1650,13 +1946,13 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-executioner_bite" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="" data-search="serpent bite epic · shadow one enemy · power 1.5 · up to +100 % against wounded targets · cooldown 4">
+      <article class="card movecard dbcard" id="move-executioner_bite" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="" data-search="executioner&#39;s bite epic · shadow one enemy · power 1.5 · up to +100 % against wounded targets · cooldown 4">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
           <span class="frame r-epic s64"><img src="../../assets/art/move/executioner_bite-192.6c334851.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
           <div>
-            <h3>Serpent Bite</h3>
+            <h3>Executioner&#39;s Bite</h3>
             <p class="sub">Epic · Shadow</p>
           </div>
           </div>
@@ -1686,7 +1982,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-blood_toll" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="self_damage" data-search="blood toll epic · shadow one enemy · power 2.6 · life cost 15 % · cooldown 4 life cost">
+      <article class="card movecard dbcard" id="move-blood_toll" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="self_damage" data-search="blood toll epic · shadow one enemy · power 3 · life cost 10 % · cooldown 4 life cost">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1701,7 +1997,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one enemy</dd></div></dl>
-<ul class="lines"><li>Deals 260 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 15 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
+<ul class="lines"><li>Deals 300 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 10 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1746,7 +2042,7 @@
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-night_storm" data-card data-family="shadow" data-rarity="epic" data-kind="area" data-effects="" data-search="night storm epic · shadow all enemies · power 0.5 · 2 hits · cooldown 4">
+      <article class="card movecard dbcard" id="move-night_storm" data-card data-family="shadow" data-rarity="epic" data-kind="area" data-effects="" data-search="night storm epic · shadow all enemies · power 0.65 · 2 hits · cooldown 4">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1759,12 +2055,12 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>all enemies</dd></div></dl>
-<ul class="lines"><li>Hits all enemies with 50 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li></ul>
+<ul class="lines"><li>Hits all enemies with 65 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-shard_rain" data-card data-family="shadow" data-rarity="epic" data-kind="area" data-effects="" data-search="shard rain epic · shadow 3 random enemies · power 0.35 · 3 hits · cooldown 4">
+      <article class="card movecard dbcard" id="move-shard_rain" data-card data-family="shadow" data-rarity="epic" data-kind="area" data-effects="" data-search="shard rain epic · shadow 3 random enemies · power 0.45 · 3 hits · cooldown 4">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1777,7 +2073,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>3 random enemies</dd></div></dl>
-<ul class="lines"><li>Hits 3 random enemies with 35 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
+<ul class="lines"><li>Hits 3 random enemies with 45 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> each.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1858,6 +2154,66 @@
           <dl class="rows">
 <div><dt>Target</dt><dd>self</dd></div></dl>
 <ul class="lines"><li>Gives itself <strong class="buff">Counterattack</strong> for 2 turns: every direct hit is answered with 150 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>Raises its own <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span></strong> <strong class="buff">by 30 %</strong> for 2 turns.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-silencing_blow" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="interrupt" data-search="silencing blow epic · shadow one enemy · power 1.8 · interrupt 1 % · cooldown 4 interrupt">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/silencing_blow-192.5dd1a697.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Silencing Blow</h3>
+            <p class="sub">Epic · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Interrupt</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 180 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li><strong class="debuff">Interrupts</strong> the enemy: abilities with a cooldown need 1 turn longer to be ready.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-blood_feast" data-card data-family="shadow" data-rarity="epic" data-kind="area" data-effects="bleed" data-search="blood feast epic · shadow all enemies · power 0.7 · 70 % bleed 30 % for 2 turns · cooldown 4 bleed">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/blood_feast-192.15253591.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Blood Feast</h3>
+            <p class="sub">Epic · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Bleed</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all enemies</dd></div></dl>
+<ul class="lines"><li>Hits all enemies with 70 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>70 % chance to make all enemies <strong class="debuff">bleed</strong> for 2 turns: 30 % of the user’s <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-life_thief" data-card data-family="shadow" data-rarity="epic" data-kind="single" data-effects="lifesteal heal_reduce" data-search="life thief epic · shadow one enemy · power 1.7 · lifesteal 40 % · 100 % heal reduction 50 % for 2 turns · cooldown 4 lifesteal heal reduction">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-epic s64"><img src="../../assets/art/move/life_thief-192.d37d15d7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Life Thief</h3>
+            <p class="sub">Epic · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Lifesteal</span></li><li><img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal Reduction</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 170 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Heals itself for 40 % of the damage dealt (<strong class="buff">lifesteal</strong>).</li><li>Gives the enemy <strong class="debuff">Heal Reduction</strong> for 2 turns: healing is 50 % weaker.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>4 turns</dd></div></dl>
         </details>
@@ -1962,7 +2318,7 @@
 <div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-sun_judgment" data-card data-family="light" data-rarity="legendary" data-kind="area" data-effects="armor_break" data-search="sun judgment legendary · light all enemies · power 1 · 100 % defense down 25 % for 2 turns · cooldown 5 defense down">
+      <article class="card movecard dbcard" id="move-sun_judgment" data-card data-family="light" data-rarity="legendary" data-kind="area" data-effects="armor_break" data-search="sun judgment legendary · light all enemies · power 1.2 · 100 % defense down 35 % for 2 turns · cooldown 5 defense down">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -1977,7 +2333,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>all enemies</dd></div></dl>
-<ul class="lines"><li>Hits all enemies with 100 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>Lowers all enemies' <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="debuff">by 25 %</strong> for 2 turns.</li></ul>
+<ul class="lines"><li>Hits all enemies with 120 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li>Lowers all enemies' <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="debuff">by 35 %</strong> for 2 turns.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
@@ -2120,6 +2476,66 @@
 <ul class="lines"><li><strong class="buff">Revives</strong> all fallen allies with 30 % of their max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>6 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-aegis_of_wrath" data-card data-family="light" data-rarity="legendary" data-kind="support" data-effects="shield counter_attack" data-search="aegis of wrath legendary · light all allies · shield 15 %, reduces damage by 5 % · 100 % counterattack 60 % for 2 turns · cooldown 5 shield counterattack">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/aegis_of_wrath-192.61d54d1c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Aegis of Wrath</h3>
+            <p class="sub">Legendary · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Shield</span></li><li><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Counterattack</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Gives all allies a <strong class="buff">shield</strong> of 15 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>. While it holds, it reduces all damage taken by 5 %.</li><li>Gives all allies <strong class="buff">Counterattack</strong> for 2 turns: every direct hit is answered with 60 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-undying_flame" data-card data-family="light" data-rarity="legendary" data-kind="support" data-effects="lifeline" data-search="undying flame legendary · light all allies · 100 % spark of life 50 % for 3 turns · cooldown 6 spark of life">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/undying_flame-192.3b465501.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Undying Flame</h3>
+            <p class="sub">Legendary · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Spark of Life</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Gives all allies a <strong class="buff">Spark of Life</strong> for 3 turns: whoever falls gets right back up with 50 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span> (once per battle).</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>6 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-sanctuary" data-card data-family="light" data-rarity="legendary" data-kind="support" data-effects="cleanse heal mirror" data-search="sanctuary legendary · light all allies · cleanse · heal 10 % · 100 % mirror for 2 turns · cooldown 5 cleanse heal mirror">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/sanctuary-192.e34d8166.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Sanctuary</h3>
+            <p class="sub">Legendary · Light</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Cleanse</span></li><li><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Heal</span></li><li><img src="../../assets/art/effect/mirror-96.e5533f34.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Mirror</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all allies</dd></div></dl>
+<ul class="lines"><li>Frees all allies from all <strong class="buff">debuffs</strong>.</li><li><strong class="buff">Heals</strong> all allies for 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li><li>Gives all allies <strong class="buff">Mirror</strong> for 2 turns: the next debuff from an enemy bounces back and hits that enemy.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
       </article>
       <article class="card movecard dbcard" id="move-world_eater" data-card data-family="shadow" data-rarity="legendary" data-kind="single" data-effects="" data-search="world eater legendary · shadow one enemy · power 3 · ignores 50 % defense · cooldown 5">
@@ -2274,7 +2690,7 @@
 <div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
       </article>
-      <article class="card movecard dbcard" id="move-blood_sacrifice" data-card data-family="shadow" data-rarity="legendary" data-kind="single" data-effects="self_damage" data-search="blood sacrifice legendary · shadow one enemy · power 4 · life cost 25 % · sure crit · cooldown 5 life cost">
+      <article class="card movecard dbcard" id="move-blood_sacrifice" data-card data-family="shadow" data-rarity="legendary" data-kind="single" data-effects="self_damage" data-search="blood sacrifice legendary · shadow one enemy · power 4 · life cost 10 % · sure crit · cooldown 5 life cost">
         <details class="expander cardexp">
           <summary>
           <div class="movehead">
@@ -2289,7 +2705,7 @@
           </summary>
           <dl class="rows">
 <div><dt>Target</dt><dd>one enemy</dd></div></dl>
-<ul class="lines"><li>Deals 400 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 25 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li><li>Always lands a critical hit.</li></ul>
+<ul class="lines"><li>Deals 400 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Costs the user 10 % of its max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</li><li>Always lands a critical hit.</li></ul>
 <dl class="rows">
 <div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
@@ -2370,18 +2786,76 @@
 <div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
         </details>
       </article>
+      <article class="card movecard dbcard" id="move-endless_edge" data-card data-family="shadow" data-rarity="legendary" data-kind="single" data-effects="" data-search="endless edge legendary · shadow one enemy · power 1.6 · crit chain +5 · cooldown 5">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/endless_edge-192.f5675d9e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Endless Edge</h3>
+            <p class="sub">Legendary · Shadow</p>
+          </div>
+          </div>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 160 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Every critical hit strikes again, up to 5 extra hits.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-hemorrhage" data-card data-family="shadow" data-rarity="legendary" data-kind="single" data-effects="bleed armor_break" data-search="hemorrhage legendary · shadow one enemy · power 1.5 · 100 % bleed 40 % for 2 turns · 100 % defense down 25 % for 2 turns · cooldown 5 bleed defense down">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/hemorrhage-192.2210f46c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Hemorrhage</h3>
+            <p class="sub">Legendary · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Bleed</span></li><li><img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Defense Down</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>one enemy</dd></div></dl>
+<ul class="lines"><li>Deals 150 % of <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage.</li><li>Makes the enemy <strong class="debuff">bleed</strong> for 2 turns: 40 % of the user’s <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</li><li>Lowers the enemy's <strong class="debuff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span></strong> <strong class="debuff">by 25 %</strong> for 2 turns.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
+      <article class="card movecard dbcard" id="move-dead_silence" data-card data-family="shadow" data-rarity="legendary" data-kind="area" data-effects="interrupt" data-search="dead silence legendary · shadow all enemies · power 1.3 · interrupt 1 % · cooldown 5 interrupt">
+        <details class="expander cardexp">
+          <summary>
+          <div class="movehead">
+          <span class="frame r-legendary s64"><img src="../../assets/art/move/dead_silence-192.d02775dc.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy"></span>
+          <div>
+            <h3>Dead Silence</h3>
+            <p class="sub">Legendary · Shadow</p>
+          </div>
+          </div>
+          <ul class="effectchips">
+<li><img src="../../assets/art/effect/interrupt-96.192b2a92.webp" alt="" aria-hidden="true" width="22" height="22" loading="lazy"><span>Interrupt</span></li>          </ul>
+          </summary>
+          <dl class="rows">
+<div><dt>Target</dt><dd>all enemies</dd></div></dl>
+<ul class="lines"><li>Hits all enemies with 130 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span>.</li><li><strong class="debuff">Interrupts</strong> all enemies: abilities with a cooldown need 1 turn longer to be ready.</li></ul>
+<dl class="rows">
+<div><dt>Cooldown</dt><dd>5 turns</dd></div></dl>
+        </details>
+      </article>
     </div>
   </section>
 
   <section class="section" aria-labelledby="passives" data-group>
     <h2 class="stitle" id="passives"><span>Passives</span></h2>
     <div class="cards dbcards" data-list="passives">
-      <article class="card movecard dbcard" id="passive-light_shield_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="shielded start passive · normal · light starts every battle with a shield of 10 %.">
+      <article class="card movecard dbcard" id="passive-light_shield_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="shielded start passive · normal · light starts every battle with a shield of 20 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_n-192.a8a4efb7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_shield_n">Shielded Start</a></h3><p class="sub">Passive · Normal · Light</p></div>
         </div>
-        <p class="short">Starts every battle with a shield of 10 %.</p>
+        <p class="short">Starts every battle with a shield of 20 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_heal_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="warm light passive · normal · light heals all allies by 2 % at the start of its turn.">
         <div class="movehead">
@@ -2403,6 +2877,13 @@
           <div><h3><a class="cardlink" href="#passive-light_spark_n">Light Spark</a></h3><p class="sub">Passive · Normal · Light</p></div>
         </div>
         <p class="short">After its own critical hit, heals the whole team by 3 % of their max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_boost_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="healing power passive · normal · light heals and shields from this ovaling are 15 % stronger.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_boost_n-192.1612756e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_boost_n">Healing Power</a></h3><p class="sub">Passive · Normal · Light</p></div>
+        </div>
+        <p class="short">Heals and shields from this Ovaling are 15 % stronger.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_lifesteal_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="bloodthirst passive · normal · shadow heals by 8 % of the damage it deals.">
         <div class="movehead">
@@ -2432,19 +2913,26 @@
         </div>
         <p class="short">Critical hits ignore 15 % of the target's <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="shielded start passive · rare · light starts every battle with a shield of 15 %.">
+      <article class="card movecard dbcard" id="passive-shadow_finish_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="finishing blow passive · normal · shadow +20 % damage against targets below 30 % hp.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_finish_n-192.b5055b97.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_finish_n">Finishing Blow</a></h3><p class="sub">Passive · Normal · Shadow</p></div>
+        </div>
+        <p class="short">+20 % damage against targets below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_shield_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="shielded start passive · rare · light starts every battle with a shield of 30 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_r-192.5ca4d2bb.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_shield_r">Shielded Start</a></h3><p class="sub">Passive · Rare · Light</p></div>
         </div>
-        <p class="short">Starts every battle with a shield of 15 %.</p>
+        <p class="short">Starts every battle with a shield of 30 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_stand_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="back to the wall passive · rare · light below 30 % hp: defense +30 %.">
+      <article class="card movecard dbcard" id="passive-light_stand_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="back to the wall passive · rare · light below 30 % hp: defense +60 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_stand_r-192.3d517244.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_stand_r">Back to the Wall</a></h3><p class="sub">Passive · Rare · Light</p></div>
         </div>
-        <p class="short">Below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>: <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span> +30 %.</p>
+        <p class="short">Below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>: <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span> +60 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_resist_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="pure heart passive · rare · light 20 % chance to resist a harmful effect.">
         <div class="movehead">
@@ -2459,6 +2947,13 @@
           <div><h3><a class="cardlink" href="#passive-light_lead_r">Guiding Light</a></h3><p class="sub">Passive · Rare · Light</p></div>
         </div>
         <p class="short">All allies get <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span> +12 percentage points while this Ovaling is alive.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_circle_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="circle of protection passive · rare · light at the start of every battle, the whole team gets a shield of 10 % of max hp.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_circle_r-192.1db01de0.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_circle_r">Circle of Protection</a></h3><p class="sub">Passive · Rare · Light</p></div>
+        </div>
+        <p class="short">At the start of every battle, the whole team gets a shield of 10 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_venom_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="venom lore passive · rare · shadow +20 % damage against poisoned targets.">
         <div class="movehead">
@@ -2488,6 +2983,13 @@
         </div>
         <p class="short"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Crit Damage</span> +20 percentage points.</p>
       </article>
+      <article class="card movecard dbcard" id="passive-shadow_wound_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="wound bite passive · rare · shadow its critical hits make the target bleed for 2 turns: 15 % of its attack as damage per turn.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_wound_r-192.e3e6306a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_wound_r">Wound Bite</a></h3><p class="sub">Passive · Rare · Shadow</p></div>
+        </div>
+        <p class="short">Its critical hits make the target bleed for 2 turns: 15 % of its <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</p>
+      </article>
       <article class="card movecard dbcard" id="passive-light_heal_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="warm light passive · epic · light heals all allies by 4 % at the start of its turn.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_heal_e-192.753edd47.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -2495,19 +2997,19 @@
         </div>
         <p class="short">Heals all allies by 4 % at the start of its turn.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="shielded start passive · epic · light starts every battle with a shield of 20 %.">
+      <article class="card movecard dbcard" id="passive-light_shield_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="shielded start passive · epic · light starts every battle with a shield of 40 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_e-192.fa115cb4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_shield_e">Shielded Start</a></h3><p class="sub">Passive · Epic · Light</p></div>
         </div>
-        <p class="short">Starts every battle with a shield of 20 %.</p>
+        <p class="short">Starts every battle with a shield of 40 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_stand_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="back to the wall passive · epic · light below 30 % hp: defense +40 %.">
+      <article class="card movecard dbcard" id="passive-light_stand_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="back to the wall passive · epic · light below 30 % hp: defense +80 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_stand_e-192.b9cce0b8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_stand_e">Back to the Wall</a></h3><p class="sub">Passive · Epic · Light</p></div>
         </div>
-        <p class="short">Below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>: <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span> +40 %.</p>
+        <p class="short">Below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>: <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span> +80 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_spark_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="light spark passive · epic · light after its own critical hit, heals the whole team by 6 % of their max hp.">
         <div class="movehead">
@@ -2515,6 +3017,13 @@
           <div><h3><a class="cardlink" href="#passive-light_spark_e">Light Spark</a></h3><p class="sub">Passive · Epic · Light</p></div>
         </div>
         <p class="short">After its own critical hit, heals the whole team by 6 % of their max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_boost_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="healing power passive · epic · light heals and shields from this ovaling are 30 % stronger.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_boost_e-192.7d8b8762.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_boost_e">Healing Power</a></h3><p class="sub">Passive · Epic · Light</p></div>
+        </div>
+        <p class="short">Heals and shields from this Ovaling are 30 % stronger.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_crit_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="predator&#39;s eye passive · epic · shadow crit chance +16 percentage points.">
         <div class="movehead">
@@ -2544,6 +3053,13 @@
         </div>
         <p class="short">Critical hits ignore 30 % of the target's <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">defense</span>.</p>
       </article>
+      <article class="card movecard dbcard" id="passive-shadow_finish_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="finishing blow passive · epic · shadow +40 % damage against targets below 30 % hp.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_finish_e-192.12843ff8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_finish_e">Finishing Blow</a></h3><p class="sub">Passive · Epic · Shadow</p></div>
+        </div>
+        <p class="short">+40 % damage against targets below 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
+      </article>
       <article class="card movecard dbcard" id="passive-light_heal_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="warm light passive · legendary · light heals all allies by 5 % at the start of its turn.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_heal_g-192.2a132917.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
@@ -2558,12 +3074,12 @@
         </div>
         <p class="short">40 % chance to resist a harmful effect.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="shielded start passive · legendary · light starts every battle with a shield of 30 %.">
+      <article class="card movecard dbcard" id="passive-light_shield_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="shielded start passive · legendary · light starts every battle with a shield of 60 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_g-192.708716b1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
           <div><h3><a class="cardlink" href="#passive-light_shield_g">Shielded Start</a></h3><p class="sub">Passive · Legendary · Light</p></div>
         </div>
-        <p class="short">Starts every battle with a shield of 30 %.</p>
+        <p class="short">Starts every battle with a shield of 60 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_lead_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="guiding light passive · legendary · light all allies get crit chance +24 percentage points while this ovaling is alive.">
         <div class="movehead">
@@ -2571,6 +3087,13 @@
           <div><h3><a class="cardlink" href="#passive-light_lead_g">Guiding Light</a></h3><p class="sub">Passive · Legendary · Light</p></div>
         </div>
         <p class="short">All allies get <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Crit Chance</span> +24 percentage points while this Ovaling is alive.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_circle_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="circle of protection passive · legendary · light at the start of every battle, the whole team gets a shield of 20 % of max hp.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_circle_g-192.e9fbaa02.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_circle_g">Circle of Protection</a></h3><p class="sub">Passive · Legendary · Light</p></div>
+        </div>
+        <p class="short">At the start of every battle, the whole team gets a shield of 20 % of max <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">HP</span>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_lifesteal_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="bloodthirst passive · legendary · shadow heals by 20 % of the damage it deals.">
         <div class="movehead">
@@ -2599,6 +3122,13 @@
           <div><h3><a class="cardlink" href="#passive-shadow_edge_g">Keen Edge</a></h3><p class="sub">Passive · Legendary · Shadow</p></div>
         </div>
         <p class="short"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Crit Damage</span> +40 percentage points.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_wound_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="wound bite passive · legendary · shadow its critical hits make the target bleed for 2 turns: 20 % of its attack as damage per turn.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_wound_g-192.7f3774c5.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_wound_g">Wound Bite</a></h3><p class="sub">Passive · Legendary · Shadow</p></div>
+        </div>
+        <p class="short">Its critical hits make the target bleed for 2 turns: 20 % of its <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">attack</span> as damage per turn.</p>
       </article>
     </div>
   </section>
