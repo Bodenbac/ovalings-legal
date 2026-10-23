@@ -1,7 +1,7 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang), Übersetzung von privacy_de.md. Bei Abweichungen gilt die deutsche Fassung. Platzhalter vor dem Start ersetzen. -->
 # Privacy policy
 
-Last updated: 22 October 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
+Last updated: 23 October 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
 
 ## 1. Controller
 
@@ -26,6 +26,9 @@ We are not required to appoint a data protection officer. You can reach us about
 - Parental approval (only under 18): the email address you enter for your parents, until they decide, then only the status, the monthly limit and the time of the decision (see section 10).
 - Contact form: your message, the topic, your email address and an encrypted check value of your IP address against spam.
 - Question chat on the website: your question and the history in the window go to the AI. We only store a count with an encrypted check value made from your IP address and the day (see section 19).
+- Inviting friends: who invited you (through the invite link or the name you enter when you register), whom you invited, whether that person reached player level 10 with a confirmed email address, and which rewards were credited for it (see section 20).
+- Clans: your clan, your role in it, requests and invitations, your clan points, donations and fulfilled wishes per week, purchases in the clan shop, messages in the clan chat, the clan log (who joined, left or was promoted) and reports about clans (see section 21).
+- Question bot on Discord: only a daily count with an encrypted check value of your Discord ID (see section 22).
 - Technical data: every connection to our server involves your IP address, the time and the request.
 - On your device: your sign-in (encrypted), your settings and cached images of your Ovalings.
 
@@ -60,10 +63,11 @@ If you sign in on the website, your browser keeps the session (local storage, ke
 - Anthropic: writes the profiles and the answers in the question chat on the website (Anthropic, PBC, model Claude Haiku) on our behalf (Art. 28 GDPR, data processing agreement as part of Anthropic's commercial terms). Sections 7 and 19 explain what we send there.
 - Google AdMob: shows the reward videos (Google Ireland Limited). Google is itself responsible for the data it processes in doing so (independent controller under Google's ads data protection terms, not on our behalf). Details in section 9.
 - Resend: sends the emails of Ovalings on our behalf (Art. 28 GDPR): account confirmation, password reset and the email to your parents when you are under 18 and ask for approval of purchases (section 10). For this Resend receives the recipient address and the content of the email. The data processing agreement is part of Resend's terms.
-- Other players: others can see your display name, your showcase, your backdrop and your marketplace offers. Only your friends can see your profile with your collection. Everyone in the same room sees your chat messages with your display name. The leaderboard shows your display name and your value if you are in the top 100, among friends always. In an event, the others in your group see your display name, your points and your rank. Everyone who looks at an Ovaling can see its profile. Nobody can see your email address. Anyone who knows the ID of an Ovaling can view it on ovalings.app: look, stats, level, attacks, passive and profile. Your account, your display name and the Ovaling's nickname never appear there.
+- Other players: others can see your display name, your showcase, your backdrop and your marketplace offers. Only your friends can see your profile with your collection. Everyone in the same room sees your chat messages with your display name. The leaderboard shows your display name and your value if you are in the top 100, among friends always. In an event, the others in your group see your display name, your points and your rank. Everyone who looks at an Ovaling can see its profile. Nobody can see your email address. Anyone who knows the ID of an Ovaling can view it on ovalings.app: look, stats, level, attacks, passive and profile. Your account, your display name and the Ovaling's nickname never appear there. If you signed up through an invitation, the person who invited you sees your display name and whether you have reached the goal. The leaderboard of inviters shows display name and number of invitations if you are among the best. Members of your clan see your display name, your role, your clan points, donations and fulfilled wishes of the week and your messages in the clan chat. Everyone can see a clan's name, flag, level and number of members.
 - Apple and Google: they distribute the app and handle in-app purchases. They are responsible for this themselves and their privacy policies apply. Our server checks every receipt with them to verify a purchase, and they notify us of renewals, cancellations and refunds. We only receive the information we need for this, no payment data.
 - Cloudflare: Cloudflare, Inc. delivers the website ovalings.app on our behalf (Art. 28 GDPR, data processing agreement as part of Cloudflare's terms). For every visit Cloudflare processes technically necessary data such as IP address, time, requested address and browser identifier to deliver the site and to fend off attacks. We do not analyse visits ourselves. When you sign in, register, start as a guest or reset your password, Cloudflare Turnstile checks in the app whether a human is making the request. For this Cloudflare processes your IP address and technical information about your device and browser, but sets no advertising or analytics cookies. We only receive the result of the check.
 <!-- Offen: Turnstile ist vorbereitet, aber noch ausgeschaltet. Den Satz zu Turnstile erst mit dem Einschalten (Schalter in Supabase) veröffentlichen oder bis dahin streichen. -->
+- Discord: the Ovalings Discord server runs on the platform of Discord Inc. What you write there is processed by Discord itself under its privacy policy. If you ask the question bot something, Discord sends the question to our server, which passes it on to Anthropic as with the question chat on the website (section 22).
 - GitHub: an earlier address of the website with the legal texts can still be reached on GitHub Pages (GitHub, Inc.). GitHub stores the IP address of every visit for security purposes.
 
 We do not sell data. For advertising we only pass on what section 9 describes.
@@ -86,7 +90,7 @@ If you enter the ID of an Ovaling on ovalings.app, your browser sends the ID and
 
 ## 9. Advertising
 
-Ovalings only shows ad videos that you start voluntarily to get a reward, such as double loot after a fight, energy, diamonds or a spin of the lucky wheel. There are no ads between actions and no banners. Players with a monthly pass get the same rewards without a video.
+Ovalings only shows ad videos that you start voluntarily to get a reward, such as double loot after a fight, energy, diamonds or a spin of the lucky wheel. There are no ads between actions and no banners. Players with a monthly pass get the same rewards without a video. Reward videos only exist in the app on Android and iOS. On Steam and on the web, Ovalings shows no ads.
 
 The videos come from Google AdMob (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Where required, for example in the EU, the app uses Google's consent form at start-up to ask whether Google may use data for personalised ads and store information on your device. You can change your choice at any time in the settings under "Ad privacy options". Without consent, Google only shows non-personalised ads or none. We only allow ads that are suitable for teenagers. You can consent to personalised advertising yourself from the age of 16 (Art. 8 GDPR), and you cannot play Ovalings if you are younger. On the iPhone the app does not ask for tracking across apps (App Tracking Transparency), so Google does not receive an advertising ID there.
 
@@ -112,6 +116,9 @@ Guest accounts cannot make purchases with real money.
 - Question chat on the website: we do not store questions or answers. The count with the check value for at most 90 days.
 - Chat: messages 30 days. Breaches 30 days, mutes until 30 days after they end. Reports until we have handled them, then 30 days. Blocked accounts until you unblock them or delete your account.
 - Leaderboard and events: as long as your account exists.
+- Inviting friends: as long as both accounts exist. If one of the two deletes their account, the link is removed. The counters of the name search without signing in at most one hour.
+- Clans: membership and role until you leave the clan or delete your account. Points, donations and wishes per week until you delete your account or the clan is dissolved. Messages in the clan chat as in the chat. Clan log and handled reports 90 days. Dissolved clans are deleted completely after 90 days.
+- Question bot on Discord: the count at most 90 days.
 - Server logs: at most 7 days.
 - Counters against mass requests on the website: at most 24 hours.
 - Records of purchases: as long as tax and commercial law require (up to ten years). If you delete your account, they are kept without any link to your account.
@@ -158,6 +165,20 @@ We do not store your questions, the answers or your IP address. So that nobody c
 
 The answers come from an AI and can contain mistakes. What the game shows is what counts.
 
-## 20. Changes
+## 20. Inviting friends and invite event
+
+When you register or secure a guest account, you can voluntarily say who invited you. If you type a name, our server suggests matching display names, even without signing in. For this we count the searches per minute with an encrypted check value of IP address and day, as with the question chat. If you open an invite link, your browser remembers the code of the person who invited you (local storage, key ovalings.invite) until you register.
+
+When you reach player level 10 with a confirmed email address, you and the person who invited you get a reward in the inbox. The legal basis is the contract of use (Art. 6(1)(b) GDPR). To detect fraud, such as many accounts of the same person, we check the invitations of the top players before paying out the prizes of the invite event, for example the date of sign-up, the domain of the email address and activity in the game (Art. 6(1)(f) GDPR). Nobody but us sees the email addresses.
+
+## 21. Clans
+
+Clans are available from player level 12, not for guests. Our server checks clan names and flags before saving them, like display names, without AI. The clan chat follows section 18. You can report clans, only we see reported clans. The legal basis is the contract of use (Art. 6(1)(b) GDPR), for checks and reports our legitimate interest in friendly behaviour (Art. 6(1)(f) GDPR).
+
+## 22. Question bot on Discord
+
+On the Ovalings Discord server, a bot answers questions about the game with the command /ask, also with Claude Haiku from Anthropic. Only your question is sent, not your Discord name. We store neither questions nor answers. So that nobody uses the bot without limit, we count the questions per day with an encrypted check value of your Discord ID and the date, together with time, model, amount of processed text tokens and cost. The next day, the same ID gives a different check value. The same applies to Anthropic as in section 7. The legal basis is our legitimate interest in answering questions quickly and limiting costs (Art. 6(1)(f) GDPR).
+
+## 23. Changes
 
 If the app or the law changes, we will update this policy. The current version is always available in the app and on the website.

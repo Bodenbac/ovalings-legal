@@ -1,7 +1,7 @@
-<!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang) nach der Recherche „Ovalings Datenschutz und Nutzungsbedingungen“. Keine Rechtsberatung. Platzhalter in eckigen Klammern vor dem Start ersetzen. -->
+<!-- Entwurf von Claude (04.10.2026, ergänzt 23.10.2026 um Freunde werben, Clans, Frage-Bot im Discord und keine Werbung auf Steam und im Web, 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang) nach der Recherche „Ovalings Datenschutz und Nutzungsbedingungen“. Keine Rechtsberatung. Platzhalter in eckigen Klammern vor dem Start ersetzen. -->
 # Datenschutzerklärung
 
-Stand: 22. Oktober 2026. Diese Erklärung gilt für die App Ovalings und die Webseite ovalings.app. Sie sagt dir, welche Daten wir verarbeiten, wozu und welche Rechte du hast.
+Stand: 23. Oktober 2026. Diese Erklärung gilt für die App Ovalings und die Webseite ovalings.app. Sie sagt dir, welche Daten wir verarbeiten, wozu und welche Rechte du hast.
 
 ## 1. Verantwortlicher
 
@@ -26,6 +26,9 @@ Eine Datenschutzbeauftragte oder einen Datenschutzbeauftragten müssen wir nicht
 - Freigabe durch Eltern (nur unter 18): die E-Mail-Adresse, die du für deine Eltern angibst, bis zu ihrer Entscheidung, danach nur Stand, Grenze je Monat und Zeitpunkt der Entscheidung (siehe Abschnitt 10).
 - Kontaktformular: deine Nachricht, das Thema, deine E-Mail-Adresse und ein verschlüsselter Prüfwert deiner IP-Adresse gegen Spam.
 - Frage-Chat auf der Webseite: deine Frage und der Verlauf im Fenster gehen an die KI, gespeichert wird nur eine Zählung mit einem verschlüsselten Prüfwert aus IP-Adresse und Tag (siehe Abschnitt 19).
+- Freunde werben: wer dich eingeladen hat (über den Einladungslink oder den Namen, den du beim Registrieren angibst), wen du eingeladen hast, ob diese Person Spieler-Level 10 mit bestätigter E-Mail-Adresse erreicht hat und welche Belohnungen dafür gebucht wurden (siehe Abschnitt 20).
+- Clans: dein Clan, deine Rolle darin, Anfragen und Einladungen, deine Clan-Punkte, Spenden und erfüllten Wünsche je Woche, Käufe im Clan-Shop, Nachrichten im Clan-Chat, das Protokoll des Clans (wer beigetreten, gegangen oder befördert wurde) und Meldungen von Clans (siehe Abschnitt 21).
+- Frage-Bot im Discord: nur eine Zählung je Tag mit einem verschlüsselten Prüfwert deiner Discord-Kennung (siehe Abschnitt 22).
 - Technische Daten: Bei jeder Verbindung zu unserem Server fallen IP-Adresse, Zeitpunkt und die Anfrage an.
 - Auf deinem Gerät: deine Anmeldung (verschlüsselt), deine Einstellungen und Bilder deiner Ovalings als Zwischenspeicher.
 
@@ -60,10 +63,11 @@ Meldest du dich auf der Webseite an, legt dein Browser die Sitzung (lokaler Spei
 - Anthropic: formuliert die Steckbriefe und die Antworten im Frage-Chat der Webseite (Anthropic, PBC, Modell Claude Haiku) in unserem Auftrag (Art. 28 DSGVO, Vertrag zur Auftragsverarbeitung als Teil der Geschäftsbedingungen von Anthropic). Was wir dorthin senden, steht in Abschnitt 7 und 19.
 - Google AdMob: zeigt die Belohnungsvideos (Google Ireland Limited). Für die Daten, die Google dabei verarbeitet, ist Google selbst verantwortlich (eigene Verantwortung nach den Datenschutzbedingungen von Google für Werbung, kein Auftrag von uns). Einzelheiten in Abschnitt 9.
 - Resend: verschickt in unserem Auftrag die E-Mails von Ovalings (Art. 28 DSGVO): Bestätigung des Kontos, Zurücksetzen des Passworts und die E-Mail an deine Eltern, wenn du unter 18 eine Freigabe für Käufe anfragst (Abschnitt 10). Dafür erhält Resend die Empfängeradresse und den Inhalt der Mail. Der Vertrag zur Auftragsverarbeitung ist Teil der Bedingungen von Resend.
-- Andere Spieler:innen: Deinen Anzeigenamen, deine Vitrine, deine Kulisse und deine Angebote auf dem Marktplatz sehen andere. Dein Profil mit Sammlung sehen nur deine Freund:innen. Deine Nachrichten im Chat sehen alle im selben Raum mit deinem Anzeigenamen. In der Rangliste stehen dein Anzeigename und dein Wert, wenn du unter den besten 100 bist, unter Freund:innen auch sonst. In einem Event sehen die anderen deiner Gruppe deinen Anzeigenamen, deine Punkte und deinen Platz. Die Steckbriefe der Ovalings sehen alle, die das Ovaling ansehen. Deine E-Mail-Adresse sieht niemand. Wer die ID eines Ovalings kennt, kann es auf ovalings.app ansehen: Aussehen, Werte, Level, Attacken, Passive und Steckbrief. Dein Konto, dein Anzeigename und der Spitzname des Ovalings erscheinen dort nie.
+- Andere Spieler:innen: Deinen Anzeigenamen, deine Vitrine, deine Kulisse und deine Angebote auf dem Marktplatz sehen andere. Dein Profil mit Sammlung sehen nur deine Freund:innen. Deine Nachrichten im Chat sehen alle im selben Raum mit deinem Anzeigenamen. In der Rangliste stehen dein Anzeigename und dein Wert, wenn du unter den besten 100 bist, unter Freund:innen auch sonst. In einem Event sehen die anderen deiner Gruppe deinen Anzeigenamen, deine Punkte und deinen Platz. Die Steckbriefe der Ovalings sehen alle, die das Ovaling ansehen. Deine E-Mail-Adresse sieht niemand. Wer die ID eines Ovalings kennt, kann es auf ovalings.app ansehen: Aussehen, Werte, Level, Attacken, Passive und Steckbrief. Dein Konto, dein Anzeigename und der Spitzname des Ovalings erscheinen dort nie. Hast du dich über Freunde werben angemeldet, sieht die Person, die dich eingeladen hat, deinen Anzeigenamen und ob du das Ziel schon erreicht hast. In der Rangliste der Werbenden stehen Anzeigename und Zahl der Einladungen, wenn du unter den Besten bist. Mitglieder deines Clans sehen deinen Anzeigenamen, deine Rolle, deine Clan-Punkte, Spenden und erfüllten Wünsche der Woche und deine Nachrichten im Clan-Chat. Name, Flagge, Level und Zahl der Mitglieder eines Clans sehen alle.
 - Apple und Google: Sie stellen die App bereit und wickeln Käufe in der App ab. Dafür sind sie selbst verantwortlich, es gelten ihre Datenschutzerklärungen. Unser Server fragt bei ihnen jeden Beleg nach, um einen Kauf zu prüfen, und sie melden uns Verlängerungen, Kündigungen und Rückerstattungen. Wir erhalten nur die Angaben, die wir dafür brauchen, keine Zahlungsdaten.
 - Cloudflare: Die Webseite ovalings.app liefert Cloudflare, Inc. in unserem Auftrag aus (Art. 28 DSGVO, Vertrag zur Auftragsverarbeitung als Teil der Bedingungen von Cloudflare). Bei jedem Aufruf verarbeitet Cloudflare technisch nötige Daten wie IP-Adresse, Zeitpunkt, aufgerufene Adresse und Browserkennung, um die Seite auszuliefern und Angriffe abzuwehren. Wir selbst werten keine Zugriffe aus. Beim Anmelden, Registrieren, Start als Gast und Zurücksetzen des Passworts prüft Cloudflare Turnstile in der App, ob ein Mensch die Anfrage stellt. Dafür verarbeitet Cloudflare IP-Adresse und technische Angaben zu Gerät und Browser, setzt aber keine Werbe- oder Analyse-Cookies. Wir erhalten nur das Ergebnis der Prüfung.
 <!-- Offen: Turnstile ist vorbereitet, aber noch ausgeschaltet. Den Satz zu Turnstile erst mit dem Einschalten (Schalter in Supabase) veröffentlichen oder bis dahin streichen. -->
+- Discord: Den Discord-Server von Ovalings betreibt Discord Inc. als Plattform. Was du dort schreibst, verarbeitet Discord selbst nach seiner Datenschutzerklärung. Stellst du dem Frage-Bot eine Frage, schickt Discord sie an unseren Server, der sie wie beim Frage-Chat der Webseite an Anthropic weitergibt (Abschnitt 22).
 - GitHub: Eine frühere Adresse der Webseite mit den Rechtstexten ist noch bei GitHub Pages (GitHub, Inc.) erreichbar. GitHub speichert dabei die IP-Adresse jedes Besuchs zu Sicherheitszwecken.
 
 Wir verkaufen keine Daten. Für Werbung geben wir nur weiter, was in Abschnitt 9 steht.
@@ -86,7 +90,7 @@ Gibst du auf ovalings.app die ID eines Ovalings ein, schickt dein Browser die ID
 
 ## 9. Werbung
 
-Ovalings zeigt nur Werbevideos, die du freiwillig startest, um eine Belohnung zu bekommen, etwa doppelte Beute nach einem Kampf, Energie, Diamanten oder einen Dreh am Glücksrad. Es gibt keine Werbung zwischen den Aktionen und keine Banner. Wer einen Monatspass hat, bekommt dieselben Belohnungen ohne Video.
+Ovalings zeigt nur Werbevideos, die du freiwillig startest, um eine Belohnung zu bekommen, etwa doppelte Beute nach einem Kampf, Energie, Diamanten oder einen Dreh am Glücksrad. Es gibt keine Werbung zwischen den Aktionen und keine Banner. Wer einen Monatspass hat, bekommt dieselben Belohnungen ohne Video. Belohnungsvideos gibt es nur in der App auf Android und iOS. Auf Steam und im Web zeigt Ovalings keine Werbung.
 
 Die Videos kommen von Google AdMob (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland). Wo es nötig ist, etwa in der EU, fragt die App beim Start über das Einwilligungsformular von Google, ob Google Daten für personalisierte Werbung nutzen und auf deinem Gerät speichern darf. Deine Wahl kannst du jederzeit in den Einstellungen unter „Datenschutz-Optionen für Werbung“ ändern. Ohne Einwilligung zeigt Google nur Anzeigen ohne Personalisierung oder keine. Wir lassen nur Anzeigen zu, die für Jugendliche geeignet sind. In die personalisierte Werbung kannst du ab 16 selbst einwilligen (Art. 8 DSGVO), jünger kannst du Ovalings nicht spielen. Auf dem iPhone fragt die App nicht nach dem Tracking über Apps hinweg (App Tracking Transparency), Google erhält dort deshalb keine Werbe-ID.
 
@@ -112,6 +116,9 @@ Gästen sind Käufe mit echtem Geld nicht möglich.
 - Frage-Chat auf der Webseite: Fragen und Antworten speichern wir nicht. Die Zählung mit Prüfwert höchstens 90 Tage.
 - Chat: Nachrichten 30 Tage. Verstöße 30 Tage, Stummschaltungen bis 30 Tage nach ihrem Ende. Meldungen, bis wir sie bearbeitet haben, danach 30 Tage. Blockierte Konten, bis du die Blockade aufhebst oder dein Konto löschst.
 - Rangliste und Events: solange dein Konto besteht.
+- Freunde werben: solange beide Konten bestehen. Löscht eine der beiden Personen ihr Konto, fällt die Verbindung weg. Die Zähler der Namenssuche ohne Anmeldung höchstens eine Stunde.
+- Clans: Mitgliedschaft und Rolle, bis du den Clan verlässt oder dein Konto löschst. Punkte, Spenden und Wünsche je Woche, bis du dein Konto löschst oder der Clan aufgelöst ist. Nachrichten im Clan-Chat wie im Chat. Protokoll des Clans und bearbeitete Meldungen 90 Tage. Aufgelöste Clans löschen wir nach 90 Tagen ganz.
+- Frage-Bot im Discord: die Zählung höchstens 90 Tage.
 - Server-Protokolle: höchstens 7 Tage.
 - Zähler gegen massenhafte Abfragen auf der Webseite: höchstens 24 Stunden.
 - Belege über Käufe: so lange, wie das Steuer- und Handelsrecht es verlangt (bis zu zehn Jahre). Löschst du dein Konto, bleiben sie ohne Verbindung zu deinem Konto erhalten.
@@ -158,6 +165,20 @@ Wir speichern weder deine Fragen noch die Antworten noch deine IP-Adresse. Damit
 
 Die Antworten kommen von einer KI und können Fehler enthalten. Maßgeblich ist, was im Spiel steht.
 
-## 20. Änderungen
+## 20. Freunde werben und Einladungs-Event
+
+Beim Registrieren und beim Sichern eines Gastkontos kannst du freiwillig angeben, wer dich eingeladen hat. Tippst du einen Namen, schlägt dir unser Server passende Anzeigenamen vor, auch ohne Anmeldung. Dafür zählen wir die Suchen je Minute mit einem verschlüsselten Prüfwert aus IP-Adresse und Tag, wie beim Frage-Chat. Öffnest du einen Einladungslink, merkt sich dein Browser den Code der Person, die dich eingeladen hat (lokaler Speicher, Schlüssel ovalings.invite), bis du dich registrierst.
+
+Erreichst du Spieler-Level 10 mit bestätigter E-Mail-Adresse, bekommen du und die Person, die dich eingeladen hat, eine Belohnung in die Inbox. Rechtsgrundlage ist der Vertrag über die Nutzung (Art. 6 Abs. 1 lit. b DSGVO). Um Betrug zu erkennen, etwa viele Konten derselben Person, prüfen wir vor der Auszahlung der Preise des Einladungs-Events die Einladungen der Besten, zum Beispiel Datum der Anmeldung, Domain der E-Mail-Adresse und Aktivität im Spiel (Art. 6 Abs. 1 lit. f DSGVO). Die E-Mail-Adressen sieht dabei niemand außer uns.
+
+## 21. Clans
+
+Clans gibt es ab Spieler-Level 12, nicht für Gäste. Namen und Flaggen von Clans prüft unser Server vor dem Speichern wie Anzeigenamen, ohne KI. Für den Clan-Chat gilt Abschnitt 18. Clans kannst du melden, gemeldete Clans sehen nur wir. Rechtsgrundlage ist der Vertrag über die Nutzung (Art. 6 Abs. 1 lit. b DSGVO), für Prüfung und Meldungen unser berechtigtes Interesse an einem freundlichen Umgang (Art. 6 Abs. 1 lit. f DSGVO).
+
+## 22. Frage-Bot im Discord
+
+Im Discord-Server von Ovalings beantwortet ein Bot Fragen zum Spiel mit dem Befehl /ask, ebenfalls mit Claude Haiku von Anthropic. Gesendet wird nur deine Frage, nicht dein Discord-Name. Wir speichern weder Fragen noch Antworten. Damit niemand den Bot unbegrenzt nutzt, zählen wir die Fragen je Tag mit einem verschlüsselten Prüfwert aus deiner Discord-Kennung und dem Datum, dazu Zeitpunkt, Modell, Menge der verarbeiteten Textbausteine und Kosten. Am nächsten Tag ergibt dieselbe Kennung einen anderen Prüfwert. Für Anthropic gilt dasselbe wie in Abschnitt 7. Rechtsgrundlage ist unser berechtigtes Interesse, Fragen schnell zu beantworten und die Kosten zu begrenzen (Art. 6 Abs. 1 lit. f DSGVO).
+
+## 23. Änderungen
 
 Ändern sich die App oder die Rechtslage, passen wir diese Erklärung an. Die aktuelle Fassung steht immer in der App und auf der Webseite.
