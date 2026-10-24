@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
-<link rel="stylesheet" href="../../assets/viewer.e7da15d7.css"></head>
+<link rel="stylesheet" href="../../assets/site.7adcf90f.css">
+<link rel="stylesheet" href="../../assets/viewer.6d852eb5.css"></head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
 <header class="top" id="top">
@@ -47,7 +47,7 @@
       <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="34" height="34"><span>ダンジョン</span>
     </a>
     <a class="navpill" href="../campaign/">
-      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="34" height="34"><span>キャンペーン</span>
+      <img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="34" height="34"><span>キャンペーン</span>
     </a>
     <a class="navpill on" href="./" aria-current="page">
       <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="34" height="34"><span>3DでOvaling</span>
@@ -72,7 +72,7 @@
 </section>
 
 <div class="wrap vwrap">
-  <div class="vmodes first-examples" role="group" aria-label="表示を選ぶ" data-modes data-on="examples" data-start="examples">
+  <div class="vmodes first-examples" role="group" aria-label="表示を選ぶ" data-modes data-on="examples" data-start="examples" data-own="off" hidden>
     <button class="vmode" type="button" data-mode="examples" aria-pressed="true">サンプルのOvaling</button>
     <button class="vmode" type="button" data-mode="own" aria-pressed="false">自分のOvaling</button>
   </div>
@@ -109,7 +109,7 @@
   <div class="vgrid" data-view hidden>
     <div class="vfams" role="group" aria-label="ファミリー" data-fams hidden>
       <button class="vfambtn fam-light" type="button" data-fam="light" aria-pressed="false">
-<img src="../../assets/ovaling/2d91ce5c-180.fcee1fec.webp" alt="" aria-hidden="true" width="360" height="350">        <span class="on-image">光</span>
+<img src="../../assets/ovaling/5117c160-180.2c728ad7.webp" alt="" aria-hidden="true" width="360" height="336">        <span class="on-image">光</span>
       </button>
       <button class="vfambtn fam-shadow" type="button" data-fam="shadow" aria-pressed="false">
 <img src="../../assets/ovaling/308b297a-180.f86fcef1.webp" alt="" aria-hidden="true" width="360" height="326">        <span class="on-image">影</span>
@@ -126,6 +126,7 @@
           <p class="glass" data-no3d-text>この端末では3Dを表示できません。</p>
         </div>
         <p class="sr" data-live role="status" aria-live="polite"></p>
+        <p class="sr" data-ex-count aria-live="polite"></p>
         <div class="vtop">
           <h2 class="vname on-image" data-name hidden></h2>
           <span class="vlevelpill" data-level-pill hidden></span>
@@ -135,13 +136,13 @@
         <ol class="vdots glass" data-ex-dots aria-hidden="true" hidden></ol>
         <button class="vfull glass" type="button" data-full data-on="全画面" data-off="全画面を終了" hidden>全画面</button>
       </div>
+      <p class="rotatehint">
+  <span class="rh rh-mouse"><svg class="rhicon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path class="rhkey" d="M12 3.2a5.8 5.8 0 0 0-5.8 5.8v1.4H12z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 3.2a5.8 5.8 0 0 1 5.8 5.8v6a5.8 5.8 0 0 1-11.6 0V9A5.8 5.8 0 0 1 12 3.2zM12 3.2v7.2M6.2 10.4h11.6"/></svg><span>押したまま回す</span></span>
+  <span class="rh rh-touch"><svg class="rhicon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4.5 9.5Q12 4 19.5 9.5M4.5 9.5l.6-3M4.5 9.5l3 .4M19.5 9.5l-.6-3M19.5 9.5l-3 .4"/><circle class="rhkey" cx="12" cy="15.5" r="3.4"/><circle cx="12" cy="15.5" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".45"/></svg><span>スワイプで回す</span></span>
+</p>
     </div>
 
     <div class="vinfo" data-info>
-      <div class="card vexample" data-example hidden>
-        <p>サンプルは見た目だけを表示します。</p>
-        <p class="sr" data-ex-count aria-live="polite"></p>
-      </div>
 
       <div class="vdetails" data-details hidden>
         <div class="card rarity vcard" data-card>
@@ -229,7 +230,7 @@
     <span class="tablabel">ダンジョン</span>
   </a>
   <a class="tab" href="../campaign/">
-    <span class="tabicon"><img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tabicon"><img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="30" height="30"></span>
     <span class="tablabel">キャンペーン</span>
   </a>
 </nav>
@@ -270,6 +271,22 @@
   <ul class="langchoice">
 <li><a href="../../en/ovaling/" hreflang="en" lang="en" data-lang="en"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" data-flag="en" alt="" aria-hidden="true" width="30" height="20"></span>English</a></li><li><a href="../../de/ovaling/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" data-flag="de" alt="" aria-hidden="true" width="30" height="20"></span>Deutsch</a></li><li><a href="../../es/ovaling/" hreflang="es" lang="es" data-lang="es"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" data-flag="es" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/ovaling/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" data-flag="pt" alt="" aria-hidden="true" width="30" height="20"></span>Português</a></li><li><a href="../../fr/ovaling/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" data-flag="fr" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/ovaling/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" data-flag="tr" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="./" hreflang="ja" lang="ja" data-lang="ja" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" data-flag="ja" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="../../ko/ovaling/" hreflang="ko" lang="ko" data-lang="ko"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" data-flag="ko" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/ovaling/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" data-flag="id" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script type="application/json" id="viewercfg">{"api": "https://kglxfxsccunylhbxquqz.supabase.co/functions/v1/ovaling-view", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "data": "../../assets/data/viewer.ja.a265c805.json", "frame": "../../3d/viewer/#v", "root": "../../"}</script><script src="../../assets/site.b6c4becf.js" defer></script>
-<script src="../../assets/viewer.8212422a.js" defer></script></body>
+<button class="askfab" type="button" data-opens="askdialog" aria-haspopup="dialog" aria-controls="askdialog" title="質問する" data-ask-show hidden><span aria-hidden="true">?</span><span class="sr">質問する</span></button>
+<div class="glass dialog askpanel" id="askdialog" role="dialog" aria-modal="true" aria-labelledby="asktitle" hidden>
+  <button class="close" type="button" aria-label="閉じる"></button>
+  <h2 id="asktitle">Ovalings Bot に聞く</h2>
+  <div class="asklog" id="asklog" role="log" aria-live="polite" tabindex="0" aria-labelledby="asktitle">
+    <p class="askmsg bot"><span class="sr">Ovalings Bot: </span>こんにちは！Ovalings のことなら何でも聞いてね。1〜2文で答えるよ。続けて質問もできるよ。</p>
+  </div>
+  <form class="askform" id="askform" autocomplete="off">
+    <label class="sr" for="askinput">質問</label>
+    <input id="askinput" name="question" type="text" maxlength="300" required placeholder="質問" enterkeyhint="send" aria-describedby="asknote">
+    <input class="trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="ob medium" type="submit">送信</button>
+  </form>
+  <p class="asknote" id="asknote">答えは AI によるもので、まちがいがあるかもしれません。</p>
+</div>
+<script type="application/json" id="askcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "lang": "ja", "text": {"you": "あなた", "bot": "Ovalings Bot", "thinking": "考え中 …", "daily": "今日の質問はすべて使いました。明日また試してください。", "month": "Bot は今お休み中です。あとでもう一度試してください。", "error": "ごめんなさい、今は答えられませんでした。もう一度試してください。"}}</script>
+<script type="application/json" id="viewercfg">{"api": "https://kglxfxsccunylhbxquqz.supabase.co/functions/v1/ovaling-view", "key": "sb_publishable_Fc-CZcL6tfj1gVKR-psQbg_p2FS_yss", "lang": "ja", "data": "../../assets/data/viewer.ja.195f4359.json", "frame": "../../3d/viewer/#v", "root": "../../"}</script><script src="../../assets/site.d947fc98.js" defer></script>
+<script src="../../assets/ask.b84bd393.js" defer></script><script src="../../assets/viewer.d55264e2.js" defer></script></body>
 </html>

@@ -7,8 +7,9 @@
 <title>Ovalings 3D</title>
 <style>
 /* 3D der Startseite von ovalings.app (Luis 21.10.2026): zwei Ansichten aus einer Seite, gewählt über den Anker.
-   #egg: ein Ei vor dem gemalten Bild der Brutkammer. Jeder Tipp lässt es wackeln und reißt es an der getippten Stelle, nach so vielen
-   Tipps wie in der App (Eggs, taps) springt es auf und ein Ovaling schlüpft wie in der Bühne der App (Hatch, Baukasten, Skelett).
+   #egg: ein Ei im Nest mitten in der Halle der Brutkammer, der ganze Raum in 3D wie in der App (seit 23.10.2026, vorher vor dem
+   gemalten Bild der Website). Halten und Ziehen schaut sich rundum um. Jeder Tipp lässt das Ei wackeln und reißt es an der getippten
+   Stelle, nach so vielen Tipps wie in der App (Eggs, taps) springt es auf und ein Ovaling schlüpft wie in der Bühne der App.
    #bosses: die Bosse der Dungeons in einem gemeinsamen Bild, je Boss ein Ausschnitt an der Stelle seiner Karte, Idle wie im Kampf,
    auf Wunsch der Website (Maus darüber, Antippen) ein Angriff. Ein Kontext für alle Bosse statt eines je Boss (Handy).
    Kein sichtbarer Text, kein Speicher im Browser, keine fremden Quellen. Die Website steuert die Seite über Nachrichten (JSON als
@@ -16,7 +17,9 @@
 html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
 #view { position: fixed; inset: 0; }
 #view canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; outline: none; }
+html.egg #view canvas { cursor: grab; }
 #view.pointer canvas { cursor: pointer; }
+#view.grabbing canvas { cursor: grabbing; }
 </style>
 </head>
 <body>
@@ -4854,6 +4857,8 @@ vec3 rareHue(vec3 c, float a) {
     // Flügel (Luis 04.10.2026: Teile müssen beim Schlagen zusammenbleiben): der Ansatz jeder Seite wird gemerkt, das Rig
     // dreht den Flügel genau dort, und alle Teile eines Flügels (Haut, Knochen, Krallen, Federn, Schein) hängen am selben Knochen
     const wingRoots = {};
+    // Teile der Flügel für den Abstand der Hörner (Luis 23.10.2026: „overlappen Flügel und Horn hier?“), Bereich in g.children
+    let wingFrom = 0, wingTo = 0;
     // Ein hohler Körper (Käfig) trägt keinen Rücken: zwischen den Rippen gäbe es keine Fläche, auf der etwas stehen könnte (11.10.2026)
     if (backV2 && backF && !B.hollow) Backs.build(backF, backCtx());
     const backEnd = g.children.length;
@@ -4864,15 +4869,25 @@ vec3 rareHue(vec3 c, float a) {
     if (d.wings && d.wings.number && typeof Wings !== 'undefined') {
       const wg = d.wings, kind = wg.number, base = Wings.SIZE[kind - 1] || 1, wSize = base * lerp(0.8, 1.2, wg.size != null ? wg.size : 0.5);
       const wTilt = lerp(-0.25, 0.25, wg.tilt != null ? wg.tilt : 0.5), pairs = wg.pairs === 2 ? 2 : 1, wingStart = g.children.length, fxWing = fx.length;
+      // Abstand des zweiten Paars hinter dem ersten in Einheiten der Flügelgröße (23.10.2026), je Form in Wings.PAIR_GAP
+      const pairGap = (Wings.PAIR_GAP && Wings.PAIR_GAP[kind]) || 0.13;
       const rnd = (() => { const r = random32(d.seed + '|flügelform|'); return r; })();
       for (let pr = 0; pr < pairs; pr++) for (const s of [-1, 1]) {
         // weiter zur Seite als die alten Rückenflügel, sonst sieht man sie von vorn kaum und von schräg hinten nur als Strich
         // Beim Käfig genau auf die hinteren Rippen (318 und 222 Grad), sonst träfe der Strahl durch eine Lücke den Kern im Inneren
         const lift = pr === 0 ? 0.4 : 0.05, out = B.hollow ? V(s * 0.743, 0, -0.669) : V(s * 0.82, 0, -0.57).normalize();
         const h = cast(V(0, B.armY + lift, 0).add(out.clone().multiplyScalar(7)), out.clone().negate()); if (!h) continue;
-        const root = h.p.clone().sub(out.clone().multiplyScalar(0.12)), w = wSize * (pr === 0 ? 1 : 0.68), tl = wTilt - (pr === 0 ? 0 : 0.45);
-        if (pr === 0) wingRoots[s > 0 ? 'L' : 'R'] = root.clone();
-        const q = frame(out, V(0, 1, 0)), P = (x, y, z) => root.clone().add(V(x * w, y * w, (z || 0) * w * s).applyQuaternion(q));
+        const q = frame(out, V(0, 1, 0)), root = h.p.clone().sub(out.clone().multiplyScalar(0.12)), w = wSize * (pr === 0 ? 1 : 0.68), tl = wTilt - (pr === 0 ? 0 : 0.45);
+        // Zweites Paar (Luis 23.10.2026: beim Dämonenflügel sah es je Seite wie zwei Flügel aus, die sich gegeneinander bewegen und
+        // durcheinander laufen): beide Paare lagen genau in derselben Ebene, und jede Welle im Shader lief vom eigenen Ansatz aus mit eigener
+        // Länge. Jetzt liegt das zweite Paar um pairGap der Flügelgröße hinter dem ersten (zur Wirbelsäule hin, entlang der Oberfläche),
+        // und alle Teile mit Bewegung im Raum des Flügels rechnen vom Ansatz des ersten Paars aus (off): ein Wellenfeld je Seite, der Abstand
+        // zwischen den Paaren bleibt in jeder Haltung gleich
+        if (pr > 0) root.add(V(0, 0, -s * pairGap * wSize).applyQuaternion(q));
+        const side0 = s > 0 ? 'L' : 'R';
+        if (pr === 0) wingRoots[side0] = root.clone();
+        const base = wingRoots[side0] || root, off = root.clone().sub(base).applyQuaternion(q.clone().invert());
+        const P = (x, y, z) => root.clone().add(V(x * w, y * w, (z || 0) * w * s).applyQuaternion(q));
         const planeQ = ang => q.clone().multiply(new THREE.Quaternion().setFromAxisAngle(V(0, 0, 1), ang));
         // Seite und Paar stehen am Teil (Luis 22.10.2026): rig.js hängt es an den Knochen dieser Seite, die Prüfung wing_check liest beides
         const side = s > 0 ? 'L' : 'R', mark = m => { m.userData.wingPart = true; m.userData.wingSide = side; m.userData.wingPair = pr + 1; return m; };
@@ -4884,30 +4899,32 @@ vec3 rareHue(vec3 c, float a) {
           seeded: tag => random32(d.seed + tag),
           tint(hex, unlit) { const k = (unlit ? 'u' : 'c') + hex; if (!roleColor[k]) { roleColor[k] = hex; if (unlit) UNLIT[k] = 1; } return k; },
           flat(outline, depth, role, o) {
-            o = o || {}; let geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); if (o.z) geo.translate(0, 0, o.z * w * s);
+            o = o || {}; let geo = flatGeo(outline.map(p => [p[0] * w, p[1] * w]), depth * w, !!o.smooth); geo.translate(off.x, off.y, off.z + (o.z || 0) * w * s);
             // Fläche mit Welle im Shader: fein teilen, damit sie sich überall wie Knochen und Adern darauf verformt
             if (o.anim && o.anim.v) geo = densify(geo, 0.07 * w);
-            return finishPart(add(geo, role, Object.assign(opt(o), { pos: root, quat: q })), o);
+            return finishPart(add(geo, role, Object.assign(opt(o), { pos: base, quat: q })), o);
           },
           // o.local (bewegte Flügel): Röhre im Raum des Flügels, damit die gleiche Welle wie auf der Haut sie mitnimmt
-          tube(pts, r0, r1, role, o) { o = o || {}; if (o.local) return finishPart(add(tubeGeo(pts.map(p => V(p[0] * w, p[1] * w, ((p[2] || 0) + (o.z || 0)) * w * s)), r0 * w, r1 * w), role, Object.assign(opt(o), { pos: root, quat: q })), o); return finishPart(add(tubeGeo(pts.map(p => P(p[0], p[1], (p[2] || 0) + (o.z || 0))), r0 * w, r1 * w), role, { th: 0.016, outline: false }), o); },
+          tube(pts, r0, r1, role, o) { o = o || {}; if (o.local) return finishPart(add(tubeGeo(pts.map(p => V(p[0] * w, p[1] * w, ((p[2] || 0) + (o.z || 0)) * w * s).add(off)), r0 * w, r1 * w), role, Object.assign(opt(o), { pos: base, quat: q })), o); return finishPart(add(tubeGeo(pts.map(p => P(p[0], p[1], (p[2] || 0) + (o.z || 0))), r0 * w, r1 * w), role, { th: 0.016, outline: false }), o); },
           ell(x, y, z, rx, ry, rz, ang, role, o) { o = o || {}; return finishPart(add(ellGeo(rx * w, ry * w, rz * w, !!o.anim && Math.max(rx, ry, rz) * w < 0.05), role, Object.assign(opt(o), { pos: P(x, y, z), quat: planeQ(ang) })), o); },
           // fertiges Netz platzieren (runde Flammen der Flammenflügel, 17.10.2026): +y des Netzes bei ang = 0 entlang +y des Flügels, Maße in Flügeleinheiten
           geo(geo, x, y, z, ang, role, o) { o = o || {}; geo.scale(w, w, w); return finishPart(add(geo, role, Object.assign(opt(o), { pos: P(x, y, z), quat: planeQ(ang) })), o); },
-          cone(x, y, ang, r, hgt, seg, role, o) { if (o && o.local) { const cg = coneGeo(r * w, hgt * w, seg); cg.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(alongY(V(Math.cos(ang), Math.sin(ang), 0)))); cg.translate(x * w, y * w, 0); return finishPart(add(cg, role, Object.assign(opt(o), { pos: root, quat: q })), o); } const dir = V(Math.cos(ang), Math.sin(ang), 0).applyQuaternion(q); return finishPart(add(coneGeo(r * w, hgt * w, seg), role, { pos: P(x, y, 0), quat: alongY(dir), th: 0.012, outline: false }), o); },
+          cone(x, y, ang, r, hgt, seg, role, o) { if (o && o.local) { const cg = coneGeo(r * w, hgt * w, seg); cg.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(alongY(V(Math.cos(ang), Math.sin(ang), 0)))); cg.translate(x * w + off.x, y * w + off.y, off.z); return finishPart(add(cg, role, Object.assign(opt(o), { pos: base, quat: q })), o); } const dir = V(Math.cos(ang), Math.sin(ang), 0).applyQuaternion(q); return finishPart(add(coneGeo(r * w, hgt * w, seg), role, { pos: P(x, y, 0), quat: alongY(dir), th: 0.012, outline: false }), o); },
           feather(x, y, ang, len, wid, role, o) {
             o = o || {}; const L = len * w, W = wid * w, sh = [[0, 0], [W * 0.5, L * 0.22], [W * 0.46, L * 0.7], [0, L], [-W * 0.46, L * 0.7], [-W * 0.5, L * 0.22]];
-            const geo = flatGeo(sh, 0.03 * w, true); geo.rotateZ(ang - Math.PI / 2); geo.translate(x * w, y * w, (o.z || 0) * w * s);
-            return finishPart(add(geo, role, Object.assign(opt(o), { pos: root, quat: q, th: 0.016 })), o);
+            const geo = flatGeo(sh, 0.03 * w, true); geo.rotateZ(ang - Math.PI / 2); geo.translate(x * w + off.x, y * w + off.y, (o.z || 0) * w * s + off.z);
+            return finishPart(add(geo, role, Object.assign(opt(o), { pos: base, quat: q, th: 0.016 })), o);
           },
-          star(x, y, z, r, role, o) { const geo = flatGeo(star2(5, r * w, r * w * 0.45), 0.01 * w, false); geo.translate(x * w, y * w, z * w * s); return finishPart(add(geo, role, { pos: root, quat: q, outline: false, mat: Object.assign({ double: true }, o && o.anim ? { anim: o.anim } : {}) }), { noTex: true }); },
-          // Punkt im Raum des Flügels in Weltmaßen (Mitte für spin und shoot), w ist die Flügelgröße
-          at(x, y, z) { return V(x * w, y * w, (z || 0) * w * s); }, w,
+          star(x, y, z, r, role, o) { const geo = flatGeo(star2(5, r * w, r * w * 0.45), 0.01 * w, false); geo.translate(x * w + off.x, y * w + off.y, z * w * s + off.z); return finishPart(add(geo, role, { pos: base, quat: q, outline: false, mat: Object.assign({ double: true }, o && o.anim ? { anim: o.anim } : {}) }), { noTex: true }); },
+          // Punkt im Raum des Flügels in Weltmaßen (Mitte für spin, shoot und flickerWave), gemessen vom Ansatz des ersten Paars,
+          // dir dasselbe als Richtung (Achsen). w ist die Flügelgröße, waveW die des ersten Paars (Länge und Stärke der Welle)
+          at(x, y, z) { return V(x * w, y * w, (z || 0) * w * s).add(off); }, dir(x, y, z) { return V(x * w, y * w, (z || 0) * w * s); }, w, waveW: wSize,
           glow(x, y, size, color, op, pulse) { glow(P(x, y, 0.05), size * w, color === '#ff8a2a' ? FIRE.glow : color || roleColor.light, op, pulse); mark(fx[fx.length - 1]); },
         };
         Wings.build(kind, c);
       }
       for (let i = wingStart; i < g.children.length; i++) g.children[i].userData.wingPart = true;
+      wingFrom = wingStart; wingTo = g.children.length;
       for (let i = fxWing; i < fx.length; i++) fx[i].userData.wingPart = true;
     }
 
@@ -4940,6 +4957,46 @@ vec3 rareHue(vec3 c, float a) {
       o.updateMatrix();
       for (const q of surfacePoints(o, perMesh)) if (q.distanceTo(headC) < 3.4) obstaclePoints.push(q);
     }
+    // Flügel als Hindernis der Hörner (23.10.2026): die Flügel bewegen sich gegen den Kopf. Deshalb zählen Punkte der Flügel in allen
+    // Lagen, die das Skelett ihnen gibt: gedreht um den Ansatz (rotation.y bis 0,55 beim Schlagen), dazu das Stauchen und Strecken des
+    // Rumpfs (scale.y 0,84 bis 1,06, in der Tiefe bis 1,12), das den Kopf gegen die Flügel verschiebt (gleichwertig: Flügelpunkte gegen den
+    // Ansatz umgekehrt skaliert).
+    // Abstand HORN_MARGIN plus WING_PAD für die Welle der Haut und das Nicken des Kopfs. Gitter, damit die Suche schnell bleibt
+    const WING_PAD = 0.08, wingGrid = new Map(), WG = 0.2, WING_BODY = [[1, 1, 1], [1.07, 0.89, 1.07], [1, 0.84, 1], [1.03, 0.93, 1.12], [0.97, 1.06, 0.97]];
+    // Schlüssel als Zahl (schneller als Text), h ist die Kantenlänge des Würfels
+    const vkey = (x, y, z, h) => ((Math.floor(x / h) + 512) * 1024 + Math.floor(y / h) + 512) * 1024 + Math.floor(z / h) + 512;
+    if (wingTo > wingFrom && hoF) {
+      // 1. Punkte in Ruhe, nach Größe des Teils etwa alle 0,04 einer (eine feste Zahl je Teil ließ große Knochen löchrig), doppelte weg
+      const rest = new Map();
+      for (const o of g.children.slice(wingFrom, wingTo)) {
+        if (!o.isMesh || !o.geometry || !o.geometry.attributes.position) continue;
+        o.updateMatrix(); const r = wingRoots[o.userData.wingSide]; if (!r) continue;
+        if (!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
+        const rad = o.geometry.boundingSphere.radius * o.scale.x, per = Math.min(900, Math.max(24, Math.ceil(Math.pow(rad / 0.04, 2) * 3)));
+        for (const q of surfacePoints(o, per)) { const k = vkey(q.x, q.y, q.z, 0.04); if (!rest.has(k)) rest.set(k, [q.x, q.y, q.z, r]); }
+      }
+      // 2. alle Lagen: Winkel so dicht, dass ein Punkt zwischen zwei Lagen höchstens 0,08 wandert, je Würfel von 0,05 nur ein Punkt
+      const seen = new Set();
+      for (const [qx, qy, qz, r] of rest.values()) {
+        const dx = qx - r.x, dz = qz - r.z, rr = Math.hypot(dx, dz), na = Math.max(2, Math.ceil(1.1 * rr / 0.08));
+        for (let ia = 0; ia <= na; ia++) {
+          const a = -0.55 + 1.1 * ia / na, ca = Math.cos(a), sa = Math.sin(a), x0 = dx * ca + dz * sa, z0 = -dx * sa + dz * ca;
+          // Rumpf gestaucht, gestreckt, beim Laufen in der Tiefe gedehnt (rig.js): Flügelpunkte gegen den Ansatz umgekehrt skaliert
+          for (const [kx, ky, kz] of WING_BODY) {
+            const x = r.x + x0 / kx, y = r.y + (qy - r.y) / ky, z = r.z + z0 / kz;
+            if ((x - headC.x) ** 2 + (y - headC.y) ** 2 + (z - headC.z) ** 2 > 6.76) continue;
+            const f = vkey(x, y, z, 0.05); if (seen.has(f)) continue; seen.add(f);
+            const c = vkey(x, y, z, WG); let L = wingGrid.get(c); if (!L) wingGrid.set(c, L = []); L.push(x, y, z);
+          }
+        }
+      }
+    }
+    // kleinster Abstand eines Punkts zu den Flügeln in allen Lagen (abzüglich Rand), bricht unter limit ab
+    const wingGap = (p, limit) => {
+      let f = 1e3; const gx = Math.floor(p.x / WG) + 512, gy = Math.floor(p.y / WG) + 512, gz = Math.floor(p.z / WG) + 512;
+      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) for (let k = -1; k <= 1; k++) { const L = wingGrid.get(((gx + i) * 1024 + gy + j) * 1024 + gz + k); if (L) for (let n = 0; n < L.length; n += 3) { f = Math.min(f, Math.hypot(p.x - L[n], p.y - L[n + 1], p.z - L[n + 2]) - 0.03 - WING_PAD); if (f < limit) return f; } }
+      return f;
+    };
     const hornPoints = [];
     // Kleinster Abstand eines Punkts zu den Hindernissen und zu Hörnern, die schon stehen. Bricht ab, sobald er unter limit fällt
     const spacing = (p, limit) => {
@@ -4949,6 +5006,7 @@ vec3 rareHue(vec3 c, float a) {
       for (const [i, o] of limbPrims.entries()) { f = Math.min(f, o.f(p.x, p.y, p.z)); if (f < limit) return hit('glied ' + i); }
       for (const q of obstaclePoints) { f = Math.min(f, p.distanceTo(q) - 0.03); if (f < limit) return hit('teil'); }
       for (const q of hornPoints) { f = Math.min(f, p.distanceTo(q) - 0.03); if (f < limit) return hit('horn'); }
+      if (wingGrid.size) { f = Math.min(f, wingGap(p, limit)); if (f < limit) return hit('flügel'); }
       return f;
     };
     if (hoF === 12) {
@@ -5243,6 +5301,14 @@ vec3 rareHue(vec3 c, float a) {
               const fb = field(w.x, w.y, w.z);
               if (!R2 && fb < -0.01 && w.distanceTo(root) > rootR) { intoBody = true; break; }
               if (fb > 0) distance = Math.min(distance, spacing(w, HORN_MARGIN));
+              // knapp unter der Haut (Knubbel): die Flügel sitzen dort auch an der Haut, beide träfen sich an der Oberfläche
+              else if (fb > -0.03 && wingGrid.size) distance = Math.min(distance, wingGap(w, HORN_MARGIN));
+              if (distance < HORN_MARGIN) break;
+            }
+            // Teile mit wenigen Ecken (Kristalle als Achtflächner): auch Punkte auf den Flächen, sonst ragte eine große Fläche zwischen den
+            // Ecken in einen Flügel (23.10.2026)
+            if (!intoBody && distance >= HORN_MARGIN && p.count < 100) for (const w2 of surfacePoints(o, 90)) {
+              if (field(w2.x, w2.y, w2.z) > 0) distance = Math.min(distance, spacing(w2, HORN_MARGIN));
               if (distance < HORN_MARGIN) break;
             }
             if (intoBody || distance < HORN_MARGIN) break;
@@ -5319,7 +5385,8 @@ vec3 rareHue(vec3 c, float a) {
     for (const f of fxLate) f();
     for (const s of fx) g.add(s);
     globalThis.__ovLod = 0;
-    return { group: g, box, skinKey, skin: skinName, skinPhi, body: { rx: hMid }, hornParts, tailPlacement, material: matUni, shells: matShells,
+    // field: Abstandsfeld der Haut in Ruhe (Prüfung wing_check: Berührungen innerhalb des Körpers sieht man nicht)
+    return { group: g, box, skinKey, skin: skinName, skinPhi, body: { rx: hMid }, hornParts, tailPlacement, material: matUni, shells: matShells, field,
       rig: { parts, skin: skinMeshRef, top: B.top, bottom: B.bottom, armY: B.armY, eyeY: B.eyeY, earY: B.earY, eyes: eyeRig, mouth: mouthRig, fam, eyeColor: roleColor.eye, pupilColor: roleColor.pupil, wingRoots, gait } };
   }
   build2.NAMES = NAMES; build2.bodyMixMax = bodyMixMax; build2.hornPlacement = hornPlacement; build2.matAxes = matAxes; build2.HORN_RANGE = HORN_RANGE; build2.EYE_PATTERNS = EYE_PATTERNS;
@@ -7522,6 +7589,10 @@ const Wings = (() => {
     'Pfauenfächer', 'Engelsflügel', 'Dämonenflügel', 'Sternenflügel', 'Phönixflügel', 'Lichtflügel'];
   // Grundgröße je Form (Spannweite in Einheiten der Figur), die Genwerte skalieren darum
   const SIZE = [0.95, 1.4, 1.55, 1.3, 1.2, 1.2, 1.4, 1.25, 1.2, 1.55, 1.45, 1.4, 1.5, 1.7, 1.3, 1.45, 1.35, 1.45, 1.5, 1.5, 1.75, 1.6, 1.7, 1.6];
+  // Abstand des zweiten Paars hinter dem ersten in Einheiten der Flügelgröße (23.10.2026, Prüfung wing_check: kein Teil des zweiten
+  // Paars berührt das erste, in keiner Haltung), ohne Eintrag 0,13. Dicke Formen brauchen mehr: Käfer, Wolkenpuffer, Drache, Flammen
+  // mit eigenem Züngeln, Engels- und Phönixfedern in mehreren Lagen
+  const PAIR_GAP = { 6: 0.16, 8: 0.34, 14: 0.16, 17: 0.3, 20: 0.2, 23: 0.2 };
 
   // Bogen der Hinterkante zwischen zwei Spitzen, nach innen gewölbt (Flughaut)
   function scallop(a, b, depth, n) {
@@ -7797,7 +7868,9 @@ const Wings = (() => {
       o.push([0.2, -0.32], [0.04, -0.2]);
       // Haut, Knochen, Adern, Krallen und die Flammen an den Spitzen tragen dieselbe Welle (gleiche Werte, alle im Raum des Flügels,
       // Phase 0, weil flickerWave die Welle ohne eigene Phase rechnet), so bleiben sie aufeinander. Geprüft mit web3d/tools/wing_check.js
-      const w = wOf(c), wave = { v: 'ripple', s: 2.4, a: 0.06 * w, h: 4.5 / w, seed: 0 };
+      // Welle mit der Größe des ersten Paars und auf beiden Seiten gespiegelt (c.s): beide Paare einer Seite liegen in einem Wellenfeld,
+      // linker und rechter Flügel schwingen spiegelgleich statt gegeneinander (23.10.2026)
+      const w = wOf(c), ww = c.waveW || w, wave = { v: 'ripple', s: 2.4, a: 0.06 * ww * c.s, h: 4.5 / ww, seed: 0 };
       c.flat(o, 0.03, 'demon', { anim: wave });
       // Adern (Luis 22.10.2026, statt des gestrichelten Streifens): je Feld zwischen zwei Streben eine Hauptader vom Gelenk zur Kerbe
       // der Hinterkante, davon zweigen Äste zu den Kanten des Felds ab, manche gabeln sich noch einmal. Zahl, Lage, Biegung und Gabeln
@@ -7874,10 +7947,10 @@ const Wings = (() => {
       c.tube([[0, 0], [el[0] * 0.5, el[1] * 0.55], el], 0.05, 0.035, 'light', { local: true, anim: { f: 'run', s: 1.6, h: 3 / w } });
       for (const tp of tips) c.tube([el, [(el[0] + tp[0]) / 2, (el[1] + tp[1]) / 2 + 0.03], tp], 0.022, 0.008, 'light', { local: true, anim: { f: 'run', s: 1.6, h: 3 / w } });
       const star = c.tint('#fff3c4', true), dust = c.tint('#dfe6ff', true);
-      for (let i = 0; i < 40; i++) { const x = 0.15 + r() * 0.8, y = -0.3 + r() * 0.95 + t * x; if (!inside(x, y) || !inside(x + 0.05, y + 0.05) || !inside(x - 0.05, y - 0.05)) continue; for (const zz of [1, -1]) { const da = r() * 6.28, ax = c.at(Math.cos(da), Math.sin(da), 0).normalize(); c.ell(x, y, 0.016 * zz, 0.012, 0.012, 0.004, 0, dust, { anim: { v: 'bob', f: 'twinkle', s: 1.2 + (i % 5) * 0.3, a: 0.035 * w, ax, seed: i * 1.3 } }); } }
+      for (let i = 0; i < 40; i++) { const x = 0.15 + r() * 0.8, y = -0.3 + r() * 0.95 + t * x; if (!inside(x, y) || !inside(x + 0.05, y + 0.05) || !inside(x - 0.05, y - 0.05)) continue; for (const zz of [1, -1]) { const da = r() * 6.28, ax = c.dir(Math.cos(da), Math.sin(da), 0).normalize(); c.ell(x, y, 0.016 * zz, 0.012, 0.012, 0.004, 0, dust, { anim: { v: 'bob', f: 'twinkle', s: 1.2 + (i % 5) * 0.3, a: 0.035 * w, ax, seed: i * 1.3 } }); } }
       for (let i = 0; i < 7; i++) {
         const x = 0.25 + r() * 0.6, y = -0.15 + r() * 0.7 + t * x, R = 0.035 + r() * 0.03; if (!inside(x, y)) continue;
-        const oa = r() * 6.28; for (const zz of [1, -1]) c.star(x, y, 0.02 * zz, R, star, { anim: { v: 'spin', f: 'twinkle', s: 0.6 + (i % 3) * 0.25, c: c.at(x + 0.05 * Math.cos(oa), y + 0.05 * Math.sin(oa), 0.02 * zz), ax: c.at(0, 0, 1).normalize(), seed: i * 2.9 } });
+        const oa = r() * 6.28; for (const zz of [1, -1]) c.star(x, y, 0.02 * zz, R, star, { anim: { v: 'spin', f: 'twinkle', s: 0.6 + (i % 3) * 0.25, c: c.at(x + 0.05 * Math.cos(oa), y + 0.05 * Math.sin(oa), 0.02 * zz), ax: c.dir(0, 0, 1).normalize(), seed: i * 2.9 } });
         
       }
       // Sternschnuppen: Kopf als Stern, dahinter ein spitz zulaufender heller Schweif, fliegen in Richtung des Kopfes
@@ -7886,7 +7959,7 @@ const Wings = (() => {
         for (let i = 0; i <= 10; i++) { const u = i / 10, wd = 0.026 * (1 - u); streak.push([sx + Math.cos(ang) * len * u - Math.sin(ang) * wd, sy + Math.sin(ang) * len * u + Math.cos(ang) * wd]); }
         for (let i = 10; i >= 0; i--) { const u = i / 10, wd = 0.026 * (1 - u); streak.push([sx + Math.cos(ang) * len * u + Math.sin(ang) * wd, sy + Math.sin(ang) * len * u - Math.cos(ang) * wd]); }
         for (const zz of [1, -1]) {
-          const an = { v: 'shoot', s: 1.4, h: 0.55 * w, c: c.at(sx, sy, 0.024 * zz), ax: c.at(-Math.cos(ang), -Math.sin(ang), 0).normalize(), seed: ph };
+          const an = { v: 'shoot', s: 1.4, h: 0.55 * w, c: c.at(sx, sy, 0.024 * zz), ax: c.dir(-Math.cos(ang), -Math.sin(ang), 0).normalize(), seed: ph };
           c.flat(streak, 0.004, c.tint('#ffffff', true), { alpha: 0.9, noTex: true, z: 0.024 * zz, anim: an });
           c.star(sx, sy, 0.03 * zz, 0.055, star, { anim: an });
         }
@@ -7921,7 +7994,8 @@ const Wings = (() => {
       [[0.95, 1.05, 0.2], [0.35, 1.25, 0.22], [-0.25, 0.9, 0.18]].forEach(([a, L, W], i) => {
         // alle Klingen mit derselben Welle (Luis 22.10.2026): mit eigener Phase je Klinge schwangen sie am Ansatz, wo sie übereinander
         // liegen, gegeneinander und tauchten ineinander
-        const an = { v: 'ripple', f: 'run', s: 2.2, a: 0.07 * w, h: 4 / w, seed: 0 };
+        // wie beim Dämonenflügel: Größe des ersten Paars, Seiten gespiegelt (23.10.2026)
+        const ww = c.waveW || w, an = { v: 'ripple', f: 'run', s: 2.2, a: 0.07 * ww * c.s, h: 4 / ww, seed: 0 };
         c.flat(blade(a + t, L, W), 0.012, 'light', { alpha: 0.75, noTex: true, smooth: true, z: -0.015 * i, anim: an });
         c.flat(blade(a + t, L * 0.85, W * 0.4), 0.012, c.tint('#ffffff', true), { alpha: 0.9, noTex: true, smooth: true, z: 0.01 - 0.015 * i, anim: an });
       });
@@ -7932,7 +8006,7 @@ const Wings = (() => {
   };
 
   function build(kind, c) { const f = FORMS[kind]; if (f) f(c); }
-  return { build, NAMES, SIZE, COUNT: NAMES.length };
+  return { build, NAMES, SIZE, PAIR_GAP, COUNT: NAMES.length };
 })();
 
 // Rücken als eigener Platz ohne Flügel (Luis 11.10.2026: Rücken und Flügel getrennt, 24 Rücken, Panzer und Schneckenhaus kamen zu oft).
@@ -10335,8 +10409,9 @@ const Eggs = (() => {
   }
 
   // Schlauch mit laufender Dicke für Risse
-  function pipe(pts, r0, r1) {
-    const curve = new THREE.CatmullRomCurve3(pts), M = Math.max(8, pts.length * 2), R = 6, g = new THREE.TubeGeometry(curve, M, 1, R, false), p = g.attributes.position, c = V(0, 0, 0);
+  // lite (Website, Luis 24.10.2026): weniger Ringe und vier statt sechs Ecken im Querschnitt, die Halme sind dünn
+  function pipe(pts, r0, r1, lite) {
+    const curve = new THREE.CatmullRomCurve3(pts), M = lite ? Math.max(6, Math.round(pts.length * 1.3)) : Math.max(8, pts.length * 2), R = lite ? 4 : 6, g = new THREE.TubeGeometry(curve, M, 1, R, false), p = g.attributes.position, c = V(0, 0, 0);
     for (let i = 0; i <= M; i++) { curve.getPointAt(i / M, c); const r = lerp(r0, r1, i / M); for (let j = 0; j <= R; j++) { const k = i * (R + 1) + j; p.setXYZ(k, c.x + (p.getX(k) - c.x) * r, c.y + (p.getY(k) - c.y) * r, c.z + (p.getZ(k) - c.z) * r); } }
     return g;
   }
@@ -10355,7 +10430,10 @@ const Eggs = (() => {
   function distance(u1, v1, u2, v2) { let du = Math.abs(u1 - u2) % 1; du = Math.min(du, 1 - du); const vm = (v1 + v2) / 2; return Math.hypot(du * proU(vm), (v1 - v2) * proV(vm)); }
 
   // --- Nest ------------------------------------------------------------------------
-  function nest() {
+  // nest({ lite: true }) (Website, Luis 24.10.2026, Auftrag 17a): gleiche Halme an gleicher Stelle (gleicher Zufall), gröber gebaut
+  // und alle Halme in einem Netz mit Farbe je Ecke statt sieben Netzen. Die App ruft ohne lite und bleibt gleich
+  function nest(opts) {
+    const lite = !!(opts && opts.lite);
     const g = new THREE.Group(), r = rng(3);
     const brown = ['#8d6e63', '#6d4c41', '#a1887f', '#5d4037', '#795548'].map(c => new THREE.MeshStandardMaterial({ color: col(c), roughness: 0.95 }));
     const straw = new THREE.MeshStandardMaterial({ color: col('#d8ba8a'), roughness: 0.9 });
@@ -10365,15 +10443,23 @@ const Eggs = (() => {
     for (let i = 0; i < 95; i++) {
       const rr0 = lerp(0.56, 1.06, Math.pow(r(), 0.7)), a0 = r() * TAU, span = lerp(0.7, 1.8, r()), pts = [];
       for (let k = 0; k <= 8; k++) { const a = a0 + span * k / 8, rr = rr0 + (r() - 0.5) * 0.06; pts.push(V(rr * Math.cos(a), height(rr) + (r() - 0.5) * 0.05 + 0.02, rr * Math.sin(a))); }
-      g.add(new THREE.Mesh(pipe(pts, lerp(0.02, 0.035, r()), lerp(0.012, 0.025, r())), r() < 0.2 ? straw : brown[Math.floor(r() * brown.length)]));
+      g.add(new THREE.Mesh(pipe(pts, lerp(0.02, 0.035, r()), lerp(0.012, 0.025, r()), lite), r() < 0.2 ? straw : brown[Math.floor(r() * brown.length)]));
     }
     // Halme, die über den Rand stehen
     for (let i = 0; i < 16; i++) {
       const a = r() * TAU, rr = lerp(0.85, 1.0, r()), d = V(Math.cos(a + (r() - 0.5)), 0.25 + r() * 0.3, Math.sin(a + (r() - 0.5))).normalize(), p0 = V(rr * Math.cos(a), height(rr) + 0.02, rr * Math.sin(a));
-      g.add(new THREE.Mesh(pipe([p0, p0.clone().add(d.clone().multiplyScalar(0.18)), p0.clone().add(d.clone().multiplyScalar(0.34))], 0.014, 0.006), r() < 0.5 ? straw : brown[0]));
+      g.add(new THREE.Mesh(pipe([p0, p0.clone().add(d.clone().multiplyScalar(0.18)), p0.clone().add(d.clone().multiplyScalar(0.34))], 0.014, 0.006, lite), r() < 0.5 ? straw : brown[0]));
     }
     // Draw Calls (Lina 14.10.2026): die 111 Halme je Material zu einem Mesh (sie liegen alle ohne eigene Lage in der Gruppe), 112 auf 7
     const byMat = new Map();
+    // lite: alle Halme in einer Gruppe, die Farbe des Materials wandert in die Ecken (ein Zeichenaufruf statt sechs)
+    const liteMat = lite ? new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, roughness: 0.93 }) : null;
+    if (lite) for (const m of g.children) if (m.geometry.type === 'TubeGeometry') {
+      const n = m.geometry.attributes.position.count, c = new Float32Array(n * 3), k = m.material.color;
+      for (let i = 0; i < n; i++) { c[i * 3] = k.r; c[i * 3 + 1] = k.g; c[i * 3 + 2] = k.b; }
+      m.geometry.setAttribute('color', new THREE.BufferAttribute(c, 3)); m.material = liteMat;
+    }
+    if (lite) { for (const mt of [...brown, straw]) mt.dispose(); }
     for (const m of [...g.children]) if (m.geometry.type === 'TubeGeometry') { if (!byMat.has(m.material)) byMat.set(m.material, []); byMat.get(m.material).push(m); }
     for (const [mat, list] of byMat) {
       if (list.length < 2) continue;
@@ -10585,6 +10671,497 @@ const Eggs = (() => {
   }
 
   return { egg, nest, DESIGN, HEIGHT: 2 * HH, studioMap };
+})();
+
+</script>
+<script>
+// Räume als Rundumbild mit echter Bühne davor (Luis 11.10.2026, Regel „Umgebungen als Rundumbild“): Brutkammer, Licht und
+// Schatten. Das Bild aus Figma liegt als Kugel um die Bühne (Licht, Schatten, frühere Brutkammer) oder als Wand eines echten
+// Zylinders mit Boden und Kuppel aus Code (Halle der Brutkammer). Die Oberkante der Bühne liegt auf y = 0, dort stehen
+// Ovaling oder Nest. Die Räume ganz aus Code für Licht und Schatten sind seit 12.10.2026 entfernt (Luis: sehr schlecht),
+// die alte Fassung liegt in 00 bin. Weiche Verläufe als Bilddaten (Regel 06.10.2026). Gestaltungsregeln: keine Kreuze,
+// keine Gitter, keine Schrift, keine vierzählige Symmetrie, Sterne nur als runde Punkte.
+// FamilyRoom.buildPano(kind, texture, { detail }) mit kind 'hatchery', 'hatcheryHall', 'light' oder 'shadow' gibt zurück:
+// group, lights, update(t), fog ({ color, near, far }), tris
+// { lite: true } (Website, Luis 24.10.2026, Auftrag 17a): Halle mit weniger Dreiecken (Wand, Ring, Boden, Kuppel, Wulst, Bordstein,
+// Stumpf gröber, wo man es nicht sieht), die Flammen-Stücke in einem Netz statt elf, nur zwei echte Lichter (Himmelslicht und
+// Kaminfeuer), Fensterlicht, Vorderlicht und Laterne stecken im helleren Himmelslicht. Die App ruft ohne lite und bleibt gleich
+const FamilyRoom = (() => {
+  const TAU = Math.PI * 2;
+  let LITE = false;
+  const lin = hex => new THREE.Color(hex).convertSRGBToLinear();
+  const rng = seed => { let s = seed >>> 0; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; };
+  const hash = (x, y) => { const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return s - Math.floor(s); };
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const noise = (x, y) => {
+    const ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy, ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+    const a = hash(ix, iy), b = hash(ix + 1, iy), c = hash(ix, iy + 1), d = hash(ix + 1, iy + 1);
+    return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+  };
+  const fbm = (x, y, o) => { let s = 0, a = 0.5, f = 1, n = 0; for (let k = 0; k < o; k++) { s += a * noise(x * f, y * f); n += a; a *= 0.5; f *= 2; } return s / n; };
+
+  function makeTex(w, h, fill, srgb) {
+    const d = new Uint8Array(w * h * 4), px = [0, 0, 0, 1];
+    for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      px[3] = 1; fill(i, j, px); const o = (j * w + i) * 4;
+      for (let c = 0; c < 4; c++) d[o + c] = Math.max(0, Math.min(255, Math.round(px[c] * 255)));
+    }
+    const t = new THREE.DataTexture(d, w, h, THREE.RGBAFormat);
+    if (srgb) t.encoding = THREE.sRGBEncoding;
+    t.magFilter = THREE.LinearFilter; t.minFilter = THREE.LinearMipmapLinearFilter; t.generateMipmaps = true; t.needsUpdate = true;
+    return t;
+  }
+  const glowTex = makeTex(64, 64, (i, j, o) => { const d = Math.hypot(i + 0.5 - 32, j + 0.5 - 32) / 32; o[0] = o[1] = o[2] = 1; o[3] = Math.pow(Math.max(0, 1 - d), 2.2); }, false);
+  // Wolkenballen: weicher, ausgefranster Rand, oben hell, unten bläulich (Zeile 0 unten)
+  const puffTex = makeTex(128, 128, (i, j, o) => {
+    const x = (i + 0.5) / 64 - 1, y = (j + 0.5) / 64 - 1, a = Math.atan2(y, x), d = Math.hypot(x, y);
+    const edge = 0.78 + 0.16 * (fbm(Math.cos(a) * 2.2 + 3, Math.sin(a) * 2.2 + 3, 3) - 0.5) * 2;
+    const al = 1 - smooth(edge - 0.22, edge, d), lit = 0.5 + 0.5 * y, k = 0.72 + 0.28 * Math.pow(lit, 0.8);
+    o[0] = k * 0.97; o[1] = k * 0.985; o[2] = Math.min(1, k * 1.02 + 0.03); o[3] = al;
+  }, false);
+
+  // Rauschen und Relief im Shader (wie bei der Brutkammer)
+  const NOISE3 = `float n3Hash(vec3 q) { q = fract(q * 0.3183099 + 0.1); q *= 17.0; return fract(q.x * q.y * q.z * (q.x + q.y + q.z)); }
+float n3(vec3 q) {
+  vec3 i = floor(q), f = fract(q); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(n3Hash(i), n3Hash(i + vec3(1, 0, 0)), f.x), mix(n3Hash(i + vec3(0, 1, 0)), n3Hash(i + vec3(1, 1, 0)), f.x), f.y),
+             mix(mix(n3Hash(i + vec3(0, 0, 1)), n3Hash(i + vec3(1, 0, 1)), f.x), mix(n3Hash(i + vec3(0, 1, 1)), n3Hash(i + vec3(1, 1, 1)), f.x), f.y), f.z);
+}
+`;
+  const BUMP = k => `{
+    vec3 bDx = dFdx(-vViewPosition), bDy = dFdy(-vViewPosition);
+    float bHx = dFdx(hgt) * ${k}, bHy = dFdy(hgt) * ${k};
+    vec3 bR1 = cross(bDy, normal), bR2 = cross(normal, bDx);
+    float bDet = dot(bDx, bR1);
+    normal = normalize(abs(bDet) * normal - sign(bDet) * (bHx * bR1 + bHy * bR2));
+  }`;
+  function formulaMat(params, key, colorCode, bumpK) {
+    const m = new THREE.MeshStandardMaterial(params);
+    m.onBeforeCompile = sh => {
+      sh.vertexShader = 'varying vec3 vFP;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\n#ifdef USE_INSTANCING\n vFP = (instanceMatrix * vec4(transformed, 1.0)).xyz;\n#else\n vFP = transformed;\n#endif');
+      sh.fragmentShader = 'varying vec3 vFP;\nfloat hgt = 0.0;\n' + NOISE3 + sh.fragmentShader
+        .replace('#include <color_fragment>', '#include <color_fragment>\n' + colorCode)
+        .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n' + BUMP(bumpK));
+    };
+    m.customProgramCacheKey = () => key;
+    return m;
+  }
+  // Marmor: Adern als schmale, verbogene Linien, dazu feine Wolken im Stein. base, vein in linearen Farben
+  const marble = (key, base, vein, veinW, scale) => formulaMat({ color: 0xffffff, roughness: 0.28, metalness: 0.05 }, key, `{
+    vec3 p = vFP * ${scale};
+    float w = n3(p * 0.9) * 2.6 + n3(p * 2.7 + 4.0) * 0.8;
+    float v1 = 1.0 - smoothstep(0.0, ${veinW}, abs(sin(p.x * 1.3 + p.z * 0.7 + w * 2.2)));
+    float v2 = 1.0 - smoothstep(0.0, ${veinW} * 0.6, abs(sin(p.z * 2.1 - p.x * 0.9 + w * 3.1 + 1.7)));
+    float cloud = n3(p * 1.6) * 0.6 + n3(p * 5.0) * 0.4;
+    float vein = max(v1 * 0.9, v2 * 0.55) * smoothstep(0.25, 0.6, n3(p * 0.7 + 9.0));
+    hgt = -vein * 0.4 + cloud * 0.15;
+    diffuseColor.rgb *= mix(vec3(${base}) * (0.92 + 0.12 * cloud), vec3(${vein}), vein);
+  }`, '0.012');
+
+  // Wolken und Nebel als Flächen zur Kamera, alle in einem Zeichenaufruf. Reihenfolge: weit weg zuerst
+  function puffs(list, tint, opts) {
+    const o = opts || {};
+    list.sort((a, b) => Math.hypot(b[0], b[2]) - Math.hypot(a[0], a[2]));
+    const n = list.length, base = new THREE.PlaneGeometry(1, 1), g = new THREE.InstancedBufferGeometry();
+    g.index = base.index; g.setAttribute('position', base.attributes.position); g.setAttribute('uv', base.attributes.uv);
+    const off = new Float32Array(n * 3), size = new Float32Array(n), shade = new Float32Array(n), rot = new Float32Array(n);
+    list.forEach((p, i) => { off.set([p[0], p[1], p[2]], i * 3); size[i] = p[3]; shade[i] = p[4]; rot[i] = p[5]; });
+    g.setAttribute('offset', new THREE.InstancedBufferAttribute(off, 3)); g.setAttribute('size', new THREE.InstancedBufferAttribute(size, 1));
+    g.setAttribute('shade', new THREE.InstancedBufferAttribute(shade, 1)); g.setAttribute('rot', new THREE.InstancedBufferAttribute(rot, 1));
+    g.instanceCount = n;
+    const m = new THREE.ShaderMaterial({
+      uniforms: { map: { value: puffTex }, uTint: { value: tint }, uFog: { value: o.fog || new THREE.Color(1, 1, 1) }, uNear: { value: o.near || 30 }, uFar: { value: o.far || 120 }, uAlpha: { value: o.alpha || 1 }, uTime: { value: 0 }, uDrift: { value: o.drift || 0 } },
+      vertexShader: 'attribute vec3 offset; attribute float size; attribute float shade; attribute float rot; uniform float uTime; uniform float uDrift; varying vec2 vUv; varying float vShade; varying float vDist;\n' +
+        'void main() { vUv = uv; vShade = shade; vec3 c = offset; c.x += sin(uTime * 0.05 + offset.z * 0.3) * uDrift; c.z += cos(uTime * 0.04 + offset.x * 0.3) * uDrift;\n' +
+        '  vec4 mv = modelViewMatrix * vec4(c, 1.0); float cr = cos(rot), sr = sin(rot); vec2 q = vec2(position.x * cr - position.y * sr, position.x * sr + position.y * cr);\n' +
+        '  mv.xy += q * size; vDist = -mv.z; gl_Position = projectionMatrix * mv; }',
+      fragmentShader: 'uniform sampler2D map; uniform vec3 uTint; uniform vec3 uFog; uniform float uNear; uniform float uFar; uniform float uAlpha; varying vec2 vUv; varying float vShade; varying float vDist;\n' +
+        'void main() { vec4 t = texture2D(map, vUv); vec3 c = t.rgb * uTint * vShade; c = mix(c, uFog, smoothstep(uNear, uFar, vDist)); gl_FragColor = vec4(c, t.a * uAlpha); }',
+      transparent: true, depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(g, m); mesh.frustumCulled = false; mesh.renderOrder = o.order || 0;
+    return mesh;
+  }
+
+  // Himmel: Kuppel mit Verlauf, Sonne oder Mond mit Schein, Strahlen (ungerade Zahl, unregelmäßig), Sterne als Punkte
+  function stage(o, add) {
+    const g = new THREE.Group(), R = o.r;
+    const top = new THREE.CylinderGeometry(R, R, 0.3, 96, 1); top.translate(0, -0.15, 0); add(new THREE.Mesh(top, o.top), g);
+    const step = new THREE.CylinderGeometry(R + 0.16, R + 0.2, 0.16, 96, 1); step.translate(0, -0.38, 0); add(new THREE.Mesh(step, o.top), g);
+    const rim = new THREE.TorusGeometry(R + 0.005, 0.045, 10, 160); rim.rotateX(Math.PI / 2); add(new THREE.Mesh(rim, o.rim), g);
+    const band = new THREE.CylinderGeometry(R + 0.012, R + 0.012, 0.05, 96, 1, true); band.translate(0, -0.2, 0); add(new THREE.Mesh(band, o.rim), g);
+    const band2 = new THREE.TorusGeometry(R + 0.19, 0.03, 8, 160); band2.rotateX(Math.PI / 2); band2.translate(0, -0.3, 0); add(new THREE.Mesh(band2, o.rim), g);
+    const shaft = new THREE.CylinderGeometry(R + 0.1, R * 0.55, o.shaft || 1.6, 64, 3); shaft.translate(0, -0.46 - (o.shaft || 1.6) / 2, 0); add(new THREE.Mesh(shaft, o.under || o.top), g);
+    return g;
+  }
+
+  // Halle der Brutkammer (Probe 12.10.2026, nach den Versuchen mit Skybox AI): das Rundumbild aus drei Figma-Ansichten liegt
+  // nicht als Kugel weit weg, sondern als Wand auf einem echten Zylinder. Boden und Kuppel sind echte Flächen aus Formeln,
+  // damit Decke und Boden beim Drehen stimmen (im Bild waren sie aufgefüllt oder verzerrt). Im Bild liegt das Fenster in der
+  // Mitte (u = 0,5, Richtung -z), der Kamin bei u = 1/6, die Leseecke bei u = 5/6. HALL.bottom und HALL.top sind die
+  // Zeilen (Anteil von oben) von Wandfuß und Kuppelansatz im Bild (top hinter dem Übergang zur Füllfarbe oben).
+  // Abbildung wie bei der Aufnahme (Luis 12.10.2026: Übergang Boden zu Wand war nicht sauber): jeder Punkt von Wand und Boden
+  // nimmt die Stelle im Bild, unter der man ihn aus der Raummitte in Augenhöhe EY sieht. EY folgt daraus, dass der Wandfuß
+  // genau auf der Zeile HALL.bottom liegt. So läuft der gemalte Bodenstreifen ohne Knick als Ring auf dem echten Boden
+  // weiter und geht nach innen weich in die Dielen aus Code über
+  const HALL = { r: 6.5, floor: -1, bottom: 0.662, top: 0.318, ringIn: 5.5, ringFade: 0.55, ambient: 0.5 };
+  function buildHall(texture, add) {
+    const R = HALL.r, fy = HALL.floor;
+    const EY = fy + R * Math.tan((HALL.bottom - 0.5) * Math.PI);
+    // Zeile im Bild (Anteil von oben) für einen Punkt in Höhe y im Abstand r von der Mitte, und umgekehrt die Höhe an der Wand
+    const fOf = (y, r) => 0.5 - Math.atan2(y - EY, r) / Math.PI;
+    const yOf = f => EY - R * Math.tan((f - 0.5) * Math.PI);
+    const top = yOf(HALL.top);
+    const seg = LITE ? 128 : 192, nv = 24, pos = [], uv = [], idx = [];
+    for (let i = 0; i <= seg; i++) {
+      const u = i / seg, a = (u - 0.5) * TAU, x = Math.sin(a) * R, z = -Math.cos(a) * R;
+      for (let j = 0; j <= nv; j++) { const y = fy + (top - fy) * j / nv; pos.push(x, y, z); uv.push(u, 1 - fOf(y, R)); }
+      if (i < seg) for (let j = 0; j < nv; j++) { const k = i * (nv + 1) + j, k2 = k + nv + 1; idx.push(k, k2, k + 1, k + 1, k2, k2 + 1); }
+    }
+    const wg = new THREE.BufferGeometry();
+    wg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); wg.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); wg.setIndex(idx);
+    texture.wrapS = THREE.RepeatWrapping;
+    // Gedimmt (Luis 12.10.2026: gemütlicher, Kerzen und Kamin sollen hervortreten): die gemalte Wand wird insgesamt dunkler,
+    // um jede Lichtquelle liegt eine warme Lichtinsel, die mit ihr flackert. Flammen selbst (sehr helle, warme Stellen)
+    // bleiben voll hell. Dieselbe Rechnung (DIM) läuft in den Flammen-Stücken, damit ihre Ränder zur Wand passen.
+    // Lichter in Bildkoordinaten: u rundum, f Anteil von oben, Radius (in u), Stärke, Flackern
+    const LIGHTS = [
+      [0.167, 0.56, 0.085, 0.9, 1], [0.456, 0.54, 0.03, 0.45, 1], [0.5, 0.45, 0.075, 0.45, 0],
+      [0.816, 0.36, 0.03, 0.4, 1], [0.857, 0.44, 0.03, 0.4, 1], [0.75, 0.495, 0.025, 0.35, 1], [0.803, 0.5, 0.022, 0.3, 1], [0.876, 0.5, 0.022, 0.3, 1],
+      [0.4, 0.425, 0.045, 0.45, 0.5], [0.6, 0.425, 0.045, 0.45, 0.5], [0.716, 0.565, 0.025, 0.3, 0.3], [0.958, 0.607, 0.025, 0.3, 0.3],
+    ];
+    const DIM = `uniform float uTime;
+vec3 dimLight(vec2 uv, vec3 c) {
+  float f = 1.0 - uv.y, L = ${HALL.ambient.toFixed(2)};
+  ${LIGHTS.map(([u, ff, r, st, fl], i) => `{ float du = abs(uv.x - ${u.toFixed(3)}); du = min(du, 1.0 - du); vec2 d = vec2(du, (f - ${ff.toFixed(3)}) * 0.5) / ${r.toFixed(3)};
+    float fl = 1.0 - ${(0.22 * fl).toFixed(3)} * (0.6 * n3(vec3(${i}.0 * 3.7, uTime * 3.1, 1.0)) + 0.4 * n3(vec3(${i}.0 * 5.1, uTime * 8.7, 2.0)));
+    L += ${st.toFixed(2)} * fl * exp(-dot(d, d)); }`).join(' ')}
+  float l = dot(c, vec3(0.3, 0.59, 0.11)), hot = smoothstep(0.78, 0.95, l) * smoothstep(0.05, 0.2, c.r - c.b);
+  return c * mix(min(L, 1.0), 1.0, hot);
+}
+`;
+    const wallMat = new THREE.ShaderMaterial({
+      uniforms: { map: { value: texture }, uTime: { value: 0 } }, side: THREE.DoubleSide, fog: false,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: NOISE3 + DIM + 'uniform sampler2D map; varying vec2 vUv; void main(){ gl_FragColor = vec4(dimLight(vUv, texture2D(map, vUv).rgb), 1.0); }'
+    });
+    add(new THREE.Mesh(wg, wallMat));
+    // Gemalter Boden als Ring vor der Wand: dieselbe Abbildung, nach innen durchsichtig (unter dem Ring liegen die Dielen)
+    {
+      const nr = 8, rp = [], ru = [], ra = [], ri = [];
+      for (let i = 0; i <= seg; i++) {
+        const u = i / seg, a = (u - 0.5) * TAU, sx = Math.sin(a), sz = -Math.cos(a);
+        for (let j = 0; j <= nr; j++) {
+          const r = HALL.ringIn + (R + 0.02 - HALL.ringIn) * j / nr;
+          rp.push(sx * r, fy + 0.004, sz * r); ru.push(u, 1 - fOf(fy, Math.min(r, R))); ra.push(smooth(HALL.ringIn, HALL.ringIn + HALL.ringFade, r));
+        }
+        if (i < seg) for (let j = 0; j < nr; j++) { const k = i * (nr + 1) + j, k2 = k + nr + 1; ri.push(k, k + 1, k2, k + 1, k2 + 1, k2); }
+      }
+      const rg = new THREE.BufferGeometry();
+      rg.setAttribute('position', new THREE.Float32BufferAttribute(rp, 3)); rg.setAttribute('uv', new THREE.Float32BufferAttribute(ru, 2));
+      rg.setAttribute('alpha', new THREE.Float32BufferAttribute(ra, 1)); rg.setIndex(ri);
+      const ringMat = new THREE.ShaderMaterial({
+        uniforms: wallMat.uniforms, transparent: true, depthWrite: false, fog: false,
+        vertexShader: 'attribute float alpha; varying vec2 vUv; varying float vA; void main(){ vUv = uv; vA = alpha; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        fragmentShader: NOISE3 + DIM + 'uniform sampler2D map; varying vec2 vUv; varying float vA; void main(){ gl_FragColor = vec4(dimLight(vUv, texture2D(map, vUv).rgb), vA); }'
+      });
+      add(new THREE.Mesh(rg, ringMat));
+    }
+    // Dielenboden: Bretter quer zum Fenster, Stöße versetzt (nur T-Stöße, keine Kreuzungen), Farbe wie im Bild
+    const floorGeo = new THREE.CircleGeometry(R + 0.05, LITE ? 64 : 128); floorGeo.rotateX(-Math.PI / 2); floorGeo.translate(0, fy, 0);
+    add(new THREE.Mesh(floorGeo, formulaMat({ color: 0xffffff, roughness: 0.6 }, 'hallPlanks', `{
+      vec3 p = vFP; float w = 0.55; float row = floor(p.z / w); float fz = fract(p.z / w);
+      float len = 2.6 + 1.4 * n3Hash(vec3(row, 1.0, 3.0)); float off = n3Hash(vec3(row, 7.0, 1.0)) * len;
+      float fx = fract((p.x + off) / len);
+      float seam = max(1.0 - smoothstep(0.0, 0.035, min(fz, 1.0 - fz)), 1.0 - smoothstep(0.0, 0.006, min(fx, 1.0 - fx)));
+      float grain = n3(vec3(p.x * 0.9, row * 3.1, p.z * 14.0)) * 0.6 + n3(vec3(p.x * 4.0, row, p.z * 40.0)) * 0.4;
+      float tone = 0.9 + 0.18 * n3Hash(vec3(row, floor((p.x + off) / len), 5.0));
+      hgt = -seam * 0.8 + grain * 0.12;
+      float edge = smoothstep(${(R - 2.2).toFixed(2)}, ${R.toFixed(2)}, length(p.xz));
+      diffuseColor.rgb *= mix(vec3(0.5, 0.19, 0.05) * tone * (0.88 + 0.2 * grain), vec3(0.16, 0.05, 0.015), seam * 0.8) * (0.62 - 0.32 * edge);
+    }`, '0.02')));
+    // Kuppel: flache Haube aus Holz, Rippen in ungerader Zahl laufen zur Mitte, dort ein Ring um die Laterne
+    const domeH = 3.2, dg = new THREE.SphereGeometry(R, LITE ? 64 : 96, LITE ? 12 : 24, 0, TAU, 0, Math.PI / 2);
+    dg.scale(1, domeH / R, 1); dg.translate(0, top, 0);
+    add(new THREE.Mesh(dg, formulaMat({ color: 0xffffff, roughness: 0.75, side: THREE.BackSide }, 'hallDome', `{
+      vec3 p = vFP; float a = atan(p.z, p.x); float d = length(p.xz) / ${R.toFixed(2)};
+      float rib = 1.0 - smoothstep(0.05 + 0.05 * d, 0.12 + 0.1 * d, abs(sin(a * 4.5)));
+      float grain = n3(vec3(a * 30.0, d * 3.0, 1.0)) * 0.6 + n3(vec3(a * 90.0, d * 9.0, 4.0)) * 0.4;
+      float ring = 1.0 - smoothstep(0.0, 0.03, abs(d - 0.16));
+      hgt = rib * 0.7 + ring * 0.5 + grain * 0.15;
+      vec3 wood = vec3(0.3, 0.09, 0.025) * (0.8 + 0.4 * grain);
+      diffuseColor.rgb *= mix(wood, vec3(0.55, 0.22, 0.07) * (0.9 + 0.2 * grain), max(rib, ring)) * (0.85 + 0.35 * d);
+    }`, '0.05')));
+    // Rand zwischen Wand und Kuppel: ein runder Holzwulst verdeckt die Kante
+    const lip = new THREE.TorusGeometry(R - 0.12, 0.2, LITE ? 6 : 10, LITE ? 96 : 160); lip.rotateX(Math.PI / 2); lip.translate(0, top, 0);
+    const lipMat = new THREE.MeshStandardMaterial({ color: lin('#5a2a10'), roughness: 0.7 });
+    add(new THREE.Mesh(lip, lipMat));
+    // Bordstein am Wandfuß (Luis 12.10.2026: ein Ring einmal rundherum, flach statt rund, wie ein Bordstein aus etwas dunklerem
+    // Holz, nur ein kleines Stück höher als das Parkett). Querschnitt über eine Drehfläche: innen senkrechte Kante mit kleiner
+    // Fase, oben eben bis in die Wand. Holz aus Bogenstücken (ungerade Zahl), Maserung entlang des Kreises
+    const CURB = { w: 0.42, h: 0.07, bevel: 0.018 }, cIn = R - CURB.w;
+    const curbGeo = new THREE.LatheGeometry([V(cIn, fy - 0.02, 0), V(cIn, fy + CURB.h - CURB.bevel, 0), V(cIn + CURB.bevel, fy + CURB.h, 0), V(R + 0.05, fy + CURB.h, 0)], LITE ? 96 : 192);
+    add(new THREE.Mesh(curbGeo, formulaMat({ color: 0xffffff, roughness: 0.65, side: THREE.DoubleSide }, 'hallCurb', `{
+      vec3 p = vFP; float a = atan(p.z, p.x), d = length(p.xz);
+      float seg = a / ${(TAU / 23).toFixed(5)}, fs2 = fract(seg);
+      float seam = 1.0 - smoothstep(0.0, 0.012, min(fs2, 1.0 - fs2));
+      float grain = n3(vec3(a * 40.0, d * 30.0, floor(seg))) * 0.6 + n3(vec3(a * 120.0, d * 60.0, 3.0)) * 0.4;
+      float tone = 0.85 + 0.2 * n3Hash(vec3(floor(seg), 2.0, 9.0));
+      float edge = 1.0 - smoothstep(0.0, 0.03, p.y - (${(fy + CURB.h - CURB.bevel).toFixed(3)}));
+      hgt = -seam * 0.8 + grain * 0.15;
+      diffuseColor.rgb *= mix(vec3(0.17, 0.06, 0.018) * tone * (0.85 + 0.25 * grain), vec3(0.08, 0.025, 0.008), seam * 0.8) * (1.0 - 0.25 * edge);
+    }`, '0.02')));
+    // Laterne in der Mitte der Kuppel
+    const lantern = new THREE.Mesh(new THREE.SphereGeometry(0.35, 24, 16), new THREE.MeshBasicMaterial({ color: lin('#ffd38a') }));
+    lantern.position.set(0, top + domeH * 0.55, 0); add(lantern);
+    // Runder geflochtener Teppich unter dem Stumpf, gemalt von Figma im Stil der Wand (Luis 12.10.2026, A): Ringe in Koralle,
+    // Creme, Türkis und Honig. Bild tool/art/figma/hall_rug.png, rund freigestellt nach web3d/data/pano/hall_rug.webp,
+    // build_pages.py setzt es als Daten-Adresse ein (hall_rug.webp)
+    const rugTex = new THREE.TextureLoader().load('hall_rug.webp'); rugTex.encoding = THREE.sRGBEncoding;
+    const rug = new THREE.Mesh(new THREE.CircleGeometry(2.4, 96), new THREE.MeshStandardMaterial({ map: rugTex, color: lin('#e2d6ca'), roughness: 1, transparent: true, alphaTest: 0.5 }));
+    rug.rotation.x = -Math.PI / 2; rug.position.y = fy + 0.012; add(rug);
+
+    // Gemaltes Licht bewegt sich (Luis 12.10.2026): ein Stück Wand mit denselben Bildkoordinaten vor einer Lichtquelle zeigt
+    // dasselbe Bild, verzerrt nur die hellen, gelben Stellen (Flammen) wie flirrende Hitze nach oben und dunkelt sie im
+    // Flackern leicht ab (nie heller als gemalt, sonst wird es grell). Am Rand des Stücks geht die Wirkung auf null, dort
+    // stimmt es Bildpunkt für Bildpunkt mit der Wand überein. Jede Flamme flackert für sich (Rauschen nach dem Ort im Bild).
+    // Stellen in Bildkoordinaten (u rundum, f Anteil von oben), gemessen an pano_hatchery_hall.jpg (helle gelbe Flecken):
+    // dist Verzerrung (Anteil der Bildbreite), flick Tiefe des Abdunkelns, speed Tempo
+    const FIRE = { u0: 0.124, u1: 0.214, f0: 0.486, f1: 0.612, cu: 0.167 };
+    const FLAMES = [
+      Object.assign({ dist: 0.0026, flick: 0.12, speed: 1, hot: 0.5 }, FIRE),
+      // Kerzen auf dem Fensterbrett und in den Regalen
+      { u0: 0.442, u1: 0.471, f0: 0.51, f1: 0.566, dist: 0.0003, flick: 0.28, speed: 1.6, hot: 0.86 },
+      { u0: 0.805, u1: 0.827, f0: 0.343, f1: 0.378, dist: 0.0003, flick: 0.28, speed: 1.6, hot: 0.86 },
+      { u0: 0.849, u1: 0.866, f0: 0.42, f1: 0.456, dist: 0.0003, flick: 0.28, speed: 1.6, hot: 0.86 },
+      { u0: 0.742, u1: 0.758, f0: 0.482, f1: 0.51, dist: 0.0003, flick: 0.25, speed: 1.6, hot: 0.86 },
+      { u0: 0.797, u1: 0.81, f0: 0.49, f1: 0.51, dist: 0.0003, flick: 0.25, speed: 1.6, hot: 0.86 },
+      { u0: 0.870, u1: 0.883, f0: 0.492, f1: 0.513, dist: 0.0003, flick: 0.25, speed: 1.6, hot: 0.86 },
+      // Laternen und leuchtende Pilze nur leicht
+      { u0: 0.383, u1: 0.417, f0: 0.4, f1: 0.448, dist: 0, flick: 0.1, speed: 0.8, hot: 0.6 },
+      { u0: 0.583, u1: 0.617, f0: 0.4, f1: 0.448, dist: 0, flick: 0.1, speed: 0.8, hot: 0.6 },
+      { u0: 0.704, u1: 0.729, f0: 0.548, f1: 0.582, dist: 0, flick: 0.08, speed: 0.5, hot: 0.6 },
+      { u0: 0.948, u1: 0.968, f0: 0.592, f1: 0.622, dist: 0, flick: 0.08, speed: 0.5, hot: 0.6 },
+    ];
+    // Fragment der Flammen-Stücke (eine Fassung für Stücke mit Uniforms, lite ersetzt die Uniforms durch Eckendaten)
+    const FLAME_FS = NOISE3 + DIM + `uniform sampler2D map; uniform float uDist, uFlick, uSpeed, uHot; varying vec2 vUv; varying vec2 vL;
+// hot: ab welcher Helligkeit eine Stelle als Flamme gilt (Kerzen hoch, sonst wackelt das helle Wachs mit)
+float hotOf(vec3 c) { float l = dot(c, vec3(0.3, 0.59, 0.11)); return smoothstep(uHot, min(1.0, uHot + 0.35), l) * smoothstep(0.0, 0.18, c.r - c.b); }
+void main() {
+  vec4 base = texture2D(map, vUv);
+  float edge = smoothstep(0.0, 0.18, vL.x) * smoothstep(1.0, 0.82, vL.x) * smoothstep(0.0, 0.14, vL.y) * smoothstep(1.0, 0.86, vL.y);
+  float t = uTime * uSpeed;
+  vec3 q = vec3(vL.x * 7.0, vL.y * 5.0 - t * 2.4, t * 0.7);
+  vec2 off = vec2((n3(q) - 0.5) * uDist, (n3(q + 7.3) - 0.5) * uDist * 0.75 - uDist * 0.3 * (0.5 + 0.5 * sin(t * 7.0 + vL.x * 9.0))) * (0.35 + vL.y) * edge;
+  vec4 d = texture2D(map, vUv + off);
+  float m = max(hotOf(base.rgb), hotOf(d.rgb)) * edge;
+  vec3 col = mix(base.rgb, d.rgb, m);
+  // Abdunkeln je Flamme: Rauschen über Zeit und Ort im Bild, damit benachbarte Kerzen nicht im Gleichtakt flackern
+  float n = n3(vec3(vUv.x * 900.0, vUv.y * 300.0, t * 3.2)) * 0.65 + n3(vec3(vUv.x * 900.0 + 5.0, 2.0, t * 9.0)) * 0.35;
+  float lit = smoothstep(0.35, 0.7, dot(base.rgb, vec3(0.3, 0.59, 0.11)));
+  col *= 1.0 - uFlick * n * max(m, 0.5 * lit * edge);
+  gl_FragColor = vec4(dimLight(vUv, col), 1.0);
+}`;
+    const flameMats = [], flameParts = [];
+    for (const F of FLAMES) {
+      const pg = new THREE.BufferGeometry(), pp = [], puv = [], ploc = [], pidx = [], pr = R - 0.03;
+      const nu = Math.max(4, Math.round((F.u1 - F.u0) * 260)), nv = Math.max(3, Math.round((F.f1 - F.f0) * 100));
+      for (let j = 0; j <= nv; j++) for (let i = 0; i <= nu; i++) {
+        const u = F.u0 + (F.u1 - F.u0) * i / nu, f = F.f1 - (F.f1 - F.f0) * j / nv, ang = (u - 0.5) * TAU;
+        pp.push(Math.sin(ang) * pr, yOf(f), -Math.cos(ang) * pr); puv.push(u, 1 - f); ploc.push(i / nu, j / nv);
+        if (i < nu && j < nv) { const k = j * (nu + 1) + i; pidx.push(k, k + 1, k + nu + 1, k + 1, k + nu + 2, k + nu + 1); }
+      }
+      pg.setAttribute('position', new THREE.Float32BufferAttribute(pp, 3)); pg.setAttribute('uv', new THREE.Float32BufferAttribute(puv, 2));
+      pg.setAttribute('loc', new THREE.Float32BufferAttribute(ploc, 2)); pg.setIndex(pidx);
+      const mat = new THREE.ShaderMaterial({
+        uniforms: { map: { value: texture }, uTime: { value: 0 }, uDist: { value: F.dist }, uFlick: { value: F.flick }, uSpeed: { value: F.speed }, uHot: { value: F.hot } },
+        side: THREE.DoubleSide, fog: false,
+        vertexShader: 'attribute vec2 loc; varying vec2 vUv; varying vec2 vL; void main(){ vUv = uv; vL = loc; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        // Die Textur kommt roh (sRGB) heraus und geht roh auf den Schirm, wie bei der Wand mit MeshBasicMaterial
+        fragmentShader: FLAME_FS
+      });
+      // lite: Stücke sammeln und unten zu einem Netz zusammenlegen (Werte je Flamme als Eckendaten statt Uniforms)
+      if (LITE) { flameParts.push({ pg, F }); mat.dispose(); continue; }
+      flameMats.push(mat);
+      add(new THREE.Mesh(pg, mat));
+    }
+    if (flameParts.length) {
+      let nv0 = 0; const P = [], U = [], L = [], FP = [], I = [];
+      for (const { pg, F } of flameParts) {
+        const a = pg.attributes, n = a.position.count;
+        P.push(...a.position.array); U.push(...a.uv.array); L.push(...a.loc.array);
+        for (let i = 0; i < n; i++) FP.push(F.dist, F.flick, F.speed, F.hot);
+        for (const q of pg.index.array) I.push(q + nv0);
+        nv0 += n; pg.dispose();
+      }
+      const mg = new THREE.BufferGeometry();
+      mg.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); mg.setAttribute('uv', new THREE.Float32BufferAttribute(U, 2));
+      mg.setAttribute('loc', new THREE.Float32BufferAttribute(L, 2)); mg.setAttribute('fp', new THREE.Float32BufferAttribute(FP, 4)); mg.setIndex(I);
+      const mat = new THREE.ShaderMaterial({
+        uniforms: { map: { value: texture }, uTime: { value: 0 } }, side: THREE.DoubleSide, fog: false,
+        vertexShader: 'attribute vec2 loc; attribute vec4 fp; varying vec2 vUv; varying vec2 vL; varying float uDist; varying float uFlick; varying float uSpeed; varying float uHot; ' +
+          'void main(){ vUv = uv; vL = loc; uDist = fp.x; uFlick = fp.y; uSpeed = fp.z; uHot = fp.w; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        fragmentShader: FLAME_FS.replace('uniform float uDist, uFlick, uSpeed, uHot;', 'varying float uDist; varying float uFlick; varying float uSpeed; varying float uHot;')
+      });
+      flameMats.push(mat);
+      add(new THREE.Mesh(mg, mat));
+    }
+    // Funken steigen aus der Glut, wenige und klein
+    const ca = (FIRE.cu - 0.5) * TAU, dir = new THREE.Vector3(Math.sin(ca), 0, -Math.cos(ca)), side = new THREE.Vector3(-dir.z, 0, dir.x);
+    const base = dir.clone().multiplyScalar(R - 0.35), baseY = yOf(0.59), sr = rng(77), sparkN = 10, sparkPos = new Float32Array(sparkN * 3), sparks = [];
+    for (let i = 0; i < sparkN; i++) sparks.push({ x: (sr() - 0.5) * 0.8, d: sr() * 0.25, v: 0.5 + sr() * 0.5, t0: sr() * 3, life: 1.6 + sr() * 1.4, sw: sr() * TAU });
+    const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
+    add(new THREE.Points(sg, new THREE.PointsMaterial({ map: glowTex, color: lin('#e8892e'), size: 0.045, transparent: true, opacity: 0.7, depthWrite: false, blending: THREE.AdditiveBlending, fog: false })));
+    function update(t) {
+      for (const m of flameMats) m.uniforms.uTime.value = t;
+      wallMat.uniforms.uTime.value = t;
+      for (let i = 0; i < sparkN; i++) {
+        const s = sparks[i], age = ((t + s.t0) % s.life) / s.life, y = baseY + age * s.v * 1.8, w = s.x * (1 - age * 0.4) + 0.06 * Math.sin(t * 3 + s.sw) * age;
+        sparkPos[i * 3] = base.x + side.x * w - dir.x * s.d; sparkPos[i * 3 + 1] = y; sparkPos[i * 3 + 2] = base.z + side.z * w - dir.z * s.d;
+      }
+      sg.attributes.position.needsUpdate = true;
+    }
+    return { top, domeH, lantern, update };
+  }
+
+  // Probe 11.10.2026: Raum aus einem Rundumbild (Equirectangular 2:1) statt Himmel und Kulisse aus Code. Nur Bühne, Licht und
+  // ein paar nahe Dinge (Wolkenring oder Nebel, Lichtkugeln) sind echtes 3D
+  function buildPano(kind, texture, opts) {
+    LITE = !!(opts && opts.lite);
+    const detail = (opts && opts.detail) || 1, r = rng(31), group = new THREE.Group(), lights = new THREE.Group(), anim = [];
+    let tris = 0;
+    const add = (mesh, parent) => { (parent || group).add(mesh); const g = mesh.geometry; if (g) tris += ((g.index ? g.index.count : g.attributes.position.count) / 3) * (g.instanceCount || 1); return mesh; };
+    texture.encoding = THREE.sRGBEncoding;
+    const hall = kind === 'hatcheryHall' ? buildHall(texture, add) : null;
+    if (!hall) {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      const sphere = new THREE.Mesh(new THREE.SphereGeometry(80, 64, 32), new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide, fog: false, depthWrite: false }));
+      sphere.geometry.scale(-1, 1, 1); sphere.material.side = THREE.FrontSide; sphere.renderOrder = -10; add(sphere);
+    }
+    if (kind === 'hatchery' || hall) {
+      // Brutkammer (Luis 11.10.2026): Baumstumpf mit Jahresringen, darauf legt die Seite Nest und Ei (Mulde auf y = 0).
+      // Unter dem Stumpf ein weicher Schatten, damit er auf dem gemalten Boden steht. Licht warm vom Kamin, kühl vom Fenster
+      // Sockel für Nest und Ei, Oberkante auf y = -0,04 (dort liegt das Nest der Bühne). Ein Steinaltar war als Probe gebaut,
+      // Luis 12.10.2026: es bleibt der Stumpf (Probe in 00 bin)
+      const TOPY = -0.04, BOTY = -1.0, SH = TOPY - BOTY, sr = rng(53);
+      const angD = (x, y) => { let d = (x - y) % TAU; if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU; return d; };
+      // Drehfläche aus einer Radiusfunktion r(Winkel, Höhe 0 bis 1)
+      const lathe = (rOf, mat, na, nh) => {
+        const P = [], I = [];
+        for (let j = 0; j <= nh; j++) { const t = j / nh; for (let i = 0; i <= na; i++) { const an = i / na * TAU, r = rOf(an, t); P.push(Math.cos(an) * r, BOTY + t * SH, Math.sin(an) * r); } }
+        for (let j = 0; j < nh; j++) for (let i = 0; i < na; i++) { const k = j * (na + 1) + i, k2 = k + na + 1; I.push(k, k2, k + 1, k + 1, k2, k2 + 1); }
+        const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setIndex(I); g.computeVertexNormals();
+        return add(new THREE.Mesh(g, mat));
+      };
+      // Baumstumpf (Luis 12.10.2026: sah schlecht aus, dann realistischer gewünscht): Rinde aus unregelmäßigen, länglichen
+      // Platten mit tiefen Furchen, fünf Wurzeln spreizen sich in den Boden, Schnittfläche mit Jahresringen, hellem Splintholz,
+      // dunklem Rindenrand und drei Trockenrissen, etwas Moos am Fuß
+      const RT = 1.1, roots = [];
+      for (let k = 0; k < 5; k++) roots.push({ a: k * TAU / 5 + 0.45 + (sr() - 0.5) * 0.5, s: 0.7 + sr() * 0.35, w: 0.18 + sr() * 0.07 });
+      const furrow = (an, y) => Math.abs(noise(an * 7 + 3, y * 0.8 + 1) - 0.5) * 2;
+      const stumpR = (an, t) => {
+        let r = RT + 0.08 * (1 - t) - 0.05 * (1 - Math.min(1, furrow(an, BOTY + t * SH) * 3));
+        for (const q of roots) { const da = angD(an, q.a) / q.w; r += q.s * Math.exp(-da * da) * Math.pow(1 - t, 2.6); }
+        return r;
+      };
+      lathe(stumpR, formulaMat({ color: 0xffffff, roughness: 0.9, side: THREE.DoubleSide }, 'famStump', `{
+        vec3 p = vFP; float a = atan(p.z, p.x), t = clamp((p.y - (${BOTY.toFixed(2)})) / ${SH.toFixed(2)}, 0.0, 1.0);
+        float fur = abs(n3(vec3(a * 7.0 + 3.0, p.y * 0.8 + 1.0, 0.5)) - 0.5) * 2.0;
+        float plate = smoothstep(0.06, 0.3, fur), fine = n3(vec3(a * 50.0, p.y * 14.0, 1.0)), blot = n3(p * 2.5);
+        float lichen = smoothstep(0.7, 0.85, n3(p * 3.0 + 8.0)) * plate;
+        float moss = smoothstep(0.5, 0.75, n3(p * 1.6 + 3.0)) * (1.0 - smoothstep(0.0, 0.4, t));
+        hgt = plate * 0.8 + fine * 0.2;
+        vec3 bark = mix(vec3(0.035, 0.022, 0.014), vec3(0.2, 0.13, 0.08) * (0.8 + 0.35 * blot), plate) * (0.85 + 0.25 * fine);
+        bark = mix(bark, vec3(0.32, 0.33, 0.24), lichen * 0.5);
+        diffuseColor.rgb *= mix(bark, vec3(0.11, 0.19, 0.04) * (0.8 + 0.4 * fine), moss * 0.85);
+      }`, '0.05'), 180, 32);
+      // Schnittfläche: Jahresringe, nach außen helles Splintholz, ganz außen dunkle Rinde, drei Trockenrisse von der Mitte aus
+      const cracks = [0.4, 2.5, 4.4].map(c => c + sr() * 0.4);
+      const ringsTex = makeTex(512, 512, (i, j, o) => {
+        const dx = (i + 0.5) / 256 - 1, dy = (j + 0.5) / 256 - 1, d0 = Math.hypot(dx, dy), d = d0 + 0.02 * noise(dx * 4 + 3, dy * 4), an = Math.atan2(dy, dx);
+        const ring = 0.5 + 0.5 * Math.sin(d * TAU * (14 + 3 * noise(an, 2))), grain = noise(i * 0.15, j * 0.15);
+        let c = [0.58, 0.38, 0.22].map((v, k) => v * (0.82 + 0.12 * ring + 0.08 * grain) + [0.08, 0.06, 0.04][k] * smooth(0.72, 0.86, d));
+        if (d > 0.9) c = [0.16, 0.1, 0.06].map(v => v * (0.8 + 0.4 * grain));
+        let cr = 0;
+        for (const ca of cracks) { const w = Math.abs(angD(an, ca)) * d0; cr = Math.max(cr, (1 - smooth(0.004, 0.014, w)) * smooth(0.05, 0.2, d0) * (1 - smooth(0.6, 0.85, d0))); }
+        for (let k = 0; k < 3; k++) o[k] = c[k] * (1 - 0.75 * cr);
+      }, true);
+      const top = new THREE.CircleGeometry(RT * 1.0, 96); top.rotateX(-Math.PI / 2); top.translate(0, TOPY, 0);
+      add(new THREE.Mesh(top, new THREE.MeshStandardMaterial({ map: ringsTex, roughness: 0.85 })));
+      const shadowTex = makeTex(64, 64, (i, j, o) => { const d = Math.hypot(i + 0.5 - 32, j + 0.5 - 32) / 32; o[0] = o[1] = o[2] = 0; o[3] = 0.7 * Math.pow(Math.max(0, 1 - d), 1.5); }, false);
+      const shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 3.6), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }));
+      shadow.rotation.x = -Math.PI / 2; shadow.position.y = hall ? -0.985 : -1.0; add(shadow);
+      // Staub im warmen Licht
+      const dustN = Math.round(40 * detail), dustPos = new Float32Array(dustN * 3), seeds = [];
+      for (let i = 0; i < dustN; i++) seeds.push({ a: r() * TAU, d: 0.8 + r() * 2.5, y: 0.2 + r() * 2.2, s: 0.2 + r() * 0.5, p: r() * TAU });
+      const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+      group.add(new THREE.Points(dg, new THREE.PointsMaterial({ map: glowTex, color: lin('#ffcf8a'), size: 0.04, transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending })));
+      anim.push(t => { seeds.forEach((q, i) => { const a = q.a + t * 0.02 * q.s; dustPos[i * 3] = Math.cos(a) * q.d; dustPos[i * 3 + 1] = q.y + Math.sin(t * q.s + q.p) * 0.2; dustPos[i * 3 + 2] = Math.sin(a) * q.d; }); dg.attributes.position.needsUpdate = true; });
+      // lite: zwei Lichter. Das Himmelslicht trägt Fensterlicht und Grundhelligkeit, ein warmes Richtungslicht von oben vorne steht
+      // für Laterne, Vorderlicht und Kaminfeuer (das Feuer flackert im Takt des Kamins, wie vorher das Punktlicht)
+      const liteHall = LITE && hall;
+      lights.add(liteHall ? new THREE.HemisphereLight(lin('#ffe0c4'), lin('#5a3418'), 0.4) : new THREE.HemisphereLight(lin('#ffd9a8'), lin('#5a3418'), hall ? 0.3 : 0.55));
+      const fire = liteHall ? new THREE.DirectionalLight(lin('#ffbf80'), 0.55) : new THREE.PointLight(lin('#ff9a48'), 1.6, hall ? 14 : 10, 2); lights.add(fire);
+      // In der Halle steht der Kamin bei u = 1/6 (links vom Fenster), sein Licht kommt von dort
+      if (liteHall) fire.position.set(-2.5, 6, 3); else if (hall) fire.position.set(-0.866 * HALL.r * 0.75, 0.6, 0.5 * HALL.r * 0.75); else fire.position.set(0, 1.2, 3.5);
+      // In der Halle ruhiger: das gemalte Feuer leuchtet schon, das Licht soll nicht grell auf Stumpf und Teppich fallen
+      const fireBase = liteHall ? 0.55 : hall ? 1.3 : 1.6, fireAmp = liteHall ? 0.05 : hall ? 0.15 : 0.25;
+      anim.push(t => { fire.intensity = fireBase + fireAmp * Math.sin(t * 8.3) + fireAmp * 0.5 * Math.sin(t * 13.1); });
+      if (!(LITE && hall)) {
+        const win = new THREE.DirectionalLight(lin('#e0b8ff'), hall ? 0.22 : 0.35); win.position.set(0, 3, -6); lights.add(win);
+        const front = new THREE.DirectionalLight(lin('#ffe2c0'), hall ? 0.22 : 0.35); front.position.set(1, 3, 8); lights.add(front);
+      }
+      // Halle: die Laterne in der Kuppel wirft einen warmen Lichtkegel auf Stumpf und Teppich
+      if (hall && !LITE) { const lamp = new THREE.PointLight(lin('#ffc27a'), 0.9, 14, 2); lamp.position.set(0, hall.top + hall.domeH * 0.4, 0); lights.add(lamp); }
+      if (hall) anim.push(hall.update);
+      if (hall) anim.push(t => { hall.lantern.material.color.copy(lin('#ffd38a')).multiplyScalar(0.95 + 0.05 * Math.sin(t * 3.1)); });
+      return finish({ group, lights, anim, tris, fog: { color: lin('#3a2416'), near: 40, far: 150 } });
+    }
+    if (kind === 'light') {
+      const white = marble('famLightMarble', '0.93, 0.92, 0.9', '0.62, 0.58, 0.55', '0.12', '0.9');
+      const gold = new THREE.MeshStandardMaterial({ color: lin('#e8b84a'), roughness: 0.28, metalness: 0.85, emissive: lin('#6a4a10'), emissiveIntensity: 0.25 });
+      group.add(stage({ r: 2.5, top: white, rim: gold, shaft: 0.9 }, add));
+      const list = [];
+      for (let i = 0; i < Math.round(120 * detail); i++) {
+        const a = r() * TAU, d = 1.6 + r() * 6, s0 = 0.9 + r() * 1.2 + d * 0.15;
+        list.push([Math.cos(a) * d, -0.75 - s0 * 0.5 - r() * 0.4, Math.sin(a) * d, s0, 0.92 + r() * 0.08, r() * TAU]);
+      }
+      const clouds = add(puffs(list, new THREE.Color(1, 1, 1), { fog: lin('#d4ebff'), near: 25, far: 95, drift: 0.4 }));
+      anim.push(t => { clouds.material.uniforms.uTime.value = t; });
+      lights.add(new THREE.HemisphereLight(lin('#dcecff'), lin('#ffffff'), 0.85));
+      const sun = new THREE.DirectionalLight(lin('#fff3da'), 1.0); sun.position.set(-5, 6, -5); lights.add(sun);
+      const front = new THREE.DirectionalLight(lin('#ffffff'), 0.35); front.position.set(1, 3, 8); lights.add(front);
+      return finish({ group, lights, anim, tris, fog: { color: lin('#cfe7ff'), near: 40, far: 150 } });
+    }
+    const dark = marble('famShadowMarble', '0.06, 0.05, 0.09', '0.42, 0.3, 0.7', '0.09', '1.0');
+    const ringMat = new THREE.MeshBasicMaterial({ color: lin('#b48cff') });
+    group.add(stage({ r: 2.5, top: dark, rim: ringMat, shaft: 1.4 }, add));
+    const mist = [];
+    for (let i = 0; i < Math.round(80 * detail); i++) {
+      const a = r() * TAU, d = 2.8 + Math.pow(r(), 0.7) * 10;
+      mist.push([Math.cos(a) * d, -1.3 + r() * 0.6, Math.sin(a) * d, 2 + d * 0.2 + r() * 2, 0.75 + r() * 0.25, r() * TAU]);
+    }
+    const mistMesh = add(puffs(mist, lin('#8a6cc8'), { fog: lin('#3b2763'), near: 12, far: 55, alpha: 0.3, drift: 0.8, order: 2 }));
+    anim.push(t => { mistMesh.material.uniforms.uTime.value = t; ringMat.color.copy(lin('#b48cff')).multiplyScalar(0.9 + 0.15 * Math.sin(t * 1.3)); });
+    const orbs = [];
+    for (let i = 0; i < 7; i++) {
+      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: lin('#b58bff'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+      s.scale.setScalar(0.7); group.add(s); orbs.push({ s, a: TAU * (i + 0.4 * hash(i, 5)) / 7, d: 3.4 + r() * 4, y: 0.3 + r() * 2.2, p: r() * TAU });
+    }
+    anim.push(t => { for (const o2 of orbs) { o2.s.position.set(Math.cos(o2.a + t * 0.04) * o2.d, o2.y + Math.sin(t * 0.8 + o2.p) * 0.25, Math.sin(o2.a + t * 0.04) * o2.d); o2.s.material.opacity = 0.55 + 0.25 * Math.sin(t * 2 + o2.p); } });
+    lights.add(new THREE.HemisphereLight(lin('#6b58b0'), lin('#140c22'), 0.6));
+    const moon = new THREE.DirectionalLight(lin('#d6c8ff'), 0.9); moon.position.set(4, 5, -7); lights.add(moon);
+    const front = new THREE.DirectionalLight(lin('#c9b8ff'), 0.35); front.position.set(1, 3, 8); lights.add(front);
+    const stageLight = new THREE.PointLight(lin('#a07aff'), 1.1, 6, 2); stageLight.position.set(0, 0.6, 0); lights.add(stageLight);
+    return finish({ group, lights, anim, tris, fog: { color: lin('#3b2763'), near: 14, far: 60 } });
+  }
+  function finish(room) {
+    function update(t) { for (const f of room.anim) f(t); }
+    update(0);
+    return { group: room.group, lights: room.lights, update, fog: room.fog, tris: Math.round(room.tris) };
+  }
+
+  return { buildPano };
 })();
 
 </script>
@@ -15830,6 +16407,7 @@ const Bulwark = (() => {
 'use strict';
 // --- Verbindung zur Website (wie der Betrachter) ---------------------------------------------------------------------------
 const MODE = location.hash.slice(1) === 'bosses' ? 'bosses' : 'egg';
+document.documentElement.classList.add(MODE);
 const TARGET = location.origin && location.origin !== 'null' ? location.origin : '*';
 function send(message) {
   message.source = MODE;
@@ -15861,8 +16439,9 @@ if (!renderer) {
   window.addEventListener('error', e => { if (e.error === stop) e.preventDefault(); });
   throw stop;
 }
-// Pixeldichte: Ei höchstens 2, Bosse höchstens 1,5 (sechs Figuren in einem Bild, Handy). Über 28 ms je Bild sinkt sie in Stufen
-const quality = { ratio: Math.min(devicePixelRatio || 1, MODE === 'bosses' ? 1.5 : 2), frames: 0, sum: 0, since: 0 };
+// Pixeldichte höchstens 1,5 (Bosse: sechs Figuren in einem Bild, Ei im Raum seit Auftrag 17a, Luis 24.10.2026, vorher 2). Über
+// 28 ms je Bild sinkt sie in Stufen
+const quality = { ratio: Math.min(devicePixelRatio || 1, 1.5), frames: 0, sum: 0, since: 0 };
 renderer.setPixelRatio(quality.ratio);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.setClearColor(0x000000, 0);
@@ -15888,7 +16467,8 @@ function blob(r, opacity) {
   return m;
 }
 
-// --- Schleife: verdeckt keine Bilder, in Ruhe 30, in Bewegung 60 je Sekunde -----------------------------------------------
+// --- Schleife: verdeckt keine Bilder, in Ruhe 30 (Ei im Raum 15, view.calm), in Bewegung 60 je Sekunde ----------------------
+// Verdeckt heißt: Tab verborgen oder Abschnitt aus dem Bild (die Website schickt active false, site.js beobachtet den Rahmen)
 let active = true, last = performance.now(), lastDrawAt = 0, motionUntil = 0;
 const FRAME_FAST = 1000 / 60, FRAME_CALM = 1000 / 30;
 function stir(ms) { motionUntil = Math.max(motionUntil, performance.now() + (ms || 1200)); }
@@ -15906,7 +16486,7 @@ let view = null;
 function frame(now) {
   requestAnimationFrame(frame);
   if (!active || lost || document.hidden || !view) return;
-  const want = now < motionUntil || view.moving(now) ? FRAME_FAST : FRAME_CALM;
+  const want = now < motionUntil || view.moving(now) ? FRAME_FAST : (view.calm || FRAME_CALM);
   if (now - lastDrawAt < want - 3) return;
   lastDrawAt = now;
   const raw = now - last, dt = clamp(raw / 1000, 0, 0.05); last = Math.max(last, now);
@@ -15915,36 +16495,55 @@ function frame(now) {
 }
 
 // --- Ei: Tippen bis es schlüpft ------------------------------------------------------------------------------------------
-// Das Bild der Brutkammer liegt auf der Website hinter der Zeichenfläche. Ei und Ovaling stehen dort, wo das Ei im Bild steht:
-// Boden bei ground (Anteil der Höhe von oben), Ei so hoch wie eggShare der Höhe. Die Website kann beides mitschicken
-// camera und pivot stehen außen, die Funken der Bühne (sprayShower, moveSparks) zeichnen über sie
+// Ganzer Raum in 3D (Luis 23.10.2026: „ich will, dass der ganze Raum 3D ist“): die Halle der Brutkammer wie in der App
+// (FamilyRoom.buildPano('hatcheryHall'), gemaltes Rundumbild als Wand eines Zylinders, Boden, Kuppel, Teppich und Baumstumpf
+// aus Code, eigenes Licht). Das Strohnest liegt auf dem Stumpf, darin das Ei. Halten und Ziehen kreist die Kamera um das Ei,
+// waagerecht ohne Grenze (rundum), senkrecht von knapp über dem Nest bis schräg von oben. Die Kamera bleibt immer innerhalb der
+// Wand und über dem Boden. Ein Tipp (kurz, kaum bewegt) reißt das Ei, ein Ziehen zählt nie als Tipp.
+// Rundumbild und Teppich liegen neben der Seite (pano_hatchery_hall.jpg, hall_rug.webp). Gesendet wird egg erst, wenn das
+// Bild geladen ist, so zeigt die Website nie eine leere Wand. Lädt es nicht, meldet die Seite error room, dann bleibt das Bild
+// der Website stehen. camera und pivot stehen außen, die Funken der Bühne (sprayShower, moveSparks) zeichnen über sie
 let camera = null, pivot = null;
+const HALL_R = 6.5, HALL_FLOOR = -1, CAM_WALL = HALL_R - 1.0, CAM_FLOOR = HALL_FLOOR + 0.5;
+// EGG_HALF: halbe sichtbare Höhe in Metern um das Ei im Nest (Ei etwa ein Drittel der Höhe des Bilds)
+const EL0 = 0.2, EL_MIN = -0.08, EL_MAX = 0.95, EGG_HALF = 2.4;
 function eggView() {
-  const scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(26, 1, 0.1, 200); pivot = new THREE.Group();
+  const scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(50, 1, 0.05, 200); pivot = new THREE.Group();
   scene.add(pivot);
-  let lights = lightRig(null); scene.add(lights);
-  let layout = { ground: 0.69, eggShare: 0.34 };
+  // Raum: einmal gebaut, bleibt für jedes weitere Ei
+  let roomState = 'loading', pending = null;
+  const tex = new THREE.TextureLoader().load('pano_hatchery_hall.jpg',
+    () => { roomState = 'ready'; stir(); if (pending) { const t = pending; pending = null; showEgg(t); } },
+    undefined,
+    () => { roomState = 'failed'; send({ type: 'error', code: 'room' }); });
+  tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  // lite (Auftrag 17a, Luis 24.10.2026): gröbere Teile, wo man es nicht sieht, Flammen in einem Netz, zwei statt fünf Lichter
+  const room = FamilyRoom.buildPano('hatcheryHall', tex, { detail: quality.ratio < 1.5 ? 0.7 : 1, lite: true });
+  scene.add(room.group); scene.add(room.lights);
+  scene.fog = new THREE.Fog(room.fog.color, room.fog.near, room.fog.far);
+  const nest = Eggs.nest({ lite: true }); pivot.add(nest);
   let egg = null, model = null, shadowM = null, result = null, phase = 'empty', fallT = 9, born = -1e9, gen = 0, tier = 'normal';
+  // Kamera: Winkel rundum (az), Höhenwinkel (elev), Abstand (dist) zum Blickpunkt (0, look, 0). Ziele gleiten weich nach
+  let az = 0, elev = EL0, velAz = 0, dist = 5, distGoal = 5, look = 0.7, lookGoal = 0.7, figSize = null;
+  function goal() {
+    const T = Math.tan(camera.fov * Math.PI / 360), A = Math.max(camera.aspect, 0.4);
+    if (!figSize) { distGoal = EGG_HALF / T / Math.min(A, 1); lookGoal = 0.7; return; }
+    // Das Ovaling füllt höchstens 70 % der Höhe, seitlich mit Luft. Nie weiter weg als die Wand erlaubt (place klemmt)
+    const h = figSize.y + 0.3, w = Math.max(figSize.x, figSize.z) * 1.25;
+    distGoal = Math.max(EGG_HALF / T / Math.min(A, 1), h / 2 / 0.7 / T, w / 2 / (T * A)); lookGoal = Math.max(0.6, figSize.y * 0.45);
+  }
+  function place() {
+    // Innerhalb der Wand und über dem Boden bleiben: Abstand kürzen, wenn die Kamera sonst hinaus käme
+    const c = Math.cos(elev), s = Math.sin(elev);
+    let d = Math.min(dist, CAM_WALL / Math.max(0.05, c));
+    if (look + s * d < CAM_FLOOR) d = (look - CAM_FLOOR) / Math.max(0.01, -s);
+    camera.position.set(Math.sin(az) * c * d, look + s * d, Math.cos(az) * c * d); camera.lookAt(0, look, 0);
+  }
   function size() {
     const w = el.clientWidth || innerWidth, h = el.clientHeight || innerHeight;
     if (!w || !h) return;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); viewH = 0; place(); stir();
-  }
-  // Kamera waagerecht mit leichter Neigung: sichtbare Höhe so, dass das Ei eggShare der Höhe füllt, Boden bei ground
-  // Nach dem Schlüpfen wächst die sichtbare Höhe, bis das Ovaling über dem Boden Platz hat (viewH gleitet zu viewGoal)
-  let viewH = 0, viewGoal = 0, figSize = null;
-  function goal() {
-    const egg0 = Eggs.HEIGHT / layout.eggShare;
-    if (!figSize) return egg0;
-    // Das Ovaling füllt höchstens 70 % des Platzes über dem Boden, so steht es im Raum und nicht vor dem ganzen Bild
-    const byHeight = figSize.y / (layout.ground * 0.7), byWidth = figSize.x * 1.3 / Math.max(camera.aspect, 0.3);
-    return Math.max(egg0, byHeight, byWidth);
-  }
-  function place() {
-    viewGoal = goal(); if (!viewH) viewH = viewGoal;
-    const half = viewH / 2, T = Math.tan(camera.fov * Math.PI / 360), d = half / T;
-    const look = (2 * layout.ground - 1) * half, tilt = 0.12;
-    camera.position.set(0, look + Math.sin(tilt) * d, Math.cos(tilt) * d); camera.lookAt(0, look, 0);
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.fov = camera.aspect < 0.8 ? 58 : 50; camera.updateProjectionMatrix();
+    goal(); dist = distGoal; look = lookGoal; place(); stir();
   }
   function clear() {
     if (egg) { pivot.remove(egg.root); egg.dispose(); egg = null; }
@@ -15952,15 +16551,15 @@ function eggView() {
     if (shadowM) { pivot.remove(shadowM); shadowM.geometry.dispose(); shadowM.material.dispose(); shadowM = null; }
     if (sparks) { pivot.remove(sparks); sparks.geometry.dispose(); sparks.material.dispose(); sparks = null; }
   }
-  function setLight(fam) { scene.remove(lights); lights = lightRig(fam); scene.add(lights); }
   // Neues Ei der Stufe t. Welches Ovaling schlüpft, würfelt die Seite selbst nach den Chancen des Eis (nur zum Anschauen, nichts
   // wird gespeichert, kein Wert im Spiel)
   function showEgg(t) {
-    gen++; clear(); tier = Eggs.DESIGN[t] ? t : 'normal'; figSize = null; place();
+    if (roomState === 'loading') { pending = t; return; }
+    if (roomState === 'failed') return;
+    gen++; clear(); tier = Eggs.DESIGN[t] ? t : 'normal'; figSize = null; goal();
     result = Hatch.hatch(Hatch.newId(tier));
     egg = Eggs.egg(tier, renderer, parseInt(result.seed.slice(1, 8), 16)); pivot.add(egg.root);
-    shadowM = blob(0.75, 0.35); pivot.add(shadowM);
-    setLight(null); phase = 'egg'; fallT = reducedMotion ? 9 : 0; pivot.rotation.y = 0.4;
+    nest.visible = true; phase = 'egg'; fallT = reducedMotion ? 9 : 0; pivot.rotation.y = 0.4;
     el.classList.add('pointer'); stir(1500);
     send({ type: 'egg', tier, taps: egg.taps });
   }
@@ -15972,47 +16571,70 @@ function eggView() {
       if (mine !== gen) return;
       let built = null;
       try { built = rigged(build2(figure(result))); } catch (x) { console.warn('Bau', x); send({ type: 'error', code: 'build' }); return; }
-      model = built.group; model.rotation.y = -pivot.rotation.y;
+      // Das Ovaling steht auf dem Stumpf und schaut zur Kamera, wie sie gerade steht
+      model = built.group; model.rotation.y = az - pivot.rotation.y;
       const sz = built.box.getSize(V(0, 0, 0));
-      model.position.y = -built.box.min.y; pivot.add(model); born = performance.now(); figSize = sz; viewGoal = goal();
-      if (shadowM) { pivot.remove(shadowM); shadowM.geometry.dispose(); shadowM.material.dispose(); }
-      shadowM = blob(Math.min(Math.max(sz.x, sz.z), 2.6) * 0.62, result.family === 'shadow' ? 0.6 : 0.3); pivot.add(shadowM);
+      model.position.y = -built.box.min.y; pivot.add(model); born = performance.now(); figSize = sz; goal();
+      nest.visible = false;
+      shadowM = blob(Math.min(Math.max(sz.x, sz.z), 2.2) * 0.62, result.family === 'shadow' ? 0.6 : 0.35); pivot.add(shadowM);
       sprayShower(RARITY[result.rarity][0], { normal: 70, rare: 110, epic: 160, legendary: 260 }[result.rarity] || 90, Math.max(sz.x, sz.z), result.family !== 'shadow');
-      setLight(result.family); phase = 'done'; stir(2500);
+      phase = 'done'; stir(2500);
       send({ type: 'hatched', id: result.seed, family: result.family, rarity: result.rarity });
     }, 160);
   }
-  const ray = new THREE.Raycaster();
-  let down = null;
+  // Bedienung: Halten und Ziehen dreht (ab 7 Bildpunkten Weg), ein kurzer Tipp ohne Ziehen reißt das Ei. Am Handy bleibt das
+  // senkrechte Wischen der Website (touch-action pan-y), waagerecht begonnenes Wischen dreht und darf dabei auch neigen
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
   const canvas = renderer.domElement;
-  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, t: performance.now() }; });
-  canvas.addEventListener('pointercancel', () => { down = null; });
-  canvas.addEventListener('pointerup', e => {
-    const d = down; down = null;
-    if (!d || phase !== 'egg' || !egg || performance.now() - d.t > 600 || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 12) return;
+  let down = null;
+  function hitEgg(e) {
     const r = canvas.getBoundingClientRect();
-    ray.setFromCamera({ x: (e.clientX - r.left) / r.width * 2 - 1, y: -((e.clientY - r.top) / r.height) * 2 + 1 }, camera);
-    const hit = ray.intersectObjects(egg.shards, false)[0];
+    ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    return ray.intersectObjects(egg.shards, false)[0];
+  }
+  canvas.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    down = { id: e.pointerId, x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, t: performance.now(), drag: false };
+    try { canvas.setPointerCapture(e.pointerId); } catch (x) { /* ohne Fang dreht es trotzdem */ }
+    velAz = 0; stir(1500);
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (down && e.pointerId === down.id) {
+      const dx = e.clientX - down.lx, dy = e.clientY - down.ly; down.lx = e.clientX; down.ly = e.clientY;
+      if (!down.drag && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 7) { down.drag = true; el.classList.add('grabbing'); }
+      if (!down.drag) return;
+      const k = 5.2 / Math.max(300, canvas.clientWidth);
+      az -= dx * k; velAz = -dx * k; elev = clamp(elev + dy * k * 0.8, EL_MIN, EL_MAX); stir(600);
+      return;
+    }
+    // Zeiger über dem Ei als Hand, sonst Greifhand
+    if (e.pointerType !== 'mouse') return;
+    el.classList.toggle('pointer', phase === 'egg' && !!egg && !!hitEgg(e));
+  });
+  canvas.addEventListener('pointercancel', () => { down = null; el.classList.remove('grabbing'); });
+  canvas.addEventListener('pointerup', e => {
+    const d = down; down = null; el.classList.remove('grabbing');
+    if (!d || e.pointerId !== d.id || d.drag || phase !== 'egg' || !egg || performance.now() - d.t > 600) return;
+    const hit = hitEgg(e);
     if (!hit || !hit.uv) return;
     stir(900);
     const done = egg.tap(hit, RARITY[result.rarity][0]);
     send({ type: 'tap', count: egg.hits, of: egg.taps });
     if (done) hatchNow();
   });
-  // Zeiger nur über dem Ei als Hand
-  canvas.addEventListener('pointermove', e => {
-    if (e.pointerType !== 'mouse' || phase !== 'egg' || !egg) return;
-    const r = canvas.getBoundingClientRect();
-    ray.setFromCamera({ x: (e.clientX - r.left) / r.width * 2 - 1, y: -((e.clientY - r.top) / r.height) * 2 + 1 }, camera);
-    el.classList.toggle('pointer', ray.intersectObjects(egg.shards, false).length > 0);
-  });
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
   new ResizeObserver(size).observe(el);
   size();
   return {
     size,
-    moving: now => !!sparks || phase === 'hatching' || (egg && fallT < 0.9) || now - born < 700 || Math.abs(viewGoal - viewH) > 0.01,
+    // Ruhe (Ei liegt, Flammen flackern, Ovaling atmet): 15 Bilder je Sekunde statt 30
+    calm: 1000 / 15,
+    moving: now => !!down || Math.abs(velAz) > 1e-4 || !!sparks || phase === 'hatching' || (egg && fallT < 0.9) || now - born < 700 ||
+      Math.abs(distGoal - dist) > 0.01 || Math.abs(lookGoal - look) > 0.005,
     cmd(b) {
-      if (b.kind === 'egg') { if (b.layout && typeof b.layout.ground === 'number' && typeof b.layout.eggShare === 'number') { layout = { ground: clamp(b.layout.ground, 0.3, 0.98), eggShare: clamp(b.layout.eggShare, 0.1, 0.8) }; place(); } showEgg(String(b.tier || 'normal')); }
+      // layout der Website galt dem gemalten Bild und hat im Raum keine Wirkung mehr
+      if (b.kind === 'egg') showEgg(String(b.tier || 'normal'));
     },
     draw(now, dt) {
       if (egg) {
@@ -16027,7 +16649,11 @@ function eggView() {
         else { const w = Math.sin(now / 1000 * 2.6); model.scale.set(s * (1 - 0.012 * w), s * (1 + 0.02 * w), s * (1 - 0.012 * w)); }
       }
       if (sparks) moveSparks(dt);
-      if (Math.abs(viewGoal - viewH) > 0.001) { viewH += (viewGoal - viewH) * Math.min(1, dt * 3); place(); }
+      // Schwung nach dem Loslassen, Abstand und Blickpunkt gleiten zum Ziel
+      if (!down && Math.abs(velAz) > 1e-4) { az += velAz; velAz *= Math.pow(0.9, dt * 60); }
+      dist += (distGoal - dist) * Math.min(1, dt * 3); look += (lookGoal - look) * Math.min(1, dt * 3);
+      place();
+      if (!reducedMotion) room.update(now / 1000);
       renderer.render(scene, camera);
     },
   };

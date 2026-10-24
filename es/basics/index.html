@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.c82aed2e.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.634b83ed.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.7adcf90f.css">
 </head>
 <body>
 <a class="skip" href="#main">Ir al contenido</a>
@@ -48,7 +48,7 @@
       <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="34" height="34"><span>Mazmorras</span>
     </a>
     <a class="navpill" href="../campaign/">
-      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="34" height="34"><span>Campaña</span>
+      <img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="34" height="34"><span>Campaña</span>
     </a>
     <a class="navpill" href="../ovaling/">
       <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="34" height="34"><span>Ovaling en 3D</span>
@@ -85,13 +85,15 @@
       <table>
         <thead><tr><td></td><th scope="col"><span class="chip rar r-normal">Normal</span></th><th scope="col"><span class="chip rar r-rare">Raro</span></th><th scope="col"><span class="chip rar r-epic">Épico</span></th><th scope="col"><span class="chip rar r-legendary">Legendario</span></th></tr></thead>
         <tbody>
-          <tr><th scope="row"><a href="#genescore">Gene Score habitual</a></th><td>17 a 21</td><td>35 a 42</td><td>47 a 55</td><td>56 a 65</td></tr>
-          <tr><th scope="row">Bonus de familia</th><td>1 % a 5 %</td><td>6 % a 10 %</td><td>11 % a 15 %</td><td>16 % a 20 %</td></tr>
+          <tr><th scope="row"><a href="#stats">Gene Score</a> habitual</th><td>17 a 21</td><td>35 a 42</td><td>47 a 55</td><td>56 a 65</td></tr>
+          <tr><th scope="row"><a href="#families">Bonus de familia</a></th><td>1 % a 5 %</td><td>6 % a 10 %</td><td>11 % a 15 %</td><td>16 % a 20 %</td></tr>
+          <tr><th scope="row">Probabilidad de piezas <span class="r-epic tierword">épicas</span></th><td>0,09 %</td><td>1,9 %</td><td>19 %</td><td>35 %</td></tr>
+          <tr><th scope="row">Probabilidad de piezas <span class="r-legendary tierword">legendarias</span></th><td>0,01 %</td><td>0,1 %</td><td>1 %</td><td>10 %</td></tr>
         </tbody>
       </table>
     </div>
     <h3 class="minorhead">Qué más cambia la rareza</h3>
-    <p class="read">Mayor bono de familia · piezas y colores más raros · alas y huecos de ataque abiertos más a menudo</p>
+    <p class="read">Mayor bono de familia · colores más raros · alas y huecos de ataque abiertos más a menudo</p>
   </section>
 
   <section class="section reveal" aria-labelledby="families">
@@ -100,13 +102,13 @@
       <li class="card famcard fam-light">
         <div class="famimg famimg-light"><img src="../../assets/ovaling/63e33a6d-360.4b1bb9e8.webp" srcset="../../assets/ovaling/63e33a6d-180.1bfc2cd8.webp 180w, ../../assets/ovaling/63e33a6d-360.4b1bb9e8.webp 360w" sizes="220px" alt="" aria-hidden="true" width="360" height="278" loading="lazy"><strong class="on-image">Luz</strong></div>
         <div class="famtext">
-          <p>Redondos y tiernos, con colores claros. Los Ovalings de Luz tienen más <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Vida</span>.</p>
+          <p>Bonus de familia: más <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Vida</span></p>
         </div>
       </li>
       <li class="card famcard fam-shadow">
         <div class="famimg famimg-shadow"><img src="../../assets/ovaling/66de5335-360.999b4413.webp" srcset="../../assets/ovaling/66de5335-180.a23ba382.webp 180w, ../../assets/ovaling/66de5335-360.999b4413.webp 360w" sizes="220px" alt="" aria-hidden="true" width="360" height="282" loading="lazy"><strong class="on-image">Sombra</strong></div>
         <div class="famtext">
-          <p>Fantasía oscura con brillo violeta. Los Ovalings de Sombra tienen más <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Ataque</span>.</p>
+          <p>Bonus de familia: más <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Ataque</span></p>
         </div>
       </li>
     </ul>
@@ -114,40 +116,10 @@
 
   <section class="section reveal" aria-labelledby="looks">
     <h2 class="stitle" id="looks"><img src="../../assets/art/nav/palette-192.cdfc21e3.webp" alt="" aria-hidden="true" width="40" height="40"><span>Aspecto</span></h2>
-    <p class="read">Cada Ovaling está hecho de piezas, como bloques de construcción: cuerpo, ojos, boca, orejas y más. Como cada pieza siempre sale un poco distinta, ningún Ovaling se parece a otro.</p>
+    <p class="read">Cada Ovaling está hecho de más de 10 piezas, muchas de ellas con más de 20 formas. Además hay colores infinitos. Así cada Ovaling es único.</p>
     <ul class="lookgrid" aria-label="Ovalings de distintos huevos">
 <li class="fam-light"><img src="../../assets/ovaling/2d91ce5c-180.fcee1fec.webp" srcset="../../assets/ovaling/2d91ce5c-180.fcee1fec.webp 180w, ../../assets/ovaling/2d91ce5c-360.b636b126.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="350" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/308b297a-180.f86fcef1.webp" srcset="../../assets/ovaling/308b297a-180.f86fcef1.webp 180w, ../../assets/ovaling/308b297a-360.402d2f4b.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="326" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/4fd8bdb5-180.38833135.webp" srcset="../../assets/ovaling/4fd8bdb5-180.38833135.webp 180w, ../../assets/ovaling/4fd8bdb5-360.66c9034b.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="265" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/6a0de433-180.e88c8cf7.webp" srcset="../../assets/ovaling/6a0de433-180.e88c8cf7.webp 180w, ../../assets/ovaling/6a0de433-360.ce9cf24c.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="301" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/1b93883d-180.9097eb70.webp" srcset="../../assets/ovaling/1b93883d-180.9097eb70.webp 180w, ../../assets/ovaling/1b93883d-360.6ff71c8b.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="251" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/4285f35c-180.a224c78b.webp" srcset="../../assets/ovaling/4285f35c-180.a224c78b.webp 180w, ../../assets/ovaling/4285f35c-360.a4e4433c.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="345" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/63e33a6d-180.1bfc2cd8.webp" srcset="../../assets/ovaling/63e33a6d-180.1bfc2cd8.webp 180w, ../../assets/ovaling/63e33a6d-360.4b1bb9e8.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="278" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/323d9f37-180.1634c9cc.webp" srcset="../../assets/ovaling/323d9f37-180.1634c9cc.webp 180w, ../../assets/ovaling/323d9f37-360.af8c7d1d.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="154" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/500f9f7f-180.8675c067.webp" srcset="../../assets/ovaling/500f9f7f-180.8675c067.webp 180w, ../../assets/ovaling/500f9f7f-360.4b4c6cdb.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="329" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/25007187-180.bafecb1e.webp" srcset="../../assets/ovaling/25007187-180.bafecb1e.webp 180w, ../../assets/ovaling/25007187-360.f0aed287.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="377" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/5117c160-180.2c728ad7.webp" srcset="../../assets/ovaling/5117c160-180.2c728ad7.webp 180w, ../../assets/ovaling/5117c160-360.e3330e83.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="336" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/3f5d4a3f-180.9284fd2b.webp" srcset="../../assets/ovaling/3f5d4a3f-180.9284fd2b.webp 180w, ../../assets/ovaling/3f5d4a3f-360.d014c062.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="211" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/696126eb-180.8788a2ec.webp" srcset="../../assets/ovaling/696126eb-180.8788a2ec.webp 180w, ../../assets/ovaling/696126eb-360.49e24563.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="247" loading="lazy"></li><li class="fam-light"><img src="../../assets/ovaling/4cf8b8c5-180.4165efe1.webp" srcset="../../assets/ovaling/4cf8b8c5-180.4165efe1.webp 180w, ../../assets/ovaling/4cf8b8c5-360.c50189e4.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="270" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/25c87409-180.9ff6fa4b.webp" srcset="../../assets/ovaling/25c87409-180.9ff6fa4b.webp 180w, ../../assets/ovaling/25c87409-360.ad0a6ef0.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="305" loading="lazy"></li><li class="fam-shadow"><img src="../../assets/ovaling/66de5335-180.a23ba382.webp" srcset="../../assets/ovaling/66de5335-180.a23ba382.webp 180w, ../../assets/ovaling/66de5335-360.999b4413.webp 360w" sizes="(min-width: 900px) 140px, 22vw" alt="" aria-hidden="true" width="360" height="282" loading="lazy"></li>    </ul>
-    <ul class="parts">
-      <li class="card part"><strong>Cuerpo</strong><span>42 formas</span></li>
-      <li class="card part"><strong>Ojos</strong><span>32 formas</span></li>
-      <li class="card part"><strong>Boca</strong><span>26 formas</span></li>
-      <li class="card part"><strong>Cuernos</strong><span>12 formas o ninguna</span></li>
-      <li class="card part"><strong>Brazos</strong><span>24 formas</span></li>
-      <li class="card part"><strong>Piernas</strong><span>24 formas</span></li>
-      <li class="card part"><strong>Cola</strong><span>10 formas o ninguna</span></li>
-      <li class="card part"><strong>Patrón</strong><span>10 formas o ninguna</span></li>
-      <li class="card part"><strong>Orejas</strong><span>10 formas o ninguna</span></li>
-      <li class="card part"><strong>Espalda</strong><span>24 formas o ninguna</span></li>
-    </ul>
-    <h3 class="subtitle">Además</h3>
-    <ul class="checks">
-      <li>1 a 5 ojos en distintas posiciones</li>
-      <li>19 tipos de cejas</li>
-      <li>23 manos y 20 pies</li>
-      <li>24 formas de alas, a veces dos pares</li>
-      <li>40 materiales de piel por familia</li>
-      <li>6 colores raros como albino o neón</li>
-    </ul>
-    <div class="card skincard">
-      <h3>Piel en 4 niveles</h3>
-      <p>La mayoría de los Ovalings tiene un color normal. Los más raros tienen un color raro o un material, los más raros de todos un material en movimiento.</p>
-      <ul class="odds">
-  <li class="r-normal"><span class="oddname">Color</span><span class="oddbar"><span class="oddfill w75"></span></span><span class="oddval">75 %</span></li>
-  <li class="r-rare"><span class="oddname">Color raro</span><span class="oddbar"><span class="oddfill w15"></span></span><span class="oddval">15 %</span></li>
-  <li class="r-epic"><span class="oddname">Material</span><span class="oddbar"><span class="oddfill w8"></span></span><span class="oddval">8 %</span></li>
-  <li class="r-legendary"><span class="oddname">Material en movimiento</span><span class="oddbar"><span class="oddfill w2"></span></span><span class="oddval">2 %</span></li>
-</ul>
-    </div>
+    <p class="more"><a class="morelink" href="../ovaling/">Ver Ovalings en 3D<span class="arrow" aria-hidden="true"></span></a></p>
   </section>
 
   <section class="section reveal" aria-labelledby="stats">
@@ -213,7 +185,7 @@
     <span class="tablabel">Mazmorras</span>
   </a>
   <a class="tab" href="../campaign/">
-    <span class="tabicon"><img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tabicon"><img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="30" height="30"></span>
     <span class="tablabel">Campaña</span>
   </a>
 </nav>
@@ -222,7 +194,7 @@
   <div class="wrap footshort">
     <div class="footbrand">
       <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="21" height="40"><span>Ovalings</span></a>
-      <p>Cada Ovaling existe una sola vez.</p>
+      <p>Cada Ovaling es único.</p>
     </div>
     <nav class="footline" aria-label="Comunidad">
 <a href="https://discord.gg/VqSPPpdz3T" rel="noopener">Discord</a><a href="../faq/">Preguntas frecuentes</a><a href="../../contact.html">Contacto</a>    </nav>
@@ -254,6 +226,22 @@
   <ul class="langchoice">
 <li><a href="../../en/basics/" hreflang="en" lang="en" data-lang="en"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" data-flag="en" alt="" aria-hidden="true" width="30" height="20"></span>English</a></li><li><a href="../../de/basics/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" data-flag="de" alt="" aria-hidden="true" width="30" height="20"></span>Deutsch</a></li><li><a href="./" hreflang="es" lang="es" data-lang="es" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" data-flag="es" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/basics/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" data-flag="pt" alt="" aria-hidden="true" width="30" height="20"></span>Português</a></li><li><a href="../../fr/basics/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" data-flag="fr" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/basics/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" data-flag="tr" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="../../ja/basics/" hreflang="ja" lang="ja" data-lang="ja"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" data-flag="ja" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="../../ko/basics/" hreflang="ko" lang="ko" data-lang="ko"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" data-flag="ko" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/basics/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" data-flag="id" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../assets/site.b6c4becf.js" defer></script>
-</body>
+<button class="askfab" type="button" data-opens="askdialog" aria-haspopup="dialog" aria-controls="askdialog" title="Hacer una pregunta" data-ask-show hidden><span aria-hidden="true">?</span><span class="sr">Hacer una pregunta</span></button>
+<div class="glass dialog askpanel" id="askdialog" role="dialog" aria-modal="true" aria-labelledby="asktitle" hidden>
+  <button class="close" type="button" aria-label="Cerrar"></button>
+  <h2 id="asktitle">Pregunta al Ovalings Bot</h2>
+  <div class="asklog" id="asklog" role="log" aria-live="polite" tabindex="0" aria-labelledby="asktitle">
+    <p class="askmsg bot"><span class="sr">Ovalings Bot: </span>¡Hola! Pregúntame lo que quieras sobre Ovalings. Respondo en una o dos frases y puedes seguir preguntando.</p>
+  </div>
+  <form class="askform" id="askform" autocomplete="off">
+    <label class="sr" for="askinput">Tu pregunta</label>
+    <input id="askinput" name="question" type="text" maxlength="300" required placeholder="Tu pregunta" enterkeyhint="send" aria-describedby="asknote">
+    <input class="trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="ob medium" type="submit">Enviar</button>
+  </form>
+  <p class="asknote" id="asknote">Las respuestas vienen de una IA y pueden contener errores.</p>
+</div>
+<script type="application/json" id="askcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "lang": "es", "text": {"you": "Tú", "bot": "Ovalings Bot", "thinking": "Pensando …", "daily": "Ya usaste todas tus preguntas de hoy. Vuelve mañana.", "month": "El bot está descansando ahora. Inténtalo más tarde.", "error": "Lo siento, ahora no pude responder. Inténtalo de nuevo."}}</script>
+<script src="../../assets/site.d947fc98.js" defer></script>
+<script src="../../assets/ask.b84bd393.js" defer></script></body>
 </html>

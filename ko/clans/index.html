@@ -30,7 +30,7 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="stylesheet" href="../../assets/site.5dc911f8.css">
+<link rel="stylesheet" href="../../assets/site.7adcf90f.css">
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -47,7 +47,7 @@
       <img src="../../assets/art/nav/arena-192.17b66560.webp" alt="" aria-hidden="true" width="34" height="34"><span>던전</span>
     </a>
     <a class="navpill" href="../campaign/">
-      <img src="../../assets/art/nav/book-192.8a6dedda.webp" alt="" aria-hidden="true" width="34" height="34"><span>캠페인</span>
+      <img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="34" height="34"><span>캠페인</span>
     </a>
     <a class="navpill" href="../ovaling/">
       <img src="../../assets/art/nav/ovalings-192.57a8beba.webp" alt="" aria-hidden="true" width="34" height="34"><span>3D Ovaling</span>
@@ -178,7 +178,7 @@
     <span class="tablabel">던전</span>
   </a>
   <a class="tab" href="../campaign/">
-    <span class="tabicon"><img src="../../assets/art/nav/clan-192.a12a74ce.webp" alt="" aria-hidden="true" width="30" height="30"></span>
+    <span class="tabicon"><img src="../../assets/nav/island-96.d80c8236.webp" alt="" aria-hidden="true" width="30" height="30"></span>
     <span class="tablabel">캠페인</span>
   </a>
 </nav>
@@ -187,7 +187,7 @@
   <div class="wrap footshort">
     <div class="footbrand">
       <a class="brand" href="../"><img src="../../assets/logo-96.b9ab3d8a.webp" alt="" aria-hidden="true" width="21" height="40"><span>Ovalings</span></a>
-      <p>모든 Ovaling은 세상에 단 하나뿐이에요.</p>
+      <p>모든 Ovaling은 유일해요.</p>
     </div>
     <nav class="footline" aria-label="광장">
 <a href="https://discord.gg/VqSPPpdz3T" rel="noopener">Discord</a><a href="../faq/">자주 묻는 질문</a><a href="../../contact.html">문의</a>    </nav>
@@ -219,6 +219,22 @@
   <ul class="langchoice">
 <li><a href="../../en/clans/" hreflang="en" lang="en" data-lang="en"><span class="flag"><img src="../../assets/flag/en.5fae2229.svg" data-flag="en" alt="" aria-hidden="true" width="30" height="20"></span>English</a></li><li><a href="../../de/clans/" hreflang="de" lang="de" data-lang="de"><span class="flag"><img src="../../assets/flag/de.dd903518.svg" data-flag="de" alt="" aria-hidden="true" width="30" height="20"></span>Deutsch</a></li><li><a href="../../es/clans/" hreflang="es" lang="es" data-lang="es"><span class="flag"><img src="../../assets/flag/es.7bbca29d.svg" data-flag="es" alt="" aria-hidden="true" width="30" height="20"></span>Español</a></li><li><a href="../../pt/clans/" hreflang="pt-BR" lang="pt-BR" data-lang="pt"><span class="flag"><img src="../../assets/flag/pt.b40bc68f.svg" data-flag="pt" alt="" aria-hidden="true" width="30" height="20"></span>Português</a></li><li><a href="../../fr/clans/" hreflang="fr" lang="fr" data-lang="fr"><span class="flag"><img src="../../assets/flag/fr.5e58ea4c.svg" data-flag="fr" alt="" aria-hidden="true" width="30" height="20"></span>Français</a></li><li><a href="../../tr/clans/" hreflang="tr" lang="tr" data-lang="tr"><span class="flag"><img src="../../assets/flag/tr.9bf3348f.svg" data-flag="tr" alt="" aria-hidden="true" width="30" height="20"></span>Türkçe</a></li><li><a href="../../ja/clans/" hreflang="ja" lang="ja" data-lang="ja"><span class="flag"><img src="../../assets/flag/ja.f281e3bd.svg" data-flag="ja" alt="" aria-hidden="true" width="30" height="20"></span>日本語</a></li><li><a href="./" hreflang="ko" lang="ko" data-lang="ko" class="on" aria-current="true"><span class="flag"><img src="../../assets/flag/ko.5da6456b.svg" data-flag="ko" alt="" aria-hidden="true" width="30" height="20"></span>한국어</a></li><li><a href="../../id/clans/" hreflang="id" lang="id" data-lang="id"><span class="flag"><img src="../../assets/flag/id.693c4fad.svg" data-flag="id" alt="" aria-hidden="true" width="30" height="20"></span>Bahasa Indonesia</a></li>  </ul>
 </div>
-<script src="../../assets/site.b6c4becf.js" defer></script>
-</body>
+<button class="askfab" type="button" data-opens="askdialog" aria-haspopup="dialog" aria-controls="askdialog" title="질문하기" data-ask-show hidden><span aria-hidden="true">?</span><span class="sr">질문하기</span></button>
+<div class="glass dialog askpanel" id="askdialog" role="dialog" aria-modal="true" aria-labelledby="asktitle" hidden>
+  <button class="close" type="button" aria-label="닫기"></button>
+  <h2 id="asktitle">Ovalings Bot 에게 물어보기</h2>
+  <div class="asklog" id="asklog" role="log" aria-live="polite" tabindex="0" aria-labelledby="asktitle">
+    <p class="askmsg bot"><span class="sr">Ovalings Bot: </span>안녕하세요! Ovalings 에 대해 무엇이든 물어보세요. 한두 문장으로 답하고, 이어서 질문할 수도 있어요.</p>
+  </div>
+  <form class="askform" id="askform" autocomplete="off">
+    <label class="sr" for="askinput">질문</label>
+    <input id="askinput" name="question" type="text" maxlength="300" required placeholder="질문" enterkeyhint="send" aria-describedby="asknote">
+    <input class="trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="ob medium" type="submit">보내기</button>
+  </form>
+  <p class="asknote" id="asknote">답변은 AI 가 만들며 틀릴 수 있어요.</p>
+</div>
+<script type="application/json" id="askcfg">{"url": "https://kglxfxsccunylhbxquqz.supabase.co", "lang": "ko", "text": {"you": "나", "bot": "Ovalings Bot", "thinking": "생각 중 …", "daily": "오늘 질문을 모두 사용했어요. 내일 다시 해 보세요.", "month": "Bot 이 지금 쉬고 있어요. 나중에 다시 해 보세요.", "error": "죄송해요, 지금은 답할 수 없었어요. 다시 해 보세요."}}</script>
+<script src="../../assets/site.d947fc98.js" defer></script>
+<script src="../../assets/ask.b84bd393.js" defer></script></body>
 </html>
