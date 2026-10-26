@@ -1080,7 +1080,7 @@ const ARM_FORMS = [{ old: 1 }, { old: 2 }, { old: 8 }, { mod: 3 }, { mod: 1 }, {
         const k1 = Math.hypot(px / (r[0] * r[0]), py / (r[1] * r[1]), pz / (r[2] * r[2]));
         return k1 < 1e-9 ? -m : k0 * (k0 - 1) / k1;
       },
-      min: [c.x - R, c.y - R, c.z - R], max: [c.x + R, c.y + R, c.z + R],
+      min: [c.x - R, c.y - R, c.z - R], max: [c.x + R, c.y + R, c.z + R], pts: [c], rad: [(r[0] + r[1] + r[2]) / 3],
     };
   }
   // Kette aus Abschnitten mit laufender Dicke. flat staucht die Kette entlang einer Achse.
@@ -1106,7 +1106,8 @@ const ARM_FORMS = [{ old: 1 }, { old: 2 }, { old: 8 }, { mod: 3 }, { mod: 1 }, {
         }
         return best * fk;
       },
-      min, max,
+      // Achse und Radien (Prüfung v2_check: liegt ein Glied auf dem Rumpf), ändern nichts am Feld
+      min, max, pts, rad,
     };
   }
 
@@ -3081,7 +3082,7 @@ vec3 rareHue(vec3 c, float a) {
     }
     function add(geo, role, o) {
       o = o || {}; if (o.anim) o = Object.assign({}, o, { mat: Object.assign({}, o.mat, { anim: o.anim }) });
-      const m = new THREE.Mesh(geo, mat(role, o.mat)); m.userData.role = role; m.userData.sec = rigSec; m.userData.side = rigSide;
+      const m = new THREE.Mesh(geo, mat(role, o.mat)); m.userData.role = role; m.userData.sec = rigSec; m.userData.side = rigSide; m.userData.slot = partSlot;
       // bewegte Teile (legendär, Luis 17.10.2026): die Zeit kommt wie bei der Haut aus der Uhr oder build2.clock
       if (m.material.userData.animU) { const u = m.material.userData.animU; m.onBeforeRender = () => { u.value = build2.clock != null ? build2.clock : performance.now() / 1000; }; }
       if (o.pos) m.position.copy(o.pos); if (o.quat) m.quaternion.copy(o.quat); g.add(m);
@@ -3100,7 +3101,7 @@ vec3 rareHue(vec3 c, float a) {
     function glow(pos, size, color, opacity, pulse) {
       const bright = fam === 'light', k = (opacity || 0.75) * (bright ? 0.5 : fam === 'forest' ? 0.7 : 1);
       const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: col(color), blending: bright ? THREE.NormalBlending : THREE.AdditiveBlending, transparent: true, opacity: k, depthWrite: false }));
-      s.scale.set(size, size, 1); s.position.copy(pos); fx.push(s);
+      s.scale.set(size, size, 1); s.position.copy(pos); s.userData.slot = partSlot; fx.push(s);
       // Schein an Armen (Abnahme Arme 25.10.2026): hängt am Armknochen, sonst blieb er beim Winken und Jubeln an der alten Stelle stehen
       if (rigSec === 'arm' && rigSide) { s.userData.sec = 'arm'; s.userData.side = rigSide; }
       // pulse (bewegte Teile): das Leuchten atmet mit, Stärke und Takt aus pulse
@@ -3425,14 +3426,19 @@ vec3 rareHue(vec3 c, float a) {
     // Beinteile damit fest an den Knochen ihrer Seite statt an den nächstgelegenen
     // rigLeg: Nummer des Beins auf seiner Seite bei Arten mit mehreren Beinen je Seite (Gehen, 08.10.2026), sonst null
     let rigSec = 'body', rigSide = 0, rigLeg = null;
-    const later = fn => { const sec = rigSec, side = rigSide; after.push(() => { const o = [rigSec, rigSide]; rigSec = sec; rigSide = side; fn(); rigSec = o[0]; rigSide = o[1]; }); };
+    // partSlot (Prüfung v2_check, 27.10.2026): zu welchem Bauteil des Gens ein Teil gehört (body, legs, arms, back, tail, ears,
+    // eyes, mouth, pattern, brows, wings, horns). Nur zum Prüfen und Zuordnen in userData.slot, ändert nichts am Aussehen
+    let partSlot = 'body';
+    const later = fn => { const sec = rigSec, side = rigSide, slot = partSlot; after.push(() => { const o = [rigSec, rigSide, partSlot]; rigSec = sec; rigSide = side; partSlot = slot; fn(); rigSec = o[0]; rigSide = o[1]; partSlot = o[2]; }); };
+    // späte Teile nach dem Messen (fxLate) mit dem Bauteil, in dem sie geplant wurden
+    const lateFx = fn => { const sec = rigSec, side = rigSide, slot = partSlot; fxLate.push(() => { const o = [rigSec, rigSide, partSlot]; rigSec = sec; rigSide = side; partSlot = slot; fn(); rigSec = o[0]; rigSide = o[1]; partSlot = o[2]; }); };
     const parts = B.prims.map(p => ({ prim: p, k: B.k || 0.18, limb: false, sec: 'body' })), cuts = [], after = [];
     if (B.extra) for (const e of B.extra) parts.push(Object.assign({ sec: 'body' }, e));
     const limb = (prim, k) => parts.push({ prim, k: k || 0.13, limb: true, sec: rigSec, leg: rigSec === 'leg' ? rigLeg : null });
     const mid = (B.top + B.bottom) / 2, hMid = hwAt(mid), hy = (B.top - B.bottom) / 2;
 
     // ---------------- Beine ----------------
-    rigSec = 'leg';
+    rigSec = 'leg'; partSlot = 'legs';
     // Generator V2: Beine ab 25 und die Fassungen mit Fuß der Bestandsformen 1, 4, 5, 20 und 22 baut LegsNew (Bericht teile-beine),
     // die Werkstatt wählt weiter über d.legNew
     const LGN = typeof LegsNew !== 'undefined' ? LegsNew : null, legRaw = T.legs ? T.legs.number || 0 : 0;
@@ -3551,7 +3557,7 @@ vec3 rareHue(vec3 c, float a) {
     const gait = legMod ? (typeof LegsNew !== 'undefined' && (LegsNew.has(legMod) || (legOver && LegsNew.over && LegsNew.over(legOver))) ? LegsNew.gait(legMod) : legMod === 10 ? 'slide' : legMod === 11 ? 'hop' : 'walk') : legOld === 4 || legOld === 8 ? 'hop' : legOld === 9 ? 'tentacle' : legOld ? 'walk' : 'float';
 
     // ---------------- Arme ----------------
-    rigSec = 'arm'; rigSide = 0;
+    rigSec = 'arm'; rigSide = 0; partSlot = 'arms';
     // Generator V2: Arme ab 25 baut ArmsNew (Nummer im Gen gleich Nummer im Modul), 1 bis 24 wie bisher über ARM_FORMS
     const armRaw = T.arms ? T.arms.number || 0 : 0, armV2 = !d.armNew && armRaw > 24 && typeof ArmsNew !== 'undefined' && ArmsNew.has(armRaw) ? armRaw : 0;
     const ar = T.arms, armF = formOf(T, 'arms'), armMap = ARM_FORMS[armF - 1] || { old: armF ? 2 : 0 }, armOld = armV2 ? 0 : armMap.old || 0, armMod = d.armNew || armV2 || armMap.mod || 0;
@@ -3706,7 +3712,7 @@ vec3 rareHue(vec3 c, float a) {
       }
     }
 
-    rigSide = 0;
+    rigSide = 0; partSlot = 'back';
     // ---------------- Rücken vorab: Schneckenhaus und Rückenschild liegen als Schale auf dem Rücken ----------------
     // Kandidaten (Auftrag teile-ruecken, 25.10.2026): BackNew aus web3d/src/candidates/back_new.js, nur auf der Werkstatt-Seite geladen,
     // Nummer über d.backNew. Ohne BackNew bleibt alles, wie es ist
@@ -3755,7 +3761,7 @@ vec3 rareHue(vec3 c, float a) {
     else if (shellKind === 'carapace') { const h = cast(V(0, mid, -7), V(0, 0, 1)); if (h) backShell = { c: h.p.clone().add(V(0, 0.05, 0.2)), r: V(hMid * 0.86 * Math.min(1.1, rSize), hy * 0.72 * Math.min(1.1, rSize), 0.55) }; }
 
     // ---------------- Schwanz ----------------
-    rigSec = 'tail';
+    rigSec = 'tail'; partSlot = 'tail';
     // schwanzLage: um wie viele Schritte der Schwanz wegen einer Schale tiefer und weiter außen ansetzt
     // Neue Schwänze zur Auswahl (Auftrag teile-schwanz, 24.10.2026): TailNew aus web3d/src/candidates/tail_new.js, nur auf der
     // Werkstatt-Seite geladen, Nummer über d.tailNew. Ohne TailNew bleibt alles, wie es ist
@@ -3839,7 +3845,9 @@ vec3 rareHue(vec3 c, float a) {
           // Kaulquappenschwanz: flache, gewellte Flosse
           const p = sweep(1.0 * len), { end } = tipOf(p);
           limb(chainPrim(p.slice(0, 5), 0.16 * th, 0.1 * th), 0.1); deco.push({ c: end, r: 0.3 });
-          later(() => { const L = 1.1 * len, o = []; for (let i = 0; i <= 20; i++) { const u = i / 20; o.push([u * L, (0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } for (let i = 19; i >= 1; i--) { const u = i / 20; o.push([u * L, -(0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } add(flatGeo(o, 0.05, true), 'horn', { pos: at(0.1, 0.02), quat: frame(back, V(0, 1, 0)), mat: { double: true }, th: 0.016 }); });
+          // Flosse beginnt erst hinter dem Rumpf (v2_check 27.10.2026: ihr oberer Rand steckte am Ansatz im Rücken)
+          const fx0 = build2.TAIL_FIX === false ? 0 : 0.12;
+          later(() => { const L = 1.1 * len - fx0, o = []; for (let i = 0; i <= 20; i++) { const u = i / 20; o.push([u * L, (0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } for (let i = 19; i >= 1; i--) { const u = i / 20; o.push([u * L, -(0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } add(flatGeo(o, 0.05, true), 'horn', { pos: at(0.1 + fx0, 0.02), quat: frame(back, V(0, 1, 0)), mat: { double: true }, th: 0.016 }); });
         } else if (f === 17) {
           // Perlenschwanz: Kugeln an einer Schnur, nach außen kleiner
           const p = curve([0.6 * len, -0.2], [1.2 * len, 0], [1.2 * len, 0.6 * len * curl + 0.2], 12), n = cnt(3, 6);
@@ -3996,7 +4004,7 @@ vec3 rareHue(vec3 c, float a) {
           });
         }
       };
-      const buildTail = () => {
+      const buildTailForm = () => {
       if (TN && TN.has(scF)) TN.build(scF, { g, field, at, back, sweep, tipOf, len, th, curl, tip, det, cnt, limb, later, add, glow, legendFx, deco, roleColor, UNLIT, FIRE, GOLD, fam, C, backF, LOD, seed: d.seed, chainPrim, ellPrim, C3, flatGeo, flameGeo, star2, frame, tubeR, rollGeo, random32 });
       else if (scF === 1) limb(chainPrim(sweep(1.05 * len), 0.19 * th, 0.08 * tip));
       else if (scF === 2) { const p = sweep(1.05 * len), { end, td } = tipOf(p); limb(chainPrim(p, 0.14 * th, 0.05 * th)); deco.push({ c: end, r: 0.4 * tip }); later(() => { const cg = coneGeo(0.17 * tip, 0.40 * tip, 4); cg.scale(1, 1, 0.45); cg.computeVertexNormals(); add(cg, 'horn', { pos: end.clone().sub(td.clone().multiplyScalar(0.08 * tip)), quat: alongY(td), th: 0.02 }); }); }
@@ -4052,6 +4060,58 @@ vec3 rareHue(vec3 c, float a) {
         later(() => { for (const e of ends) add(ellGeo(0.085 * tip, 0.11 * tip, 0.085 * tip), 'horn', { pos: e, th: 0.016 }); });
       }
       };
+      // Schwanz frei vom Rumpf (Luis 27.10.2026: Schwänze lagen flach auf dem Rücken oder steckten im Körper, die Keule am Ende berührte
+      // den Rücken). Viele Formen biegen sich nach oben und wieder nach vorn, bei runden oder nach hinten gewölbten Körpern liegen sie
+      // dann am Rücken. Nach dem Bau prüft tailClear die Achsen des Schwanzes (Ketten und Kugeln der Abstandsfelder) hinter dem Ansatz
+      // und die Zierteile am Ende (deco) gegen das Feld des Rumpfs: Abstand der Oberfläche mindestens TAIL_GAP. Sonst kippt der ganze
+      // Schwanz samt Zierteilen um seinen Ansatz nach hinten und unten (Achse quer, Schritte von 0,08 bis 1,2), nie unter den Boden.
+      // Der kleinste Winkel, der passt, gilt, sonst der mit dem größten Abstand. Ändert nur Lage, nie Form oder Würfel
+      const TAIL_GAP = 0.08;
+      const buildTail = () => {
+        const p0 = parts.length, a0 = after.length, d0 = deco.length, n0 = g.children.length, f0 = fx.length;
+        buildTailForm();
+        const n1 = g.children.length, f1 = fx.length;
+        const o = root.clone(), mine = parts.slice(p0).filter(x => x.sec === 'tail' && x.prim.pts), r0 = mine.length && mine[0].prim.rad ? mine[0].prim.rad[0] : 0.15;
+        const axis = back.clone().cross(V(0, 1, 0)).normalize(), probe = [];
+        for (const x of mine) x.prim.pts.forEach((q, i) => { if (q.distanceTo(o) > 0.3 + r0) probe.push([q, x.prim.rad[i]]); });
+        const decos = deco.slice(d0);
+        if (!probe.length && !decos.length) return;
+        let sign = -1; if (V(0, 1, 0).applyQuaternion(new THREE.Quaternion().setFromAxisAngle(axis, -0.3)).dot(back) < 0) sign = 1;
+        const q = new THREE.Quaternion(), t = V(0, 0, 0);
+        const score = a => {
+          q.setFromAxisAngle(axis, sign * a); let m = 1e9;
+          for (const [p, r] of probe) { t.copy(p).sub(o).applyQuaternion(q).add(o); m = Math.min(m, field(t.x, t.y, t.z) - r - TAIL_GAP, t.y - r - B.bottom - 0.02); }
+          for (const dc of decos) { t.copy(dc.c).sub(o).applyQuaternion(q).add(o); m = Math.min(m, field(t.x, t.y, t.z) - 0.5 * dc.r - 0.04, t.y - B.bottom - 0.02); }
+          return m;
+        };
+        if (build2.TAIL_FIX === false || score(0) >= 0) return;
+        let best = 0, bs = score(0);
+        for (let a = 0.08; a <= 1.2001; a += 0.08) { const sc = score(a); if (sc >= 0) { best = a; bs = sc; break; } if (sc > bs) { bs = sc; best = a; } }
+        if (!best) return;
+        q.setFromAxisAngle(axis, sign * best); const qi = q.clone().invert();
+        tailPlacement.tilt = +best.toFixed(2);
+        // Felder drehen: Abfrage zurück in die alte Lage, Hülle aus den gedrehten Ecken, Achse mit
+        for (const x of parts.slice(p0)) {
+          const pr = x.prim, f0 = pr.f, tq = V(0, 0, 0);
+          pr.f = (X, Y, Z) => { tq.set(X - o.x, Y - o.y, Z - o.z).applyQuaternion(qi); return f0(tq.x + o.x, tq.y + o.y, tq.z + o.z); };
+          const lo = V(1e9, 1e9, 1e9), hi = V(-1e9, -1e9, -1e9);
+          for (let c = 0; c < 8; c++) { const v = V(c & 1 ? pr.max[0] : pr.min[0], c & 2 ? pr.max[1] : pr.min[1], c & 4 ? pr.max[2] : pr.min[2]).sub(o).applyQuaternion(q).add(o); lo.min(v); hi.max(v); }
+          pr.min = lo.toArray(); pr.max = hi.toArray();
+          if (pr.pts) pr.pts = pr.pts.map(v => v.clone().sub(o).applyQuaternion(q).add(o));
+        }
+        for (const dc of decos) dc.c = dc.c.clone().sub(o).applyQuaternion(q).add(o);
+        for (let k = n0; k < n1; k++) { const m = g.children[k]; m.position.sub(o).applyQuaternion(q).add(o); m.quaternion.premultiply(q); }
+        for (let k = f0; k < f1; k++) fx[k].position.sub(o).applyQuaternion(q).add(o);
+        // Zierteile entstehen später (later): was sie anlegen, dreht sich genauso um den Ansatz
+        for (let i = a0; i < after.length; i++) {
+          const fn = after[i];
+          after[i] = () => {
+            const n0 = g.children.length, f0 = fx.length; fn();
+            for (let k = n0; k < g.children.length; k++) { const m = g.children[k]; m.position.sub(o).applyQuaternion(q).add(o); m.quaternion.premultiply(q); }
+            for (let k = f0; k < fx.length; k++) fx[k].position.sub(o).applyQuaternion(q).add(o);
+          };
+        }
+      };
       if (!backShell) buildTail();
       else {
         // Der Schwanz darf nicht in Schneckenhaus oder Rückenschild stecken. Proben liegen in der Schale außerhalb
@@ -4080,7 +4140,7 @@ vec3 rareHue(vec3 c, float a) {
     }
 
     // ---------------- Ohren: Teil der Haut, deshalb immer verwachsen ----------------
-    rigSec = 'ear';
+    rigSec = 'ear'; partSlot = 'ears';
     // Lage der Ohren: eigener Zufall aus der ID, von außen an der Seite (0) bis weiter innen oben (1)
     // Neue Ohren zur Auswahl (Auftrag teile-ohren, 24.10.2026): EarNew aus web3d/src/candidates/ears_new.js, nur auf der
     // Werkstatt-Seite geladen, Nummer über d.earNew. Ohne EarNew bleibt alles, wie es ist
@@ -4283,7 +4343,7 @@ vec3 rareHue(vec3 c, float a) {
     const earPrims = parts.slice(earStart).map(p => p.prim);
 
     // ---------------- Augen: Maße, Stiele gehören zur Haut ----------------
-    rigSec = 'head';
+    rigSec = 'head'; partSlot = 'eyes';
     // Neue Augenformen zur Auswahl (Auftrag teile-augenform, 25.10.2026): EyeNew aus web3d/src/candidates/eyes_new.js, nur auf der
     // Werkstatt-Seite geladen, Nummer über d.eyeNew. Ohne EyeNew bleibt alles, wie es ist
     const EYN = typeof EyeNew !== 'undefined' ? EyeNew : null;
@@ -4376,7 +4436,7 @@ vec3 rareHue(vec3 c, float a) {
     }
 
     // ---------------- Maul: Vertiefung und Rüssel gehören zur Haut ----------------
-    rigSec = 'head';
+    rigSec = 'head'; partSlot = 'mouth';
     // Neue Münder zur Auswahl (Auftrag teile-mund, 24.10.2026): MouthNew aus web3d/src/candidates/mouth_new.js, nur auf der
     // Werkstatt-Seite geladen, Nummer über d.mouthNew. Ohne MouthNew bleibt alles, wie es ist
     const MN = typeof MouthNew !== 'undefined' ? MouthNew : null;
@@ -4397,7 +4457,7 @@ vec3 rareHue(vec3 c, float a) {
     }
 
     // ---------------- Rücken: Höcker gehören zur Haut ----------------
-    rigSec = 'body';
+    rigSec = 'body'; partSlot = 'back';
     if (backV2 && !B.hollow && Backs.SKIN[backF]) for (const b of Backs.SKIN[backF](backCtx())) { if (b.body) parts.push({ prim: b.prim, k: b.k, limb: false, sec: 'body' }); else limb(b.prim || ellPrim(b.p, [b.r, b.r, b.r]), b.k || 0.16); }
 
     // ---------------- Haut erzeugen ----------------
@@ -4428,6 +4488,7 @@ vec3 rareHue(vec3 c, float a) {
     for (const f of after) f();
 
     // ---------------- Flächen auf dem Rumpf ----------------
+    partSlot = 'pattern';
     const hole = mouthCut ? { x: 0, y: B.mouthY - mouthCut.dP / 2, rx: mouthCut.ww / 2 * 0.97, ry: mouthCut.dP / 2 * 0.97 } : null;
     // Zierteile neuer Körper (Kristalle, Zahnräder, Leuchtkern): Hörner halten Abstand zu ihnen wie zu Ohren und Rücken
     const bodyDecor = [];
@@ -4810,7 +4871,7 @@ vec3 rareHue(vec3 c, float a) {
       const sk = d.skin && d.skin.kind, LEG_SKIN = { lava: FIRE.mid, aurora: '#7dffb0', constellation: '#fff0a8', energy: '#7ff6ff' };
       const LEG_PAT = { 10: '#c9b8ff', 30: '#7dffb0', 28: FIRE.mid, 27: '#ffffff' }, LEG_RARE = { galaxy: '#c9b8ff', holo: '#b8fff6', aurora: '#7dffb0', ember: FIRE.mid };
       const aura = LEG_RARE[rk] || LEG_SKIN[sk] || (texFx ? texFx.aura : ['quilted', 'honeycomb', 'pebble', 'corrugated'].includes(tk) ? GOLD : null) || LEG_PAT[mouthFr] || (PN && PN.has(mouthFr) ? PN.aura(mouthFr, { roleColor, FIRE }) : null) || (legBody ? (bodyFx ? bodyFx.aura : '#ffffff') : null);
-      if (aura) fxLate.push(() => legendFx(V(0, mid + 0.1, 0), Math.max(hMid, 0.7) * 1.25, aura, { motes: 8, sparks: 8, glow: 0, size: 0.055, tilt: 0.22 }));
+      if (aura) lateFx(() => legendFx(V(0, mid + 0.1, 0), Math.max(hMid, 0.7) * 1.25, aura, { motes: 8, sparks: 8, glow: 0, size: 0.055, tilt: 0.22 }));
     }
     // Struktur auf allen Teilen mit Oberfläche (Luis 11.10.2026: „damit es einheitlich aussieht“, gewählt am Beispiel mit Horn,
     // Beinschienen und Knochenarmen). Ausgenommen sind nur Gesicht und Leuchtendes, das Maul behält sein Loch.
@@ -4819,6 +4880,7 @@ vec3 rareHue(vec3 c, float a) {
     if (matUni && SHELLS[matUni.uMatKind.value]) matShells = shells(g, skinMeshRef, matUni);
 
     // ---------------- Augen ----------------
+    partSlot = 'eyes';
     // Augen und Brauen merken, damit die Hörner später Abstand halten
     const faceStart = g.children.length;
     // Augenformen 13 bis 32 (Luis, 01.10.2026): alle spiegelgleich oder als gespiegeltes Paar, ohne Kreuze,
@@ -4921,7 +4983,7 @@ vec3 rareHue(vec3 c, float a) {
       return false;
     }
     // Werkzeug für EyeNew: Teile ans Auge hängen, Leuchten, späte Teile (nach dem Messen, am Kopf, ohne Blinzeln)
-    const eyeCtx = () => ({ add, glow, legendFx, late: fn => { const sec = rigSec, side = rigSide; fxLate.push(() => { const o = [rigSec, rigSide]; rigSec = sec; rigSide = side; fn(); rigSec = o[0]; rigSide = o[1]; }); },
+    const eyeCtx = () => ({ add, glow, legendFx, late: lateFx,
       flatGeo, rollGeo, tubeR, flameGeo, star2, frame, cast, fam, C, roleColor, UNLIT, GOLD, FIRE, LOD, pup, tilt, seed: d.seed, random32, eyeCount: d.eyeCount, list: eyeList, mouthY: B.mouthY });
     function eyeball(c, n, r, s, onStalk, main) {
       const q = basis(n), lx = V(1, 0, 0).applyQuaternion(q), ly = V(0, 1, 0).applyQuaternion(q), slit = eyeF === 2;
@@ -5002,12 +5064,13 @@ vec3 rareHue(vec3 c, float a) {
       // Augen mit Ring oder Fassung tragen keine Braue (die Zierde liefert sie zurück), sonst stießen beide aneinander
       // browL: Länge der Brauen als Vielfaches des Augenradius (wie unten bei den Brauen, 0 ohne Brauen), damit Zierde ihnen ausweicht
       const browL = T.brows && eyeF !== 5 && formOf(T, 'brows') ? 2.0 * sl(T.brows, 'length', 0.75, 1.3) : 0;
-      const framed = ELN.decorate(layId, { eyes: eyesNow, browL, stalk: eyeF === 5, visor: eyeF === 8, er, B, fam, front, cast, above, hwAt, add: addE, glow: glowE, legendFx: fxE, later: fn => fxLate.push(fn), rollGeo, flatGeo, flameGeo, star2, basis, roleColor, UNLIT, FIRE, GOLD, C, LOD, random32, seed: d.seed, variant: lay.variant });
+      const framed = ELN.decorate(layId, { eyes: eyesNow, browL, stalk: eyeF === 5, visor: eyeF === 8, er, B, fam, front, cast, above, hwAt, add: addE, glow: glowE, legendFx: fxE, later: lateFx, rollGeo, flatGeo, flameGeo, star2, basis, roleColor, UNLIT, FIRE, GOLD, C, LOD, random32, seed: d.seed, variant: lay.variant });
       if (framed && framed.length) eyeNoBrow = new Set(eyeList.filter(([x, y]) => framed.some(e => Math.hypot(x - e.c.x, y - e.c.y) < e.r * 0.6)));
       g.userData.eyeLayout = { fallback: eyeFallback, list: eyeList.map(e => e.slice(0, 3)) };
     }
 
     // ---------------- Augenbrauen (Luis 01.10.2026: 19 Arten, Länge und Dicke je Ovaling) ----------------
+    partSlot = 'brows';
     // Je Auge eine Braue, das Paar ist gespiegelt. u läuft von innen (Nase) nach außen. Form aus Formeln:
     // Höhe y(u) und Dicke w(u) in Einheiten des Augenradius. Ohne Drehsinn, ohne Kreuze, keine Zickzack-Paare (Blitze).
     // Neue Brauen zur Auswahl (Auftrag teile-augenbrauen, 25.10.2026): BrowNew aus web3d/src/candidates/brows_new.js, nur auf der
@@ -5110,7 +5173,7 @@ vec3 rareHue(vec3 c, float a) {
         // Legendäre Brauen (Luis 17.10.2026): ein paar Lichtpunkte kreisen über der Braue, Funken steigen auf
         // Mit BrowNew (Werkstatt) sagt der Vorschlag, welche Brauen legendär sind und in welcher Farbe ihre Punkte leuchten
         const lfxHex = BrN ? BrN.legendHex(brF, { FIRE }) : [20, 21, 24, 26].includes(brF) ? (brF === 20 ? FIRE.mid : brF === 21 ? '#9fd8ff' : brF === 24 ? '#fff3b0' : '#ffffff') : null;
-        if (lfxHex && half !== -1) { const hb = front(half ? ex : X(0.5), y0 + 0.25 * r); if (hb) fxLate.push(() => legendFx(hb.p.clone().add(hb.n.clone().multiplyScalar(0.06)), r * 0.75, lfxHex, { motes: 3, sparks: 4, glow: 0, size: 0.018, axis: hb.n })); }
+        if (lfxHex && half !== -1) { const hb = front(half ? ex : X(0.5), y0 + 0.25 * r); if (hb) lateFx(() => legendFx(hb.p.clone().add(hb.n.clone().multiplyScalar(0.06)), r * 0.75, lfxHex, { motes: 3, sparks: 4, glow: 0, size: 0.018, axis: hb.n })); }
       };
       // Brauen-Teile markieren (Prüfung der Werkstatt Augenbrauen: liegt an, dringt nicht ein)
       const browFrom = g.children.length;
@@ -5122,6 +5185,7 @@ vec3 rareHue(vec3 c, float a) {
 
     const faceEnd = g.children.length;
     // ---------------- Maul ----------------
+    partSlot = 'mouth';
     // Marken für die Mundanimation in rig.js (Luis 12.10.2026: der Mund soll sich bewegen wie die Augen): line verformt sich mit den
     // Mundwinkeln, jaw geht mit dem Unterkiefer nach unten, tongue, stache, tent, mand, ring und pucker haben eigene Bewegungen
     // (Drehpunkt mouthBase), fixed bleibt stehen. tagNew markiert alles, was ab n0 dazukam
@@ -5335,7 +5399,7 @@ vec3 rareHue(vec3 c, float a) {
       const tEnd = mouthF === 10 && trunk ? trunk[trunk.length - 1] : null, hm = tEnd ? null : front(0, B.mouthY - 0.05);
       const mc0 = tEnd ? tEnd.clone() : hm ? hm.p.clone().add(hm.n.clone().multiplyScalar(0.14)) : null;
       // erst nach dem Messen (fxLate), sonst zählten die Punkte zum Maul und blieben im Skelett einzeln
-      if (mc0) fxLate.push(() => legendFx(mc0, (mouthF === 10 ? 0.22 : 0.3) * fs, mouthF === 12 ? FIRE.mid : mouthF === 23 ? GOLD : '#' + col(roleColor.light).lerp(col('#ffffff'), 0.4).getHexString(), { motes: mouthF === 12 ? 2 : 5, sparks: mouthF === 12 ? 8 : 4, glow: 0, size: 0.026, axis: hm ? hm.n : V(0, 0, 1) }));
+      if (mc0) lateFx(() => legendFx(mc0, (mouthF === 10 ? 0.22 : 0.3) * fs, mouthF === 12 ? FIRE.mid : mouthF === 23 ? GOLD : '#' + col(roleColor.light).lerp(col('#ffffff'), 0.4).getHexString(), { motes: mouthF === 12 ? 2 : 5, sparks: mouthF === 12 ? 8 : 4, glow: 0, size: 0.026, axis: hm ? hm.n : V(0, 0, 1) }));
     }
     let mouthRig = null;
     {
@@ -5353,6 +5417,7 @@ vec3 rareHue(vec3 c, float a) {
     // Seit 25.10.2026 (Auftrag teile-ruecken, Ausmaß) kommen die Flügel vor dem Rücken: der Rücken richtet sich nach ihnen, nicht umgekehrt
 
     // ---------------- Flügel als eigener Platz (Luis 11.10.2026, Probe über d.wings) ----------------
+    partSlot = 'wings';
     // d.wings: { number 1 bis 24 (wings.js), size und tilt 0 bis 1, pairs 1 oder 2 }. Jedes Paar sitzt im oberen Rücken, das
     // zweite tiefer, kleiner und weiter nach unten gedreht. Alle Teile hängen am Flügelknochen ihrer Seite (wingPart, wingRoots)
     if (d.wings && d.wings.number && typeof Wings !== 'undefined') {
@@ -5420,6 +5485,7 @@ vec3 rareHue(vec3 c, float a) {
     }
 
     // ---------------- Rücken ----------------
+    partSlot = 'back';
     // Hindernisse für den Rücken (Auftrag teile-ruecken, Luis 25.10.2026: nichts steckt in Flügeln, Hörnern, Ohren, Armen oder anderen
     // Teilen, auch beim größten Ausmaß und in allen Bewegungen): Punkte auf Flügeln (in allen Stellungen, die das Skelett ihnen gibt,
     // gedreht um ihren Ansatz), Zierteilen von Ohren, Armen, Schwanz und Körper in einem Gitter, dazu die Glieder (Arme, Ohren, Schwanz)
@@ -5558,6 +5624,7 @@ vec3 rareHue(vec3 c, float a) {
     }
 
     // ---------------- Hörner ----------------
+    partSlot = 'horns';
     // Kommen nach dem Rücken, damit sie gegen alles prüfen können (Luis, 01.10.2026: Hörner überlappen nie mit
     // anderen Teilen und ragen nirgends hinein). hornParts merkt sich je Horn Ansatz, Seite, Teile, wie tief der
     // Ansatz sitzt und den kleinsten Abstand zu allem anderen. Testseiten nutzen das für eine Vorschau ohne Neubau
@@ -6023,6 +6090,7 @@ vec3 rareHue(vec3 c, float a) {
       }
     }
     // Zierteile neuer Körper, die allem ausweichen, was schon steht (Kristalle der Druse zwischen Hörnern, Ohren, Augen, Rücken)
+    partSlot = 'body';
     if (BN) BN.late(plan, bodyCtx());
     const box = new THREE.Box3().setFromObject(g);
     // Zeichen der Legende, die nach dem Messen dazukommen (Kranz um den Körper, Brauen), zählen nicht zur Größe der Figur
@@ -6049,6 +6117,9 @@ vec3 rareHue(vec3 c, float a) {
     if (slot === 'eyeLayout') return M ? M.nameOf(n) : String(n);
     return M && M.has(n) ? M.nameOf(n) : (NAMES[slot] && NAMES[slot][n - 1]) || String(n);
   };
+  // Schalter für die Probe ovalings-v2-fixes-probe.html (27.10.2026): false baut Schwänze wie vor der Reparatur (ohne Kippen frei vom
+  // Rumpf, Flosse und Wirbel ab dem Ansatz). Im Spiel immer an
+  build2.TAIL_FIX = true;
   build2.NAMES = NAMES; build2.bodyMixMax = bodyMixMax; build2.hornPlacement = hornPlacement; build2.matAxes = matAxes; build2.HORN_RANGE = HORN_RANGE; build2.EYE_PATTERNS = EYE_PATTERNS;
   // Arten der Struktur für die Werkstätten (Katalog)
   build2.TEX_KIND = TEX_KIND;
@@ -12553,9 +12624,12 @@ const TailNew = (() => {
       // Knochenschwanz: dünne Schnur, darauf sechs bis zehn Wirbel als flache Scheiben in Knochenfarbe, jeder mit einem Dorn nach oben
       const p = curve([0.7 * len, -0.25], [1.3 * len, -0.05], [1.4 * len, 0.45 * len * curl + 0.1], 18), k = cnt(6, 10);
       limb(chainPrim(p, 0.08 * th, 0.04 * th), 0.08); deco.push({ c: p[18], r: 0.12 });
+      // Wirbel erst dort, wo die Schnur frei vom Rumpf ist (v2_check 27.10.2026: der erste Wirbel lag auf dem Rücken und rieb beim
+      // Schwingen über die Haut)
+      let u0 = 0.12; while (u0 < 0.5 && c.field && build2.TAIL_FIX !== false) { const j = Math.round(u0 * 18), q = p[j]; if (c.field(q.x, q.y, q.z) > lerp(0.17, 0.07, u0) * th + 0.04) break; u0 += 0.02; }
       later(() => {
         for (let i = 0; i < k; i++) {
-          const u = 0.12 + 0.82 * i / (k - 1), j = Math.round(u * 18), d = dirAt(p, j), r = lerp(0.17, 0.07, u) * th, uu = upOf(d);
+          const u = u0 + (0.94 - u0) * i / (k - 1), j = Math.round(u * 18), d = dirAt(p, j), r = lerp(0.17, 0.07, u) * th, uu = upOf(d);
           add(ellGeo(r, 0.06 * th * (1.2 - 0.4 * u), r), 'claw', { pos: p[j], quat: alongY(d), th: 0.012 });
           add(coneGeo(0.035 * th, 0.12 * th * (1.2 - 0.6 * u), seg(8)), 'claw', { pos: p[j].clone().add(uu.clone().multiplyScalar(r * 0.7)), quat: alongY(uu.clone().add(d.clone().multiplyScalar(0.45)).normalize()), th: 0.01 });
         }
@@ -19543,11 +19617,68 @@ const Rig = (() => {
     // Flügelknochen hängt am Rumpf und erbte sie, im gedrehten Flügel wurde daraus eine Scherung, Lagen aus Federn, Haut und Knochen
     // verschoben sich gegeneinander. Der Ansatz wandert weiter mit der Oberfläche, die Skalierung des Rumpfs hebt der Flügel auf:
     // Matrix = Lage * Rumpfskalierung⁻¹ * Drehung * eigene Skalierung (gilt für alle, die den Rumpf skalieren, auch Alphas und Bühne)
+    // Übergang Rumpf und Kopf (Luis 27.10.2026: Flügel und Teile im Nacken gingen beim Atmen und Umschauen nicht mit): die Haut teilt
+    // sich dort weich nach der Höhe (weigh, Anteil des Kopfs headShare). Feste Teile hingen dagegen ganz am Rumpf oder ganz am Kopf und
+    // rutschten gegen die Haut, sobald sich der Kopf bewegte (Flügel bis 0,6 beim Umschauen). Teile in diesem Übergang hängen jetzt an
+    // einem Zwischenstück im Kopfgelenk, das der Drehung des Kopfs mit dem Anteil der Haut an ihrem Ansatz folgt (wie das Maul, mouthApply).
+    // Stufen in Dritteln, damit es wenige Zwischenstücke gibt (Zusammenführen der Teile, Draw Calls)
+    // Auf dem Rücken (z < 0) liegt der Übergang höher (bis 0,35): sonst drehte sich beim Umschauen der ganze obere Rücken mit dem Kopf,
+    // samt Flügelansatz und allem, was dort sitzt. Vorn und an den Seiten bleibt er, wo er war (Maul, Augen, Wangen)
+    const headShare = (y, z) => { const up = 0.35 * smooth(0, 0.35, -(z || 0)); return smooth(neck - 0.12 + up, neck + 0.2 + up, y); };
+    const mounts = [];
+    const mountFor = k => {
+      const m = mounts.find(x => !x.wing && Math.abs(x.k - k) < 1e-3); if (m) return m.o;
+      const o = new THREE.Object3D(); o.name = 'mount' + k.toFixed(2); o.userData.headMount = k; o.position.copy(pivot.head).sub(pivot.body); bones.body.add(o); o.updateMatrixWorld(true);
+      mounts.push({ o, k, p0: o.position.clone() }); return o;
+    };
+    // Anteil des Kopfs gestuft: 0 Rumpf, 1 Kopf, dazwischen ein Zwischenstück
+    const holderK = k => { k = Math.round(k * 3) / 3; return k <= 0 ? bones.body : k >= 1 ? bones.head : mountFor(k); };
+    const holderAt = (y, z) => holderK(headShare(y, z));
+    // Anteil der Haut, auf der ein Teil wirklich aufsitzt: Hautpunkte des Rumpfs (nicht der Glieder) nahe den Punkten, Mittel ihres
+    // Anteils am Kopf. Gitter über die Haut in Ruhe (Raum der Gruppe)
+    skin.updateMatrix();
+    const SC = 0.05, sGrid = new Map(), sP = [], sH = [];
+    for (let i = 0; i < n; i++) {
+      let jb = 0, db = 1e9; for (let j = 0; j < G; j++) { const d = dist[i * G + j]; if (d < db) { db = d; jb = j; } }
+      if (jb !== iBody) continue;
+      const v = V(pos.getX(i), pos.getY(i), pos.getZ(i)).applyMatrix4(skin.matrix), k = Math.floor(v.x / SC) + ',' + Math.floor(v.y / SC) + ',' + Math.floor(v.z / SC);
+      let L = sGrid.get(k); if (!L) sGrid.set(k, L = []); L.push(sP.length); sP.push(v); sH.push(headShare(v.y, v.z));
+    }
+    const shareNear = (pts, R) => {
+      let sum = 0, cnt = 0;
+      for (const p of pts) {
+        const x0 = Math.floor((p.x - R) / SC), x1 = Math.floor((p.x + R) / SC), y0 = Math.floor((p.y - R) / SC), y1 = Math.floor((p.y + R) / SC), z0 = Math.floor((p.z - R) / SC), z1 = Math.floor((p.z + R) / SC);
+        for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) { const L = sGrid.get(x + ',' + y + ',' + z); if (L) for (const i of L) if (sP[i].distanceTo(p) < R) { sum += sH[i]; cnt++; } }
+      }
+      return cnt ? sum / cnt : null;
+    };
+    // Anteil am Ansatz eines Teils: die Punkte, die der Haut am nächsten kommen (bis 2 cm über dem nächsten), ein Teil, das oben am Kopf
+    // anliegt, aber unten auf dem Rücken sitzt, folgt dem Rücken
+    const shareRoot = pts => {
+      const near = [];
+      for (const p of pts) {
+        let bd = 0.06, bh = null; const x0 = Math.floor((p.x - bd) / SC), x1 = Math.floor((p.x + bd) / SC), y0 = Math.floor((p.y - bd) / SC), y1 = Math.floor((p.y + bd) / SC), z0 = Math.floor((p.z - bd) / SC), z1 = Math.floor((p.z + bd) / SC);
+        for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) { const L = sGrid.get(x + ',' + y + ',' + z); if (L) for (const i of L) { const d = sP[i].distanceTo(p); if (d < bd) { bd = d; bh = sH[i]; } } }
+        if (bh != null) near.push([bd, bh]);
+      }
+      if (!near.length) return null;
+      const dmin = Math.min(...near.map(x => x[0])), sel = near.filter(x => x[0] <= dmin + 0.02);
+      return sel.reduce((a, x) => a + x[1], 0) / sel.length;
+    };
+    // Flügel: Knochen beider Seiten an einem eigenen Zwischenstück mit dem Anteil der Haut um den Ansatz (ungestuft, Flügel sind groß)
+    const wingK = ['L', 'R'].filter(s => bones['wing.' + s]).map(s => { const p = pivot['wing.' + s], k = shareNear([p], 0.3); return k == null ? headShare(p.y, p.z) : k; });
+    if (wingK.length && Math.max(...wingK) > 0.02) {
+      const k = Math.max(...wingK), o = new THREE.Object3D(); o.name = 'mountWing'; o.userData.headMount = k; o.position.copy(pivot.head).sub(pivot.body); bones.body.add(o); o.updateMatrixWorld(true);
+      mounts.push({ o, k, p0: o.position.clone(), wing: true });
+      for (const s of ['L', 'R']) { const wb = bones['wing.' + s]; if (wb) { wb.position.copy(pivot['wing.' + s]).sub(pivot.head); o.add(wb); } }
+    }
     for (const s of ['L', 'R']) {
       const wb = bones['wing.' + s]; if (!wb) continue;
+      // Skalierung des Rumpfs aufheben, auch wenn der Knochen an einem Zwischenstück hängt
+      wb.userData.scaleOf = bones.body;
       wb.updateMatrix = function () {
         this.matrix.compose(this.position, this.quaternion, this.scale);
-        const p = this.parent, e = this.matrix.elements;
+        const p = this.userData.scaleOf || this.parent, e = this.matrix.elements;
         if (p && p.scale) for (let c = 0; c < 3; c++) { e[c * 4] /= p.scale.x || 1; e[c * 4 + 1] /= p.scale.y || 1; e[c * 4 + 2] /= p.scale.z || 1; }
         this.matrixWorldNeedsUpdate = true;
       };
@@ -19557,13 +19688,13 @@ const Rig = (() => {
     const si = new Uint16Array(n * 4), sw = new Float32Array(n * 4), idx = k => list.indexOf(bones[k] || bones.body);
     const iHead = idx('head'), iBodyBone = idx('body');
     // d(j): Abstand des Punkts zur Gruppe j, y: Höhe. Schreibt die vier stärksten Knochen nach si und sw ab Stelle o
-    const weigh = (d, y, si, sw, o) => {
+    const weigh = (d, y, z, si, sw, o) => {
       let dmin = 1e9; for (let j = 0; j < G; j++) dmin = Math.min(dmin, d(j));
       const cand = [];
       for (let j = 0; j < G; j++) {
         const w = Math.exp(-(d(j) - dmin) / SIGMA); if (w < 0.01) continue;
         const k = names[j];
-        if (k === 'body') { const h = smooth(neck - 0.12, neck + 0.2, y); cand.push([iBodyBone, w * (1 - h)], [iHead, w * h]); }
+        if (k === 'body') { const h = headShare(y, z); cand.push([iBodyBone, w * (1 - h)], [iHead, w * h]); }
         else cand.push([idx(k), w]);
       }
       // Gleiche Knochen zusammenfassen, die vier stärksten behalten
@@ -19571,7 +19702,7 @@ const Rig = (() => {
       const top = [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4), tot = top.reduce((a, e) => a + e[1], 0) || 1;
       top.forEach(([b, w], q) => { si[o + q] = b; sw[o + q] = w / tot; });
     };
-    for (let i = 0; i < n; i++) weigh(j => dist[i * G + j], pos.getY(i), si, sw, i * 4);
+    for (let i = 0; i < n; i++) weigh(j => dist[i * G + j], pos.getY(i), pos.getZ(i), si, sw, i * 4);
     const geo = skin.geometry;
     geo.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(si, 4));
     geo.setAttribute('skinWeight', new THREE.Float32BufferAttribute(sw, 4));
@@ -19604,7 +19735,7 @@ const Rig = (() => {
       c.updateMatrix();
       const cg = c.geometry.clone(); cg.applyMatrix4(c.matrix);
       const cp = cg.attributes.position, cn = cp.count, csi = new Uint16Array(cn * 4), csw = new Float32Array(cn * 4);
-      for (let i = 0; i < cn; i++) { const x = cp.getX(i), y = cp.getY(i), z = cp.getZ(i); weigh(j => distAt(x, y, z, j), y, csi, csw, i * 4); }
+      for (let i = 0; i < cn; i++) { const x = cp.getX(i), y = cp.getY(i), z = cp.getZ(i); weigh(j => distAt(x, y, z, j), y, z, csi, csw, i * 4); }
       cg.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(csi, 4));
       cg.setAttribute('skinWeight', new THREE.Float32BufferAttribute(csw, 4));
       // Eigenes Material, damit Teile mit demselben Material ohne Skelett nicht mitverändert werden
@@ -19639,7 +19770,7 @@ const Rig = (() => {
         // teils zum Kopf (wie in weigh). Der Drehpunkt hängt deshalb am Rumpf, an einem Zwischenstück im Kopfgelenk, das der
         // Drehung des Kopfs mit demselben Anteil folgt (mouthApply)
         const mount = new THREE.Object3D(); mount.position.copy(pivot.head).sub(pivot.body); bones.body.add(mount); mount.updateMatrixWorld(true); mount.attach(c);
-        mouth.mount = mount; mouth.mountP = mount.position.clone(); mouth.headK = smooth(neck - 0.12, neck + 0.2, R.mouth.c.y);
+        mount.userData.mouthMount = true; mouth.mount = mount; mouth.mountP = mount.position.clone(); mouth.headK = headShare(R.mouth.c.y, R.mouth.c.z);
         continue;
       }
       // eyeDecor: Zierde neuer Augenanordnungen (Auftrag teile-augenlage) hängt wie die Augen immer am Kopf, auch tief im Gesicht
@@ -19651,22 +19782,47 @@ const Rig = (() => {
       // Zierteile der Ohren (Federn des Flügelohrs, Innenohr, Schmuck) ganz an den Knochen ihres Ohrs (Luis 22.10.2026: einzelne Federn
       // hingen nach dem nächsten Abstand am Kopf und blieben stehen, wenn das Ohr zuckte)
       else if (c.userData.sec === 'ear' && !c.isSprite && earBone(c)) k = earBone(c);
-      // Zierteile neuer Schwänze (Auftrag teile-schwanz, 24.10.2026) ganz an den Schwanzknochen, auch nah am Ansatz, wo der Rumpf sonst näher ist
-      else if (c.userData.tailBone && bones.tail) k = 'tail';
+      // Zierteile neuer Schwänze (Auftrag teile-schwanz, 24.10.2026) ganz an den Schwanzknochen, auch nah am Ansatz, wo der Rumpf sonst näher ist.
+      // Seit 27.10.2026 alle Teile aus dem Abschnitt Schwanz (slot im Baukasten): Stacheln, Kelle, Pfauenrad und Spitzen der älteren Formen
+      // hingen nach dem nächsten Abstand an Rumpf oder Kopf und blieben stehen, wenn der Schwanz schwang
+      else if ((c.userData.tailBone || c.userData.slot === 'tail') && bones.tail) k = 'tail';
       else if ((c.userData.sec === 'arm' || c.userData.sec === 'leg') && c.userData.side && bones[c.userData.sec + (c.userData.side > 0 ? '.L' : '.R')]) k = c.userData.sec + (c.userData.side > 0 ? '.L' : '.R');
       else {
         const b = c.isSprite ? null : new THREE.Box3().setFromObject(c), p = b && !b.isEmpty() ? b.getCenter(V(0, 0, 0)) : c.position.clone();
         let best = 'body', bd = 1e9; for (let j = 0; j < G; j++) { const d = distAt(p.x, p.y, p.z, j); if (d < bd) { bd = d; best = names[j]; } }
         k = best === 'body' ? (p.y > neck ? 'head' : 'body') : best;
+        // Teile am Rumpf oder Kopf: Ansatz ist die Ecke, die der Oberfläche am nächsten liegt (ein Baum auf dem Rücken sitzt mit dem Fuß
+        // auf, ein Horn mit dem Ring um seinen Ansatz)
+        if (k === 'body' || k === 'head') {
+          // Anteil der Haut unter dem Teil, sonst nach der Ecke, die der Oberfläche am nächsten liegt
+          if (!c.isSprite && c.geometry && c.geometry.attributes.position) {
+            const ps = c.geometry.attributes.position, st = Math.max(1, Math.floor(ps.count / 150)), pts = [];
+            c.updateMatrixWorld(true);
+            for (let i = 0; i < ps.count; i += st) pts.push(g.worldToLocal(V(0, 0, 0).fromBufferAttribute(ps, i).applyMatrix4(c.matrixWorld)));
+            const kk = shareRoot(pts); if (kk != null) { holderK(kk).attach(c); continue; }
+          }
+          let y = p.y, z = p.z;
+          if (!c.isSprite && c.geometry && c.geometry.attributes.position && iBody >= 0) {
+            const ps = c.geometry.attributes.position, st = Math.max(1, Math.floor(ps.count / 120)); let bd2 = 1e9;
+            c.updateMatrixWorld(true);
+            for (let i = 0; i < ps.count; i += st) { _v.fromBufferAttribute(ps, i).applyMatrix4(c.matrixWorld); g.worldToLocal(_v); const d = Math.abs(distAt(_v.x, _v.y, _v.z, iBody)); if (d < bd2) { bd2 = d; y = _v.y; z = _v.z; } }
+          }
+          holderAt(y, z).attach(c); continue;
+        }
+      }
+      if (k === 'head' && (c.userData.eyePivot || c.userData.eyeDecor || c.userData.browHead)) {
+        // Augen, Zierde und Brauen nach der Höhe ihrer Mitte im Gesicht
+        const b = c.isSprite ? null : new THREE.Box3().setFromObject(c), cc = b && !b.isEmpty() ? g.worldToLocal(b.getCenter(V(0, 0, 0))) : c.position;
+        holderAt(cc.y, cc.z).attach(c); continue;
       }
       (bones[k] || bones.body).attach(c);
     }
     // Bewegte Kleinteile je Knochen zu wenigen Netzen zusammenfassen (Leistung, Luis 17.10.2026 A), siehe mergeAnim im Baukasten
-    if (typeof build2 !== 'undefined' && build2.mergeAnim) for (const b of list) build2.mergeAnim(b);
+    if (typeof build2 !== 'undefined' && build2.mergeAnim) for (const b of [...list, ...mounts.map(m => m.o)]) build2.mergeAnim(b);
     const rest = {}; for (const b of list) rest[b.name] = { p: b.position.clone(), q: b.quaternion.clone(), s: b.scale.clone() };
     // opts.still (Porträts in Ruhehaltung, Lina 14.10.2026): Knochen, Gewichte, Augen und Maul stehen, alles Weitere (Flügel für die
     // Gesten, freie Armwinkel, Anker, Beine) braucht nur die Bewegung. Die Form ist dieselbe wie mit allem
-    if (opts && opts.still) return { mesh: sm, bones, list, rest, neck, pivot, eyes, mouth, seed: Math.random(), dist, distCached: !!given, still: true };
+    if (opts && opts.still) return { mesh: sm, bones, list, rest, neck, pivot, eyes, mouth, mounts, seed: Math.random(), dist, distCached: !!given, still: true };
     // Flügel für die Prüfung der Gesten (Entscheidung 12.10.2026: kein Arm durch Flughaut oder Federn): Punkte auf allen Teilen
     // am Flügelknochen, relativ zum Ansatz in Ruhe, große Dreiecke dicht abgetastet, in einem Gitter von 3 cm für schnelle Suche
     const wingHit = {};
@@ -19714,6 +19870,35 @@ const Rig = (() => {
     const armMax = {}, armSwing = {}, armProbe = {}, solid = names.map((k, j) => k === 'body' || k === 'head' ? j : -1).filter(j => j >= 0);
     const dBody = (x, y, z) => { let m = 1e9; for (const j of solid) m = Math.min(m, distAt(x, y, z, j)); return m; };
     g.updateMatrixWorld(true);
+    // Glieder bewegen sich nur so weit, wie sie frei bleiben (Luis 27.10.2026, v2_check: Stacheln, Keulen und Flossen schlugen beim
+    // Wedeln in den Rumpf, Zierteile der Ohren beim Zucken in den Kopf, Flügel beim Ausbreiten in den Rücken). Proben: Hautpunkte des
+    // Glieds und Ecken der Teile an seinem Knochen. Geprüft wird die stärkste Haltung zu beiden Seiten. Was in Ruhe schon anliegt (unter
+    // 2 cm, der Ansatz), zählt nicht, alles andere bleibt mindestens LIMB_MARGIN vom Rumpf oder kommt ihm nicht näher als in Ruhe.
+    // Ergebnis je Glied ein Anteil k (0 bis 1, Schritte 0,1), mit dem animate die Drehung dieses Knochens multipliziert (limbScale)
+    const LIMB_MARGIN = 0.03;
+    const limitK = (key, eul) => {
+      const j = names.indexOf(key), P = pivot[key], b = bones[key]; if (!P || !b) return 1;
+      const pts = [];
+      if (j >= 0) for (let i = 0; i < n; i += 2) { let mine = true; for (let q = 0; q < G; q++) if (dist[i * G + q] < dist[i * G + j]) { mine = false; break; } if (mine) pts.push(V(pos.getX(i), pos.getY(i), pos.getZ(i))); }
+      b.traverse(c => { if (!c.isMesh || !c.geometry || !c.geometry.attributes.position) return; const ps = c.geometry.attributes.position, st = Math.max(1, Math.floor(ps.count / 60)); for (let i = 0; i < ps.count; i += st) pts.push(g.worldToLocal(V(0, 0, 0).fromBufferAttribute(ps, i).applyMatrix4(c.matrixWorld))); });
+      // nur die äußeren drei Fünftel: am Ansatz verformt sich die Haut weich mit und darf anliegen
+      let far = 0; for (const p of pts) far = Math.max(far, p.distanceTo(P));
+      const probe = []; for (const p of pts) { const d0 = dBody(p.x, p.y, p.z); if (d0 > 0.02 && p.distanceTo(P) > 0.4 * far) probe.push([p, Math.min(LIMB_MARGIN, d0 - 0.005)]); }
+      if (!probe.length) return 1;
+      const st = Math.max(1, Math.floor(probe.length / 300)), q = new THREE.Quaternion(), v = V(0, 0, 0);
+      const free = k => { for (const sg of [1, -1]) { q.setFromEuler(eul(k, sg)); for (let i = 0; i < probe.length; i += st) { v.copy(probe[i][0]).sub(P).applyQuaternion(q).add(P); if (dBody(v.x, v.y, v.z) < probe[i][1]) return false; } } return true; };
+      if (free(1)) return 1;
+      let best = 0; for (let k = 0.1; k < 1; k += 0.1) { if (!free(k)) break; best = Math.round(k * 10) / 10; }
+      return best;
+    };
+    const _eu = new THREE.Euler();
+    // Schwanz: Ruhe 0,35 und Schlängeln 0,55 um die Hochachse, dazu Nicken 0,12. Ohren: Zucken 0,35 und Ruhe 0,18 um z.
+    // Flügel: Ausbreiten 0,62 und Schlag um die Hochachse
+    const limbK = {};
+    if (bones.tail) limbK.tail = limitK('tail', (k, sg) => _eu.set(0.12 * k, sg * 0.9 * k, 0));
+    for (const sd of ['L', 'R', 'C']) if (bones['ear.' + sd]) limbK['ear.' + sd] = limitK('ear.' + sd, (k, sg) => _eu.set(0, 0, sg * 0.53 * k));
+    for (const sd of ['L', 'R']) if (bones['wing.' + sd]) limbK['wing.' + sd] = limitK('wing.' + sd, (k, sg) => _eu.set(0, sg * 0.62 * k, 0));
+    const tailK = limbK.tail != null ? limbK.tail : 1;
     for (const s of ['L', 'R']) {
       const k = 'arm.' + s, j = names.indexOf(k), P = pivot[k]; if (j < 0 || !P || !bones[k]) continue;
       const pts = [];
@@ -19815,7 +20000,7 @@ const Rig = (() => {
     if (gait === 'tentacle') { legs.sort((a, b) => Math.atan2(a.x, a.z) - Math.atan2(b.x, b.z)); legs.forEach((l, i) => { l.phase = i / legs.length * Math.PI * 2; }); }
     else for (const s of [1, -1, 0]) legs.filter(l => l.side === s).sort((a, b) => b.z - a.z).forEach((l, i) => { l.phase = (i % 2) * Math.PI + (s < 0 ? Math.PI : 0); });
     const height = R.top - Math.min(R.bottom, ...legs.map(l => pivot[l.k].y - l.len));
-    return { mesh: sm, bones, list, rest, neck, pivot, armAngle, armMax, eyes, mouth, seed: Math.random(), dist, distCached: !!given, legs, gait, height, armSwing, anchors, collide, gestureMax: {} };
+    return { mesh: sm, bones, list, rest, neck, pivot, armAngle, armMax, eyes, mouth, mounts, tailK, limbK, seed: Math.random(), dist, distCached: !!given, legs, gait, height, armSwing, anchors, collide, gestureMax: {} };
   }
 
   // Zufall je Zyklus aus einer Zahl, damit Blinzeln nicht im Takt läuft
@@ -19914,7 +20099,7 @@ const Rig = (() => {
     for (const b of rig.list) { const r = R[b.name]; b.position.copy(r.p); b.quaternion.copy(r.q); b.scale.copy(r.s); }
     // Ereignis-Bewegung dieses Bilds (Rig.liven): beim Gehen nur das Gesicht, in Ruhe und Kampfhaltung auch Körper und Arme
     const life = rig.lifeNow && (kind === 'idle' || kind === 'ready' || kind === 'walk' || kind === 'run') ? rig.lifeNow : null;
-    if (kind === 'walk' || kind === 'run') { gaitPose(rig, t, kind); blinkEyes(rig, t); if (life) lifeEyes(rig, life); mouthPose(rig, t, 0, life); return; }
+    if (kind === 'walk' || kind === 'run') { gaitPose(rig, t, kind); blinkEyes(rig, t); if (life) lifeEyes(rig, life); mouthPose(rig, t, 0, life); mountPose(rig); return; }
     const S = Math.sin, br = S(t * 2.2);
     // Atmen und Wippen
     if (B.body) { B.body.position.y += 0.02 * br; B.body.scale.set(1 + 0.012 * br, 1 - 0.008 * br, 1 + 0.012 * br); }
@@ -19954,11 +20139,29 @@ const Rig = (() => {
     blinkEyes(rig, t);
     if (life) lifeEyes(rig, life);
     mouthPose(rig, t, kind === 'cheer' ? 0.6 : 0, life);
+    mountPose(rig);
+  }
+  // Zwischenstücke im Kopfgelenk (attach, headShare): folgen Lage und Drehung des Kopfs mit ihrem Anteil. Nach allen Bewegungen des
+  // Kopfs im Bild aufrufen (animate, gesture), ohne Allokationen
+  function mountPose(rig) {
+    // Glieder nur so weit drehen, wie sie frei bleiben (limbK aus attach), Ruhe der Knochen ist ohne Drehung
+    const K = rig.limbK;
+    if (K) for (const key in K) { const k = K[key], b = rig.bones[key]; if (k < 1 && b) { b.rotation.x *= k; b.rotation.y *= k; b.rotation.z *= k; } }
+    const ms = rig.mounts, hb = rig.bones.head; if (!ms || !ms.length || !hb) return;
+    const r = rig.rest.head;
+    for (const m of ms) {
+      m.o.position.copy(m.p0).add(_v.copy(hb.position).sub(r.p).multiplyScalar(m.k));
+      m.o.quaternion.identity().slerp(_q.copy(r.q).invert().multiply(hb.quaternion), m.k);
+    }
   }
 
   function blinkEyes(rig, t) {
     const b = blink(t, rig.seed), o = peek(t, rig.seed);
     for (const e of rig.eyes || []) {
+      // Breite und Tiefe jedes Bild neu setzen (Luis 27.10.2026, Ovaling 522442ff: Augen wuchsen über das ganze Bild). Die Drehpunkte
+      // der Augen sind keine Knochen und werden in animate nicht zurückgesetzt. Staunen (lifeEyes) multiplizierte x und z je Bild
+      // mit 1,14, das wuchs ohne Grenze und blieb auch nach dem Staunen stehen
+      e.piv.scale.x = 1; e.piv.scale.z = 1; if (e.alt) { e.alt.scale.x = 1; e.alt.scale.z = 1; }
       // Versteckte Teile ausblenden statt flachdrücken: eine flache Scheibe sieht man von schräg oben als Ellipse mit Pupille
       // (Rückmeldung Luis 02.10.2026, geschlossene Augen zeigten ihre Pupille)
       if (e.alt) { const k = o * (1 - b); e.alt.visible = k > 0.04; e.alt.scale.y = Math.max(0.04, k); e.piv.visible = k < 0.96; e.piv.scale.y = Math.max(0.04, 1 - k); }
@@ -20655,7 +20858,8 @@ const Rig = (() => {
   function rest(rig) {
     if (!rig) return;
     for (const b of rig.list) { const r = rig.rest[b.name]; b.position.copy(r.p); b.quaternion.copy(r.q); b.scale.copy(r.s); }
-    for (const e of rig.eyes || []) { e.piv.visible = true; e.piv.scale.y = 1; if (e.alt) e.alt.visible = false; }
+    for (const e of rig.eyes || []) { e.piv.visible = true; e.piv.scale.set(1, 1, 1); if (e.alt) { e.alt.visible = false; e.alt.scale.set(1, 1, 1); } }
+    mountPose(rig);
     mouthApply(rig, { open: 0, L: 0, R: 0, W: 0, P: 0 }, 0);
   }
 
@@ -21212,8 +21416,8 @@ const Eggs = (() => {
   function distance(u1, v1, u2, v2) { let du = Math.abs(u1 - u2) % 1; du = Math.min(du, 1 - du); const vm = (v1 + v2) / 2; return Math.hypot(du * proU(vm), (v1 - v2) * proV(vm)); }
 
   // --- Schlüpfen V2 (Probe 30c, Luis 27.10.2026): weiches Wackeln, wachsende Risse mit Lichtschein ------------------------
-  // Hinter dem Schalter EGG_FX_V2, die App-Bühne bleibt bis zur Abnahme beim alten Ablauf. Einzelne Eier schalten mit
-  // Eggs.egg(tier, renderer, seed, { fx2: true }) um (Probe-Seite ovalings-egg-hatch-probe.html).
+  // Hinter dem Schalter EGG_FX ('old' bisher, 'v2' neu, 'v3' Mittel), die App-Bühne bleibt bis zur Abnahme bei 'old'. Einzelne
+  // Eier schalten mit Eggs.egg(tier, renderer, seed, { fx: 'v3' }) um (Probe-Seite ovalings-egg-hatch-probe.html).
   // Ruckeln bisher: (1) jedes Tippen setzte das Wackeln auf null zurück und wechselte sofort die Achse (Sprung im Winkel,
   // Sprung in der Drehgeschwindigkeit), (2) 4 Wellen je Sekunde bei 30 Bildern, sobald die Bühne nach 0,9 s auf 30 Bilder geht
   // (Lebenszeichen ganz bei 30), (3) jedes Tippen baute 4 bis 8 Schläuche (TubeGeometry), einen Lichtfleck mit eigenem Material
@@ -21223,7 +21427,7 @@ const Eggs = (() => {
   // einen weichen Stoß (Kraft über 70 ms als Sinusbogen), nichts wird zurückgesetzt. Risse liegen in einem einzigen, beim
   // Bau angelegten Netz (Bänder auf der Schale, je Ecke die Zeit, zu der die Front sie erreicht, der Shader blendet sie
   // ein). Späne kommen aus einem festen Vorrat (InstancedMesh). Im Bildtakt nur Zahlen in vorhandene Puffer.
-  const EGG_FX_V2 = false;
+  const EGG_FX = 'old', EGG_FX_ALL = ['old', 'v2', 'v3'];
   const CRACK_MAXV = 16384, CRACK_LIFT = 0.0035, CRACK_HALO = 5, CRACK_SPEED = 1.5, CHIP_POOL = 40;
   const WOB_OMEGA = TAU * 2.8, WOB_ZETA = 0.22, WOB_STEP = 1 / 240, WOB_MAX = 0.3, PUSH_DUR = 0.07;
   const CRACK_VS = [
@@ -21312,6 +21516,98 @@ const Eggs = (() => {
       geo.setDrawRange(0, ni);
     }
     return { mesh, mat, ribbon, dispose() { geo.dispose(); mat.dispose(); } };
+  }
+
+  // --- Schlüpfen V3 „Mittel“ (Luis 27.10.2026): Risse und Leuchten wie bisher, Wachsen und Wackeln wie V2 -----------------
+  // Luis: V2 wirkt zerfranst und ohne kräftigen Schein, bisher sieht besser aus (dunkle, verzweigte Schläuche, heller Fleck am
+  // Treffpunkt). Behalten aus V2: das weiche Wackeln (Feder, springWobble) und die Risse, die langgezogen vom Treffpunkt wachsen.
+  // Die Wege der Risse rechnet path() wie bisher (3 bis 4 Strahlen, Ast mit 60 %, Dicke 0,013 bis 0,003 und 0,008 bis 0,002).
+  // Statt je Riss eine TubeGeometry mit eigenem Mesh liegen alle Schläuche in einem beim Bau angelegten Netz: je Ecke die Mitte
+  // des Rings, der Versatz zur Wand und die Zeit, zu der die Front sie erreicht. Der Shader lässt Teile vor der Front weg und
+  // öffnet die Spitze in gut 0,1 s auf volle Dicke. Farbe einheitlich wie MeshBasicMaterial (dunkel, mit jedem Tippen zur Farbe
+  // der Seltenheit). Leuchtflecken aus einem festen Vorrat mit einem gemeinsamen Material, Späne wie V2.
+  const TUBE_MAXV = 24576, TUBE_R = 6, TUBE_RINGS = 256, TUBE_SPEED = 1.5, PATH_STEP = 0.035, GLINT_POOL = 16;
+  const TUBE_VS = [
+    'attribute vec3 off; attribute float born;',
+    'uniform float uNow; varying float vAge;',
+    'void main() {',
+    '  vAge = uNow - born;',
+    '  vec3 p = position + off * (0.3 + 0.7 * clamp(vAge * 8.0, 0.0, 1.0));',
+    '  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);',
+    '}'].join('\n');
+  const TUBE_FS = [
+    'uniform vec3 uColor; varying float vAge;',
+    'void main() {',
+    '  if (vAge < 0.0) discard;',
+    '  gl_FragColor = vec4(uColor, 1.0);',
+    '  #include <tonemapping_fragment>',
+    '  #include <encodings_fragment>',
+    '}'].join('\n');
+  function crackTubes(d) {
+    const pos = new Float32Array(TUBE_MAXV * 3), off = new Float32Array(TUBE_MAXV * 3), born = new Float32Array(TUBE_MAXV).fill(1e9);
+    const idx = new Uint16Array(TUBE_MAXV * 6), geo = new THREE.BufferGeometry();
+    const at = (name, arr, n) => { const b = new THREE.BufferAttribute(arr, n); b.setUsage(THREE.DynamicDrawUsage); geo.setAttribute(name, b); return b; };
+    const aPos = at('position', pos, 3), aOff = at('off', off, 3), aBorn = at('born', born, 1);
+    const aIdx = new THREE.BufferAttribute(idx, 1); aIdx.setUsage(THREE.DynamicDrawUsage); geo.setIndex(aIdx);
+    // Platzhalter (nie sichtbar, Geburt 1e9), damit der Shader beim Bau übersetzt wird und nicht beim ersten Tippen
+    idx.set([0, 1, 2]); geo.setDrawRange(0, 3);
+    geo.boundingSphere = new THREE.Sphere(V(0, 0, 0), 1.2);
+    const mat = new THREE.ShaderMaterial({ uniforms: { uNow: { value: 0 }, uColor: { value: col(d.crack) } }, vertexShader: TUBE_VS, fragmentShader: TUBE_FS });
+    const mesh = new THREE.Mesh(geo, mat); mesh.frustumCulled = false;
+    // Zwischenspeicher für Punkte des Weges und Ringe, einmal angelegt
+    const P = new Float32Array(TUBE_RINGS * 3), Q = new Float32Array(TUBE_RINGS * 3), C = new Float32Array(TUBE_RINGS * 3), CN = new Float32Array(TUBE_RINGS * 3), CD = new Float32Array(TUBE_RINGS);
+    const tg = V(0, 0, 0), sd = V(0, 0, 0), up = V(0, 0, 0), nn = V(0, 0, 0);
+    let nv = 3, ni = 3, last = -9;
+    const grow = (b, a0, a1) => { if (b.updateRange.count < 0) b.updateRange.offset = a0; b.updateRange.count = a1 - b.updateRange.offset; b.needsUpdate = true; };
+    // Schlauch entlang eines Weges [[u, v], ...] (Schritt PATH_STEP), Dicke r0 nach r1, die Front erreicht den Anfang zur Zeit t0
+    function tube(pts, t0, r0, r1) {
+      const n = pts.length;
+      if (n < 3 || n > TUBE_RINGS) return;
+      // so viele Ringe wie TubeGeometry über CatmullRomCurve3 (mindestens 8 Stücke), gleichmäßig je Stück statt nach Bogenlänge
+      const sub = Math.max(2, Math.ceil(8 / (n - 1))), M = (n - 1) * sub;
+      if (M + 1 > TUBE_RINGS || nv + (M + 1) * TUBE_R > TUBE_MAXV) return;
+      for (let i = 0; i < n; i++) {
+        const p = S(pts[i][0], pts[i][1]), q = N(pts[i][0], pts[i][1]);
+        P[3 * i] = p.x + q.x * 0.005; P[3 * i + 1] = p.y + q.y * 0.005; P[3 * i + 2] = p.z + q.z * 0.005; Q[3 * i] = q.x; Q[3 * i + 1] = q.y; Q[3 * i + 2] = q.z;
+      }
+      // Mitten der Ringe als Catmull-Rom, die Enden wie bei three.js nach außen verlängert
+      let j = 0;
+      for (let i = 0; i < n - 1; i++) for (let s = 0; s < (i === n - 2 ? sub + 1 : sub); s++, j++) {
+        const t = s / sub, t2 = t * t, t3 = t2 * t, i0 = Math.max(0, i - 1), i3 = Math.min(n - 1, i + 2);
+        for (let c = 0; c < 3; c++) {
+          const p1 = P[3 * i + c], p2 = P[3 * (i + 1) + c], p0 = i > 0 ? P[3 * i0 + c] : 2 * p1 - p2, p3 = i + 2 < n ? P[3 * i3 + c] : 2 * p2 - p1;
+          C[3 * j + c] = 0.5 * (2 * p1 + (p2 - p0) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (3 * p1 - p0 - 3 * p2 + p3) * t3);
+          CN[3 * j + c] = Q[3 * i + c] + (Q[3 * (i + 1) + c] - Q[3 * i + c]) * t;
+        }
+        CD[j] = (i + t) * PATH_STEP;
+      }
+      const v0 = nv, i0 = ni;
+      for (let k = 0; k <= M; k++) {
+        const a = Math.max(0, k - 1), b = Math.min(M, k + 1);
+        tg.set(C[3 * b] - C[3 * a], C[3 * b + 1] - C[3 * a + 1], C[3 * b + 2] - C[3 * a + 2]).normalize();
+        nn.set(CN[3 * k], CN[3 * k + 1], CN[3 * k + 2]);
+        sd.crossVectors(nn, tg).normalize(); up.crossVectors(tg, sd);
+        const rr = lerp(r0, r1, k / M), tb = t0 + CD[k] / TUBE_SPEED;
+        for (let e = 0; e < TUBE_R; e++) {
+          const th = e / TUBE_R * TAU, cs = Math.cos(th) * rr, sn = Math.sin(th) * rr, q = nv + k * TUBE_R + e;
+          pos[3 * q] = C[3 * k]; pos[3 * q + 1] = C[3 * k + 1]; pos[3 * q + 2] = C[3 * k + 2];
+          off[3 * q] = sd.x * cs + up.x * sn; off[3 * q + 1] = sd.y * cs + up.y * sn; off[3 * q + 2] = sd.z * cs + up.z * sn;
+          born[q] = tb;
+        }
+        if (tb > last) last = tb;
+      }
+      // Dreiecke zwischen Ring k und k+1, Vorderseite außen (Querschnitt sd, up, Laufrichtung tg)
+      for (let k = 0; k < M; k++) for (let e = 0; e < TUBE_R; e++) {
+        const e1 = (e + 1) % TUBE_R, a = nv + k * TUBE_R + e, b = a + TUBE_R, c = nv + (k + 1) * TUBE_R + e1, dd = nv + k * TUBE_R + e1;
+        idx[ni++] = a; idx[ni++] = dd; idx[ni++] = b; idx[ni++] = b; idx[ni++] = dd; idx[ni++] = c;
+      }
+      nv += (M + 1) * TUBE_R;
+      // nur den neuen Teil hochladen (wie crackField)
+      for (const [bb, w] of [[aPos, 3], [aOff, 3], [aBorn, 1]]) grow(bb, v0 * w, nv * w);
+      grow(aIdx, i0, ni);
+      geo.setDrawRange(0, ni);
+    }
+    return { mesh, mat, tube, get last() { return last; }, dispose() { geo.dispose(); mat.dispose(); } };
   }
 
   // --- Nest ------------------------------------------------------------------------
@@ -21454,7 +21750,8 @@ const Eggs = (() => {
 
   // --- Ein Ei ---------------------------------------------------------------------
   function egg(tier, renderer, seed, opts) {
-    const fx2 = opts && opts.fx2 != null ? !!opts.fx2 : EGG_FX_V2;
+    // Fassung des Schlüpfens: opts.fx ('old', 'v2', 'v3'), opts.fx2 (true heißt 'v2') bleibt für ältere Aufrufe
+    const fx = opts && EGG_FX_ALL.includes(opts.fx) ? opts.fx : opts && opts.fx2 != null ? (opts.fx2 ? 'v2' : 'old') : EGG_FX;
     const d = DESIGN[tier], env = d.studio ? studioMap(renderer) : envMap(renderer), r = rng(seed || 1);
     const root = new THREE.Group(), wob = new THREE.Group(), shell = new THREE.Group();
     root.add(wob); wob.add(shell); shell.position.y = HH;
@@ -21478,9 +21775,72 @@ const Eggs = (() => {
       sparks = new THREE.Points(geo, new THREE.PointsMaterial({ map: glowTexture(), color: col(sk.color), size: sk.size, transparent: true, opacity: sk.opacity, blending: THREE.AdditiveBlending, depthWrite: false }));
       sparks.userData = info; wob.add(sparks);
     }
-    if (fx2) return eggV2();
+    // Wackeln als gedämpfte Feder (V2 und V3), siehe EGG_FX
+    function springWobble() {
+      // Wackeln: Neigung um x und z als gedämpfte Feder, Stöße als weicher Kraftbogen (Vorrat fester Größe)
+      const W = { ax: 0, az: 0, vx: 0, vz: 0, acc: 0 }, pushes = [];
+      for (let i = 0; i < 6; i++) pushes.push({ on: false, wait: 0, t: 0, jx: 0, jz: 0 });
+      function push(dirX, dirZ, strength, wait) {
+        const p = pushes.find(x => !x.on) || pushes[0], j = strength * WOB_OMEGA * 1.25;
+        p.on = true; p.wait = wait || 0; p.t = 0; p.jx = dirX * j; p.jz = dirZ * j;
+      }
+      function stepWobble(dt) {
+        W.acc += dt;
+        while (W.acc >= WOB_STEP) {
+          W.acc -= WOB_STEP;
+          let fx = -WOB_OMEGA * WOB_OMEGA * W.ax - 2 * WOB_ZETA * WOB_OMEGA * W.vx, fz = -WOB_OMEGA * WOB_OMEGA * W.az - 2 * WOB_ZETA * WOB_OMEGA * W.vz;
+          for (const p of pushes) {
+            if (!p.on) continue;
+            if (p.wait > 0) { p.wait -= WOB_STEP; continue; }
+            // Sinusbogen über PUSH_DUR, Fläche 1: der ganze Stoß j kommt an, ohne Sprung in der Geschwindigkeit
+            const k = Math.PI / (2 * PUSH_DUR) * Math.sin(Math.PI * p.t / PUSH_DUR);
+            fx += p.jx * k; fz += p.jz * k; p.t += WOB_STEP; if (p.t >= PUSH_DUR) p.on = false;
+          }
+          W.vx += fx * WOB_STEP; W.vz += fz * WOB_STEP; W.ax += W.vx * WOB_STEP; W.az += W.vz * WOB_STEP;
+        }
+        // weiche Grenze, damit schnelles Tippen das Ei nicht umwirft
+        wob.rotation.set(WOB_MAX * Math.tanh(W.ax / WOB_MAX), 0, WOB_MAX * Math.tanh(W.az / WOB_MAX));
+      }
+      return { W, pushes, push, stepWobble };
+    }
+    // Späne aus festem Vorrat (V2 und V3)
+    function chipPool(rc) {
+      // Späne: ein InstancedMesh, je Span Lage, Tempo, Drehung, Drehtempo, Rest der Lebenszeit
+      const chips = new THREE.InstancedMesh(spanGeo, spanMat, CHIP_POOL), cs = new Float32Array(CHIP_POOL * 13), dummy = new THREE.Object3D();
+      chips.instanceMatrix.setUsage(THREE.DynamicDrawUsage); chips.frustumCulled = false;
+      dummy.scale.setScalar(0); dummy.updateMatrix();
+      for (let i = 0; i < CHIP_POOL; i++) chips.setMatrixAt(i, dummy.matrix);
+      shell.add(chips);
+      let chipNext = 0, chipLive = 0, chipQuiet = 0;
+      function chip(p, n) {
+        const i = chipNext, o = i * 13; chipNext = (chipNext + 1) % CHIP_POOL;
+        if (cs[o + 12] <= 0) chipLive++;
+        const sp = 1 + rc();
+        cs[o] = p.x; cs[o + 1] = p.y; cs[o + 2] = p.z;
+        cs[o + 3] = n.x * sp + (rc() - 0.5) * 1.4; cs[o + 4] = n.y * sp + 0.8 + rc(); cs[o + 5] = n.z * sp + (rc() - 0.5) * 1.4;
+        cs[o + 6] = rc() * TAU; cs[o + 7] = rc() * TAU; cs[o + 8] = 0; cs[o + 9] = rc() * 12; cs[o + 10] = rc() * 12; cs[o + 11] = 0; cs[o + 12] = 0.9;
+      }
+      function moveChips(dt) {
+        if (!chipLive) { if (chips.visible && ++chipQuiet > 3) chips.visible = false; return; }
+        chips.visible = true; chipQuiet = 0;
+        for (let i = 0; i < CHIP_POOL; i++) {
+          const o = i * 13; if (cs[o + 12] <= 0) continue;
+          cs[o + 12] -= dt; cs[o + 4] -= 7 * dt;
+          cs[o] += cs[o + 3] * dt; cs[o + 1] += cs[o + 4] * dt; cs[o + 2] += cs[o + 5] * dt; cs[o + 6] += cs[o + 9] * dt; cs[o + 7] += cs[o + 10] * dt;
+          const life = cs[o + 12];
+          if (life <= 0) { chipLive--; dummy.scale.setScalar(0); }
+          else { dummy.position.set(cs[o], cs[o + 1], cs[o + 2]); dummy.rotation.set(cs[o + 6], cs[o + 7], 0); dummy.scale.setScalar(Math.max(0.01, life / 0.9)); }
+          dummy.updateMatrix(); chips.setMatrixAt(i, dummy.matrix);
+        }
+        chips.instanceMatrix.needsUpdate = true;
+      }
+      return { chips, chip, moveChips, chipsLive: () => chipLive };
+    }
 
-    // Schlüpfen V2: Feder, Risse aus einem Netz, Späne aus dem Vorrat (siehe EGG_FX_V2). Teilt Schale, Band, Aura und Funken mit oben
+    if (fx === 'v2') return eggV2();
+    if (fx === 'v3') return eggV3();
+
+    // Schlüpfen V2: Feder, Risse aus einem Netz, Späne aus dem Vorrat (siehe EGG_FX). Teilt Schale, Band, Aura und Funken mit oben
     function eggV2() {
       const st = crackStyle(seed || 1), rc = rng(((seed || 1) * 2654435761) >>> 0), rw = rng(((seed || 1) ^ 0x2545f491) >>> 0);
       const field = crackField(d); shell.add(field.mesh);
@@ -21517,67 +21877,15 @@ const Eggs = (() => {
           grow(p[0], p[1], p[3] + sgn * st.fork * (0.7 + 0.6 * rc()), rest * st.twig * (0.7 + 0.6 * rc()), t0 + p[2] / CRACK_SPEED, w * 0.62, depth + 1, -bend * 0.5);
         }
       }
-      // Wackeln: Neigung um x und z als gedämpfte Feder, Stöße als weicher Kraftbogen (Vorrat fester Größe)
-      const W = { ax: 0, az: 0, vx: 0, vz: 0, acc: 0 }, pushes = [];
-      for (let i = 0; i < 6; i++) pushes.push({ on: false, wait: 0, t: 0, jx: 0, jz: 0 });
-      function push(dirX, dirZ, strength, wait) {
-        const p = pushes.find(x => !x.on) || pushes[0], j = strength * WOB_OMEGA * 1.25;
-        p.on = true; p.wait = wait || 0; p.t = 0; p.jx = dirX * j; p.jz = dirZ * j;
-      }
-      function stepWobble(dt) {
-        W.acc += dt;
-        while (W.acc >= WOB_STEP) {
-          W.acc -= WOB_STEP;
-          let fx = -WOB_OMEGA * WOB_OMEGA * W.ax - 2 * WOB_ZETA * WOB_OMEGA * W.vx, fz = -WOB_OMEGA * WOB_OMEGA * W.az - 2 * WOB_ZETA * WOB_OMEGA * W.vz;
-          for (const p of pushes) {
-            if (!p.on) continue;
-            if (p.wait > 0) { p.wait -= WOB_STEP; continue; }
-            // Sinusbogen über PUSH_DUR, Fläche 1: der ganze Stoß j kommt an, ohne Sprung in der Geschwindigkeit
-            const k = Math.PI / (2 * PUSH_DUR) * Math.sin(Math.PI * p.t / PUSH_DUR);
-            fx += p.jx * k; fz += p.jz * k; p.t += WOB_STEP; if (p.t >= PUSH_DUR) p.on = false;
-          }
-          W.vx += fx * WOB_STEP; W.vz += fz * WOB_STEP; W.ax += W.vx * WOB_STEP; W.az += W.vz * WOB_STEP;
-        }
-        // weiche Grenze, damit schnelles Tippen das Ei nicht umwirft
-        wob.rotation.set(WOB_MAX * Math.tanh(W.ax / WOB_MAX), 0, WOB_MAX * Math.tanh(W.az / WOB_MAX));
-      }
-      // Späne: ein InstancedMesh, je Span Lage, Tempo, Drehung, Drehtempo, Rest der Lebenszeit
-      const chips = new THREE.InstancedMesh(spanGeo, spanMat, CHIP_POOL), cs = new Float32Array(CHIP_POOL * 13), dummy = new THREE.Object3D();
-      chips.instanceMatrix.setUsage(THREE.DynamicDrawUsage); chips.frustumCulled = false;
-      dummy.scale.setScalar(0); dummy.updateMatrix();
-      for (let i = 0; i < CHIP_POOL; i++) chips.setMatrixAt(i, dummy.matrix);
-      shell.add(chips);
-      let chipNext = 0, chipLive = 0, chipQuiet = 0;
-      function chip(p, n) {
-        const i = chipNext, o = i * 13; chipNext = (chipNext + 1) % CHIP_POOL;
-        if (cs[o + 12] <= 0) chipLive++;
-        const sp = 1 + rc();
-        cs[o] = p.x; cs[o + 1] = p.y; cs[o + 2] = p.z;
-        cs[o + 3] = n.x * sp + (rc() - 0.5) * 1.4; cs[o + 4] = n.y * sp + 0.8 + rc(); cs[o + 5] = n.z * sp + (rc() - 0.5) * 1.4;
-        cs[o + 6] = rc() * TAU; cs[o + 7] = rc() * TAU; cs[o + 8] = 0; cs[o + 9] = rc() * 12; cs[o + 10] = rc() * 12; cs[o + 11] = 0; cs[o + 12] = 0.9;
-      }
-      function moveChips(dt) {
-        if (!chipLive) { if (chips.visible && ++chipQuiet > 3) chips.visible = false; return; }
-        chips.visible = true; chipQuiet = 0;
-        for (let i = 0; i < CHIP_POOL; i++) {
-          const o = i * 13; if (cs[o + 12] <= 0) continue;
-          cs[o + 12] -= dt; cs[o + 4] -= 7 * dt;
-          cs[o] += cs[o + 3] * dt; cs[o + 1] += cs[o + 4] * dt; cs[o + 2] += cs[o + 5] * dt; cs[o + 6] += cs[o + 9] * dt; cs[o + 7] += cs[o + 10] * dt;
-          const life = cs[o + 12];
-          if (life <= 0) { chipLive--; dummy.scale.setScalar(0); }
-          else { dummy.position.set(cs[o], cs[o + 1], cs[o + 2]); dummy.rotation.set(cs[o + 6], cs[o + 7], 0); dummy.scale.setScalar(Math.max(0.01, life / 0.9)); }
-          dummy.updateMatrix(); chips.setMatrixAt(i, dummy.matrix);
-        }
-        chips.instanceMatrix.needsUpdate = true;
-      }
+      const { W, pushes, push, stepWobble } = springWobble(), { chips, chip, moveChips, chipsLive } = chipPool(rc);
 
       let hits = 0, clock = 0, restT = 0, quietT = 9, burstT = -1, lastCrack = -9;
       const self = {
-        root, tier, name: d.name, text: d.text, taps: d.taps, bg: d.bg, shards, fx2: true,
+        root, tier, name: d.name, text: d.text, taps: d.taps, bg: d.bg, shards, fx: 'v2',
         get hits() { return hits; },
         get done() { return burstT > 1.9; },
         // läuft noch etwas, das 60 Bilder braucht (Wackeln, wachsende Risse, Späne, Aufbrechen). Für die Bühne, die sonst nach 0,9 s auf 30 geht
-        get busy() { if (burstT >= 0 || chipLive > 0 || clock - lastCrack < 1.0) return true; for (let i = 0; i < pushes.length; i++) if (pushes[i].on) return true; return Math.abs(W.ax) + Math.abs(W.az) + 0.06 * (Math.abs(W.vx) + Math.abs(W.vz)) > 0.004; },
+        get busy() { if (burstT >= 0 || chipsLive() > 0 || clock - lastCrack < 1.0) return true; for (let i = 0; i < pushes.length; i++) if (pushes[i].on) return true; return Math.abs(W.ax) + Math.abs(W.az) + 0.06 * (Math.abs(W.vx) + Math.abs(W.vz)) > 0.004; },
         tap(hit, rareColor) {
           if (burstT >= 0) return false;
           hits++; tint.copy(col(rareColor));
@@ -21647,6 +21955,98 @@ const Eggs = (() => {
           }
         },
         dispose() { shell.remove(chips); chips.dispose && chips.dispose(); root.traverse(c => { if (c.geometry) c.geometry.dispose(); if (c.material && c.material.dispose) c.material.dispose(); }); field.dispose(); spanGeo.dispose(); spanMat.dispose(); },
+      };
+      return self;
+    }
+
+    // Schlüpfen V3 „Mittel“: Risse und Leuchtflecken wie bisher, Wachsen und Wackeln wie V2 (siehe crackTubes)
+    function eggV3() {
+      const rc = rng(((seed || 1) * 2654435761) >>> 0), rw = rng(((seed || 1) ^ 0x2545f491) >>> 0);
+      const tubes = crackTubes(d); shell.add(tubes.mesh);
+      const dark = col(d.crack), tint = col('#ffffff');
+      // Leuchtflecken am Treffpunkt wie bisher (je Tippen einer, alle gleich hell und groß), hier aus einem Vorrat mit einem Material
+      const glintMat = new THREE.SpriteMaterial({ map: glowTexture(), color: tint, blending: THREE.AdditiveBlending, transparent: true, opacity: 0, depthWrite: false });
+      const glints3 = [];
+      for (let i = 0; i < GLINT_POOL; i++) { const g = new THREE.Sprite(glintMat); g.visible = i === 0; g.scale.setScalar(0.3); shell.add(g); glints3.push(g); }
+      const { W, pushes, push, stepWobble } = springWobble(), { chips, chip, moveChips, chipsLive } = chipPool(rc);
+      const spots3 = [];
+      // kGoal wie bisher f hoch 1,6, kNow folgt weich, damit Farbe und Schein nicht springen
+      let hits = 0, clock = 0, restT = 0, burstT = -1, glintN = 0, warm = 0, kGoal = 0, kNow = 0;
+      const self = {
+        root, tier, name: d.name, text: d.text, taps: d.taps, bg: d.bg, shards, fx: 'v3',
+        get hits() { return hits; },
+        get done() { return burstT > 1.9; },
+        // läuft noch etwas, das 60 Bilder braucht (Wackeln, wachsende Risse, Späne, Aufbrechen), wie V2
+        get busy() { if (burstT >= 0 || chipsLive() > 0 || clock < tubes.last + 0.2 || Math.abs(kGoal - kNow) > 0.01) return true; for (let i = 0; i < pushes.length; i++) if (pushes[i].on) return true; return Math.abs(W.ax) + Math.abs(W.az) + 0.06 * (Math.abs(W.vx) + Math.abs(W.vz)) > 0.004; },
+        tap(hit, rareColor) {
+          if (burstT >= 0) return false;
+          hits++; tint.set(rareColor).convertSRGBToLinear();
+          const f = hits / d.taps, u = hit.uv.x, v = hit.uv.y;
+          // Trifft man dieselbe Stelle wieder, werden die neuen Risse dort länger und reichen weiter nach außen
+          let sp = spots3.find(x => distance(x.u, x.v, u, v) < 0.2);
+          if (!sp) { sp = { u, v, hits2: 0 }; spots3.push(sp); }
+          sp.hits2++;
+          const rays = 3 + (rc() < 0.5 ? 1 : 0), length = Math.min(0.85, (0.12 + 0.45 * f) * (1 + 0.3 * (sp.hits2 - 1))), a0 = rc() * TAU;
+          for (let s = 0; s < rays; s++) {
+            const away = path(u, v, a0 + s * TAU / rays + (rc() - 0.5) * 0.6, length * (0.7 + 0.6 * rc()), rc);
+            tubes.tube(away, clock, 0.013, 0.003);
+            // Ast: beginnt zu wachsen, wenn die Front des Strahls dort ankommt
+            if (rc() < 0.6) { const k = Math.floor(away.length * (0.35 + 0.3 * rc())), m = away[k]; tubes.tube(path(m[0], m[1], rc() * TAU, length * 0.45, rc), clock + k * PATH_STEP / TUBE_SPEED, 0.008, 0.002); }
+          }
+          tubes.mesh.visible = true;
+          kGoal = Math.pow(f, 1.6);
+          const p = S(u, v), n = N(u, v);
+          if (glintN < GLINT_POOL) { const g = glints3[glintN++]; g.position.copy(p).addScaledVector(n, 0.05); g.scale.setScalar(0.3 + 0.5 * kNow); g.visible = true; }
+          for (let i = 0; i < 6 + Math.round(4 * f); i++) chip(p, n);
+          // weg vom Treffpunkt kippen wie V2
+          const h = Math.hypot(n.x, n.z) || 1;
+          push(-n.z / h, n.x / h, 0.1 + 0.08 * f);
+          restT = 0;
+          return hits >= d.taps;
+        },
+        burst() {
+          burstT = 0; tubes.mesh.visible = false; for (const g of glints3) g.visible = false;
+          for (const m of flyers) { const n = m.userData.n, top = m.userData.row === ROWS.length - 2; m.userData.vel = n.clone().multiplyScalar(1.8 + r() * 1.2).add(V(0, 1.6 + (top ? 1.4 : 0), 0)); m.userData.turn = V(r() - 0.5, r() - 0.5, r() - 0.5).multiplyScalar(14); }
+          for (const x of [mat, matBottom, ...ringMats]) if (x) { x.transparent = true; x.needsUpdate = true; }
+        },
+        update(dt, now) {
+          const t = now / 1000;
+          clock += dt; restT += dt;
+          // nach drei Bildern (Shader übersetzt) Netz und Vorrat ausblenden, bis sie gebraucht werden
+          if (warm < 3 && ++warm === 3) { if (!hits) tubes.mesh.visible = false; for (let i = glintN; i < GLINT_POOL; i++) glints3[i].visible = false; }
+          tubes.mat.uniforms.uNow.value = clock;
+          if (kNow !== kGoal) {
+            kNow += (kGoal - kNow) * Math.min(1, dt * 10); if (Math.abs(kGoal - kNow) < 0.002) kNow = kGoal;
+            // Licht aus den Rissen in der Farbe der Seltenheit, mit jedem Tippen stärker (wie bisher)
+            tubes.mat.uniforms.uColor.value.copy(dark).lerp(tint, kNow);
+            glintMat.color.copy(tint); glintMat.opacity = 0.85 * kNow;
+            const g = 0.3 + 0.5 * kNow; for (let i = 0; i < glintN; i++) glints3[i].scale.set(g, g, 1);
+          }
+          // Lebenszeichen in den Pausen wie V2
+          const f = hits / d.taps;
+          if (burstT < 0 && restT > 3.6 - 1.6 * f) {
+            restT = 0; const a = rw() * TAU, s = 0.035 + 0.05 * f;
+            push(Math.cos(a), Math.sin(a), s);
+            if (f > 0.5) push(Math.cos(a), Math.sin(a), s * 0.7, 0.2);
+          }
+          stepWobble(dt);
+          if (d.float) wob.position.y = d.float[0] + d.float[1] * Math.sin(t * d.float[2]);
+          if (d.pulse && burstT < 0) { const e = d.pulse.base + d.pulse.amp * Math.sin(t * PULSE); mat.emissiveIntensity = e; if (d.pulse.bottom) matBottom.emissiveIntensity = e; }
+          if (aura) aura.material.opacity = (d.aura.base + d.aura.wave * Math.sin(t * PULSE)) * (burstT < 0 ? 1 : Math.max(0, 1 - burstT * 2));
+          if (sparks) {
+            const p = sparks.geometry.attributes.position, so = d.sparks.opacity, info = sparks.userData;
+            for (let i = 0; i < info.length; i++) { const q = info[i], a = q.a + t * q.w; p.setXYZ(i, q.rr * Math.cos(a), q.y + 0.08 * Math.sin(t * 2 + i), q.rr * Math.sin(a)); }
+            p.needsUpdate = true; sparks.material.opacity = burstT < 0 ? so : Math.max(0, so - burstT * 1.5);
+          }
+          moveChips(dt);
+          if (burstT >= 0) {
+            burstT += dt;
+            for (const m of flyers) { const u = m.userData; u.vel.y -= 7 * dt; m.position.addScaledVector(u.vel, dt); m.rotation.x += u.turn.x * dt; m.rotation.y += u.turn.y * dt; m.rotation.z += u.turn.z * dt; }
+            const early = clamp(1 - (burstT - 0.3) / 0.7, 0, 1);
+            mat.opacity = early; for (const x of ringMats) x.opacity = (x === ringMats[2] ? 0.85 : 1) * early; matBottom.opacity = clamp(1 - (burstT - 0.9) / 0.8, 0, 1);
+          }
+        },
+        dispose() { shell.remove(chips); chips.dispose && chips.dispose(); root.traverse(c => { if (c.geometry) c.geometry.dispose(); if (c.material && c.material.dispose) c.material.dispose(); }); tubes.dispose(); glintMat.dispose(); spanGeo.dispose(); spanMat.dispose(); },
       };
       return self;
     }
@@ -21728,7 +22128,7 @@ const Eggs = (() => {
     return self;
   }
 
-  return { egg, nest, DESIGN, HEIGHT: 2 * HH, studioMap, FX_V2: EGG_FX_V2 };
+  return { egg, nest, DESIGN, HEIGHT: 2 * HH, studioMap, FX: EGG_FX };
 })();
 
 </script>
