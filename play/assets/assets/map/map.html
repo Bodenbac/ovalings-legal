@@ -38,16 +38,18 @@ body.embedded .map { border-radius: 0; min-height: 0; }
 
 <body class="embedded">
 <div class="app">
-  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 26.10.2026, 20:26 Uhr</span></div>
+  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 26.10.2026, 23:43 Uhr</span></div>
   <div class="map" id="map"></div>
   <div class="row">
     <button id="lvl1" aria-pressed="true">Level 1</button>
-    <button id="lvl5" aria-pressed="false">Level 5</button>
     <button id="lvl10" aria-pressed="false">Level 10</button>
+    <button id="lvl15" aria-pressed="false">Level 15</button>
     <button id="lvl20" aria-pressed="false">Level 20</button>
     <button id="lvl25" aria-pressed="false">Level 25</button>
+    <button id="lvl30" aria-pressed="false">Level 30</button>
     <button id="lvl35" aria-pressed="false">Level 35</button>
     <button id="lvl40" aria-pressed="false">Level 40</button>
+    <button id="lvl45" aria-pressed="false">Level 45</button>
   </div>
   <p class="text">Wischen verschiebt, zwei Finger oder Mausrad zoomen. Tippen auf ein Gebäude: <b id="tapped">noch nichts angetippt</b></p>
 </div>
@@ -5526,15 +5528,18 @@ totalEmissiveRadiance += vec3(1.0, 0.42, 0.1) * (1.0 - smoothstep(0.004, 0.016, 
 // Karte ist echtes 3D zum Wischen, Tippflächen sind die Gebäude selbst.
 // Rechts oben schwebt seit 10.10.2026 die erste eigene Insel: der See der Stille (Solo-Dungeon, map_solo.js), über eine
 // schwebende Treppe aus Bronze mit Goldkanten angebunden.
-// Links oben schwebt seit 13.10.2026 der Himmelspfad (map_sky.js, E128), über Wolkenschollen angebunden.
+// Seit 26.10.2026 (Luis) liegen die Außeninseln so, dass die Freischalt-Level im Uhrzeigersinn um die Hauptinsel steigen
+// (von oben gesehen, Kamera vorn): rechts oben See der Stille, rechts Himmelspfad, rechts vorn Eherne Feste, links vorn
+// Steingarten, links Spiegelgipfel, links oben Nesselriff, hinten in der Mitte Felsenhort.
+// Rechts zwischen See und Feste schwebt der Himmelspfad (map_sky.js, E128), über Wolkenschollen angebunden.
 // Rechts vorn schwebt die Eherne Feste (map_bulwark.js, Schildkoloss), angebunden über eine Brücke aus Bronzeplatten an Ketten.
-// Links neben der Hauptinsel schwebt das Nesselriff (map_reef.js, Nesselkönigin), angebunden über schwebende Muscheln.
-// Hinten in der Mitte zwischen See und Himmelspfad schwebt der Steingarten (map_garden.js, Medusa), angebunden über schwebende
-// Trittsteine aus Stein mit Efeu.
-// Rechts hinten zwischen See und Feste schwebt der Spiegelgipfel (map_spire.js, Kristallwächter), angebunden über schwebende
-// Kristallplatten an einem Lichtfaden.
-// Links zwischen Himmelspfad und Nesselriff schwebt der Felsenhort (map_hold.js, Zwietroll), zwei Felsen mit einer Schlucht
-// dazwischen, angebunden über eine Hängebrücke aus Holzbohlen und Seilen.
+// Links vorn neben der Hauptinsel schwebt der Steingarten (map_garden.js, Medusa), angebunden über schwebende Trittsteine aus
+// Stein mit Efeu.
+// Links zwischen Steingarten und Nesselriff schwebt der Spiegelgipfel (map_spire.js, Kristallwächter), angebunden über
+// schwebende Kristallplatten an einem Lichtfaden.
+// Links oben schwebt das Nesselriff (map_reef.js, Nesselkönigin), angebunden über schwebende Muscheln.
+// Hinten in der Mitte zwischen Nesselriff und See schwebt der Felsenhort (map_hold.js, Zwietroll), zwei Felsen mit einer
+// Schlucht dazwischen, angebunden über eine Hängebrücke aus Holzbohlen und Seilen.
 // DungeonMap.build() gibt { group, update(t), anchors: { tower, crypt, swamp, solo, sky, bulwark, reef, garden, spire, hold } } zurück, Punkte in Weltkoordinaten.
 const DungeonMap = (() => {
   const V = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -5826,8 +5831,10 @@ float rkHeight(vec3 q, out float crack, out float id) {
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SOLO.x, Math.sin(th) * rimR[a] - SOLO.z); if (d < footD) { footD = d; footA = a; } }
     const footTh = footA / NA * Math.PI * 2, FOOT = V(Math.cos(footTh) * (rimR[footA] - 0.75), 0, Math.sin(footTh) * (rimR[footA] - 0.75));
     FOOT.y = heightAt(FOOT.x, FOOT.z);
-    // Himmelspfad (E128): eigene Insel links oben, höher als alle anderen (Himmel), Brücke aus Wolkenschollen ab FOOT2
-    const SKY = V(-7.2, 2.6, -9.2);
+    // Himmelspfad (E128): eigene Insel rechts zwischen See der Stille und Ehernen Feste (seit 26.10.2026, vorher links oben),
+    // höher als alle anderen (Himmel), seit dem Umzug etwas tiefer (2,0 statt 2,6), damit er den See dahinter nicht verdeckt.
+    // Brücke aus Wolkenschollen ab FOOT2
+    const SKY = V(9.6, 2.0, -3.8);
     let foot2A = 0, foot2D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SKY.x, Math.sin(th) * rimR[a] - SKY.z); if (d < foot2D) { foot2D = d; foot2A = a; } }
     const foot2Th = foot2A / NA * Math.PI * 2, FOOT2 = V(Math.cos(foot2Th) * (rimR[foot2A] - 0.75), 0, Math.sin(foot2Th) * (rimR[foot2A] - 0.75));
@@ -5840,31 +5847,31 @@ float rkHeight(vec3 q, out float crack, out float id) {
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - BUL.x, Math.sin(th) * rimR[a] - BUL.z); if (d < foot3D) { foot3D = d; foot3A = a; } }
     const foot3Th = foot3A / NA * Math.PI * 2, FOOT3 = V(Math.cos(foot3Th) * (rimR[foot3A] - 0.75), 0, Math.sin(foot3Th) * (rimR[foot3A] - 0.75));
     FOOT3.y = heightAt(FOOT3.x, FOOT3.z);
-    // Nesselriff (siebter Dungeon): eigene Insel links neben der Hauptinsel, gegenüber der Feste und etwas weiter vorn, mit Abstand
-    // wie See, Himmelspfad und Feste (rund 3 vom Rand bis zur Landestelle). In der Gesamtansicht nicht zu sehen, erst nach kurzem
-    // Schieben nach links. Brücke ab FOOT4
-    const REEF = V(-10.0, -0.35, 2.2);
+    // Nesselriff (siebter Dungeon): eigene Insel links oben (seit 26.10.2026, vorher links vorn), gegenüber dem See der Stille,
+    // mit Abstand wie die anderen (rund 3 vom Rand bis zur Landestelle). Brücke ab FOOT4
+    const REEF = V(-7.2, 0.6, -9.2);
     let foot4A = 0, foot4D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - REEF.x, Math.sin(th) * rimR[a] - REEF.z); if (d < foot4D) { foot4D = d; foot4A = a; } }
     const foot4Th = foot4A / NA * Math.PI * 2, FOOT4 = V(Math.cos(foot4Th) * (rimR[foot4A] - 0.75), 0, Math.sin(foot4Th) * (rimR[foot4A] - 0.75));
     FOOT4.y = heightAt(FOOT4.x, FOOT4.z);
-    // Steingarten (achter Dungeon, ab Spielerlevel 15): eigene Insel hinten in der Mitte zwischen See der Stille und Himmelspfad,
-    // etwas höher als die Hauptinsel, mit Abstand wie die anderen (rund 3 vom Rand bis zur Landestelle). Brücke ab FOOT5
-    const GARDEN = V(0.3, 1.9, -12.4);
+    // Steingarten (achter Dungeon): eigene Insel links vorn neben der Hauptinsel (seit 26.10.2026, vorher hinten in der Mitte),
+    // gegenüber der Feste, mit Abstand wie die anderen (rund 3 vom Rand bis zur Landestelle). In der Gesamtansicht nicht ganz zu
+    // sehen, erst nach kurzem Schieben nach links. Brücke ab FOOT5
+    const GARDEN = V(-10.0, 0.4, 2.2);
     let foot5A = 0, foot5D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - GARDEN.x, Math.sin(th) * rimR[a] - GARDEN.z); if (d < foot5D) { foot5D = d; foot5A = a; } }
     const foot5Th = foot5A / NA * Math.PI * 2, FOOT5 = V(Math.cos(foot5Th) * (rimR[foot5A] - 0.75), 0, Math.sin(foot5Th) * (rimR[foot5A] - 0.75));
     FOOT5.y = heightAt(FOOT5.x, FOOT5.z);
-    // Spiegelgipfel (Dungeon ab Spielerlevel 25): eigene Insel rechts zwischen See der Stille und Ehernen Feste, höher als die
-    // Hauptinsel (ein Gipfel), mit Abstand wie die anderen. Brücke ab FOOT6
-    const SPIRE = V(9.6, 1.5, -3.8);
+    // Spiegelgipfel (neunter Dungeon): eigene Insel links zwischen Steingarten und Nesselriff (seit 26.10.2026, vorher rechts),
+    // gegenüber dem Himmelspfad, höher als die Hauptinsel (ein Gipfel), mit Abstand wie die anderen. Brücke ab FOOT6
+    const SPIRE = V(-10.2, 1.5, -3.6);
     let foot6A = 0, foot6D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SPIRE.x, Math.sin(th) * rimR[a] - SPIRE.z); if (d < foot6D) { foot6D = d; foot6A = a; } }
     const foot6Th = foot6A / NA * Math.PI * 2, FOOT6 = V(Math.cos(foot6Th) * (rimR[foot6A] - 0.75), 0, Math.sin(foot6Th) * (rimR[foot6A] - 0.75));
     FOOT6.y = heightAt(FOOT6.x, FOOT6.z);
-    // Felsenhort (Dungeon ab Spielerlevel 40): eigene Insel links zwischen Himmelspfad und Nesselriff, gespiegelt zum
-    // Spiegelgipfel, etwas niedriger. Brücke ab FOOT7
-    const HOLD = V(-10.2, 1.0, -3.6);
+    // Felsenhort (zehnter Dungeon): eigene Insel hinten in der Mitte zwischen Nesselriff und See der Stille (seit 26.10.2026,
+    // vorher links), etwas höher als die Hauptinsel, Höhe wie vorher. Brücke ab FOOT7
+    const HOLD = V(0.3, 1.0, -12.4);
     let foot7A = 0, foot7D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - HOLD.x, Math.sin(th) * rimR[a] - HOLD.z); if (d < foot7D) { foot7D = d; foot7A = a; } }
     const foot7Th = foot7A / NA * Math.PI * 2, FOOT7 = V(Math.cos(foot7Th) * (rimR[foot7A] - 0.75), 0, Math.sin(foot7Th) * (rimR[foot7A] - 0.75));
@@ -6334,7 +6341,8 @@ function gradTex(w, h, stops, radial, r0) {
   tex.magFilter = THREE.LinearFilter; tex.minFilter = THREE.LinearMipmapLinearFilter; tex.generateMipmaps = true; tex.needsUpdate = true;
   return tex;
 }
-const LEVELS = { tower: 1, crypt: 1, swamp: 5, solo: 10, garden: 15, sky: 20, spire: 25, bulwark: 30, reef: 35, hold: 40 };
+// Freischalt-Level wie `PlayerLevel.unlocks` (Luis 26.10.2026: im Uhrzeigersinn um die Hauptinsel steigend)
+const LEVELS = { tower: 1, crypt: 1, swamp: 10, solo: 15, sky: 20, bulwark: 25, garden: 30, spire: 35, reef: 40, hold: 45 };
 // Größe des Nebels je Ort: r Radius, s Größe der Bäusche, h Höhe des Schlosses. Der See der Stille ist eine eigene Insel
 // und bekommt einen weiteren Nebel, der auch ihren Rand bedeckt
 const FOG = { swamp: { r: 1.75, s: 1, h: 2.3 }, solo: { r: 2.35, s: 1.2, h: 2.4 }, sky: { r: 2.3, s: 1.2, h: 2.9 }, bulwark: { r: 2.2, s: 1.15, h: 2.6 }, reef: { r: 2.25, s: 1.15, h: 3.0 }, garden: { r: 2.3, s: 1.15, h: 2.5 }, spire: { r: 2.0, s: 1.15, h: 3.1 }, hold: { r: 2.4, s: 1.15, h: 2.7 } };
@@ -6380,32 +6388,24 @@ const view = { x: 0, z: 0.4, zoom: 0.9 }, aim = { x: 0, z: 0.4, zoom: 0.9 }, vel
 // Nachlauf seit Luis 14.10.2026 („zu schnell“) etwa halb so weit: Schwung 0,55-fach (GLIDE_GAIN), Abklingen 200 statt 330 ms
 const T_FOLLOW = 22, T_GLIDE = 200, T_SPRING = 110, T_BRAKE = 55, GLIDE_GAIN = 0.55;
 const ease = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-// Gang zur Ehernen Feste: um ihre Tiefe z herum darf die Karte um dx weiter nach rechts (voll bis r0 Abstand, aus bei r1)
-const BUL_REACH = world.parts.bulwark ? { z: world.parts.bulwark.group.position.z, dx: Math.max(0, world.parts.bulwark.group.position.x - 4.3), r0: 2.0, r1: 4.5 } : { z: 0, dx: 0, r0: 2, r1: 4.5 };
-// Gang zum Nesselriff links: um seine Tiefe z herum darf die Karte um dx weiter nach links (gespiegelt wie bei der Feste)
-const REEF_REACH = world.parts.reef ? { z: world.parts.reef.group.position.z, dx: Math.max(0, -world.parts.reef.group.position.x - 4.3), r0: 2.0, r1: 4.5 } : { z: 0, dx: 0, r0: 2, r1: 4.5 };
-// Gang zum Spiegelgipfel rechts hinten: um seine Tiefe z herum darf die Karte um dx weiter nach rechts (wie bei der Feste)
-// Gang zum Felsenhort links hinten: um seine Tiefe z herum darf die Karte um dx weiter nach links (gespiegelt wie beim Spiegelgipfel)
-const HOLD_REACH = world.parts.hold ? { z: world.parts.hold.group.position.z, dx: Math.max(0, -world.parts.hold.group.position.x - 4.3), r0: 2.0, r1: 4.5 } : { z: 0, dx: 0, r0: 2, r1: 4.5 };
-const SPIRE_REACH = world.parts.spire ? { z: world.parts.spire.group.position.z, dx: Math.max(0, world.parts.spire.group.position.x - 4.3), r0: 2.0, r1: 4.5 } : { z: 0, dx: 0, r0: 2, r1: 4.5 };
+// Gänge zu den Inseln neben der Hauptinsel: um die Tiefe z einer Insel herum darf die Karte um dx weiter zur Seite (voll bis r0
+// Abstand, aus bei r1). Rechts Himmelspfad und Eherne Feste, links Steingarten und Spiegelgipfel (Plätze seit 26.10.2026)
+const reach = (key, s) => { const p = world.parts[key] && world.parts[key].group.position; return p ? { z: p.z, dx: Math.max(0, s * p.x - 4.3), r0: 2.0, r1: 4.5 } : null; };
+const REACH_R = [reach('sky', 1), reach('bulwark', 1)].filter(Boolean), REACH_L = [reach('garden', -1), reach('spire', -1)].filter(Boolean);
+const reachAt = (list, zc) => list.reduce((m, r) => Math.max(m, r.dx * (1 - ease(r.r0, r.r1, Math.abs(zc - r.z)))), 0);
 // Grenzen für eine Lage, ohne sie zu ändern: gibt den nächsten erlaubten Punkt zurück
 function limits(x, z, zoom) {
   const m = (ZMAX - Math.min(ZMAX, Math.max(ZMIN, zoom))) / (ZMAX - ZMIN);
   // Auch ganz herausgezoomt bleibt Spiel zur Seite und nach unten (Luis 06.10.2026: Insel hochschieben, Unterseite sehen)
   // Zum See der Stille rechts oben (eigene Insel, seit 10.10.2026) führt ein schräger Gang: je weiter rechts, desto weiter
   // nach hinten, und je weiter hinten, desto weiter nach rechts. Ohne die Insel bleibt es beim Rechteck
-  // Zum Himmelspfad links oben (seit 13.10.2026) ebenso, gespiegelt
-  // Zur Ehernen Feste rechts vorn (seit 14.10.2026): in ihrer Lage weiter nach rechts (BUL_REACH)
-  // Zum Nesselriff links (seit 21.10.2026): in seiner Lage weiter nach links (REEF_REACH)
-  // Zum Spiegelgipfel rechts zwischen See und Feste (seit 21.10.2026): in seiner Lage weiter nach rechts (SPIRE_REACH)
-  // Zum Steingarten hinten in der Mitte (seit 21.10.2026): um x 0 herum weiter nach hinten wie zu See und Himmelspfad
-  // Zum Felsenhort links zwischen Himmelspfad und Nesselriff (seit 21.10.2026): in seiner Lage weiter nach links (HOLD_REACH)
-  const solo = world.parts.solo ? 1 : 0, sky = world.parts.sky ? 1 : 0, bul = world.parts.bulwark ? 1 : 0, reef = world.parts.reef ? 1 : 0, garden = world.parts.garden ? 1 : 0, spire = world.parts.spire ? 1 : 0, hold = world.parts.hold ? 1 : 0;
-  const zc = Math.min(6.5 + 2.5 * m, Math.max(-2.2 - 4 * m - 5.0 * Math.max(solo * ease(1.5, 4.5, x), sky * ease(-1.5, -4.5, x), garden * (1 - ease(1.5, 3.5, Math.abs(x)))), z));
-  const xc = Math.min(3 + 3.4 * m + Math.max(3.0 * solo * ease(-1.5, -5.5, zc), BUL_REACH.dx * bul * (1 - ease(BUL_REACH.r0, BUL_REACH.r1, Math.abs(zc - BUL_REACH.z))),
-    SPIRE_REACH.dx * spire * (1 - ease(SPIRE_REACH.r0, SPIRE_REACH.r1, Math.abs(zc - SPIRE_REACH.z)))),
-    Math.max(-3 - 3.4 * m - Math.max(3.0 * sky * ease(-1.5, -5.5, zc), REEF_REACH.dx * reef * (1 - ease(REEF_REACH.r0, REEF_REACH.r1, Math.abs(zc - REEF_REACH.z))),
-      HOLD_REACH.dx * hold * (1 - ease(HOLD_REACH.r0, HOLD_REACH.r1, Math.abs(zc - HOLD_REACH.z)))), x));
+  // Zum Nesselriff links oben (seit 26.10.2026, vorher Himmelspfad) ebenso, gespiegelt
+  // Zum Felsenhort hinten in der Mitte (seit 26.10.2026, vorher Steingarten): um x 0 herum weiter nach hinten
+  // Zu Himmelspfad und Eherner Feste rechts, Steingarten und Spiegelgipfel links: in ihrer Lage weiter zur Seite (REACH_R, REACH_L)
+  const backR = world.parts.solo ? 1 : 0, backL = world.parts.reef ? 1 : 0, backM = world.parts.hold ? 1 : 0;
+  const zc = Math.min(6.5 + 2.5 * m, Math.max(-2.2 - 4 * m - 5.0 * Math.max(backR * ease(1.5, 4.5, x), backL * ease(-1.5, -4.5, x), backM * (1 - ease(1.5, 3.5, Math.abs(x)))), z));
+  const xc = Math.min(3 + 3.4 * m + Math.max(3.0 * backR * ease(-1.5, -5.5, zc), reachAt(REACH_R, zc)),
+    Math.max(-3 - 3.4 * m - Math.max(3.0 * backL * ease(-1.5, -5.5, zc), reachAt(REACH_L, zc)), x));
   return { x: xc, z: zc };
 }
 const clampZoom = z => Math.min(ZMAX, Math.max(ZMIN, z));
@@ -6615,9 +6615,9 @@ function resetFeel() { Object.assign(view, { x: 0, z: 0.4, zoom: 0.9 }); Object.
 
 function size() { const w = map.clientWidth, h = map.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
 addEventListener('resize', size);
-for (const l of [1, 5, 10, 20, 25, 35, 40]) { const b = document.getElementById('lvl' + l); if (b) b.onclick = () => setLevel(l); }
+for (const l of [1, 10, 15, 20, 25, 30, 35, 40, 45]) { const b = document.getElementById('lvl' + l); if (b) b.onclick = () => setLevel(l); }
 
-// Nahansicht zum Ausarbeiten (Werkzeug): focusOn('tower' | 'crypt' | 'swamp' | 'solo' | 'sky', Winkel, Höhenwinkel, Abstand) richtet die Kamera
+// Nahansicht zum Ausarbeiten (Werkzeug): focusOn('tower' | 'crypt' | 'swamp' | 'solo' | 'sky' | … | 'hold', Winkel, Höhenwinkel, Abstand) richtet die Kamera
 // frei auf ein Gebäude, focusOn() zurück zur Karte. Mit ?focus=tower in der Adresse startet die Seite so
 function focusOn(key, az = 0, el = 0.5, dist = 6) {
   manual = !!key;
