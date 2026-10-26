@@ -441,6 +441,44 @@
     openDialog(dialogHead(mv.name, s.state === 'basic' ? D.t.basic : mv.sub, moveArt(mv, rarity, 64)), body2);
   }
 
+  // ---------- Steckbrief markiert wie in der App (Luis 27.10.2026, Punkt 22, lib/domain/profile/profile_marks.dart) ----------
+  // Werte als Symbol und Wort, gute Wörter blau, schlechte rot, wertende Wörter nur in Sätzen mit einem Wert. Muster und
+  // Zuordnung kommen aus dem Export (D.profileMarks), fehlen sie, steht der Text schlicht da. Nur Textknoten, kein innerHTML.
+  var MARK_STATS = { hp: 'hp', atk: 'attack', def: 'defense', spd: 'speed', crit: 'crit_rate', cdmg: 'crit_damage' };
+  function profileText(node, text, lang) {
+    clear(node);
+    var pm = D.profileMarks && D.profileMarks[lang], re, sentence;
+    try {
+      re = pm && new RegExp(pm.pattern, 'gu');
+      sentence = pm && new RegExp(pm.sentence, 'gu');
+    } catch (e) { re = null; }
+    if (!re || /[\[\]<>]/.test(text)) { node.textContent = text; return; }
+    (text.match(sentence) || [text]).forEach(function (s) {
+      var hits = [], m;
+      re.lastIndex = 0;
+      while ((m = re.exec(s))) { if (pm.tags[m[0]]) hits.push(m); }
+      var hasStat = hits.some(function (x) { var t = pm.tags[x[0]]; return t !== '+' && t !== '-'; });
+      var at = 0;
+      hits.forEach(function (x) {
+        var tag = pm.tags[x[0]];
+        if (x.index > at) node.appendChild(document.createTextNode(s.slice(at, x.index)));
+        if (MARK_STATS[tag]) {
+          var info = D.stats[MARK_STATS[tag]] || {};
+          var sm = h('span', 'statmark');
+          if (info.icon) sm.appendChild(pic(info.icon, 18));
+          sm.appendChild(document.createTextNode(x[0]));
+          node.appendChild(sm);
+        } else if (hasStat) {
+          node.appendChild(h('strong', tag === '+' ? 'buff' : 'debuff', x[0]));
+        } else {
+          node.appendChild(document.createTextNode(x[0]));
+        }
+        at = x.index + x[0].length;
+      });
+      if (at < s.length) node.appendChild(document.createTextNode(s.slice(at)));
+    });
+  }
+
   // ---------- Werte (wie _ValueRow der Detailseite) ----------
   function statRow(st) {
     var info = D.stats[st.stat] || { name: st.stat, icon: null, unit: '' };
@@ -702,7 +740,7 @@
     var pr = o.profile;
     el.profile.hidden = !(pr && pr.text);
     if (pr && pr.text) {
-      el.profileText.textContent = pr.text;
+      profileText(el.profileText, pr.text, pr.lang);
       el.profileText.lang = pr.lang;
       el.profileEn.hidden = pr.lang === cfg.lang;
     }
