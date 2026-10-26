@@ -44931,16 +44931,18 @@ const CampaignMap = (() => {
     const tex = gradTex(128, 128, [[0, 255, 255, 255, 1], [0.45, 255, 255, 255, 0.55], [1, 255, 255, 255, 0]], true);
     const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, emissive: 0x6a6488, emissiveIntensity: 0.28 });
     const ctx = { V, hash, noise, fbm, ease, lin, gradTex, tex, cloud, cloudMat, taper, pools, islandBase, pathRibbon, stationsAlong, plinth };
-    const isles = {}, only = opts.only || null;
-    LAYOUT.forEach(([x, y, z], i) => {
+    // opts.layout (Kachelbilder, Probe 27.10.2026): eigene Lage der sechs Inseln, opts.turn dreht einzelne Inseln zusätzlich (Bogenmaß),
+    // opts.bridges false lässt die Brücken weg. Ohne diese Angaben bleibt die Karte wie sie ist
+    const isles = {}, only = opts.only || null, LAY = opts.layout || LAYOUT, TURN = opts.turn || [];
+    LAY.forEach(([x, y, z], i) => {
       const key = ORDER[i];
       if (only && only !== key) return;
       const t0 = performance.now();
       const isle = (MapIsles[key] ? MapIsles[key](ctx) : plainIsle(ctx, PLAIN[key]));
       // Ausrichtung: das vordere Ende (+z der Insel) zeigt zur vorigen Insel, das hintere zur nächsten
-      const prev = LAYOUT[Math.max(0, i - 1)], next = LAYOUT[Math.min(5, i + 1)];
+      const prev = LAY[Math.max(0, i - 1)], next = LAY[Math.min(5, i + 1)];
       const dx = i === 0 ? next[0] - x : i === 5 ? x - prev[0] : next[0] - prev[0], dz = i === 0 ? next[2] - z : i === 5 ? z - prev[2] : next[2] - prev[2];
-      const ry = only ? 0 : Math.atan2(-dx, -dz);
+      const ry = only ? 0 : Math.atan2(-dx, -dz) + (TURN[i] || 0);
       isle.group.position.set(only ? 0 : x, only ? 0 : y, only ? 0 : z); isle.group.rotation.y = ry;
       root.add(isle.group); updates.push(isle.update || (() => {}));
       isle.key = key; isle.index = i; isle.ms = Math.round(performance.now() - t0);
@@ -44953,9 +44955,9 @@ const CampaignMap = (() => {
     // Brücken der Reihe nach
     const bmats = { plank: new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85 }), rope: new THREE.MeshStandardMaterial({ color: 0xcdb48a, roughness: 0.9 }),
       post: new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8 }) };
-    if (!only) for (let i = 0; i < 5; i++) { const a = isles[ORDER[i]], b = isles[ORDER[i + 1]]; root.add(bridge(a.world.exit, b.world.entry, bmats)); }
+    if (!only && opts.bridges !== false) for (let i = 0; i < 5; i++) { const a = isles[ORDER[i]], b = isles[ORDER[i + 1]]; root.add(bridge(a.world.exit, b.world.entry, bmats)); }
     // Wolkenmeer: tief unter der Reihe ein Teppich, dazu einzelne Wolken zwischen den Inseln
-    const zs = only ? [0] : LAYOUT.map(l => l[2]), y0 = only ? 0 : 0;
+    const zs = only ? [0] : LAY.map(l => l[2]), y0 = only ? 0 : 0;
     // Teppich tief unter der Reihe (mit der Reihe ansteigend), damit die Unterseiten frei bleiben und hinten nichts verdeckt wird
     for (let i = 0; i < (only ? 22 : 70); i++) {
       const zz = only ? (hash(i, 303) - 0.5) * 30 : zs[0] + 10 - (hash(i, 303)) * (zs[0] - zs[5] + 22);
@@ -44963,7 +44965,7 @@ const CampaignMap = (() => {
     }
     // Einzelne kleine Wolken seitlich zwischen den Inseln, unter der Höhe der Brücken
     for (let i = 0; i < (only ? 0 : 10); i++) {
-      const k = i % 5, a = LAYOUT[k], b = LAYOUT[k + 1], u = 0.3 + 0.4 * hash(i, 11), s = a[0] > 0 ? 1 : -1;
+      const k = i % 5, a = LAY[k], b = LAY[k + 1], u = 0.3 + 0.4 * hash(i, 11), s = a[0] > 0 ? 1 : -1;
       const c = cloud(cloudMat, 6, 3, 0.9, 600 + i * 5); c.position.set(a[0] + (b[0] - a[0]) * u + s * (5 + 3 * hash(i, 13)), a[1] + (b[1] - a[1]) * u - 7 - 2 * hash(i, 14), a[2] + (b[2] - a[2]) * u); root.add(c);
     }
     let tris = 0; root.traverse(o => { if (o.isMesh) { const g = o.geometry; tris += (g.index ? g.index.count : g.attributes.position.count) / 3; } });
@@ -52343,7 +52345,9 @@ let lookY = 1, dist = 8, targetLook = 1, targetDist = 8, lastSize = [2.2, 2.3];
 const VIEW_ZOOM = [0.72, 1.35];
 let viewZoom = 1, zoomTarget = 1;
 let rotY = 0.4, velY = 0, tiltX = 0.18, lastTouch = -1e9;
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Bewegung reduzieren entscheidet die App (Luis 27.10.2026, 24a: eigener Schalter statt der Einstellung des Systems,
+// Windows mit ausgeschalteten Animationseffekten nahm sonst die Bewegung). Kommt als { kind: 'motion', reduced } vor allem anderen
+let reducedMotion = false;
 // Ereignis-Bewegungen (Auftrag Animationen, 23.10.2026): ab Wärmestufe „serious“ keine, nur Atmen und Blinzeln
 const lifeOff = () => quality.thermal === 'serious' || quality.thermal === 'critical';
 
@@ -54664,8 +54668,13 @@ function battleFrame(now, dt, raw) {
 
 // Antippen: der Kämpfer, dessen Mitte auf dem Bildschirm am nächsten liegt, innerhalb seiner Größe
 function battleTap(cx, cy) {
+  const best = battlePick(cx, cy);
+  if (best) send({ type: 'battle_tap', key: best.key });
+}
+// Kämpfer unter dem Punkt (Bildschirm), sonst null. Tippen und Mauszeiger nutzen dieselbe Prüfung
+function battlePick(cx, cy) {
   const B = battle;
-  if (!B || !B.ready) return;
+  if (!B || !B.ready) return null;
   const r = el.getBoundingClientRect(), x = cx - r.left, y = cy - r.top;
   let best = null, bd = 1e9;
   for (const f of B.fighters.values()) {
@@ -54676,7 +54685,7 @@ function battleTap(cx, cy) {
     const d = Math.hypot(x - mx, y - my) / radius;
     if (d < 1 && d < bd) { bd = d; best = f; }
   }
-  if (best) send({ type: 'battle_tap', key: best.key });
+  return best;
 }
 
 
@@ -54794,14 +54803,19 @@ function homeTap(cx, cy) {
 }
 // Antippen als Anteil der Fläche (0 bis 1). Die App schickt es mit home_tap_at, weil ihre Seite über dem Garten liegt
 function homeTapAt(fx, fy) {
-  const H = homeView;
-  if (!H) return;
-  ray.setFromCamera({ x: fx * 2 - 1, y: -fy * 2 + 1 }, H.cam);
-  let best = null, bd = 1e9;
-  for (const f of H.team) { const hit = ray.intersectObject(f.holder, true)[0]; if (hit && hit.distance < bd) { bd = hit.distance; best = f; } }
+  const best = homePickAt(fx, fy);
   if (!best) return;
   if (!reducedMotion) best.jump = 0;
   send({ type: 'home_tap', id: best.id });
+}
+// Figur unter dem Punkt (Anteil der Fläche), sonst null. Tippen und Mauszeiger nutzen dieselbe Prüfung
+function homePickAt(fx, fy) {
+  const H = homeView;
+  if (!H) return null;
+  ray.setFromCamera({ x: fx * 2 - 1, y: -fy * 2 + 1 }, H.cam);
+  let best = null, bd = 1e9;
+  for (const f of H.team) { const hit = ray.intersectObject(f.holder, true)[0]; if (hit && hit.distance < bd) { bd = hit.distance; best = f; } }
+  return best;
 }
 function endHome() {
   const H = homeView;
@@ -54829,6 +54843,8 @@ function cmd(b) {
   if (b.kind === 'home') { startHome(b); return; }
   if (b.kind === 'home_active') { if (homeView) { homeView.active = b.on !== false; homeView.timeAt = 0; } return; }
   if (b.kind === 'home_tap_at') { if (homeView && typeof b.x === 'number' && typeof b.y === 'number') homeTapAt(b.x, b.y); return; }
+  // Maus über dem Garten (nur Web und Desktop): die App schickt die Lage gedrosselt, die Bühne meldet die Hand über einer Figur
+  if (b.kind === 'home_hover_at') { setHover(!!(homeView && typeof b.x === 'number' && typeof b.y === 'number' && homePickAt(b.x, b.y))); return; }
   if (b.kind === 'home_time') { if (homeView) { homeView.fixedHour = typeof b.hour === 'number' ? b.hour : null; homeTime(); } return; }
   if (b.kind === 'ovaling') showOvaling(b);
   else if (b.kind === 'battle') startBattle(b);
@@ -54847,6 +54863,7 @@ function cmd(b) {
   else if (b.kind === 'ground') { ground = b.at ? { at: b.at, top: b.top || 0.08, drop: b.drop || 0 } : null; if (ground) tiltX = 0.18; refit(); if (b.instant !== false) { lookY = targetLook; dist = targetDist; } }
   else if (b.kind === 'measure') startMeasurement(b);
   else if (b.kind === 'detail') { Detail.applyCommand(b, true); applyLevelQuality(); }
+  else if (b.kind === 'motion') reducedMotion = !!b.reduced;
   else if (b.kind === 'legendTest') legendTest = b.mode === 'mix' || b.mode === 'max' ? b.mode : null;
   else if (b.kind === 'clear') { generation++; clearAway(); nest.visible = false; nestTarget = 0; phase = 'empty'; }
 }
@@ -54861,7 +54878,7 @@ function meet(x, y) {
   taps++; stir(900);
   const done = egg.tap(hit, RARITY[result.rarity][0]);
   send({ type: 'tap', count: taps, from: egg.taps });
-  if (done) hatch();
+  if (done) { setHover(false); hatch(); }
 }
 el.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, t: performance.now(), lx: e.clientX, ly: e.clientY, drag: false }; velY = 0; try { el.setPointerCapture(e.pointerId); } catch (x) { /* ohne Fang läuft Ziehen trotzdem */ } });
 el.addEventListener('pointermove', e => {
@@ -54882,6 +54899,30 @@ el.addEventListener('pointerup', e => {
   meet((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
 });
 el.addEventListener('pointercancel', () => { down = null; });
+// Mauszeiger (Luis 27.10.2026, Web und Desktop): Hand über dem, was man antippen kann (Ei, Kämpfer im Kampf, Ovalings im
+// Garten). Die App legt die Bühne ohne eigene Zeiger in einen Rahmen, die Hand zeichnet deshalb die App: die Bühne meldet nur
+// einen Wechsel (Nachricht cursor). Geprüft wird nur bei Mausbewegung ohne gedrückte Taste, höchstens alle 50 ms, nie im
+// Bildtakt. Finger und Stift (Handy) prüfen nichts
+let hoverOn = false, hoverAt = 0, hoverLate = 0;
+function setHover(on) {
+  if (on === hoverOn) return;
+  hoverOn = on; el.style.cursor = on ? 'pointer' : '';
+  send({ type: 'cursor', pointer: on });
+}
+function hoverHit(cx, cy) {
+  if (battle) return !!battlePick(cx, cy);
+  if (phase !== 'egg' || !egg) return false;
+  const r = el.getBoundingClientRect();
+  ray.setFromCamera({ x: (cx - r.left) / r.width * 2 - 1, y: -((cy - r.top) / r.height) * 2 + 1 }, camera);
+  return !!ray.intersectObjects(egg.shards, false)[0];
+}
+el.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse' || e.buttons || homeView) return;
+  const x = e.clientX, y = e.clientY, now = performance.now();
+  clearTimeout(hoverLate);
+  if (now - hoverAt < 50) { hoverLate = setTimeout(() => { hoverAt = performance.now(); setHover(hoverHit(x, y)); }, 50); return; }
+  hoverAt = now; setHover(hoverHit(x, y));
+});
 // Kamera „Frei“ im Kampf: Ziehen dreht und neigt erst nach der Schwelle für Tippen (down.drag), zwei Finger zoomen
 function btPtrDist() { const [a, b] = [...btPtrs.values()]; return Math.hypot(a.x - b.x, a.y - b.y) || 1; }
 el.addEventListener('pointerdown', e => {

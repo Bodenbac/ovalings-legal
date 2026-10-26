@@ -38,7 +38,7 @@ body.embedded .map { border-radius: 0; min-height: 0; }
 
 <body class="embedded">
 <div class="app">
-  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 26.10.2026, 16:32 Uhr</span></div>
+  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 26.10.2026, 17:56 Uhr</span></div>
   <div class="map" id="map"></div>
   <div class="row">
     <button id="lvl1" aria-pressed="true">Level 1</button>
@@ -6565,6 +6565,16 @@ function up(e) {
   } else beginGesture();
 }
 map.addEventListener('pointerup', up); map.addEventListener('pointercancel', up);
+// Mauszeiger in der App (Luis 27.10.2026, Web und Desktop): die App legt diese Seite ohne eigene Zeiger in einen Rahmen, die
+// Hand zeichnet deshalb die App. Liegt unter der Maus etwas mit cursor: pointer (Stecknadel, Knopf, Ort unter der Maus), meldet
+// die Seite den Wechsel (Nachricht cursor). Nur bei Mausbewegung ohne gedrückte Taste, Finger und Stift prüfen nichts
+let hoverOn = false;
+window.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse' || e.buttons) return;
+  const t = e.target, on = !!(t && t.nodeType === 1 && getComputedStyle(t).cursor === 'pointer');
+  if (on !== hoverOn) { hoverOn = on; send({ type: 'cursor', pointer: on }); }
+});
+
 // Gemerkte Finger aufräumen (17.10.2026: tippte man auf einen Turm, öffnete die App die Turmseite, bevor die Karte das Loslassen
 // sah; der Finger galt dann als gedrückt und die Karte zeichnete dauerhaft 60 Bilder je Sekunde)
 window.addEventListener('pointerup', e => { if (ptrs.has(e.pointerId)) setTimeout(() => ptrs.delete(e.pointerId), 0); });

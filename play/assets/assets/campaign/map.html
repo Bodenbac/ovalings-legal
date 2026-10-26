@@ -18,6 +18,7 @@ h1 { font-family: var(--display); font-weight: 600; font-size: 18px; margin: 0; 
 .map { position: relative; flex: 1; min-height: 360px; border-radius: 18px; overflow: hidden; touch-action: none; cursor: grab;
   background: linear-gradient(#6fa6e0 0%, #a9c9ec 34%, #e3dcef 66%, #f3e6d6 100%); }
 .map.drag { cursor: grabbing; }
+.map.over { cursor: pointer; }
 .map canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .row { display: flex; gap: 6px; flex-wrap: wrap; }
 .row button { flex: 1; font: inherit; font-size: 13px; font-weight: 700; color: var(--fg); background: #22233a; border: 1px solid #36375a; border-radius: 999px; padding: 7px 8px; cursor: pointer; }
@@ -48,7 +49,7 @@ body.embedded .map { border-radius: 0; min-height: 0; }
 
 <body class="embedded">
 <div class="app">
-  <div class="top"><h1>Kampagnenkarte</h1><span class="built">Entwurf, Stand 26.10.2026, 16:32 Uhr</span></div>
+  <div class="top"><h1>Kampagnenkarte</h1><span class="built">Entwurf, Stand 26.10.2026, 17:56 Uhr</span></div>
   <div class="map" id="map"></div>
   <div class="row">
     <button id="pNew" aria-pressed="false">Neu</button>
@@ -4542,16 +4543,18 @@ const CampaignMap = (() => {
     const tex = gradTex(128, 128, [[0, 255, 255, 255, 1], [0.45, 255, 255, 255, 0.55], [1, 255, 255, 255, 0]], true);
     const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, emissive: 0x6a6488, emissiveIntensity: 0.28 });
     const ctx = { V, hash, noise, fbm, ease, lin, gradTex, tex, cloud, cloudMat, taper, pools, islandBase, pathRibbon, stationsAlong, plinth };
-    const isles = {}, only = opts.only || null;
-    LAYOUT.forEach(([x, y, z], i) => {
+    // opts.layout (Kachelbilder, Probe 27.10.2026): eigene Lage der sechs Inseln, opts.turn dreht einzelne Inseln zusätzlich (Bogenmaß),
+    // opts.bridges false lässt die Brücken weg. Ohne diese Angaben bleibt die Karte wie sie ist
+    const isles = {}, only = opts.only || null, LAY = opts.layout || LAYOUT, TURN = opts.turn || [];
+    LAY.forEach(([x, y, z], i) => {
       const key = ORDER[i];
       if (only && only !== key) return;
       const t0 = performance.now();
       const isle = (MapIsles[key] ? MapIsles[key](ctx) : plainIsle(ctx, PLAIN[key]));
       // Ausrichtung: das vordere Ende (+z der Insel) zeigt zur vorigen Insel, das hintere zur nächsten
-      const prev = LAYOUT[Math.max(0, i - 1)], next = LAYOUT[Math.min(5, i + 1)];
+      const prev = LAY[Math.max(0, i - 1)], next = LAY[Math.min(5, i + 1)];
       const dx = i === 0 ? next[0] - x : i === 5 ? x - prev[0] : next[0] - prev[0], dz = i === 0 ? next[2] - z : i === 5 ? z - prev[2] : next[2] - prev[2];
-      const ry = only ? 0 : Math.atan2(-dx, -dz);
+      const ry = only ? 0 : Math.atan2(-dx, -dz) + (TURN[i] || 0);
       isle.group.position.set(only ? 0 : x, only ? 0 : y, only ? 0 : z); isle.group.rotation.y = ry;
       root.add(isle.group); updates.push(isle.update || (() => {}));
       isle.key = key; isle.index = i; isle.ms = Math.round(performance.now() - t0);
@@ -4564,9 +4567,9 @@ const CampaignMap = (() => {
     // Brücken der Reihe nach
     const bmats = { plank: new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85 }), rope: new THREE.MeshStandardMaterial({ color: 0xcdb48a, roughness: 0.9 }),
       post: new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8 }) };
-    if (!only) for (let i = 0; i < 5; i++) { const a = isles[ORDER[i]], b = isles[ORDER[i + 1]]; root.add(bridge(a.world.exit, b.world.entry, bmats)); }
+    if (!only && opts.bridges !== false) for (let i = 0; i < 5; i++) { const a = isles[ORDER[i]], b = isles[ORDER[i + 1]]; root.add(bridge(a.world.exit, b.world.entry, bmats)); }
     // Wolkenmeer: tief unter der Reihe ein Teppich, dazu einzelne Wolken zwischen den Inseln
-    const zs = only ? [0] : LAYOUT.map(l => l[2]), y0 = only ? 0 : 0;
+    const zs = only ? [0] : LAY.map(l => l[2]), y0 = only ? 0 : 0;
     // Teppich tief unter der Reihe (mit der Reihe ansteigend), damit die Unterseiten frei bleiben und hinten nichts verdeckt wird
     for (let i = 0; i < (only ? 22 : 70); i++) {
       const zz = only ? (hash(i, 303) - 0.5) * 30 : zs[0] + 10 - (hash(i, 303)) * (zs[0] - zs[5] + 22);
@@ -4574,7 +4577,7 @@ const CampaignMap = (() => {
     }
     // Einzelne kleine Wolken seitlich zwischen den Inseln, unter der Höhe der Brücken
     for (let i = 0; i < (only ? 0 : 10); i++) {
-      const k = i % 5, a = LAYOUT[k], b = LAYOUT[k + 1], u = 0.3 + 0.4 * hash(i, 11), s = a[0] > 0 ? 1 : -1;
+      const k = i % 5, a = LAY[k], b = LAY[k + 1], u = 0.3 + 0.4 * hash(i, 11), s = a[0] > 0 ? 1 : -1;
       const c = cloud(cloudMat, 6, 3, 0.9, 600 + i * 5); c.position.set(a[0] + (b[0] - a[0]) * u + s * (5 + 3 * hash(i, 13)), a[1] + (b[1] - a[1]) * u - 7 - 2 * hash(i, 14), a[2] + (b[2] - a[2]) * u); root.add(c);
     }
     let tris = 0; root.traverse(o => { if (o.isMesh) { const g = o.geometry; tris += (g.index ? g.index.count : g.attributes.position.count) / 3; } });
@@ -4929,7 +4932,9 @@ map.addEventListener('pointerdown', e => {
   map.classList.add('drag');
 });
 map.addEventListener('pointermove', e => {
-  const p = ptrs.get(e.pointerId); if (!p) return;
+  const p = ptrs.get(e.pointerId);
+  // Maus ohne gedrückte Taste: Hand über Inseln und Stufen (nur bei Bewegung geprüft)
+  if (!p) { if (e.pointerType === 'mouse' && !e.buttons) map.classList.toggle('over', !!(pickMark(e.clientX, e.clientY) || pick(e.clientX, e.clientY))); return; }
   const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
   if (ptrs.size === 1) {
     const k = worldPerPx(), wx = -dx * k, wz = -dy * k / Math.sin(EL);
@@ -4948,6 +4953,16 @@ function up(e) {
   if (ptrs.size === 1) pinch0 = 0;
 }
 map.addEventListener('pointerup', up); map.addEventListener('pointercancel', up);
+// Mauszeiger in der App (Luis 27.10.2026, Web und Desktop): die App legt diese Seite ohne eigene Zeiger in einen Rahmen, die
+// Hand zeichnet deshalb die App. Liegt unter der Maus etwas mit cursor: pointer (Stecknadel, Knopf, Ort unter der Maus), meldet
+// die Seite den Wechsel (Nachricht cursor). Nur bei Mausbewegung ohne gedrückte Taste, Finger und Stift prüfen nichts
+let hoverOn = false;
+window.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse' || e.buttons) return;
+  const t = e.target, on = !!(t && t.nodeType === 1 && getComputedStyle(t).cursor === 'pointer');
+  if (on !== hoverOn) { hoverOn = on; send({ type: 'cursor', pointer: on }); }
+});
+
 // Gemerkte Finger aufräumen (17.10.2026: tippte man auf einen Turm, öffnete die App die Turmseite, bevor die Karte das Loslassen
 // sah; der Finger galt dann als gedrückt und die Karte zeichnete dauerhaft 60 Bilder je Sekunde)
 window.addEventListener('pointerup', e => { if (ptrs.has(e.pointerId)) setTimeout(() => ptrs.delete(e.pointerId), 0); });
