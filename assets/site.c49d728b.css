@@ -541,8 +541,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.c84ddc5e.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.0bcc0340.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.a4b8055d.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.78a45cf7.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -928,6 +928,14 @@ main { display: block; padding-bottom: var(--s-huge); }
 /* Bald verfügbar: Abschluss in der Nacht (UX Website 6: ohne Arena-Kachel) */
 .soonband { padding-bottom: var(--s-s); }
 .sooncard { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-xl) var(--s-xxl); align-items: center; padding: var(--s-xxl); border-radius: var(--r-xxl); border: 2px solid var(--ink); box-shadow: 0 6px 0 var(--card-edge); background: radial-gradient(circle at 12% 40%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 55%), linear-gradient(var(--night-2), var(--night)); color: var(--night-text); }
+/* Einladen rechts im Kasten „Bald verfügbar“ hinter einer senkrechten Trennlinie (Luis 27.10.2026) */
+.sooncard:has(.soninvite) { grid-template-columns: auto minmax(0, 1.25fr) minmax(0, 1fr); }
+.soninvite { align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding-left: var(--s-xxl); border-left: 2px solid color-mix(in srgb, var(--night-text) 28%, transparent); }
+.soninvite h2 { margin: 0 0 var(--s-s); color: var(--white); font-size: clamp(24px, 3vw, 32px); }
+.soninviterow { display: flex; align-items: center; gap: var(--s-m); }
+.soninviterow img { width: 52px; height: 68px; object-fit: contain; flex: none; }
+.soninviterow p { margin: 0; color: var(--night-text); }
+.soninvite .buttons { margin-top: var(--s-l); }
 .soonmascot { width: clamp(140px, 16vw, 200px); filter: drop-shadow(0 12px 14px color-mix(in srgb, var(--black) 45%, transparent)); }
 .soontext .bigtitle { color: var(--white); text-align: left; }
 .soontext .introtext { color: var(--night-text); text-shadow: none; }
@@ -936,6 +944,10 @@ main { display: block; padding-bottom: var(--s-huge); }
   .sooncard { grid-template-columns: 1fr; text-align: center; justify-items: center; padding: var(--s-xl) var(--s-l); }
   .soontext .bigtitle { text-align: center; }
   .soontext .buttons { justify-content: center; }
+  .sooncard:has(.soninvite) { grid-template-columns: 1fr; }
+  .soninvite { padding: var(--s-l) 0 0; border-left: 0; border-top: 2px solid color-mix(in srgb, var(--night-text) 28%, transparent); width: 100%; align-items: center; }
+  .soninviterow { text-align: left; }
+  .soninvite .buttons { justify-content: center; }
 }
 
 .stitle { display: flex; align-items: center; gap: var(--s-m); font-size: clamp(26px, 4.6vw, 34px); margin-bottom: var(--s-l); color: var(--text); }
@@ -1230,7 +1242,9 @@ a.nextcard:hover { color: var(--white); }
 /* Kampf */
 .effects { display: grid; gap: var(--s-m); grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); align-items: start; }
 .effecthead { display: flex; align-items: center; gap: var(--s-m); }
-.effecthead img { width: 44px; height: 44px; flex: none; }
+/* Nur das Symbol im Kopf ist groß, Symbole im Text (statmark) behalten ihre Schriftgröße, der Text füllt die Breite (Luis 27.10.2026) */
+.effecthead > img { width: 44px; height: 44px; flex: none; }
+.effecthead > div { flex: 1; min-width: 0; }
 .effect h4 { font-size: 18px; }
 
 /* Gegenstände */
@@ -1393,7 +1407,10 @@ a.nextcard:hover { color: var(--white); }
 .tip > img { width: 48px; height: 48px; object-fit: contain; }
 
 /* Häufige Fragen */
-.faq { display: grid; gap: var(--s-m); }
+/* Drei Fragen je Reihe (Luis 27.10.2026), auf schmaleren Bildschirmen zwei oder eine. Offene Fragen wachsen nach unten, die Nachbarn bleiben oben */
+.faq { display: grid; gap: var(--s-m); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+@media (max-width: 1099px) { .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 699px) { .faq { grid-template-columns: 1fr; } }
 .faqitem { padding: 0; }
 .faqitem > summary { background: transparent; border: 0; padding: var(--s-m) var(--s-l); text-transform: none; letter-spacing: 0; color: var(--text); }
 .faqitem > summary h2 { font: 600 19px/1.3 var(--display); }
@@ -1753,11 +1770,6 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 .ivprizes li { display: flex; align-items: center; gap: var(--s-s); font-weight: 700; }
 .ivprizes li > span:nth-child(2) { flex: 1; }
 /* Karte auf der Startseite */
-.ivhome { display: flex; align-items: center; gap: var(--s-l); max-width: 760px; margin: 0 auto; }
-.ivhome img { width: 62px; height: 80px; object-fit: contain; flex: none; }
-.ivhome h2 { font-size: clamp(24px, 4vw, 32px); margin: 0 0 var(--s-xs); }
-.ivhome p { margin: 0; }
-.ivhome .buttons { margin-top: var(--s-m); }
 /* Karte im Profil */
 .prinvite { gap: var(--s-s); }
 .prstats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-s); margin: 0; }
