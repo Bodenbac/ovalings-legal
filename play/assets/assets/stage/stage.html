@@ -53649,6 +53649,8 @@ function battleScreen(v) {
 // Zahl springt aus dem Treffpunkt (Plan Kampf-Animationen Punkt 8): oberer Körper, beim Boss sein Fokus, im Bogen nach oben,
 // abwechselnd nach links und rechts. Kritisch größer und mit kräftigerem Ruck. Mehrere Zahlen kurz nacheinander landen höher
 function battleNumber(f, n, cls) {
+  // Beim Vorspulen (battleInstant) keine Zahlen
+  if (battleQuiet) return;
   const B = battle, now = performance.now(), crit = cls === 'crit';
   // Start knapp unter dem Scheitel, damit das Gesicht frei bleibt
   if (f.boss) battleCenter(f, btV); else btV.copy(f.holder.position).setY(f.holder.position.y + f.height * 0.85);
@@ -53699,7 +53701,7 @@ function battleApply(ev) {
       battleNumber(f, n, ev.c ? 'crit' : dot || (f.boss ? 'big' : ''));
       if (ev.c) battleShake(0.07, 0.25);
       // Vibration (Plan Punkt 10): kurz bei einem kritischen Treffer des eigenen Teams, die App entscheidet über die Einstellung
-      if (ev.c && a && a.ally && !f.ally) send({ type: 'haptic', kind: 'crit' });
+      if (ev.c && a && a.ally && !f.ally && !battleQuiet) send({ type: 'haptic', kind: 'crit' });
       if (!reducedMotion) {
         // Reaktion abgestuft (Plan Kampf-Animationen, Schritt 6): fängt der Schild alles ab, leuchtet er auf und das Ovaling
         // weicht nicht. Sonst zuckt es zurück (flinch), bei kritischem Treffer taumelt es einen Schritt zurück (stagger)
@@ -53787,7 +53789,7 @@ function battleApply(ev) {
       break;
     }
     // Der Boss sinkt nicht ein, er stirbt am Ende mit seiner eigenen Animation an seinem Platz (Luis 05.10.2026)
-    case 'defeated': if (!f) break; f.hp = 0; f.shield = 0; if (f.ally && !f.dead) send({ type: 'haptic', kind: 'fall' }); f.dead = true;
+    case 'defeated': if (!f) break; f.hp = 0; f.shield = 0; if (f.ally && !f.dead && !battleQuiet) send({ type: 'haptic', kind: 'fall' }); f.dead = true;
       // Alpha-Ovaling (Kampagne): stirbt mit der Animation seines Moduls (Zustand death) und bleibt liegen, bis die Welle weicht
       if (f.alpha) { f.act = { state: 'death', t0: B.clock, dur: ALPHA_DEATH, hold: true }; B.deathUntil = Math.max(B.deathUntil, B.clock + ALPHA_DEATH); }
       else if (!f.boss) f.fallTarget = 1;
@@ -54812,11 +54814,44 @@ function battleEntryLeft(B) {
   }
   return Math.max(0, dur - (B.clock - B.entryAt));
 }
+// Auto-Kampf im Hintergrund (Luis 27.10.2026, 55a): kommt man zu einem Kampf auf Auto zurück, den der Server weitergespielt hat,
+// schickt die App die verpassten Ereignisse mit instant. Sie gelten sofort, ohne Bewegung, Klang, Zahlen und Warten, auch kein
+// battle_played. Zuerst kommt der Rest eines abgebrochenen Abspielens (die Bühne war verdeckt, die App ging nach 20 s weiter),
+// ein Laufen zur nächsten Welle endet sofort. battleQuiet hält Zahlen und Vibration still
+let battleQuiet = false;
+function battleInstant(B, list) {
+  B.play++;
+  const rest = B.cur ? B.cur.list.filter(ev => ev && typeof ev === 'object' && !B.cur.done.has(ev)) : [];
+  B.cur = null;
+  const was = reducedMotion;
+  reducedMotion = true; battleQuiet = true;
+  try {
+    const C = B.campaign;
+    if (C && C.walk) { const w = C.walk; C.walk = null; C.spot = w.toIdx; campaignAxis(B); C.camPos = null; w.resolve(); }
+    for (const ev of rest.concat(list)) {
+      if (!ev || typeof ev !== 'object' || ev.t === 'ability') continue;
+      if (ev.t === 'wave') battleWaveNow(B, ev); else battleApply(ev);
+    }
+  } catch (x) { send({ type: 'error', text: 'battle_instant: ' + String(x && x.stack || x) }); }
+  finally { reducedMotion = was; battleQuiet = false; }
+  B.turnKey = null;
+}
+// Neue Welle sofort (wie battleWave mit reducedMotion, ohne Warten)
+function battleWaveNow(B, ev) {
+  const C = B.campaign; if (!C || !C.W) return;
+  const n = Math.round(Number(ev.n != null ? ev.n : ev.a)) || 1, idx = Math.min(Math.max(0, n - 1), C.last);
+  if (idx <= C.spot) return;
+  for (const f of B.fighters.values()) if (f.ally ? f.dead : f.wave < idx) f.vanishTarget = 1;
+  C.spot = idx; campaignAxis(B); C.camPos = null;
+}
 async function battlePlay(b) {
   const B = battle;
   if (!B) { send({ type: 'error', text: 'battle_play ohne Kampf' }); send({ type: 'battle_played' }); return; }
   if (!B.ready) { B.pending = b; return; }
+  if (b.instant) { battleInstant(B, Array.isArray(b.events) ? b.events : []); return; }
   const id = ++B.play, list = Array.isArray(b.events) ? b.events : [];
+  // Was schon angewandt ist, für battleInstant
+  const cur = B.cur = { list, done: new Set() };
   // Tempo 1, 2 oder 3 (x3 mit dem VVIP-Pass) mal Grundtempo (Luis 15.10.2026). Das Grundtempo schickt die App mit (pace, aus
   // BattlePace.stagePace), so gilt zur Laufzeit immer der Wert aus Dart, auch wenn diese Seite von einem älteren Bau stammt.
   // Ohne pace (Werkstattseiten) gilt das eingebaute BT_PACE
@@ -54831,8 +54866,9 @@ async function battlePlay(b) {
       const ev = list[i];
       if (!live()) return;
       if (!ev || typeof ev !== 'object') continue;
-      if (ev.t === 'wave') { await battleWave(ev, live); continue; }
+      if (ev.t === 'wave') { cur.done.add(ev); await battleWave(ev, live); continue; }
       if (ev.t === 'ability') {
+        cur.done.add(ev);
         // Was direkt folgt und zur Fähigkeit gehört, erscheint im Moment des Treffers
         const impacts = [];
         while (i + 1 < list.length && list[i + 1] && BATTLE_IMPACT.has(list[i + 1].t)) impacts.push(list[++i]);
@@ -54848,7 +54884,7 @@ async function battlePlay(b) {
           for (const k of order) {
             if (plan.delays[k] > waited) { await battleSleep(plan.delays[k] - waited); waited = plan.delays[k]; if (!live()) return; }
             send({ type: 'sfx', e: impacts[k] });
-            battleApply(impacts[k]);
+            battleApply(impacts[k]); cur.done.add(impacts[k]);
           }
           await battleSleep(Math.max(plan.rest, 0.12) + 0.18);
           continue;
@@ -54858,17 +54894,17 @@ async function battlePlay(b) {
           if (plan.gap && impacts[k].t === 'damage' && impacts[k].a === ev.a) { if (hits++) { await battleSleep(plan.gap); if (!live()) return; } }
           else if (k && impacts[k].t !== impacts[k - 1].t && !plan.gap) { await battleSleep(0.1); if (!live()) return; }
           send({ type: 'sfx', e: impacts[k] });
-          battleApply(impacts[k]);
+          battleApply(impacts[k]); cur.done.add(impacts[k]);
         }
         await battleSleep(Math.max(plan.rest, 0.12) + 0.18);
       } else {
         send({ type: 'sfx', e: ev });
-        battleApply(ev);
+        battleApply(ev); cur.done.add(ev);
         await battleSleep(BATTLE_PAUSE[ev.t] || 0);
       }
     }
   } catch (x) { send({ type: 'error', text: 'battle_play: ' + String(x && x.stack || x) }); }
-  if (live()) { B.turnKey = null; send({ type: 'battle_played' }); }
+  if (live()) { B.turnKey = null; B.cur = null; send({ type: 'battle_played' }); }
 }
 
 // Dauer des Bosstods in Sekunden, langsam genug zum Zusehen (Luis 05.10.2026: vorher 3,4 und zu schnell)
