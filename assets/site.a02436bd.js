@@ -338,9 +338,11 @@
     // Die 3D-Seite zeigt die Halle der Brutkammer als ganzen Raum (Luis 23.10.2026), die Lage im Bild schickt die Website nicht mehr
     var egg3d = frame3d(hatchPic, 'hatchframe', hatchPic.getAttribute('data-title'), function (m) {
       if (m.type === 'egg') hatchPic.classList.add('live');
-      else if (m.type === 'error' && (m.code === 'webgl' || m.code === 'context_lost' || m.code === 'room')) hatchPic.classList.remove('live');
+      else if (m.type === 'error' && (m.code === 'webgl' || m.code === 'context_lost' || m.code === 'room')) { hatchPic.classList.remove('live'); hatchPic.classList.add('no3d'); }
       else if (m.type === 'hatched' && again) again.hidden = false;
     });
+    // Ohne 3D (kein IntersectionObserver) gleich das Standbild statt der Ladeanzeige
+    if (!egg3d) hatchPic.classList.add('no3d');
     var showEgg = function () { if (again) again.hidden = true; if (egg3d) egg3d.send({kind: 'egg', tier: tier}); };
     showEgg();
     if (again) again.addEventListener('click', showEgg);

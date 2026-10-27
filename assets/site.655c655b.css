@@ -541,8 +541,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.321892da.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.e2e78d1b.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.c84ddc5e.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.0bcc0340.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -847,6 +847,18 @@ main { display: block; padding-bottom: var(--s-huge); }
 /* color-scheme normal am Rahmen: mit dunklem Schema der Seite und ohne Angabe in der 3D-Seite malt Chromium den Rahmen sonst weiß
    (Schema von Rahmen und Inhalt verschieden, Fund der Koordination 21.10.2026) */
 .hatchframe, .bossframe { color-scheme: normal; }
+/* Ladeanzeige (Luis 27.10.2026): heller grauer Grund mit drehendem Ring, bis die 3D-Seite „egg“ meldet. Standbild nur ohne 3D */
+.hatchpic { background: linear-gradient(var(--well-top), var(--well-bottom)); }
+.hatchpic .hatchroom, .hatchpic .hatchegg { visibility: hidden; }
+.hatchpic.no3d .hatchroom, .hatchpic.no3d .hatchegg { visibility: visible; }
+.hatchload { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; border: 5px solid color-mix(in srgb, var(--ink) 14%, transparent); border-top-color: var(--accent); animation: hatchspin 900ms linear infinite; }
+.hatchpic.live .hatchload, .hatchpic.no3d .hatchload { display: none; }
+@keyframes hatchspin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .hatchload { animation-duration: 2400ms; } }
+.taphint { display: flex; justify-content: center; margin: 0 0 var(--s-m); color: var(--text); font: 700 14px/1.3 var(--body); }
+.taphint .rh { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px 4px 8px; border-radius: var(--r-full); background: var(--surface); border: 1.5px solid var(--line); }
+.taphint .rhicon { flex: none; width: 22px; height: 22px; }
+.taphint .rhkey { fill: var(--accent); }
 .hatchframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; opacity: 0; transition: opacity var(--t-medium) var(--ease); }
 .hatchpic.live .hatchframe { opacity: 1; }
 .hatchpic.live .hatchegg { visibility: hidden; }

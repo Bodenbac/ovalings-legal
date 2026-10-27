@@ -27977,7 +27977,7 @@ function eggView() {
   const scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(50, 1, 0.05, 200); pivot = new THREE.Group();
   scene.add(pivot);
   // Raum: einmal gebaut, bleibt für jedes weitere Ei
-  let roomState = 'loading', pending = null;
+  let roomState = 'loading', pending = null, warmed = false;
   const tex = new THREE.TextureLoader().load('pano_hatchery_hall.jpg',
     () => { roomState = 'ready'; stir(); if (pending) { const t = pending; pending = null; showEgg(t); } },
     undefined,
@@ -28027,7 +28027,13 @@ function eggView() {
     egg = Eggs.egg(tier, renderer, parseInt(result.seed.slice(1, 8), 16)); pivot.add(egg.root);
     nest.visible = true; phase = 'egg'; fallT = reducedMotion ? 9 : 0; pivot.rotation.y = 0.4;
     el.classList.add('pointer'); stir(1500);
-    send({ type: 'egg', tier, taps: egg.taps });
+    // Beim ersten Ei erst alle Shader übersetzen und einmal zeichnen (Texturen hochladen), dann melden: die Website zeigt bis dahin
+    // ihre Ladeanzeige und blendet den Raum erst ein, wenn er nicht mehr stockt (Luis 27.10.2026)
+    const announce = () => send({ type: 'egg', tier, taps: egg.taps });
+    if (warmed) { announce(); return; }
+    warmed = true;
+    try { size(); place(); renderer.compile(scene, camera); room.update(performance.now() / 1000); renderer.render(scene, camera); } catch (x) { console.warn('Vorlauf', x); }
+    setTimeout(() => requestAnimationFrame(announce), 120);
   }
   function hatchNow() {
     phase = 'hatching'; egg.burst(); el.classList.remove('pointer');
