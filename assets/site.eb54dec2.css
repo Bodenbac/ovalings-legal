@@ -541,8 +541,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.a4b8055d.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.78a45cf7.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.9eb63f3e.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.4b909681.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -934,6 +934,7 @@ main { display: block; padding-bottom: var(--s-huge); }
 .soninvite h2 { margin: 0 0 var(--s-s); color: var(--white); font-size: clamp(24px, 3vw, 32px); }
 .soninviterow { display: flex; align-items: center; gap: var(--s-m); }
 .soninviterow img { width: 52px; height: 68px; object-fit: contain; flex: none; }
+.soninviterow .invprize { width: clamp(96px, 9vw, 124px); height: auto; aspect-ratio: 1; filter: drop-shadow(0 0 18px color-mix(in srgb, var(--diamond) 60%, transparent)) drop-shadow(0 10px 12px color-mix(in srgb, var(--black) 45%, transparent)); }
 .soninviterow p { margin: 0; color: var(--night-text); }
 .soninvite .buttons { margin-top: var(--s-l); }
 .soonmascot { width: clamp(140px, 16vw, 200px); filter: drop-shadow(0 12px 14px color-mix(in srgb, var(--black) 45%, transparent)); }
@@ -1460,6 +1461,10 @@ a.nextcard:hover { color: var(--white); }
 .footline a + a::before { content: "·"; display: inline-block; margin: 0 10px; color: var(--night-muted); text-decoration: none; }
 .legalmeta { color: var(--text-muted); font-size: 14px; margin-top: var(--s-xl); }
 .footbrand p { color: var(--night-muted); margin-top: var(--s-s); }
+.foot .socials { display: flex; flex-wrap: wrap; gap: var(--s-s); list-style: none; margin: 0; padding: 0; }
+.foot .socials a { display: block; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; padding: 0; box-shadow: 0 0 0 2px color-mix(in srgb, var(--white) 22%, transparent); transition: translate var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+.foot .socials svg { display: block; }
+.foot .socials a:hover, .foot .socials a:focus-visible { translate: 0 -2px; box-shadow: 0 0 0 2px var(--white), 0 6px 12px color-mix(in srgb, var(--black) 45%, transparent); text-decoration: none; }
 .foot h2 { font: 800 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 1px; color: var(--night-muted); margin-bottom: var(--s-m); }
 .foot ul { display: grid; gap: 6px; }
 .foot li a { display: inline-block; padding: 3px 0; }
