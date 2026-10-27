@@ -2491,7 +2491,13 @@ float texQuilt(vec2 uv, float aw) {
 #endif
 float texHeight() {
   vec3 p = vSkinPos + uTexOffset;
+  // Kleine Figuren ruhiger (Luis 27.10.2026: Haut im Garten und in kleinen Ansichten körnig wie grobe Pixel): ab 0,012 Einheiten
+  // je Bildpunkt (Detailseite etwa 0,008) gilt jeder Bildpunkt stufenlos bis zu 2,6-mal so groß, texAA blendet feine Lagen früher aus
+  // und das Relief aus dFdx(texH) zerfällt nicht mehr in Blöcke aus 2x2 Bildpunkten. Groß gezeigte Figuren bleiben gleich. Im Kampf
+  // (LOD) gilt der größere Wert. Die Zeile texFw = length(...) bleibt wörtlich, TexNew ersetzt sie im LOD (ANCHOR_FW)
+  float texFw0 = length(fwidth(vSkinPos));
   texFw = length(fwidth(vSkinPos));
+  texFw = max(texFw, texFw0 * (1.0 + 1.6 * smoothstep(0.012, 0.03, texFw0)));
 #if TEX_KIND == 1
   // Fein: Körnung wie Sandputz, zwei Lagen Rauschen
   float s = mix(30.0, 55.0, uTexSize);

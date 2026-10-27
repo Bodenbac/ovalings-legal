@@ -2513,7 +2513,13 @@ float texQuilt(vec2 uv, float aw) {
 #endif
 float texHeight() {
   vec3 p = vSkinPos + uTexOffset;
+  // Kleine Figuren ruhiger (Luis 27.10.2026: Haut im Garten und in kleinen Ansichten körnig wie grobe Pixel): ab 0,012 Einheiten
+  // je Bildpunkt (Detailseite etwa 0,008) gilt jeder Bildpunkt stufenlos bis zu 2,6-mal so groß, texAA blendet feine Lagen früher aus
+  // und das Relief aus dFdx(texH) zerfällt nicht mehr in Blöcke aus 2x2 Bildpunkten. Groß gezeigte Figuren bleiben gleich. Im Kampf
+  // (LOD) gilt der größere Wert. Die Zeile texFw = length(...) bleibt wörtlich, TexNew ersetzt sie im LOD (ANCHOR_FW)
+  float texFw0 = length(fwidth(vSkinPos));
   texFw = length(fwidth(vSkinPos));
+  texFw = max(texFw, texFw0 * (1.0 + 1.6 * smoothstep(0.012, 0.03, texFw0)));
 #if TEX_KIND == 1
   // Fein: Körnung wie Sandputz, zwei Lagen Rauschen
   float s = mix(30.0, 55.0, uTexSize);
@@ -52546,7 +52552,7 @@ window.ovalingsStage = b => { try { enqueue(typeof b === 'string' ? JSON.parse(b
 // Fünftel der Bauzeit. Sie wird einmal gerechnet, kompakt gepackt (Lage 16 Bit, Farben 8 Bit, Normalen werden neu
 // gerechnet) und von der App als Datei abgelegt. Der Schlüssel kommt aus den Eingaben des Baukastens und seinem Stand,
 // ändert sich der Baukasten, wird neu gerechnet.
-const BUILDER_HASH = 'ab41225a4f';
+const BUILDER_HASH = '57bb110120';
 const SkinStore = (() => {
   // Grenze nach Größe statt Anzahl (Lina 14.10.2026): eine Haut belegt rund 400 KB, ihre Abstände fürs Skelett rund 290 KB. Mit 40
   // Einträgen passten nur noch 20 Figuren, seit auch die Porträts mit Skelett bauen, eine Sammlung rechnete dann alles neu
@@ -54988,9 +54994,11 @@ function battleTick(f, t, dt, step) {
   battleLasting(f, t, step);
   if (f.blob) { f.blob.position.x = f.holder.position.x; f.blob.position.z = f.holder.position.z; if (camp) f.blob.position.y = f.home.y + 0.015; }
   // Pfeil über dem Kopf, beim Boss über seiner Mitte oben
+  // Nur den Punkt merken, auf den Bildschirm rechnet battleBarsPlace mit der Kamera dieses Bilds (Luis 27.10.2026: mit freier
+  // Kamera hingen die Pfeile sonst wie früher die Balken hinterher)
   if (f.target) {
-    if (f.boss) btV.copy(f.home).setY(f.boss.height * 1.05); else btV.copy(f.holder.position).setY(f.holder.position.y + f.height + 0.55);
-    const [tx, ty] = battleScreen(btV); f.target.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + (ty - 24).toFixed(1) + 'px)';
+    const at = f.targetAt || (f.targetAt = V(0, 0, 0));
+    if (f.boss) at.copy(f.home).setY(f.boss.height * 1.05); else at.copy(f.holder.position).setY(f.holder.position.y + f.height + 0.55);
   }
   const k = btEase(0, 1, f.fallK);
   if (f.shake > 0) f.shake = Math.max(0, f.shake - step);
@@ -55131,6 +55139,11 @@ function battleBarsPlace(B) {
     const [x, y] = battleScreen(f.barAt);
     f.bar.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
     if (f.fx) f.fx.style.transform = f.bar.style.transform;
+  }
+  for (const f of B.fighters.values()) {
+    if (!f.target || !f.targetAt) continue;
+    const [tx, ty] = battleScreen(f.targetAt);
+    f.target.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + (ty - 24).toFixed(1) + 'px)';
   }
 }
 
