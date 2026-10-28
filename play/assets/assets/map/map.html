@@ -38,7 +38,7 @@ body.embedded .map { border-radius: 0; min-height: 0; }
 
 <body class="embedded">
 <div class="app">
-  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 28.10.2026, 02:03 Uhr</span></div>
+  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 28.10.2026, 13:26 Uhr</span></div>
   <div class="map" id="map"></div>
   <div class="row">
     <button id="lvl1" aria-pressed="true">Level 1</button>
@@ -6362,7 +6362,7 @@ for (const [key, lvl] of Object.entries(LEVELS)) {
   }
   g.position.copy(p); scene.add(g);
   const pin = document.createElement('div'); pin.className = 'lockpin';
-  pin.innerHTML = '<div class="disc"><svg viewBox="0 0 24 24"><path d="M7.5 10.5V7.5a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="#e6dcff" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="#e6dcff"/><circle cx="12" cy="15.5" r="1.8" fill="#2a2450"/></svg></div><span>Lvl ' + lvl + '</span>';
+  pin.innerHTML = '<div class="disc"><svg viewBox="0 0 24 24"><path d="M7.5 10.5V7.5a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="#e6dcff" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="#e6dcff"/><circle cx="12" cy="15.5" r="1.8" fill="#2a2450"/></svg></div><span>Lv ' + lvl + '</span>';
   pin.addEventListener('pointerdown', e => e.stopPropagation()); pin.addEventListener('click', () => tap(key));
   map.appendChild(pin);
   locks[key] = { group: g, puffs, y0: p.y, open: 0, target: 0, shake: -9, pin, at: p.clone().add(new THREE.Vector3(0, fg.h, 0)) };

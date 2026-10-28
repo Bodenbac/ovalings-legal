@@ -541,8 +541,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.8b607392.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.0b61321c.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.c475456b.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.e911d85e.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1456,9 +1456,9 @@ a.nextcard:hover { color: var(--white); }
 .foot a:hover { color: var(--night-accent); text-decoration: underline; }
 /* Kurzer Fuß (UX Website 10): Marke, dann je eine Zeile Community und Rechtliches, mit Punkten getrennt */
 .footshort { display: grid; gap: var(--s-l); }
-.footline { display: flex; flex-wrap: wrap; gap: 4px 0; }
+/* Ohne Trennpunkte: beim Umbruch stand sonst ein Punkt vorn in der Zeile (Prüfung 28.10.2026) */
+.footline { display: flex; flex-wrap: wrap; gap: 4px 20px; }
 .footline a { padding: 3px 0; }
-.footline a + a::before { content: "·"; display: inline-block; margin: 0 10px; color: var(--night-muted); text-decoration: none; }
 .legalmeta { color: var(--text-muted); font-size: 14px; margin-top: var(--s-xl); }
 /* Marke und Leitsatz in einer Zeile mit Punkt dazwischen wie in den Zeilen darunter (Luis 28.10.2026) */
 .footbrand { display: flex; flex-wrap: wrap; align-items: center; }
@@ -1467,6 +1467,8 @@ a.nextcard:hover { color: var(--white); }
 .foot .socials { display: flex; flex-wrap: wrap; gap: var(--s-s); list-style: none; margin: 0; padding: 0; }
 .foot .socials a { display: block; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; padding: 0; box-shadow: 0 0 0 2px color-mix(in srgb, var(--white) 22%, transparent); transition: translate var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
 .foot .socials svg { display: block; }
+/* Am Handy alle Netze in einer Reihe (Prüfung 28.10.2026: Twitch rutschte allein in die zweite Zeile) */
+@media (max-width: 480px) { .foot .socials { gap: 6px; } .foot .socials a { width: 38px; height: 38px; } .foot .socials a > svg { width: 38px; height: 38px; } }
 .foot .socials a:hover, .foot .socials a:focus-visible { translate: 0 -2px; box-shadow: 0 0 0 2px var(--white), 0 6px 12px color-mix(in srgb, var(--black) 45%, transparent); text-decoration: none; }
 .foot h2 { font: 800 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 1px; color: var(--night-muted); margin-bottom: var(--s-m); }
 .foot ul { display: grid; gap: 6px; }
@@ -1743,7 +1745,7 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 .p3 .medal, .medal.m3 { background: var(--medal-bronze); color: var(--ink); }
 
 /* Event-Seite */
-.ivwrap { padding-top: var(--s-xl); padding-bottom: var(--s-xxl); max-width: calc(820px + 2 * var(--page)); }
+.ivwrap { padding-top: var(--s-xl); padding-bottom: var(--s-xxl); }
 .ivshare { display: grid; gap: var(--s-s); }
 .ivshare .buttons { margin-top: 0; align-items: center; }
 .ivgifts { display: flex; flex-wrap: wrap; gap: var(--s-s) var(--s-l); }
