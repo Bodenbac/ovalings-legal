@@ -21758,7 +21758,9 @@ const Eggs = (() => {
   function egg(tier, renderer, seed, opts) {
     // Fassung des Schlüpfens: opts.fx ('old', 'v2', 'v3'), opts.fx2 (true heißt 'v2') bleibt für ältere Aufrufe
     const fx = opts && EGG_FX_ALL.includes(opts.fx) ? opts.fx : opts && opts.fx2 != null ? (opts.fx2 ? 'v2' : 'old') : EGG_FX;
-    const d = DESIGN[tier], env = d.studio ? studioMap(renderer) : envMap(renderer), r = rng(seed || 1);
+    // opts.taps: weniger Tipper bis zum Schlüpfen (zweite Fassung der Oberfläche, UI V2, 28.10.2026), sonst die des Entwurfs
+    const d = opts && opts.taps > 0 ? Object.assign({}, DESIGN[tier], { taps: opts.taps }) : DESIGN[tier];
+    const env = d.studio ? studioMap(renderer) : envMap(renderer), r = rng(seed || 1);
     const root = new THREE.Group(), wob = new THREE.Group(), shell = new THREE.Group();
     root.add(wob); wob.add(shell); shell.position.y = HH;
     const mat = d.material(env), matBottom = mat.clone(), shards = [], flyers = [];

@@ -1,0 +1,295 @@
+{
+ "format": "ovalings-showcase/1",
+ "note": "Schaufenster-Konto der Store-Bilder (Plan Werbebilder 9.1), geschrieben von node tool/promo/make_showcase.js aus tool/promo/cast.json (Stand 2026-10-22). Nicht von Hand ändern.",
+ "player": {
+  "name": "Mika",
+  "level": 34,
+  "main": "2d090764-5cb9-8001-8df7-55ef22c09e54"
+ },
+ "cast": [
+  {
+   "id": "3421b3ff-19ec-8001-a4e8-b710241cbe6d",
+   "family": "shadow",
+   "rarity": "epic",
+   "eggTier": "epic",
+   "level": 41,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "2aa30769-51c4-8001-ad01-a86e2d2fc633",
+   "family": "shadow",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 29,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "27967110-f327-8001-a10d-1b6763d86491",
+   "family": "light",
+   "rarity": "rare",
+   "eggTier": "rare",
+   "level": 34,
+   "moves": [
+    "heaven_shield",
+    "ray_storm"
+   ],
+   "passive": "light_heal_e"
+  },
+  {
+   "id": "18f4aadf-5cdc-8001-8af0-8bcbc3e85611",
+   "family": "light",
+   "rarity": "normal",
+   "eggTier": "normal",
+   "level": 27,
+   "moves": [
+    "heaven_shield",
+    "ray_storm"
+   ],
+   "passive": "light_heal_e"
+  },
+  {
+   "id": "2074ea54-7074-8001-b3e2-d2a6716a991a",
+   "family": "light",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 30,
+   "moves": [
+    "heaven_shield",
+    "ray_storm"
+   ],
+   "passive": "light_heal_e"
+  },
+  {
+   "id": "5bf364b5-d959-8001-8b91-cd5f733dd056",
+   "family": "light",
+   "rarity": "rare",
+   "eggTier": "bright",
+   "level": 35,
+   "moves": [
+    "heaven_shield",
+    "ray_storm"
+   ],
+   "passive": "light_heal_e"
+  },
+  {
+   "id": "3c162c74-5d53-8001-a7e8-f1f936da9588",
+   "family": "shadow",
+   "rarity": "rare",
+   "eggTier": "epic",
+   "level": 34,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "69a9a4db-7faa-8001-9f55-7e3e08433e7e",
+   "family": "shadow",
+   "rarity": "rare",
+   "eggTier": "dark",
+   "level": 33,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "3082c7c9-e746-8001-bb7f-1cbefd564247",
+   "family": "shadow",
+   "rarity": "rare",
+   "eggTier": "epic",
+   "level": 36,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "2604a9b7-a853-8001-9bf6-969d49718686",
+   "family": "shadow",
+   "rarity": "rare",
+   "eggTier": "rare",
+   "level": 35,
+   "moves": [
+    "night_storm",
+    "shard_rain"
+   ],
+   "passive": "shadow_crit_e"
+  },
+  {
+   "id": "2d090764-5cb9-8001-8df7-55ef22c09e54",
+   "family": "light",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 28
+  },
+  {
+   "id": "2b98b879-cd2a-8001-8e2c-9826d87f279b",
+   "family": "light",
+   "rarity": "epic",
+   "eggTier": "rare",
+   "level": 38
+  },
+  {
+   "id": "2ea9faf3-7f12-8001-8fdc-308c552c7279",
+   "family": "shadow",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 30
+  },
+  {
+   "id": "2017e55a-5fda-8001-9506-2e390ad4f3a7",
+   "family": "light",
+   "rarity": "rare",
+   "eggTier": "rare",
+   "level": 35
+  },
+  {
+   "id": "2aff8831-ed85-8001-8076-30ec3d95917e",
+   "family": "light",
+   "rarity": "rare",
+   "eggTier": "rare",
+   "level": 34
+  },
+  {
+   "id": "22a8ddb3-7093-8001-ad3a-df86049f1d91",
+   "family": "light",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 27
+  },
+  {
+   "id": "26521151-559f-8001-b395-28eb66b9fa17",
+   "family": "shadow",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 30
+  },
+  {
+   "id": "269bbaff-93a7-8001-bbf5-90e90f3dcee0",
+   "family": "light",
+   "rarity": "rare",
+   "eggTier": "rare",
+   "level": 35
+  },
+  {
+   "id": "2e65be94-56aa-8001-b765-7c0a6f7f28a0",
+   "family": "shadow",
+   "rarity": "normal",
+   "eggTier": "rare",
+   "level": 28
+  }
+ ],
+ "screens": {
+  "hatch": {
+   "id": "3095536d-0a36-8001-bb95-8860b2c3af53",
+   "egg": "epic"
+  },
+  "collection": [
+   "3421b3ff-19ec-8001-a4e8-b710241cbe6d",
+   "2aa30769-51c4-8001-ad01-a86e2d2fc633",
+   "27967110-f327-8001-a10d-1b6763d86491",
+   "18f4aadf-5cdc-8001-8af0-8bcbc3e85611",
+   "2074ea54-7074-8001-b3e2-d2a6716a991a",
+   "5bf364b5-d959-8001-8b91-cd5f733dd056",
+   "3c162c74-5d53-8001-a7e8-f1f936da9588",
+   "69a9a4db-7faa-8001-9f55-7e3e08433e7e",
+   "3082c7c9-e746-8001-bb7f-1cbefd564247",
+   "2604a9b7-a853-8001-9bf6-969d49718686",
+   "2d090764-5cb9-8001-8df7-55ef22c09e54",
+   "2b98b879-cd2a-8001-8e2c-9826d87f279b",
+   "2ea9faf3-7f12-8001-8fdc-308c552c7279",
+   "2017e55a-5fda-8001-9506-2e390ad4f3a7",
+   "2aff8831-ed85-8001-8076-30ec3d95917e",
+   "22a8ddb3-7093-8001-ad3a-df86049f1d91",
+   "26521151-559f-8001-b395-28eb66b9fa17",
+   "269bbaff-93a7-8001-bbf5-90e90f3dcee0",
+   "2e65be94-56aa-8001-b765-7c0a6f7f28a0"
+  ],
+  "detail": "3421b3ff-19ec-8001-a4e8-b710241cbe6d",
+  "battle": {
+   "tower": "sky",
+   "stage": 12,
+   "team": [
+    "2aa30769-51c4-8001-ad01-a86e2d2fc633",
+    "27967110-f327-8001-a10d-1b6763d86491",
+    "18f4aadf-5cdc-8001-8af0-8bcbc3e85611",
+    "2074ea54-7074-8001-b3e2-d2a6716a991a",
+    "5bf364b5-d959-8001-8b91-cd5f733dd056"
+   ]
+  },
+  "result": {
+   "tower": "angel",
+   "stage": 5,
+   "team": [
+    "3421b3ff-19ec-8001-a4e8-b710241cbe6d",
+    "3c162c74-5d53-8001-a7e8-f1f936da9588",
+    "69a9a4db-7faa-8001-9f55-7e3e08433e7e",
+    "3082c7c9-e746-8001-bb7f-1cbefd564247",
+    "2604a9b7-a853-8001-9bf6-969d49718686"
+   ]
+  },
+  "clan": {
+   "name": {
+    "en": "Moss Nest",
+    "de": "Moosnest",
+    "es": "Nido de Musgo",
+    "pt": "Ninho de Musgo",
+    "fr": "Nid de Mousse",
+    "tr": "Yosun Yuvası",
+    "ja": "Moss Nest",
+    "ko": "Moss Nest",
+    "id": "Sarang Lumut"
+   },
+   "members": [
+    "3421b3ff-19ec-8001-a4e8-b710241cbe6d",
+    "2aa30769-51c4-8001-ad01-a86e2d2fc633",
+    "27967110-f327-8001-a10d-1b6763d86491",
+    "18f4aadf-5cdc-8001-8af0-8bcbc3e85611",
+    "2074ea54-7074-8001-b3e2-d2a6716a991a",
+    "5bf364b5-d959-8001-8b91-cd5f733dd056",
+    "3c162c74-5d53-8001-a7e8-f1f936da9588",
+    "69a9a4db-7faa-8001-9f55-7e3e08433e7e",
+    "3082c7c9-e746-8001-bb7f-1cbefd564247",
+    "2604a9b7-a853-8001-9bf6-969d49718686",
+    "2d090764-5cb9-8001-8df7-55ef22c09e54",
+    "2b98b879-cd2a-8001-8e2c-9826d87f279b",
+    "2ea9faf3-7f12-8001-8fdc-308c552c7279",
+    "2017e55a-5fda-8001-9506-2e390ad4f3a7",
+    "2aff8831-ed85-8001-8076-30ec3d95917e",
+    "22a8ddb3-7093-8001-ad3a-df86049f1d91",
+    "26521151-559f-8001-b395-28eb66b9fa17",
+    "269bbaff-93a7-8001-bbf5-90e90f3dcee0",
+    "2e65be94-56aa-8001-b765-7c0a6f7f28a0"
+   ]
+  }
+ },
+ "progress": {
+  "towers": {
+   "angel": 30,
+   "demon": 24,
+   "swamp": 18,
+   "solo": 12,
+   "sky": 11,
+   "bulwark": 4
+  },
+  "campaign": {
+   "normal": {
+    "meadow": 10,
+    "mistwood": 10,
+    "crystal": 6
+   }
+  }
+ }
+}
