@@ -52756,6 +52756,17 @@ const LEVEL_RATIO = { high: 2, medium: 1.5, low: 1.25 };
 // so weit, dass die Fläche passt, seit 27.10.2026 nicht mehr unter 1. Android und iOS geben keinen Wert mit, dort gilt alles wie bisher
 const PX_BUDGET = +(new URLSearchParams(location.search).get('px')) || 0;
 const renderer = new THREE.WebGLRenderer({ antialias: Detail.level !== 'low', alpha: true });
+// Shader ohne Warten übersetzen (Luis 28.10.2026, Start ruckelte): mit der Prüfung fragt three.js nach jedem Programm den Stand ab,
+// der Browser wartet dann auf die Grafikkarte (unter Windows Hunderte Millisekunden je Programm, Leistungs-Log: erste Bilder des
+// Gartens 80 bis 550 ms). Mit ?debug in der Adresse bleibt die Prüfung an
+renderer.debug.checkShaderErrors = /[?&]debug/.test(location.search);
+// Fertig übersetzt? Mit KHR_parallel_shader_compile fragt das, ohne zu blockieren, ohne die Erweiterung gilt alles als fertig
+const shaderExt = renderer.getContext().getExtension('KHR_parallel_shader_compile');
+function shadersReady() {
+  if (!shaderExt) return true;
+  const gl = renderer.getContext();
+  return renderer.info.programs.every(p => !p.program || gl.getProgramParameter(p.program, shaderExt.COMPLETION_STATUS_KHR));
+}
 // WebGL verloren (Speichermangel): die App lädt die Seite neu und schickt den letzten Inhalt wieder (16.10.2026)
 renderer.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); send({ type: 'lost' }); }, false);
 // Schnittebene für den Tod des stillen Mönchs (zerbröselt von oben nach unten in Eier)
@@ -53201,7 +53212,7 @@ function portrait(b) {
 // Antworten: battle_progress, battle_ready, battle_played, battle_ended, battle_tap.
 // Pfeil zum Boss (Luis 05.10.2026): der Mittlere vorn, die Äußeren am weitesten zurück, etwas breiter verteilt
 // UI V2 (Bewertung, Kampf): eigenes Team größer und in Ruhe um diesen Winkel (Bogenmaß) zur Kamera gedreht
-const BATTLE_V2_SCALE = 1.22, BATTLE_V2_TURN = 2.3;
+const BATTLE_V2_SCALE = 1.22;
 const BATTLE_SPOTS = [[-1.74, 3.12], [-0.88, 2.84], [0, 2.56], [0.88, 2.84], [1.74, 3.12]];
 // Team mittig je nach Anzahl (Luis 12.10.2026, Handytest): je Teamgröße eigene Plätze, immer symmetrisch zur Mitte. Turm mit
 // bis zu fünf (Pfeil), Kampagne mit bis zu vier (flacher Bogen)
@@ -53441,8 +53452,7 @@ function battleAddMember(m, i, foe, n) {
   // Leistungs-Log (17.10.2026): wer steht hier und wie lange hat der Bau gedauert
   f.perf = { id: m.id || null, foe: !!foe, buildMs: Math.round(performance.now() - tb0) };
   const s = 0.95 / Math.max(size.y, size.x * 0.8) * (battle.v2 && !foe ? BATTLE_V2_SCALE : 1);
-  // UI V2: Ruhe schräg zur Kamera, zur Mitte hin (links stehende schauen nach rechts), Winkel ab dem Blick zum Gegner (Math.PI)
-  if (battle.v2 && !foe) f.restYaw = Math.PI - (spot[0] <= 0 ? 1 : -1) * BATTLE_V2_TURN;
+  // UI V2: das Team ist größer, schaut aber wie bisher immer zum Gegner (Luis 28.10.2026: schräg zur Kamera sah falsch aus)
   holder.add(built.group); built.group.position.y = -built.box.min.y; holder.scale.setScalar(s);
   f.rig = built.group.userData.rig; f.height = size.y * s;
   // Grenzen der Gesten schon beim Aufbau rechnen (Ladebalken), nicht erst beim ersten Zug
@@ -55141,17 +55151,10 @@ function battleTick(f, t, dt, step) {
     f.holder.position.set(p.x + wobble + ax, p.y + f.hop + inHop - 0.04 * k - 0.12 * btEase(0, 1, f.lostK), p.z + az);
     // Weicheres Umkippen: etwas zur Seite geneigt, je Kämpfer nach seiner Seite
     f.holder.rotation.z = (f.home.x >= 0 ? 1 : -1) * 0.22 * Math.sin(k * Math.PI * 0.5);
-    // UI V2: in Ruhe schräg von vorn, am Zug und beim Fallen zum Gegner, weich nachgeführt (nur Zahlen, keine Allokation)
-    if (f.restYaw != null && !camp && B.outcome !== 'victory') {
-      const want = B.turnKey === f.key || f.dead ? Math.PI : f.restYaw;
-      f.holder.rotation.y += (want - f.holder.rotation.y) * (reducedMotion ? 1 : Math.min(1, dt * 9));
-    }
     // Sieg: die Stehenden drehen sich zur Kamera und jubeln
     if (f.ally && B.outcome === 'victory' && !f.dead) {
       f.winK = Math.min(1, (f.winK || 0) + step / 0.6);
-      // UI V2: von der Haltung im Moment des Siegs aus, nicht vom Blick zum Gegner
-      if (f.winFrom == null) f.winFrom = f.holder.rotation.y;
-      const base = camp ? f.yaw : f.restYaw != null ? f.winFrom : Math.PI, to = Math.atan2(B.cam.position.x - f.holder.position.x, B.cam.position.z - f.holder.position.z);
+      const base = camp ? f.yaw : Math.PI, to = Math.atan2(B.cam.position.x - f.holder.position.x, B.cam.position.z - f.holder.position.z);
       let d = to - base; d = Math.atan2(Math.sin(d), Math.cos(d));
       f.holder.rotation.y = base + d * btEase(0, 1, f.winK);
     }
@@ -55303,7 +55306,8 @@ function startHome(b) {
   const G = homeGarden, sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(G.camera.fov, 9 / 20, 0.1, 200);
   sc.add(G.group);
   const hemi = new THREE.HemisphereLight(0xffffff, 0x6a7a42, 0.7), sun = new THREE.DirectionalLight(0xffffff, 1.0); sc.add(hemi); sc.add(sun);
-  homeView = { scene: sc, cam, hemi, sun, G, team: [], active: b.active !== false, fixedHour: typeof b.hour === 'number' ? b.hour : null, timeAt: 0, rnd: homeLcg(7), life: Rig.lifeScene() };
+  // warm: erst zeichnen, wenn die Shader fertig sind (bis dahin liegt das Ei der App darüber, Zeichnen wäre nur Last)
+  homeView = { scene: sc, cam, hemi, sun, G, team: [], warm: false, active: b.active !== false, fixedHour: typeof b.hour === 'number' ? b.hour : null, timeAt: 0, rnd: homeLcg(7), life: Rig.lifeScene() };
   homeResize(); homeTime();
   document.body.style.background = 'transparent';
   const mine = homeView, list = (Array.isArray(b.team) ? b.team : []).filter(m => m && (m.id || m.look)).slice(0, 4);
@@ -55312,10 +55316,37 @@ function startHome(b) {
     if (homeView !== mine) return;
     if (n < list.length) {
       try { homeAdd(list[n], n); } catch (x) { send({ type: 'error', text: 'home: ' + String(x && x.stack || x) }); }
-      n++; setTimeout(next, 0); return;
+      n++; send({ type: 'home_progress', p: 0.1 + 0.4 * n / list.length }); setTimeout(next, 0); return;
     }
     try { renderer.compile(sc, cam); } catch (x) { /* dann beim ersten Bild */ }
-    send({ type: 'home_ready', ms: Math.round(performance.now() - t0), figures: mine.team.length, tris: G.tris });
+    // Warten, bis die Grafikkarte alle Programme fertig hat (höchstens 4 s). Danach ein paar Bilder vorab zeichnen, solange noch das
+    // Ei der App darüber liegt: das erste Bild lädt Texturen und Puffer auf die Grafikkarte (Luis 28.10.2026: lieber länger beim Ei
+    // warten als mit Rucklern auf Home landen). Fertig, sobald ein Bild unter 25 ms bleibt (höchstens 8 Bilder oder 3 s)
+    const tc = performance.now();
+    let warmed = 0, tw = 0;
+    const done = () => {
+      mine.warm = true;
+      send({ type: 'home_progress', p: 1 });
+      send({ type: 'home_ready', ms: Math.round(performance.now() - t0), compileMs: Math.round(tw - tc), warmFrames: warmed, figures: mine.team.length, tris: G.tris });
+    };
+    const firstFrames = () => {
+      if (homeView !== mine) return;
+      const r0 = performance.now();
+      try { homeFrame(r0, 0.016); renderer.render(sc, cam); } catch (x) { done(); return; }
+      const ms = performance.now() - r0; warmed++;
+      send({ type: 'home_progress', p: Math.min(0.98, 0.85 + 0.02 * warmed) });
+      if ((ms < 25 && warmed >= 2) || warmed >= 8 || performance.now() - tw > 3000) { done(); return; }
+      setTimeout(firstFrames, 16);
+    };
+    const shaders = () => {
+      if (homeView !== mine) return;
+      const all = renderer.info.programs.length || 1, gl = renderer.getContext();
+      const ready = shaderExt ? renderer.info.programs.filter(p => !p.program || gl.getProgramParameter(p.program, shaderExt.COMPLETION_STATUS_KHR)).length : all;
+      send({ type: 'home_progress', p: 0.5 + 0.35 * ready / all });
+      if (ready < all && performance.now() - tc < 4000) { setTimeout(shaders, 50); return; }
+      tw = performance.now(); firstFrames();
+    };
+    shaders();
   };
   setTimeout(next, 0);
 }
@@ -55800,7 +55831,9 @@ function frame(now) {
   const camD = flat ? dist : dist * viewZoom, zk = !flat && viewZoom < 1 ? (1 - viewZoom) / (1 - VIEW_ZOOM[0]) : 0, camY = lookY + (lastSize[0] * 0.6 - lookY) * zk;
   camera.position.set(0, camY + Math.sin(tiltX) * camD, Math.cos(tiltX) * camD); camera.lookAt(0, camY, 0);
   const fs = flat ? 1 / viewZoom : 1;
-  if (Math.abs(fs - 1) > 1e-4) { const w = 1 / fs, v = camera.view; if (!v || !v.enabled || Math.abs(v.width - w) > 1e-6) camera.setViewOffset(1, 1, 0.5 * (1 - w), ground.at * (1 - w), w, w); }
+  // Ausschnitt im Seitenverhältnis der Bühne: setViewOffset setzt camera.aspect auf Breite durch Höhe des Ganzen, mit 1 zu 1 wurde
+  // das Ovaling beim Zoomen gestaucht (Luis 28.10.2026). Ändert sich die Größe der Bühne, wird der Ausschnitt neu gesetzt
+  if (Math.abs(fs - 1) > 1e-4) { const a = camera.aspect, w = 1 / fs, v = camera.view; if (!v || !v.enabled || Math.abs(v.height - w) > 1e-6 || Math.abs(v.fullWidth - a) > 1e-6) camera.setViewOffset(a, 1, 0.5 * (1 - w) * a, ground.at * (1 - w), w * a, w); }
   else if (camera.view && camera.view.enabled) camera.clearViewOffset();
   if (Math.abs(fs - flatZoomSent) > 0.002 || (fs === 1 && flatZoomSent !== 1)) { flatZoomSent = fs; send({ type: 'zoom', scale: Math.round(fs * 1000) / 1000, x: 0.5, y: ground ? ground.at : 0.5 }); }
   // Die gewollte Pause zwischen den Bildern zählt nicht als langsam (sonst sänke in Ruhe mit 30 Bildern die Auflösung)
@@ -55808,7 +55841,7 @@ function frame(now) {
   const r0 = performance.now();
   if (battle) battleFrame(now, dt, clamp(raw2 / 1000, 0, 0.1));
   // Home: nur zeichnen, solange der Tab zu sehen ist (spart Akku)
-  if (homeView) { if (homeView.active) { homeFrame(now, dt); renderer.render(homeView.scene, homeView.cam); } }
+  if (homeView) { if (homeView.active && homeView.warm) { homeFrame(now, dt); renderer.render(homeView.scene, homeView.cam); } }
   else if (battle) renderBattle(battle);
   else renderStage();
   if (measure) {
