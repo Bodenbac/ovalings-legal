@@ -22989,33 +22989,63 @@ const Bosses = (() => {
       c.lerp(new THREE.Color(0x221c18), 0.55 * bump(ax, y, 0.25, 0.045, 0.2, 0.13) * w);
       c.lerp(new THREE.Color(0x0a0405), 0.8 * bump(ax, y, 0.04, -0.37, 0.018, 0.011) * w);
     };
-    const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
-    put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
-    // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
+    // UI V2 (Bewertung 28.10.2026: „Ein Boss hat ein fast fotorealistisches Gesicht“): mit opts.v2 ein Gesicht im Stil der
+    // Ovalings statt der steinernen Fratze. Glattes, warmes Elfenbein, große glänzende Augen mit goldener Iris und zwei Lichtpunkten,
+    // strenge goldene Brauen, kleiner Mund. Kapuze und Krone bleiben. Ohne opts.v2 alles wie bisher
     const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
-    // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
-    const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
-    const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
-    tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
-    const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
-    toothGeo.translate(0, 0, -0.2);
-    for (const upper of [true, false]) {
-      const n = 15;
-      for (let i = 0; i < n; i++) {
-        const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
-        const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
-        const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
-        const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
-        t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
-        head.add(t);
+    const v2Eyes = [];
+    if (opts.v2) {
+      const softFace = (x, y, z) => front(z) * (0.035 * bump(Math.abs(x), y, 0.3, -0.25, 0.14, 0.12) - 0.025 * bump(Math.abs(x), y, 0.26, 0.04, 0.13, 0.1) + 0.03 * bump(x, y, 0, -0.7, 0.2, 0.16));
+      const blush = (x, y, z, c) => c.lerp(new THREE.Color(0xf2a38a), 0.4 * bump(Math.abs(x), y, 0.36, -0.28, 0.1, 0.07) * front(z));
+      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xfff6e8); faceMat.roughness = 0.55; faceMat.envMapIntensity = 0.3;
+      put(head, faceSphere(HR, softFace, [0xd9c7a8, 3, 0.35], blush, faceMat)).scale.set(...HS);
+      const eyeMat = new THREE.MeshStandardMaterial({ color: 0x120e20, roughness: 0.15, metalness: 0.05, envMap: env, envMapIntensity: 0.45 });
+      const irisMat = new THREE.MeshBasicMaterial({ color: 0xe8a62c }), pupilMat = new THREE.MeshBasicMaterial({ color: 0x1a0f08 }), shine = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const browMat = gold;
+      for (const sx of [-1, 1]) {
+        const at = onFace(sx * 0.26, 0.02, 0.96), eye = new THREE.Group(); eye.position.copy(at); eye.rotation.y = sx * 0.42; head.add(eye);
+        const ball = mesh(new THREE.SphereGeometry(0.068, 32, 24), eyeMat); ball.scale.set(0.92, 1.18, 0.45); eye.add(ball);
+        const iris = mesh(new THREE.CircleGeometry(0.042, 32), irisMat, 0, -0.01, 0.031); iris.scale.y = 1.12; eye.add(iris);
+        eye.add(mesh(new THREE.CircleGeometry(0.016, 24), pupilMat, 0, -0.012, 0.0315));
+        eye.add(mesh(new THREE.CircleGeometry(0.018, 20), shine, sx * -0.02, 0.026, 0.0325));
+        eye.add(mesh(new THREE.CircleGeometry(0.008, 16), shine, sx * 0.016, -0.03, 0.0325));
+        v2Eyes.push(eye);
+        // Braue: schräg zur Mitte hin tiefer (streng, aber rund), goldene Kapsel
+        const bAt = onFace(sx * 0.25, 0.25, 1.0), brow = mesh(new THREE.SphereGeometry(1, 20, 12), browMat, bAt.x, bAt.y, bAt.z);
+        brow.scale.set(0.078, 0.022, 0.026); brow.rotation.set(0, sx * 0.4, sx * 0.32); head.add(brow);
       }
-    }
-    // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
-    for (const sx of [-1, 1]) {
-      const at = onFace(sx * 0.25, 0.045, 0.88);
-      head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
-      head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
-      const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
+      // Mund: kleiner, ruhiger Bogen
+      const mPts = []; for (let i = 0; i <= 12; i++) { const ux = -0.14 + i * (0.28 / 12); mPts.push(onFace(ux, -0.43 + 0.8 * ux * ux, 1.0)); }
+      head.add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(mPts), 24, 0.011, 8), new THREE.MeshStandardMaterial({ color: 0x6b2c22, roughness: 0.5 })));
+    } else {
+      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
+      put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
+      // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
+      const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
+      // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
+      const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
+      const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
+      tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
+      const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
+      toothGeo.translate(0, 0, -0.2);
+      for (const upper of [true, false]) {
+        const n = 15;
+        for (let i = 0; i < n; i++) {
+          const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
+          const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
+          const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
+          const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
+          t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
+          head.add(t);
+        }
+      }
+      // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
+      for (const sx of [-1, 1]) {
+        const at = onFace(sx * 0.25, 0.045, 0.88);
+        head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
+        head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
+        const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
+      }
     }
     // Kapuze: Stoff mit Falten, vorn offen, fällt auf die Schultern, dicker Saum an der Öffnung
     const hoodMat = new THREE.MeshStandardMaterial({ color: 0xe9dfcc, roughness: 0.7, side: THREE.DoubleSide, emissive: 0x1c1206, emissiveIntensity: 0.25 });
@@ -23165,6 +23195,8 @@ const Bosses = (() => {
     function update(t, state, u = 0, dt = 0.016) {
       dust.userData.tick(dt);
       rig.reset();
+      // UI V2: Augen blinzeln wie bei den Ovalings (nur Maßstab, keine Allokation)
+      for (let i = 0; i < v2Eyes.length; i++) v2Eyes[i].scale.y = 1 - 0.92 * blink(t, i, 1.7);
       // Idle: schweben, atmen, Rock und Tuch schwingen nach, Kopf schaut sich um und neigt sich, Flügel als Welle von
       // innen nach außen, freie Hand bewegt die Finger, die Lanzenhand greift nach, Kern und Schein pulsieren
       const hover = Math.sin(t * 1.2), br = Math.sin(t * 1.5);

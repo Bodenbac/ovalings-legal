@@ -21342,33 +21342,63 @@ const Bosses = (() => {
       c.lerp(new THREE.Color(0x221c18), 0.55 * bump(ax, y, 0.25, 0.045, 0.2, 0.13) * w);
       c.lerp(new THREE.Color(0x0a0405), 0.8 * bump(ax, y, 0.04, -0.37, 0.018, 0.011) * w);
     };
-    const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
-    put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
-    // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
+    // UI V2 (Bewertung 28.10.2026: „Ein Boss hat ein fast fotorealistisches Gesicht“): mit opts.v2 ein Gesicht im Stil der
+    // Ovalings statt der steinernen Fratze. Glattes, warmes Elfenbein, große glänzende Augen mit goldener Iris und zwei Lichtpunkten,
+    // strenge goldene Brauen, kleiner Mund. Kapuze und Krone bleiben. Ohne opts.v2 alles wie bisher
     const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
-    // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
-    const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
-    const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
-    tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
-    const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
-    toothGeo.translate(0, 0, -0.2);
-    for (const upper of [true, false]) {
-      const n = 15;
-      for (let i = 0; i < n; i++) {
-        const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
-        const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
-        const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
-        const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
-        t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
-        head.add(t);
+    const v2Eyes = [];
+    if (opts.v2) {
+      const softFace = (x, y, z) => front(z) * (0.035 * bump(Math.abs(x), y, 0.3, -0.25, 0.14, 0.12) - 0.025 * bump(Math.abs(x), y, 0.26, 0.04, 0.13, 0.1) + 0.03 * bump(x, y, 0, -0.7, 0.2, 0.16));
+      const blush = (x, y, z, c) => c.lerp(new THREE.Color(0xf2a38a), 0.4 * bump(Math.abs(x), y, 0.36, -0.28, 0.1, 0.07) * front(z));
+      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xfff6e8); faceMat.roughness = 0.55; faceMat.envMapIntensity = 0.3;
+      put(head, faceSphere(HR, softFace, [0xd9c7a8, 3, 0.35], blush, faceMat)).scale.set(...HS);
+      const eyeMat = new THREE.MeshStandardMaterial({ color: 0x120e20, roughness: 0.15, metalness: 0.05, envMap: env, envMapIntensity: 0.45 });
+      const irisMat = new THREE.MeshBasicMaterial({ color: 0xe8a62c }), pupilMat = new THREE.MeshBasicMaterial({ color: 0x1a0f08 }), shine = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const browMat = gold;
+      for (const sx of [-1, 1]) {
+        const at = onFace(sx * 0.26, 0.02, 0.96), eye = new THREE.Group(); eye.position.copy(at); eye.rotation.y = sx * 0.42; head.add(eye);
+        const ball = mesh(new THREE.SphereGeometry(0.068, 32, 24), eyeMat); ball.scale.set(0.92, 1.18, 0.45); eye.add(ball);
+        const iris = mesh(new THREE.CircleGeometry(0.042, 32), irisMat, 0, -0.01, 0.031); iris.scale.y = 1.12; eye.add(iris);
+        eye.add(mesh(new THREE.CircleGeometry(0.016, 24), pupilMat, 0, -0.012, 0.0315));
+        eye.add(mesh(new THREE.CircleGeometry(0.018, 20), shine, sx * -0.02, 0.026, 0.0325));
+        eye.add(mesh(new THREE.CircleGeometry(0.008, 16), shine, sx * 0.016, -0.03, 0.0325));
+        v2Eyes.push(eye);
+        // Braue: schräg zur Mitte hin tiefer (streng, aber rund), goldene Kapsel
+        const bAt = onFace(sx * 0.25, 0.25, 1.0), brow = mesh(new THREE.SphereGeometry(1, 20, 12), browMat, bAt.x, bAt.y, bAt.z);
+        brow.scale.set(0.078, 0.022, 0.026); brow.rotation.set(0, sx * 0.4, sx * 0.32); head.add(brow);
       }
-    }
-    // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
-    for (const sx of [-1, 1]) {
-      const at = onFace(sx * 0.25, 0.045, 0.88);
-      head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
-      head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
-      const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
+      // Mund: kleiner, ruhiger Bogen
+      const mPts = []; for (let i = 0; i <= 12; i++) { const ux = -0.14 + i * (0.28 / 12); mPts.push(onFace(ux, -0.43 + 0.8 * ux * ux, 1.0)); }
+      head.add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(mPts), 24, 0.011, 8), new THREE.MeshStandardMaterial({ color: 0x6b2c22, roughness: 0.5 })));
+    } else {
+      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
+      put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
+      // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
+      const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
+      // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
+      const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
+      const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
+      tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
+      const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
+      toothGeo.translate(0, 0, -0.2);
+      for (const upper of [true, false]) {
+        const n = 15;
+        for (let i = 0; i < n; i++) {
+          const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
+          const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
+          const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
+          const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
+          t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
+          head.add(t);
+        }
+      }
+      // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
+      for (const sx of [-1, 1]) {
+        const at = onFace(sx * 0.25, 0.045, 0.88);
+        head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
+        head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
+        const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
+      }
     }
     // Kapuze: Stoff mit Falten, vorn offen, fällt auf die Schultern, dicker Saum an der Öffnung
     const hoodMat = new THREE.MeshStandardMaterial({ color: 0xe9dfcc, roughness: 0.7, side: THREE.DoubleSide, emissive: 0x1c1206, emissiveIntensity: 0.25 });
@@ -21518,6 +21548,8 @@ const Bosses = (() => {
     function update(t, state, u = 0, dt = 0.016) {
       dust.userData.tick(dt);
       rig.reset();
+      // UI V2: Augen blinzeln wie bei den Ovalings (nur Maßstab, keine Allokation)
+      for (let i = 0; i < v2Eyes.length; i++) v2Eyes[i].scale.y = 1 - 0.92 * blink(t, i, 1.7);
       // Idle: schweben, atmen, Rock und Tuch schwingen nach, Kopf schaut sich um und neigt sich, Flügel als Welle von
       // innen nach außen, freie Hand bewegt die Finger, die Lanzenhand greift nach, Kern und Schein pulsieren
       const hover = Math.sin(t * 1.2), br = Math.sin(t * 1.5);
@@ -34482,7 +34514,7 @@ const Troll = (() => {
           vTrW = (modelMatrix * trW4).xyz; vTrP = transformed; vTrK = aKind; vTrR = aRest; vTrA = aAux;
           #include <project_vertex>`);
       sh.fragmentShader = `varying float vTrK;\nvarying vec3 vTrR;\nvarying vec3 vTrA;\nvarying vec3 vTrW;\nvarying vec3 vTrP;
-        uniform float uTime, uStone, uStoneY, uArmor, uHeal, uHealY, uSleep, uVein, uHi, uCheek, uEyeGlow, uIrisA, uPupil, uCatch, uMouthGlow, uFlash, uScale;
+        uniform float uTime, uStone, uStoneY, uArmor, uHeal, uHealY, uSleep, uVein, uHi, uCheek, uEyeGlow, uIrisA, uPupil, uCatch, uMouthGlow, uFlash, uScale, uToon;
         uniform vec2 uLook;
         uniform vec3 uIris, uIrisIn, uScl, uHiC, uLichen, uMoss, uMossDeep, uMossTip, uStoneC, uCheekC, uVeinC, uVeinG, uHealC, uBelly, uSpot, uWoodDeep;
         uniform sampler2D uSkinRamp;\n` + GLSL + sh.fragmentShader
@@ -34517,21 +34549,23 @@ const Troll = (() => {
             float big = trNoise(trR * 3.0 + 5.0);
             float mid = trNoise(trR * 7.0 + 9.0);
             vec3 pv = trVor3(trR * 7.5 + 2.3);
-            float wart = step(0.8, pv.z) * (1.0 - smoothstep(0.0, 0.3 + 0.1 * fract(pv.z * 7.0), pv.y)) * (1.0 - 0.55 * face);
+            // UI V2 (uToon 1): Kopfhaut glatt wie bei den Ovalings, ohne Warzen, Poren und Furchen, nur ein Hauch Korn
+            float wart = step(0.8, pv.z) * (1.0 - smoothstep(0.0, 0.3 + 0.1 * fract(pv.z * 7.0), pv.y)) * (1.0 - 0.55 * face) * (1.0 - uToon);
             float frown = 0.0;
             if (trK < 1.5 || trK > 2.5) {
               frown = smoothstep(0.27, 0.32, trR.y) * (1.0 - smoothstep(0.42, 0.5, trR.y)) * (1.0 - smoothstep(0.2, 0.34, abs(trR.x))) * smoothstep(0.15, 0.3, trR.z);
               frown *= smoothstep(0.5, 0.95, sin(trR.y * 75.0 + 2.5 * trNoise(trR * 5.0))) * (1.0 - smoothstep(0.08, 0.16, fwidth(trR.y) * 12.0));
             }
-            trC *= 0.88 + 0.2 * grain;
-            trC *= 0.9 + 0.18 * big;
-            trC *= 0.92 + 0.12 * mid;
+            frown *= 1.0 - uToon;
+            trC *= mix(0.88 + 0.2 * grain, 0.98 + 0.04 * grain, uToon);
+            trC *= mix(0.9 + 0.18 * big, 0.97 + 0.06 * big, uToon);
+            trC *= mix(0.92 + 0.12 * mid, 1.0, uToon);
             trC *= 1.0 - 0.25 * frown;
             // Tonflecken wie am Leib (Abnahme Runde 2), im Gesicht schwächer, dazu dunkle Poren oben und hinten
             float htt = clamp((trNoise(trR * 1.6 + 3.0) * 0.6 + trNoise(trR * 4.2 + 7.0) * 0.4 - 0.5) * 2.4 + 0.5, 0.0, 1.0);
             trC *= mix(vec3(1.0), texture2D(uSkinRamp, vec2(0.5, htt)).rgb * 1.6, 0.65 - 0.4 * face);
             float hpn = trNoise(trR * 30.0 + 2.0);
-            trC *= 1.0 - 0.3 * mix(smoothstep(0.75, 0.84, hpn), 0.08, smoothstep(0.1, 0.3, fwidth(hpn))) * (1.0 - 0.75 * face);
+            trC *= 1.0 - 0.3 * mix(smoothstep(0.75, 0.84, hpn), 0.08, smoothstep(0.1, 0.3, fwidth(hpn))) * (1.0 - 0.75 * face) * (1.0 - uToon);
             trC = mix(trC, trC * vec3(1.1, 1.08, 0.94) + 0.02, wart * 0.6);
             float lich = smoothstep(0.64, 0.72, trNoise(trR * 3.1 + 4.0)) * (0.6 + 0.4 * trNoise(trR * 19.0)) * (1.0 - face) * smoothstep(0.0, 0.3, trR.y);
             trC = mix(trC, uLichen, lich * ${ultra ? '0.15' : '0.3'});
@@ -34546,8 +34580,8 @@ const Troll = (() => {
               trC *= 1.0 - 0.82 * nos;
               trH -= 0.012 * nos;
             }
-            trH += 0.014 * big + 0.008 * mid + 0.003 * grain + 0.028 * wart - 0.008 * frown;
-            trRo = 0.84;
+            trH += (0.014 * big + 0.008 * mid + 0.003 * grain) * (1.0 - 0.85 * uToon) + 0.028 * wart - 0.008 * frown;
+            trRo = mix(0.84, 0.6, uToon);
           } else if (trK < 4.5) {
             // Ledrige Trollhaut (Leib, Hals, Arme, Beine, Füße). Farbe, Bauch und Schatten stehen in den Ecken, hier die Struktur.
             // Abnahme Runde 2 (22.10.2026: „aus der Kampfkamera glatte Knete mit gleich großen, gleichmäßig verteilten Noppen“): alles
@@ -34658,12 +34692,13 @@ const Troll = (() => {
             float ang = acos(clamp(dot(q, trLk), -1.0, 1.0));
             float iris = 1.0 - smoothstep(uIrisA - 0.035, uIrisA, ang);
             float pup = 1.0 - smoothstep(uPupil - 0.03, uPupil, ang);
-            vec3 ic = mix(uIrisIn, uIris, smoothstep(0.0, uIrisA, ang)) * (0.78 + 0.34 * trNoise(q * 15.0 + 3.0));
-            ic = mix(ic, uIris * 0.3, smoothstep(uIrisA * 0.75, uIrisA, ang));
-            vec3 ec = mix(uScl * (0.88 + 0.1 * trNoise(q * 6.0)), ic, iris);
+            // UI V2 (uToon 1): Iris flach und klar wie bei den Ovalings, ohne Fasern, Lederhaut ohne Flecken
+            vec3 ic = mix(uIrisIn, uIris, smoothstep(0.0, uIrisA, ang)) * mix(0.78 + 0.34 * trNoise(q * 15.0 + 3.0), 1.0, uToon);
+            ic = mix(ic, uIris * 0.3, smoothstep(uIrisA * mix(0.75, 0.88, uToon), uIrisA, ang));
+            vec3 ec = mix(uScl * mix(0.88 + 0.1 * trNoise(q * 6.0), 1.0, uToon), ic, iris);
             ec = mix(ec, vec3(0.02, 0.015, 0.02), pup * (1.0 - uEyeGlow));
             vec3 cdir = normalize(trLk + vec3(-0.28, 0.32, 0.0));
-            float cat = (1.0 - smoothstep(0.1, 0.13, acos(clamp(dot(q, cdir), -1.0, 1.0)))) * uCatch;
+            float cat = (1.0 - smoothstep(0.1 + 0.07 * uToon, 0.13 + 0.07 * uToon, acos(clamp(dot(q, cdir), -1.0, 1.0)))) * uCatch;
             vec3 cdir2 = normalize(trLk + vec3(0.18, -0.2, 0.0));
             cat = max(cat, (1.0 - smoothstep(0.045, 0.06, acos(clamp(dot(q, cdir2), -1.0, 1.0)))) * uCatch * 0.8);
             ec = mix(ec, vec3(1.0), cat * (1.0 - uEyeGlow));
@@ -35056,13 +35091,15 @@ const Troll = (() => {
     const SU = {
       uTime: { value: 0 }, uStone: { value: 0 }, uStoneY: { value: -10 }, uArmor: { value: 0 }, uHeal: { value: 0 }, uHealY: { value: 0 }, uSleep: { value: 0 }, uScale: { value: 1 },
       uVein: { value: ultra ? 1 : 0 }, uFlash: { value: 0 },
+      // UI V2: Gesichter im Stil der Ovalings (glatte Kopfhaut, klare große Augen), aus opts.v2
+      uToon: { value: opts.v2 ? 1 : 0 },
       uLichen: { value: col(L.lichen) }, uMoss: { value: col(L.moss) }, uMossDeep: { value: col(L.mossDeep) }, uMossTip: { value: col(L.mossTip) },
       uStoneC: { value: col(L.stoneSkin) }, uCheekC: { value: col(L.cheek) }, uVeinC: { value: col(L.vein) }, uVeinG: { value: col(L.veinGold) }, uHealC: { value: col(L.heal) },
       uBelly: { value: col(L.belly) }, uSpot: { value: col(L.spot) }, uWoodDeep: { value: col(L.woodDeep) }, uSkinRamp: { value: skinRamp(ultra) },
     };
     const eyeU = (kind) => ({
       uLook: { value: new THREE.Vector2() }, uHi: { value: 0 }, uHiC: { value: col(HEAD_COL[kind]) }, uCheek: { value: 0 }, uEyeGlow: { value: ultra ? 1 : 0 },
-      uIrisA: { value: HEAD[kind].iris }, uPupil: { value: HEAD[kind].pupil }, uCatch: { value: kind === 'gentle' ? 1 : kind === 'grim' ? 0.55 : 0.4 }, uMouthGlow: { value: ultra ? 1 : 0 },
+      uIrisA: { value: HEAD[kind].iris * (opts.v2 ? 1.18 : 1) }, uPupil: { value: HEAD[kind].pupil * (opts.v2 ? 1.6 : 1) }, uCatch: { value: opts.v2 ? 1 : kind === 'gentle' ? 1 : kind === 'grim' ? 0.55 : 0.4 }, uMouthGlow: { value: ultra ? 1 : 0 },
       uIris: { value: col(L[kind + 'Iris']) }, uIrisIn: { value: col(L[kind + 'IrisIn']) }, uScl: { value: col(L.sclera) },
     });
     const mainU = eyeU('grim'); mainU.uEyeGlow.value = 0; mainU.uMouthGlow.value = 0;
@@ -36642,7 +36679,8 @@ const Troll = (() => {
       const F = h.F, D = h.dyn, H = h.H, s = h.s;
       look.set(clamp(F.lx, -0.6, 0.6), clamp(F.ly, -0.4, 0.4)); h.U.uLook.value.copy(look);
       // Lider
-      const op = clamp(F.op, 0, 1.3), lo = clamp(F.lo, 0, 1);
+      // UI V2: Augen weiter offen (Oberlid höher, Unterlid tiefer), Blinzeln bleibt (0 bleibt 0)
+      const op = clamp(opts.v2 ? F.op * 1.25 : F.op, 0, 1.3), lo = clamp(opts.v2 ? F.lo * 0.4 : F.lo, 0, 1);
       const aU = mix(0.08, -0.62, Math.min(1, op)) - 0.22 * Math.max(0, op - 1), aL = mix(0.72, 0.12, lo) - 0.6 * (1 - Math.min(1, op)) * 0.25;
       for (const Ld of h.lids) {
         const e = Ld.e, tilt = -e.side * F.tl;
@@ -53360,7 +53398,8 @@ const BATTLE_FIGURES = { monk: () => Monk, dragon: () => Dragon, bulwark: () => 
 
 function battleAddBoss(kind, hp, clan, tentacles) {
   // detail 'battle': Bosse, die eine Kampfstufe kennen (Himmelsdrache), bauen mit weniger Segmenten, die Bewegung bleibt gleich
-  const bo = { env: environment(), detail: 'battle' };
+  // v2: Bosse mit Gesichtern im Stil der Ovalings (UI V2, Feld v2 im Befehl battle), sonst wie bisher
+  const bo = { env: environment(), detail: 'battle', v2: !!(battle && battle.v2) };
   // Clan-Boss: clan { stage 1 bis 5, wear 0 bis 1 aus dem gemeinsamen Balken, hard 0 bis 1 Härte der Schale in Stufe 1 }. Ohne
   // Angabe Stufe 2. Schlüssel cuckoo für Stufe 1 bis 4, cuckoo_ultra für Stufe 5 (dann gilt immer Stufe 5)
   if (/^cuckoo/.test(kind)) {
