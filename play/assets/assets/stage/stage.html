@@ -17,6 +17,11 @@ html, body { margin: 0; height: 100%; background: transparent; overflow: hidden;
 .bt-track i, .bt-track b, .bt-bar i, .bt-bar b { position: absolute; top: 0; bottom: 0; left: 0; display: block; transition: width .25s, left .25s; }
 .bt-track i { background: linear-gradient(#ff8a7e, #e0453a 60%, #b8322a); }
 .bt-track b, .bt-bar b { background: #9fe3ff; }
+/* Verlust (Luis 28.10.2026): das Leben springt sofort, der verlorene Teil steht kurz in heller Farbe des Balkens und schrumpft
+   dann von rechts nach links nach (s liegt unter i, battleBar setzt die Übergänge) */
+.bt-track s, .bt-bar s { position: absolute; top: 0; bottom: 0; left: 0; display: block; text-decoration: none; }
+.bt-track s { background: #ffc2bc; }
+.bt-bar s { background: #c8f5d2; }
 .bt-bar { position: absolute; width: 46px; height: 7px; margin-left: -25px; margin-top: -3px; border-radius: 6px; background: linear-gradient(#0e0b14cc, #2a2338aa); border: 2px solid #2a1a3e; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35); overflow: hidden; will-change: transform; }
 .bt-bar i { background: linear-gradient(#86ec9c, #4cc26b 60%, #33994f); }
 /* Effekte über dem Lebensbalken (Luis 05.10.2026): Bilder malt die App (EffectIcon), daneben die restlichen Züge */
@@ -53614,6 +53619,23 @@ function battleBar(f) {
   if (!f.bar) return;
   const hpW = Math.min(100, f.hp / f.max * 100), shW = Math.min(100, f.shield / f.max * 100), left = Math.min(hpW, 100 - shW);
   const i = f.bar.querySelector('i'), b = f.bar.querySelector('b');
+  let s = f.bar.querySelector('s');
+  if (!s) { s = document.createElement('s'); s.style.width = hpW.toFixed(1) + '%'; f.bar.insertBefore(s, f.bar.firstChild); }
+  const prev = f.barHp == null ? hpW : f.barHp;
+  if (hpW < prev - 0.05) {
+    // Treffer: Leben sofort, heller Rest bleibt 0,38 s stehen und schrumpft in 0,65 s nach (mehrere Treffer: ab dem höchsten Stand)
+    i.style.transition = 'none';
+    s.style.transition = 'none';
+    s.style.width = Math.max(parseFloat(s.style.width) || 0, prev).toFixed(1) + '%';
+    void s.offsetWidth;
+    s.style.transition = 'width .65s ease-in-out .38s';
+    s.style.width = hpW.toFixed(1) + '%';
+  } else {
+    i.style.transition = '';
+    s.style.transition = 'none';
+    s.style.width = hpW.toFixed(1) + '%';
+  }
+  f.barHp = hpW;
   i.style.width = hpW.toFixed(1) + '%'; b.style.left = left.toFixed(1) + '%'; b.style.width = shW.toFixed(1) + '%';
 }
 
