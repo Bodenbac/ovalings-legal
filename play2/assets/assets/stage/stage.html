@@ -20188,7 +20188,9 @@ const Rig = (() => {
   }
 
   function blinkEyes(rig, t) {
-    const b = blink(t, rig.seed), o = peek(t, rig.seed);
+    // rig.blinkAt: einmal sofort blinzeln (UI V2: Antippen auf der Detailseite), Zeit wie t
+    const f = rig.blinkAt != null ? t - rig.blinkAt : -1, forced = f > 0 && f < 0.2 ? Math.sin(Math.PI * f / 0.2) : 0;
+    const b = Math.max(blink(t, rig.seed), forced), o = peek(t, rig.seed);
     for (const e of rig.eyes || []) {
       // Breite und Tiefe jedes Bild neu setzen (Luis 27.10.2026, Ovaling 522442ff: Augen wuchsen über das ganze Bild). Die Drehpunkte
       // der Augen sind keine Knochen und werden in animate nicht zurückgesetzt. Staunen (lifeEyes) multiplizierte x und z je Bild
@@ -52559,7 +52561,7 @@ window.ovalingsStage = b => { try { enqueue(typeof b === 'string' ? JSON.parse(b
 // Fünftel der Bauzeit. Sie wird einmal gerechnet, kompakt gepackt (Lage 16 Bit, Farben 8 Bit, Normalen werden neu
 // gerechnet) und von der App als Datei abgelegt. Der Schlüssel kommt aus den Eingaben des Baukastens und seinem Stand,
 // ändert sich der Baukasten, wird neu gerechnet.
-const BUILDER_HASH = '57bb110120';
+const BUILDER_HASH = '88a62d43c5';
 const SkinStore = (() => {
   // Grenze nach Größe statt Anzahl (Lina 14.10.2026): eine Haut belegt rund 400 KB, ihre Abstände fürs Skelett rund 290 KB. Mit 40
   // Einträgen passten nur noch 20 Figuren, seit auch die Porträts mit Skelett bauen, eine Sammlung rechnete dann alles neu
@@ -52777,6 +52779,9 @@ function zoomRange() {
   return VIEW_ZOOM;
 }
 let rotY = 0.4, velY = 0, tiltX = 0.18, lastTouch = -1e9;
+// UI V2 (Bewertung, Vorschlag 6): Antippen der Figur auf der Detailseite dreht sie zur Kamera und lässt sie blinzeln. Nur wenn die
+// App es einschaltet (Befehl face_tap), Ziel der Drehung als Winkel, null ohne Drehung
+let faceTap = false, faceTarget = null;
 // Bewegung reduzieren entscheidet die App (Luis 27.10.2026, 24a: eigener Schalter statt der Einstellung des Systems,
 // Windows mit ausgeschalteten Animationseffekten nahm sonst die Bewegung). Kommt als { kind: 'motion', reduced } vor allem anderen
 let reducedMotion = false;
@@ -53157,6 +53162,8 @@ function portrait(b) {
 // Befehle: battle (aufbauen), battle_play (Ereignisse abspielen), battle_end (Sieg oder Niederlage), battle_focus (Ring am Boden).
 // Antworten: battle_progress, battle_ready, battle_played, battle_ended, battle_tap.
 // Pfeil zum Boss (Luis 05.10.2026): der Mittlere vorn, die Äußeren am weitesten zurück, etwas breiter verteilt
+// UI V2 (Bewertung, Kampf): eigenes Team größer und in Ruhe um diesen Winkel (Bogenmaß) zur Kamera gedreht
+const BATTLE_V2_SCALE = 1.22, BATTLE_V2_TURN = 2.3;
 const BATTLE_SPOTS = [[-1.74, 3.12], [-0.88, 2.84], [0, 2.56], [0.88, 2.84], [1.74, 3.12]];
 // Team mittig je nach Anzahl (Luis 12.10.2026, Handytest): je Teamgröße eigene Plätze, immer symmetrisch zur Mitte. Turm mit
 // bis zu fünf (Pfeil), Kampagne mit bis zu vier (flacher Bogen)
@@ -53284,6 +53291,8 @@ function startBattle(b) {
     styles: b.styles && typeof b.styles === 'object' ? b.styles : {},
     clock: 0, speed: 1, waits: [], effects: [], turnKey: null, focusKey: null, bossAct: null, outcome: null, play: 0, t0: performance.now(), life: Rig.lifeScene(),
     axis: V(0, 0, 1), deathUntil: 0, campaign: null,
+    // UI V2 (Bewertung, Kampf): eigenes Team etwas größer und schräg von vorn, am Zug dreht es sich zum Gegner (nur wenn die App v2 schickt)
+    v2: !!b.v2,
   };
   // Ultra-Form des Riesenkuckucks: mit Fühlerfedern deutlich höher, die Kamera geht etwas weiter weg und höher (das Team bleibt im Bild)
   if (figure === 'cuckoo_ultra') { cam.position.set(0, 6.6, 15.6); battle.camBase = { p: cam.position.clone(), l: V(0, 2.75, -1.4) }; cam.lookAt(battle.camBase.l); }
@@ -53392,7 +53401,9 @@ function battleAddMember(m, i, foe, n) {
   const tb0 = performance.now(), e = memberLook(m), built = Detail.during(() => rigged(build2(battleFigure(e)))), size = built.box.getSize(V(0, 0, 0));
   // Leistungs-Log (17.10.2026): wer steht hier und wie lange hat der Bau gedauert
   f.perf = { id: m.id || null, foe: !!foe, buildMs: Math.round(performance.now() - tb0) };
-  const s = 0.95 / Math.max(size.y, size.x * 0.8);
+  const s = 0.95 / Math.max(size.y, size.x * 0.8) * (battle.v2 && !foe ? BATTLE_V2_SCALE : 1);
+  // UI V2: Ruhe schräg zur Kamera, zur Mitte hin (links stehende schauen nach rechts), Winkel ab dem Blick zum Gegner (Math.PI)
+  if (battle.v2 && !foe) f.restYaw = Math.PI - (spot[0] <= 0 ? 1 : -1) * BATTLE_V2_TURN;
   holder.add(built.group); built.group.position.y = -built.box.min.y; holder.scale.setScalar(s);
   f.rig = built.group.userData.rig; f.height = size.y * s;
   // Grenzen der Gesten schon beim Aufbau rechnen (Ladebalken), nicht erst beim ersten Zug
@@ -55091,10 +55102,17 @@ function battleTick(f, t, dt, step) {
     f.holder.position.set(p.x + wobble + ax, p.y + f.hop + inHop - 0.04 * k - 0.12 * btEase(0, 1, f.lostK), p.z + az);
     // Weicheres Umkippen: etwas zur Seite geneigt, je Kämpfer nach seiner Seite
     f.holder.rotation.z = (f.home.x >= 0 ? 1 : -1) * 0.22 * Math.sin(k * Math.PI * 0.5);
+    // UI V2: in Ruhe schräg von vorn, am Zug und beim Fallen zum Gegner, weich nachgeführt (nur Zahlen, keine Allokation)
+    if (f.restYaw != null && !camp && B.outcome !== 'victory') {
+      const want = B.turnKey === f.key || f.dead ? Math.PI : f.restYaw;
+      f.holder.rotation.y += (want - f.holder.rotation.y) * (reducedMotion ? 1 : Math.min(1, dt * 9));
+    }
     // Sieg: die Stehenden drehen sich zur Kamera und jubeln
     if (f.ally && B.outcome === 'victory' && !f.dead) {
       f.winK = Math.min(1, (f.winK || 0) + step / 0.6);
-      const base = camp ? f.yaw : Math.PI, to = Math.atan2(B.cam.position.x - f.holder.position.x, B.cam.position.z - f.holder.position.z);
+      // UI V2: von der Haltung im Moment des Siegs aus, nicht vom Blick zum Gegner
+      if (f.winFrom == null) f.winFrom = f.holder.rotation.y;
+      const base = camp ? f.yaw : f.restYaw != null ? f.winFrom : Math.PI, to = Math.atan2(B.cam.position.x - f.holder.position.x, B.cam.position.z - f.holder.position.z);
       let d = to - base; d = Math.atan2(Math.sin(d), Math.cos(d));
       f.holder.rotation.y = base + d * btEase(0, 1, f.winK);
     }
@@ -55405,6 +55423,7 @@ function cmd(b) {
   else if (b.kind === 'clear') { generation++; clearAway(); nest.visible = false; nestTarget = 0; phase = 'empty'; }
   // Ein Tipper auf die Mitte des Eis (UI V2: Leertaste und Gedrückthalten am PC), leicht versetzt, damit die Risse verteilt liegen
   else if (b.kind === 'egg_hit') eggHit();
+  else if (b.kind === 'face_tap') faceTap = !!b.on;
 }
 let eggHold = false, holdTimer = null, eggHits = 0;
 const hitBox = new THREE.Box3(), hitC = new THREE.Vector3(), hitS = new THREE.Vector3();
@@ -55448,6 +55467,13 @@ el.addEventListener('pointerup', e => {
   const d = down; down = null; lastTouch = performance.now(); holdStop();
   if (battle) { if (d && !d.drag && performance.now() - d.t <= 450) battleTap(e.clientX, e.clientY); return; }
   if (homeView) { if (d && !d.drag && performance.now() - d.t <= 450) homeTap(e.clientX, e.clientY); return; }
+  // Detailseite (UI V2): kurzer Tipp dreht die Figur auf dem kürzesten Weg nach vorn und lässt sie blinzeln
+  if (faceTap && model && phase === 'done' && !egg && d && !d.drag && performance.now() - d.t <= 450) {
+    const now = performance.now(), turn = Math.PI * 2;
+    faceTarget = Math.round(rotY / turn) * turn; velY = 0; stir(800);
+    const rig = model.userData.rig; if (rig) rig.blinkAt = now / 1000;
+    return;
+  }
   if (!d || d.drag || performance.now() - d.t > 450 || phase !== 'egg' || !egg) return;
   const r = el.getBoundingClientRect();
   meet((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -55701,6 +55727,7 @@ function frame(now) {
   lastDrawAt = now;
   const raw2 = now - last, dt = clamp(raw2 / 1000, 0, 0.05); last = Math.max(last, now);
   if (!down || !down.drag) { rotY += velY; velY *= 0.93; if (rotate && !reducedMotion && now - lastTouch > 3500) rotY += dt * 0.35; }
+  if (faceTarget != null) { rotY += (faceTarget - rotY) * Math.min(1, dt * 7); velY = 0; lastTouch = now; if (Math.abs(faceTarget - rotY) < 0.005) { rotY = faceTarget; faceTarget = null; } }
   pivot.rotation.y = rotY;
   if (!isFinite(dist) || !isFinite(lookY)) { dist = targetDist; lookY = targetLook; }
   lookY += (targetLook - lookY) * Math.min(1, dt * 4); dist += (targetDist - dist) * Math.min(1, dt * 4);
