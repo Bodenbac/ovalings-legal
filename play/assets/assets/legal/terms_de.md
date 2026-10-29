@@ -37,7 +37,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: o
 - Werbevideos gibt es nur in der App auf Android und iOS. Auf Steam und im Web gibt es keine Werbung und keine Belohnungen für Videos.
 - Werbung siehst du nur, wenn du selbst ein Video startest, um eine Belohnung zu bekommen. Es gibt keine Werbung zwischen den Aktionen und keine Banner.
 - Die Belohnung bekommst du, wenn Google unserem Server meldet, dass das Video bis zum Ende lief. Bricht ein Video ab oder kommt keine Meldung, gibt es keine Belohnung.
-- Je Tag und je Stelle im Spiel ist die Zahl der Videos begrenzt. Was es als Belohnung gibt, steht an der jeweiligen Stelle in der App, beim Glücksrad ist jedes Feld so groß wie seine Chance.
+- Je Tag und je Stelle im Spiel ist die Zahl der Videos begrenzt. Was es als Belohnung gibt, steht an der jeweiligen Stelle in der App.
 - Wie Google dabei mit Daten umgeht und wie du deine Einwilligung änderst, steht in der Datenschutzerklärung.
 
 ## 6. Steckbrief mit KI

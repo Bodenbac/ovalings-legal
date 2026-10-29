@@ -37,7 +37,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, 
 - Ad videos only exist in the app on Android and iOS. On Steam and on the web there are no ads and no rewards for videos.
 - You only see ads when you start a video yourself to get a reward. There are no ads between actions and no banners.
 - You receive the reward when Google tells our server that the video ran to the end. If a video stops or no message arrives, there is no reward.
-- The number of videos is limited per day and per place in the game. What you get as a reward is shown at each place in the app, on the lucky wheel each field is as large as its chance.
+- The number of videos is limited per day and per place in the game. What you get as a reward is shown at each place in the app.
 - How Google handles data and how you can change your consent is explained in the privacy policy.
 
 ## 6. AI-written profile

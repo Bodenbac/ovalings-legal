@@ -90,7 +90,7 @@ If you enter the ID of an Ovaling on ovalings.app, your browser sends the ID and
 
 ## 9. Advertising
 
-Ovalings only shows ad videos that you start voluntarily to get a reward, such as double loot after a fight, energy, diamonds or a spin of the lucky wheel. There are no ads between actions and no banners. Players with a monthly pass get the same rewards without a video. Reward videos only exist in the app on Android and iOS. On Steam and on the web, Ovalings shows no ads.
+Ovalings only shows ad videos that you start voluntarily to get a reward, such as double loot after a fight, energy or diamonds. There are no ads between actions and no banners. Players with a monthly pass get the same rewards without a video. Reward videos only exist in the app on Android and iOS. On Steam and on the web, Ovalings shows no ads.
 
 The videos come from Google AdMob (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Where required, for example in the EU, the app uses Google's consent form at start-up to ask whether Google may use data for personalised ads and store information on your device. You can change your choice at any time in the settings under "Ad privacy options". Without consent, Google only shows non-personalised ads or none. We only allow ads that are suitable for teenagers. You can consent to personalised advertising yourself from the age of 16 (Art. 8 GDPR), and you cannot play Ovalings if you are younger. On the iPhone the app does not ask for tracking across apps (App Tracking Transparency), so Google does not receive an advertising ID there.
 

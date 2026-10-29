@@ -5,6 +5,5 @@ Disallow: /confirmed
 Disallow: /parents
 Disallow: /parents-de
 Disallow: /play/
-Disallow: /play2/
 
 Sitemap: https://ovalings.app/sitemap.xml

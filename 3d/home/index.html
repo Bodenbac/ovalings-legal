@@ -188,7 +188,8 @@ function glowTexture() {
 <script>
 // Schlüpfen im Gerät: dieselbe Würfel-Logik wie im Dart-Code unter lib/domain, nach
 // JavaScript übertragen. Gleicher Seed ergibt dasselbe Ovaling wie in der App.
-// Geprüft mit web3d/tools/hatch_check.js gegen Ergebnisse aus Dart.
+// Geprüft mit web3d/tools/hatch_check.js gegen Ergebnisse aus Dart. Regeln des Generators in docs/generator/REGELN.md.
+// Seit 29.10.2026 (Luis) gibt es nur noch diesen einen Generator, er baut jede ID, auch die mit Regelversion 1 (8001).
 // Quelle der Zahlen: lib/domain/rules/game_rules.dart und stat_curve.dart.
 const Hatch = (() => {
   const M64 = (1n << 64n) - 1n;
@@ -247,47 +248,6 @@ const Hatch = (() => {
   const CURVES = { normal: 0.15, rare: 0.35, epic: 0.526, legendary: 0.76 };
   const CURVE_SHAPE = 2.0, LUCK = 0.04;
   const STATS = [['hp', 100, 10000], ['attack', 50, 1500], ['defense', 25, 1000], ['speed', 10, 150], ['crit_rate', 1, 80], ['crit_damage', 120, 250]];
-  // Slot, Anzahl der Formen im Gen, optional, Regler in fester Reihenfolge
-  const SLOTS = [
-    ['body', 42, false, ['width', 'height', 'belly', 'roundness']],
-    ['eyes', 32, false, ['size', 'spacing', 'tilt', 'pupil']],
-    ['mouth', 26, false, ['width', 'opening', 'curvature']],
-    ['horns', 12, true, ['length', 'thickness', 'bend', 'spacing', 'asymmetry']],
-    ['arms', 24, false, ['length', 'thickness', 'angle', 'curvature', 'ends', 'asymmetry']],
-    ['legs', 24, false, ['length', 'thickness', 'stance', 'ends']],
-    ['tail', 10, true, ['length', 'thickness', 'curvature', 'tip']],
-    ['pattern', 10, true, ['density', 'size', 'rotation']],
-    ['ears', 10, true, ['length', 'width', 'angle', 'asymmetry']],
-    ['back', 24, true, ['size', 'count', 'tilt', 'variant', 'place']],
-  ];
-  // Augenzahl je Seltenheit (Luis, 01.10.2026): 2 gewöhnlich, 1 oder 3 selten (Strom „augenzahl“), 4 episch, 5 legendär
-  const eyeCountFor = (tier, seed) => tier === 'uncommon' ? (seededRandom(seed, 'augenzahl').nextDouble() < 0.5 ? 1 : 3) : { common: 2, epic: 4, legendary: 5 }[tier];
-
-  // Feste Seltenheit je Form wie PartCatalog.fixedTiers in Dart: c gewöhnlich, u selten, e episch, l legendär.
-  // „Kein Teil“ (0) gehört bei optionalen Slots zu gewöhnlich.
-  const FIXED_TIERS = { eyes: 'ccccccuuuuelcccceulcueueuucculuu', body: 'cccccuuuelccccccucucuuuueuuelllelueecccccc' };
-  // Welche Formnummern gehören zu welcher Seltenheit des Teils
-  function formsPerTier(formCount, optional, slot) {
-    const fixed = FIXED_TIERS[slot];
-    if (fixed) { const out = [[], [], [], []]; if (optional) out[0].push(0); for (let i = 0; i < formCount; i++) out['cuel'.indexOf(fixed[i])].push(i + 1); return out; }
-    const share = [0.5, 0.3, 0.1, 0.1], counts = [0, 0, 0, 0];
-    let rest = formCount;
-    for (let i = 3; i > 0; i--) { const n = Math.min(Math.max(Math.round(formCount * share[i]), 1), rest); counts[i] = n; rest -= n; }
-    counts[0] = rest;
-    const out = [[], [], [], []];
-    if (optional) out[0].push(0);
-    let number = 1;
-    for (let i = 0; i < 4; i++) for (let k = 0; k < counts[i]; k++) out[i].push(number++);
-    return out;
-  }
-
-  // Seltenheit einer Formnummer, zum Beispiel für die Vorschau im Generator
-  function tierOfForm(slot, number) {
-    const s = SLOTS.find(x => x[0] === slot), list = formsPerTier(s[1], s[2], slot);
-    return PART_TIERS[list.findIndex(l => l.includes(number))];
-  }
-  const optional = slot => SLOTS.find(x => x[0] === slot)[2];
-
   // --- Stufenlose Farben (Probe zu E31) ---------------------------------------------
   // Eigener Zufallsstrom „farbe“: Seltenheit, Familie, Werte, Teile und Palette bleiben unberührt.
   // Die Palette wird weiter gewürfelt und bleibt als Rückfall erhalten. Gerechnet in OKLCH, dort wirken
@@ -308,14 +268,6 @@ const Hatch = (() => {
     for (const [kind, percent] of SKIN_KINDS) { sum += percent; if (u < sum) return { kind, size: Math.round(g * g * 1000) / 1000, variant }; }
     return null;
   }
-  // Augenbrauen aus dem Strom „brauen“ (Luis, 01.10.2026): alle Arten und „keine Brauen“ gleich häufig.
-  // Immer drei Zahlen: Art (0 keine), Länge, Dicke. Gleiche Würfe wie rollBrows in Dart. Form wie ein Teil für den Baukasten.
-  const BROW_KINDS = 19;
-  function browValues(seed) {
-    const z = seededRandom(seed, 'brauen'), number = z.nextInt(BROW_KINDS + 1);
-    const length = Math.round(z.nextDouble() * 1000) / 1000, thickness = Math.round(z.nextDouble() * 1000) / 1000;
-    return number ? { number, tier: 'common', r: { length, thickness } } : null;
-  }
   // Lage der Hörner aus dem Strom „hoerner“ (Luis, 01.10.2026): Größe, Neigung, Spreizung, Drehung, je 0 bis 1 um 0,5,
   // Breite nach Seltenheit wie die Regler. Immer acht Zahlen, gleiche Würfe wie rollHornPose in Dart
   function hornPose(seed, tier) {
@@ -323,65 +275,13 @@ const Hatch = (() => {
     const size = value(), tilt = value(), spread = value(), rotation = value();
     return { size, tilt, spread, rotation };
   }
-  // Hand aus dem Strom „haende“ (Luis, 03.10.2026, 23 Hände aus hands.js), nur bei Armen mit Hand am Ende (Stummel,
-  // Pranke, Vier Arme, Muskelarm). Erst die Stufe nach den Gewichten der Teile, dann die Form, bei „gewöhnlich“ bekommt
-  // die runde Hand 0 die Hälfte. Dann vier Regler. Immer zehn Zahlen, gleiche Würfe wie rollHand in gene_roll.dart
-  const HAND_FORMS = 23, HAND_ARMS = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16];
-  const handTier = f => f <= 12 ? 'common' : f <= 19 ? 'uncommon' : f <= 21 ? 'epic' : 'legendary';
-  function handValues(seed, tier) {
-    const z = seededRandom(seed, 'haende'), wt = withWeight(PART_TIERS, PART_WEIGHTS[tier]), width = SLIDER_SPREAD[tier];
-    const ts = pick(wt, z.nextDouble()), u = z.nextDouble(), list = [];
-    for (let f = 1; f <= HAND_FORMS; f++) if (handTier(f) === ts) list.push(f);
-    const form = ts === 'common' ? (u < 0.5 ? 0 : list[Math.min(list.length - 1, Math.floor((u - 0.5) * 2 * list.length))]) : list[Math.min(list.length - 1, Math.floor(u * list.length))];
-    const v = () => { const a = z.nextDouble(), b = z.nextDouble(); return Math.round((0.5 + (a + b - 1) / 2 * width) * 1000) / 1000; };
-    const spread = v(), curl = v(), length = v(), detail = v();
-    return { form, tier: ts, spread, curl, length, detail };
-  }
-  // Flügel aus dem Strom „fluegel“ (Luis 11.10.2026): Chance nach Seltenheit des Ovalings, dann Stufe, Form 1 bis 24 (wings.js),
-  // Größe, Neigung und ob zwei Paare. Immer acht Zahlen, gleiche Würfe wie rollWings in gene_roll.dart
-  const WING_FORMS = 24, WING_CHANCE = { normal: 0.25, rare: 0.4, epic: 0.6, legendary: 0.8 }, WING_PAIRS = { normal: 0, rare: 0.05, epic: 0.12, legendary: 0.25 };
-  const wingTier = f => f <= 13 ? 'common' : f <= 20 ? 'uncommon' : f <= 22 ? 'epic' : 'legendary';
-  function wingValues(seed, tier) {
-    const z = seededRandom(seed, 'fluegel'), wt = withWeight(PART_TIERS, PART_WEIGHTS[tier]), width = SLIDER_SPREAD[tier];
-    const has = z.nextDouble() < WING_CHANCE[tier], ts = pick(wt, z.nextDouble()), u = z.nextDouble(), list = [];
-    for (let f = 1; f <= WING_FORMS; f++) if (wingTier(f) === ts) list.push(f);
-    const number = list[Math.min(list.length - 1, Math.floor(u * list.length))];
-    const v = () => { const a = z.nextDouble(), b = z.nextDouble(); return Math.round((0.5 + (a + b - 1) / 2 * width) * 1000) / 1000; };
-    const size = v(), tilt = v(), pairs = z.nextDouble() < WING_PAIRS[tier] ? 2 : 1;
-    return has ? { number, tier: ts, size, tilt, pairs } : null;
-  }
-  // Mischform des Körpers aus dem Strom „koerpermix“ (Luis 11.10.2026): Chance nach Seltenheit des Ovalings, Stufe und Form der
-  // zweiten Grundform, Anteil 0,1 bis zum Höchstwert des Paars (BODY_MIX wie bodyMixMax im Baukasten). Immer vier Zahlen, gleiche
-  // Würfe wie rollBodyMix in gene_roll.dart
-  const BODY_MIX_CHANCE = { normal: 0.3, rare: 0.4, epic: 0.5, legendary: 0.6 }, BODY_MIX = { never: [25, 28, 31], limited: [10, 26, 29, 34, 35] };
-  const bodyMixMax = (a, b) => a === b || BODY_MIX.never.includes(a) || BODY_MIX.never.includes(b) ? 0 : BODY_MIX.limited.includes(a) || BODY_MIX.limited.includes(b) ? 0.25 : 0.5;
+  // Flügel (Luis 11.10.2026): Chance nach Seltenheit des Ovalings und Chance auf zwei Paare, gleich wie wingChance und wingPairChance
+  // in game_rules.dart
+  const WING_CHANCE = { normal: 0.25, rare: 0.4, epic: 0.6, legendary: 0.8 }, WING_PAIRS = { normal: 0, rare: 0.05, epic: 0.12, legendary: 0.25 };
+  // Mischform des Körpers (Luis 11.10.2026): Chance nach Seltenheit des Ovalings, gleich wie bodyMixChance in game_rules.dart
+  const BODY_MIX_CHANCE = { normal: 0.3, rare: 0.4, epic: 0.5, legendary: 0.6 };
   // Eigene Seltenheit der Mischform: Durchschnitt beider Formen abgerundet, episch mit legendär ergibt legendär (wie BodyMixGene.mixTier)
   const mixTier = (a, b) => { const i = PART_TIERS.indexOf(a), j = PART_TIERS.indexOf(b); return Math.min(i, j) === 2 && Math.max(i, j) === 3 ? PART_TIERS[3] : PART_TIERS[Math.floor((i + j) / 2)]; };
-  function bodyMixValues(seed, tier, bodyForm) {
-    const z = seededRandom(seed, 'koerpermix'), wt = withWeight(PART_TIERS, PART_WEIGHTS[tier]);
-    const has = z.nextDouble() < BODY_MIX_CHANCE[tier], ts = pick(wt, z.nextDouble()), u = z.nextDouble(), s = z.nextDouble();
-    const list = formsPerTier(42, false, 'body')[PART_TIERS.indexOf(ts)], form = list[Math.min(list.length - 1, Math.floor(u * list.length))], max = bodyMixMax(bodyForm, form);
-    return has && max > 0 ? { form, tier: mixTier(tierOfForm('body', bodyForm), ts), partnerTier: ts, t: Math.round((0.1 + (max - 0.1) * s) * 1000) / 1000 } : null;
-  }
-  // Fuß aus dem Strom „fuesse“ (Luis, 03.10.2026, 20 Füße aus feet.js), nur bei Beinen mit Knöchel. Wie die Hand, bei
-  // „gewöhnlich“ bekommt der Rundfuß 1 die Hälfte. Immer zehn Zahlen, gleiche Würfe wie rollFoot in gene_roll.dart
-  const FOOT_FORMS = 20, FOOT_LEGS = [2, 3, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18];
-  const footTier = f => f <= 10 ? 'common' : f <= 16 ? 'uncommon' : f <= 18 ? 'epic' : 'legendary';
-  function footValues(seed, tier) {
-    const z = seededRandom(seed, 'fuesse'), wt = withWeight(PART_TIERS, PART_WEIGHTS[tier]), width = SLIDER_SPREAD[tier];
-    const ts = pick(wt, z.nextDouble()), u = z.nextDouble(), list = [];
-    for (let f = 1; f <= FOOT_FORMS; f++) if (footTier(f) === ts) list.push(f);
-    const rest = list.filter(f => f !== 1);
-    const form = ts === 'common' ? (u < 0.5 ? 1 : rest[Math.min(rest.length - 1, Math.floor((u - 0.5) * 2 * rest.length))]) : list[Math.min(list.length - 1, Math.floor(u * list.length))];
-    const v = () => { const a = z.nextDouble(), b = z.nextDouble(); return Math.round((0.5 + (a + b - 1) / 2 * width) * 1000) / 1000; };
-    const spread = v(), curl = v(), length = v(), detail = v();
-    return { form, tier: ts, spread, curl, length, detail };
-  }
-  // Lage der Augen aus dem Strom „augenlage“ (Luis, 01.10.2026): Muster 0 bis 1 und Startwert, immer zwei Zahlen
-  function eyeLayout(seed) {
-    const z = seededRandom(seed, 'augenlage'), pattern = Math.round(z.nextDouble() * 1000) / 1000, variant = z.nextInt(1000000);
-    return { pattern, variant };
-  }
   // Materialien der Haut je Familie (E32, E48), je 20 bewegungslose und 20 bewegte. Reihenfolge wie FAMILIES in
   // materials_template.html, getrennt nach MAT_MOVING in builder.js. Gleiche Listen in lib/domain/monster/material_catalog.dart
   const MATERIALS = {
@@ -419,14 +319,6 @@ const Hatch = (() => {
     const kind = z.nextInt(RARE_KINDS.length), hue = Math.round(z.nextDouble() * 1000) / 1000;
     return hasMaterial || !rare ? null : { kind: RARE_KINDS[kind], hue };
   }
-  // Struktur der Haut aus dem Strom „struktur“ (E48): glatt oder eine der vier Arten, alle gleich häufig, nur ohne Material.
-  // Immer drei Zahlen, gleiche Würfe wie rollTexture in Dart
-  const TEXTURE_KINDS = ['fine', 'woodchip', 'coarse', 'trowel'];
-  function textureValues(seed, hasMaterial) {
-    const z = seededRandom(seed, 'struktur'), kind = z.nextInt(TEXTURE_KINDS.length + 1);
-    const strength = Math.round(z.nextDouble() * 1000) / 1000, size = Math.round(z.nextDouble() * 1000) / 1000;
-    return hasMaterial || kind === 0 ? null : { kind: TEXTURE_KINDS[kind - 1], strength, size };
-  }
   // Lage der Ohren aus dem Strom „ohrlage“, 0 außen bis 1 innen
   const earPosition = seed => Math.round(seededRandom(seed, 'ohrlage').nextDouble() * 1000) / 1000;
 
@@ -444,23 +336,23 @@ const Hatch = (() => {
     const t = x => { x = Math.max(0, Math.min(1, x)); x = x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055; return Math.round(x * 255).toString(16).padStart(2, '0'); };
     return '#' + rgb.map(t).join('');
   }
-  // version 2 (E282) mit breiteren Spannen aus COLOR_RANGE, ohne Angabe Regelversion 1. Mit harmony (Version 2, E284) rechnet
-  // colorsHarmony die Farben aus dem Schema, gleiche Schlüssel
-  function colorsFree(family, f, version, harmony) {
-    if (version === 2 && harmony && (family === 'light' || family === 'shadow')) return colorsHarmony(family, f, harmony);
+  // Farben aus der stufenlosen Farbe (E31) mit den Spannen aus COLOR_RANGE (E282). Mit harmony (E284) rechnet colorsHarmony die
+  // Farben aus dem Schema, gleiche Schlüssel
+  function colorsFree(family, f, harmony) {
+    if (harmony && (family === 'light' || family === 'shadow')) return colorsHarmony(family, f, harmony);
     const L = (a, b) => a + (b - a) * f.l, C = (a, b) => a + (b - a) * f.c, h = f.h, tw = f.twoTone, ak = f.accent, o = oklchHex;
-    const rg = (COLOR_RANGE[version] || COLOR_RANGE[1])[family] || [];
+    const rg = COLOR_RANGE[family] || [];
     if (family === 'light') {
       const l = L(rg[0], rg[1]), c = C(rg[2], rg[3]), al = 0.8 + 0.1 * ak, ah = h + 150 + 60 * ak;
-      return { body: o(l, c, h), bodyLight: o(l + 0.08, c * 0.6, h), bodyDark: o(l - 0.1, c * 1.05, h), belly: o(version === 2 ? Math.min(0.985, Math.max(0.96, l + 0.08)) : 0.96, 0.03, h), limb: o(l - 0.02, c, h + tw), accent: o(al, 0.13, ah), accentDark: o(al - 0.1, 0.12, ah), pattern: o(l - 0.14, c * 1.1, h), glow: '#ffffff', bgCenter: '#fff7fb', bgEdge: '#ffd9ea' };
+      return { body: o(l, c, h), bodyLight: o(l + 0.08, c * 0.6, h), bodyDark: o(l - 0.1, c * 1.05, h), belly: o(Math.min(0.985, Math.max(0.96, l + 0.08)), 0.03, h), limb: o(l - 0.02, c, h + tw), accent: o(al, 0.13, ah), accentDark: o(al - 0.1, 0.12, ah), pattern: o(l - 0.14, c * 1.1, h), glow: '#ffffff', bgCenter: '#fff7fb', bgEdge: '#ffd9ea' };
     }
     if (family === 'forest') {
       const l = L(0.64, 0.80), c = C(0.13, 0.21), al = 0.66 + 0.12 * ak, ah = h + 120 + 120 * ak;
       return { body: o(l, c, h), bodyLight: o(l + 0.08, c * 0.8, h), bodyDark: o(l - 0.14, c, h), belly: o(0.9, 0.08, h), limb: o(l, c, h + tw), accent: o(al, 0.19, ah), accentDark: o(al - 0.12, 0.15, ah), pattern: o(l - 0.16, c, h), glow: '#ffffff', bgCenter: '#ffe08a', bgEdge: '#fff3c4' };
     }
     const l = L(rg[0], rg[1]), c = C(rg[2], rg[3]);
-    // Version 2 (E282, breitere Helligkeit): der dunkle Akzent hält Abstand zur Haut (auf heller Haut dunkler, auf dunkler heller)
-    const darkAcc = version === 2 ? (l >= 0.42 ? l - 0.22 : l + 0.24) : 0.3;
+    // E282 (breitere Helligkeit): der dunkle Akzent hält Abstand zur Haut (auf heller Haut dunkler, auf dunkler heller)
+    const darkAcc = l >= 0.42 ? l - 0.22 : l + 0.24;
     const acc = [[0.9, 0.03, 85], [0.8, 0.13, 80], [darkAcc, 0.02, h], [0.85, 0.17, h + 180]][f.accentKind];
     return { body: o(l, c, h), bodyLight: o(l + 0.1, c * 0.9, h), bodyDark: o(l - 0.22, c, h), belly: o(l + 0.18, c * 0.7, h), limb: o(l - 0.1, c, h + tw), accent: o(acc[0], acc[1], acc[2]), accentDark: o(acc[0] - 0.25, acc[1], acc[2]), pattern: o(l - 0.16, c * 1.1, h), glow: o(0.85, 0.2, h + 120 + 120 * ak), bgCenter: '#2a1f3a', bgEdge: '#0e0a16' };
   }
@@ -504,22 +396,10 @@ const Hatch = (() => {
     }
     return { values: out, quality: Math.round(sum / STATS.length * 100) };
   }
-  function gene(seed, tier) {
-    const z = seededRandom(seed, 'gene'), wt = withWeight(PART_TIERS, PART_WEIGHTS[tier]), width = SLIDER_SPREAD[tier], parts = {};
-    for (const [slot, formen, optional, sliders] of SLOTS) {
-      const ts = pick(wt, z.nextDouble()), list = formsPerTier(formen, optional, slot)[PART_TIERS.indexOf(ts)];
-      const number = list[z.nextInt(list.length)], r = {};
-      for (const name of sliders) { const a = z.nextDouble(), b = z.nextDouble(); r[name] = Math.round((0.5 + (a + b - 1) / 2 * width) * 1000) / 1000; }
-      parts[slot] = { number, tier: ts, r };
-    }
-    const eyes = eyeCountFor(pick(wt, z.nextDouble()), seed), palette = 1 + z.nextInt(12);
-    return { parts, eyeCount: eyes, palette };
-  }
-
-  // ===================== Regelversion 2 (Generator V2, docs/v2/REGELN.md) =====================
+  // ===================== Formen des Generators (docs/generator/REGELN.md) =====================
   // Je Bauteil die 50 abgenommenen Formen: Nummer, Stufe (c Normal, u Rare, e Epic, l Legendary) und Familienrichtung
   // (L Licht, S Schatten, N neutral), aufsteigend nach Nummer. Die Struktur trägt dazu ihren Schlüssel. Gleiche Listen in Dart.
-  const V2_FORMS = {
+  const PART_FORMS = {
     body: '1cL 3cS 4cL 5cS 6cL 7uL 8uL 9uS 10eS 11cL 12cL 13cL 14cS 15cL 17uS 18cS 19cS 20cS 21uS 22uL 23uS 24uN 25eL 26uS 27uL 28eS 29eL 30lL 31lS 32eL 33eL 34uL 36uS 37cL 39cS 40cS 41cS 42cL 43cL 44cS 45uL 46uS 47uL 48eS 49eS 50eS 51lS 52lL 53lN 54eL',
     eyes: '1cL 2cS 3cS 4cL 5uL 6cS 7cL 8uS 9uL 10cL 11eL 12lN 13cS 14cL 15cL 16cL 17eS 18uS 19lL 21uS 22eS 23cS 24eL 26uS 27cL 28cL 29uL 30lS 31uS 32uL 33cL 34cS 35cS 36cS 37cS 38cS 39uL 40uL 41uL 42uS 43uS 44uN 45eL 46eL 47eL 48eS 49eS 50eS 51lL 52lS',
     eyeLayout: '11cL 12cS 13cS 21cL 22cL 23cS 24cL 25cS 26cS 27cL 31cS 32uL 33cL 34uS 35uS 36uS 37uN 41uL 43uS 44uL 45uS 46uS 51eS 53eL 54eL 55eS 101cL 102cL 103cL 104cL 105cS 106cS 107cS 108cS 109uL 110uL 111uL 112uL 113uS 114eL 115eL 116eL 117eS 118eS 119eS 120lL 121lL 122lS 123lS 124lN',
@@ -537,12 +417,14 @@ const Hatch = (() => {
     feet: '1cL 2cL 3cS 4cS 5cL 6cL 7cS 8cL 9uL 10uS 11uS 12uS 13uN 14cL 15uS 16uL 17eL 18eS 19lN 20eL 21lS 22cS 23lS 24lL 25uS 26uL 27cL 28cL 29cL 30cL 31cS 32cS 33cS 34cS 35cS 36cS 37uL 38uL 39uL 40uL 41uS 42uS 43eL 44eL 45eL 46eS 48eS 49eS 50lL 54eS',
     texture: 'woodchip:2cL coarse:3cS trowel:4cS hammered:5uS leather:6cS bark:7uS orangepeel:8cL honeycomb:9lL corrugated:10lS sand:11cL frost:12uL crumpled:13uN knit:14uL quilted:15lL cork:16cS mudcrack:17uS grooves:18cL blisters:19cS moss:20eL dripstone:21eS pebble:22lS ripples:23cL brush:24uL nubs:101cL cord:102cL waffle:103cL silk:105cL scales:106cS brick:107cS strata:108cS herringbone:109cS net:110cS basket:111cL veins:112uL feathers:113uL fans:114uL facets:115uS tortoise:116uS dragonhide:117uS chainmail:118uS lace:119uL stardust:120eL blossoms:121eL raindrops:122eL cloudsea:123eL cobweb:124eS thornvine:125eS fossils:127eS craters:128eS caustics:130lN',
   };
-  const V2 = {};
-  for (const [slot, text] of Object.entries(V2_FORMS)) V2[slot] = text.split(' ').map(t => { const m = /^(?:(\w+):)?(\d+)([cuel])([LSN])$/.exec(t); return { key: m[1], n: +m[2], tier: PART_TIERS['cuel'.indexOf(m[3])], fam: m[4] }; });
-  // „Kein Teil“ nur in der Stufe Normal mit festem Anteil (wie Version 1 bei normalen Ovalings)
+  const FORMS = {};
+  for (const [slot, text] of Object.entries(PART_FORMS)) FORMS[slot] = text.split(' ').map(t => { const m = /^(?:(\w+):)?(\d+)([cuel])([LSN])$/.exec(t); return { key: m[1], n: +m[2], tier: PART_TIERS['cuel'.indexOf(m[3])], fam: m[4] }; });
+  // „Kein Teil“ nur in der Stufe Normal mit festem Anteil (REGELN Abschnitt 2)
   const NONE_SHARE = { horns: 0.14, tail: 0.17, pattern: 0.17, ears: 0.17, back: 0.07, brows: 0.05 };
-  // Regler je Teil, detail neu bei Hörnern, Schwanz, Muster und Ohren
-  const SLOTS_V2 = [
+  // Teile, die fehlen können (Form 0), etwa für die Auswahl im Generator
+  const optional = slot => slot !== 'brows' && NONE_SHARE[slot] > 0;
+  // Regler je Teil in fester Reihenfolge des Wurfs, detail bei Hörnern, Schwanz, Muster und Ohren (REGELN Abschnitt 3)
+  const SLOTS = [
     ['body', ['width', 'height', 'belly', 'roundness']],
     ['eyes', ['size', 'spacing', 'tilt', 'pupil']],
     ['mouth', ['width', 'opening', 'curvature']],
@@ -554,8 +436,9 @@ const Hatch = (() => {
     ['ears', ['length', 'width', 'angle', 'asymmetry', 'detail']],
     ['back', ['size', 'count', 'tilt', 'variant', 'place']],
   ];
-  const HAND_ARMS_V2 = V2.arms.map(o => o.n).filter(n => ![8, 9, 17, 18, 23, 27, 33].includes(n));
-  const FOOT_LEGS_V2 = V2.legs.map(o => o.n).filter(n => ![13, 15, 19, 21, 23, 32].includes(n));
+  // Arme mit Hand und Beine mit Fuß (REGELN Abschnitt 6)
+  const HAND_ARMS = FORMS.arms.map(o => o.n).filter(n => ![8, 9, 17, 18, 23, 27, 33].includes(n));
+  const FOOT_LEGS = FORMS.legs.map(o => o.n).filter(n => ![13, 15, 19, 21, 23, 32].includes(n));
   // Augenzahl je Anordnung: Bestand Augenzahl mal 10 plus Muster, neue 101 bis 124
   const LAYOUT_EYES = { 101: 2, 102: 2, 103: 3, 104: 1, 105: 2, 106: 3, 107: 3, 108: 2, 109: 3, 110: 4, 111: 4, 112: 5, 113: 4, 114: 5, 115: 3, 116: 4, 117: 5, 118: 5, 119: 5, 120: 5, 121: 5, 122: 3, 123: 3, 124: 5 };
   const layoutEyes = id => LAYOUT_EYES[id] || Math.floor(id / 10);
@@ -571,7 +454,7 @@ const Hatch = (() => {
   };
   const sideOf = fam => fam === 'light' ? 'L' : fam === 'shadow' ? 'S' : null;
   // Formen einer Stufe auf einer Seite (neutral zählt für beide), aufsteigend nach Nummer
-  const candidates = (slot, ts, side) => V2[slot].filter(o => o.tier === ts && (!side || o.fam === side || o.fam === 'N'));
+  const candidates = (slot, ts, side) => FORMS[slot].filter(o => o.tier === ts && (!side || o.fam === side || o.fam === 'N'));
   // Augenlage der Stufe Normal (Luis 26.10.2026, 23b): Anordnungen mit zwei Augen wiegen LAYOUT_TWO_WEIGHT, alle übrigen 1,
   // damit normale Ovalings zu rund 80 Prozent zwei Augen haben. Rare und höher bleiben gleich gewichtet.
   const LAYOUT_TWO_WEIGHT = 4.5;
@@ -582,8 +465,8 @@ const Hatch = (() => {
     if (slot === 'eyeLayout' && ts === 'common') return pick(list.map(o => [o, layoutEyes(o.n) === 2 ? LAYOUT_TWO_WEIGHT : 1]), k);
     return list[Math.min(list.length - 1, Math.floor(k * list.length))];
   }
-  // Ein Teil nach Version 2: Stufe, Seite, Form, immer drei Würfe (REGELN.md Abschnitt 2)
-  function pickV2(z, slot, rarity, fam) {
+  // Ein Teil: Stufe, Seite, Form, immer drei Würfe (REGELN.md Abschnitt 2), gleich wie pickForm in gene_roll.dart
+  function pickForm(z, slot, rarity, fam) {
     const ts = pick(withWeight(PART_TIERS, PART_WEIGHTS[rarity]), z.nextDouble()), uS = z.nextDouble(), uF = z.nextDouble(), none = NONE_SHARE[slot] || 0;
     let u = uF;
     if (ts === 'common' && none > 0) { if (uF < none) return { number: 0, tier: ts }; u = (uF - none) / (1 - none); }
@@ -591,60 +474,68 @@ const Hatch = (() => {
     const o = list[Math.min(list.length - 1, Math.floor(u * list.length))];
     return { number: o.n, tier: ts, key: o.key };
   }
-  const tierOfV2 = (slot, n) => { const o = V2[slot].find(x => x.n === n); return o ? o.tier : 'common'; };
+  // Stufe einer Formnummer, gewöhnlich bei 0 und unbekannten Nummern (wie formTier in part_forms.dart)
+  const tierOf = (slot, n) => { const o = FORMS[slot] && FORMS[slot].find(x => x.n === n); return o ? o.tier : 'common'; };
   function sliderV(z, width) { const a = z.nextDouble(), b = z.nextDouble(); return Math.round((0.5 + (a + b - 1) / 2 * width) * 1000) / 1000; }
-  function geneV2(seed, tier, fam) {
+  // Teile, Stufe der Augenlage und Palette aus dem Strom „gene“ (124 Würfe), gleich wie rollGenes in gene_roll.dart
+  function gene(seed, tier, fam) {
     const z = seededRandom(seed, 'gene'), width = SLIDER_SPREAD[tier], parts = {};
-    for (const [slot, sliders] of SLOTS_V2) {
-      const p = pickV2(z, slot, tier, fam), r = {};
+    for (const [slot, sliders] of SLOTS) {
+      const p = pickForm(z, slot, tier, fam), r = {};
       for (const name of sliders) r[name] = sliderV(z, width);
       parts[slot] = { number: p.number, tier: p.tier, r };
     }
     const layoutTier = pick(withWeight(PART_TIERS, PART_WEIGHTS[tier]), z.nextDouble()), palette = 1 + z.nextInt(12);
     return { parts, layoutTier, palette };
   }
-  function eyeLayoutV2(seed, layoutTier, fam) {
+  // Augenlage aus dem Strom „augenlage“: Muster und Startwert, die Anordnung aus dem Muster (REGELN Abschnitt 4)
+  function eyeLayout(seed, layoutTier, fam) {
     const z = seededRandom(seed, 'augenlage'), pattern = Math.round(z.nextDouble() * 1000) / 1000, variant = z.nextInt(1000000);
     const o = fromOne('eyeLayout', layoutTier, fam, pattern);
     return { id: o.n, tier: layoutTier, pattern, variant, eyes: layoutEyes(o.n) };
   }
-  function browValuesV2(seed, tier, fam) {
-    const z = seededRandom(seed, 'brauen'), p = pickV2(z, 'brows', tier, fam);
+  // Augenbrauen aus dem Strom „brauen“ (REGELN Abschnitt 5): Form mit „keine Brauen“, dann Länge und Dicke
+  function browValues(seed, tier, fam) {
+    const z = seededRandom(seed, 'brauen'), p = pickForm(z, 'brows', tier, fam);
     const length = Math.round(z.nextDouble() * 1000) / 1000, thickness = Math.round(z.nextDouble() * 1000) / 1000;
     return p.number ? { number: p.number, tier: p.tier, r: { length, thickness } } : null;
   }
-  function limbEndV2(stream, slot, seed, tier, fam) {
-    const z = seededRandom(seed, stream), p = pickV2(z, slot, tier, fam), width = SLIDER_SPREAD[tier];
+  // Hand (Strom „haende“) oder Fuß (Strom „fuesse“), immer gerechnet, sichtbar nur an passendem Arm oder Bein (REGELN Abschnitt 6)
+  function limbEnd(stream, slot, seed, tier, fam) {
+    const z = seededRandom(seed, stream), p = pickForm(z, slot, tier, fam), width = SLIDER_SPREAD[tier];
     const spread = sliderV(z, width), curl = sliderV(z, width), length = sliderV(z, width), detail = sliderV(z, width);
     return { form: p.number, tier: p.tier, spread, curl, length, detail };
   }
-  function wingValuesV2(seed, tier, fam) {
-    const z = seededRandom(seed, 'fluegel'), has = z.nextDouble() < WING_CHANCE[tier], p = pickV2(z, 'wings', tier, fam), width = SLIDER_SPREAD[tier];
+  // Flügel aus dem Strom „fluegel“ (REGELN Abschnitt 7), neun Würfe
+  function wingValues(seed, tier, fam) {
+    const z = seededRandom(seed, 'fluegel'), has = z.nextDouble() < WING_CHANCE[tier], p = pickForm(z, 'wings', tier, fam), width = SLIDER_SPREAD[tier];
     const size = sliderV(z, width), tilt = sliderV(z, width), pairs = z.nextDouble() < WING_PAIRS[tier] ? 2 : 1;
     return has ? { number: p.number, tier: p.tier, size, tilt, pairs } : null;
   }
-  const BODY_MIX_V2 = { never: [25, 28, 31], limited: [10, 26, 29, 34, 49, 50, 53] };
-  const bodyMixMaxV2 = (a, b) => a === b || BODY_MIX_V2.never.includes(a) || BODY_MIX_V2.never.includes(b) ? 0 : BODY_MIX_V2.limited.includes(a) || BODY_MIX_V2.limited.includes(b) ? 0.25 : 0.5;
-  function bodyMixValuesV2(seed, tier, fam, bodyForm) {
-    const z = seededRandom(seed, 'koerpermix'), has = z.nextDouble() < BODY_MIX_CHANCE[tier], p = pickV2(z, 'body', tier, fam), s = z.nextDouble();
-    const max = bodyMixMaxV2(bodyForm, p.number);
-    return has && max > 0 ? { form: p.number, tier: mixTier(tierOfV2('body', bodyForm), p.tier), partnerTier: p.tier, t: Math.round((0.1 + (max - 0.1) * s) * 1000) / 1000 } : null;
+  // Mischform aus dem Strom „koerpermix“ (REGELN Abschnitt 8): nie und höchstens zu 25 Prozent wie bodyMixMax in part_forms.dart
+  const BODY_MIX = { never: [25, 28, 31], limited: [10, 26, 29, 34, 49, 50, 53] };
+  const bodyMixMax = (a, b) => a === b || BODY_MIX.never.includes(a) || BODY_MIX.never.includes(b) ? 0 : BODY_MIX.limited.includes(a) || BODY_MIX.limited.includes(b) ? 0.25 : 0.5;
+  function bodyMixValues(seed, tier, fam, bodyForm) {
+    const z = seededRandom(seed, 'koerpermix'), has = z.nextDouble() < BODY_MIX_CHANCE[tier], p = pickForm(z, 'body', tier, fam), s = z.nextDouble();
+    const max = bodyMixMax(bodyForm, p.number);
+    return has && max > 0 ? { form: p.number, tier: mixTier(tierOf('body', bodyForm), p.tier), partnerTier: p.tier, t: Math.round((0.1 + (max - 0.1) * s) * 1000) / 1000 } : null;
   }
-  function textureValuesV2(seed, tier, fam, material) {
-    const z = seededRandom(seed, 'struktur'), has = z.nextDouble() >= 0.2, p = pickV2(z, 'texture', tier, fam);
+  // Struktur aus dem Strom „struktur“ (REGELN Abschnitt 10): sieben Würfe, mit Material erlaubt, außer bei gleichem Thema
+  function textureValues(seed, tier, fam, material) {
+    const z = seededRandom(seed, 'struktur'), has = z.nextDouble() >= 0.2, p = pickForm(z, 'texture', tier, fam);
     const strength = Math.round(z.nextDouble() * 1000) / 1000, size = Math.round(z.nextDouble() * 1000) / 1000, detail = Math.round(z.nextDouble() * 1000) / 1000;
     if (!has || (material && (TEX_MAT_CLASH[p.key] || []).includes(material.kind))) return null;
     return { kind: p.key, number: p.number, tier: p.tier, strength, size, detail };
   }
-  // Farben der Haut (E282): breitere Spannen für Helligkeit und Kraft, sonst wie colorsFree
-  const COLOR_RANGE = { 1: { light: [0.76, 0.88, 0.07, 0.15], shadow: [0.36, 0.52, 0.04, 0.12] }, 2: { light: [0.58, 0.90, 0.06, 0.22], shadow: [0.28, 0.60, 0.03, 0.20] } };
-  // ===================== Farbharmonie (Regelversion 2, E284, Luis 26.10.2026) =====================
-  // Schalter: COLOR_HARMONY false rechnet die Farben von Version 2 genau wie vor E284 (nur E282, ohne Strom „harmonie“) und gibt der
-  // Schatten-Bühne ihr altes lila Licht zurück. Gleicher Schalter in Dart (COLOR_HARMONY in lib/domain/monster/v2_forms.dart).
+  // Farben der Haut (E282): Spannen für Helligkeit und Kraft je Familie
+  const COLOR_RANGE = { light: [0.58, 0.90, 0.06, 0.22], shadow: [0.28, 0.60, 0.03, 0.20] };
+  // ===================== Farbharmonie (E284, Luis 26.10.2026) =====================
+  // Schalter: COLOR_HARMONY false rechnet die Farben genau wie vor E284 (nur E282, ohne Strom „harmonie“) und gibt der
+  // Schatten-Bühne ihr altes lila Licht zurück. Gleicher Schalter in Dart (COLOR_HARMONY in lib/domain/monster/part_forms.dart).
   const COLOR_HARMONY = true;
   // Schemata mit Gewicht in Prozent: Ton in Ton, Nachbarn, Gegenfarbe, Dreiklang, geteilte Gegenfarbe, Neutral mit Farbe
   const HARMONY_SCHEMES = [['tonal', 20], ['analog', 20], ['complement', 15], ['triad', 10], ['split', 15], ['neutral', 20]];
-  // Strom „harmonie“ (docs/v2/REGELN.md Abschnitt 9b): immer 17 Zahlen. Alles stufenlos, keine festen Farben: Abstände im Farbkreis
+  // Strom „harmonie“ (docs/generator/REGELN.md Abschnitt 9b): immer 17 Zahlen. Alles stufenlos, keine festen Farben: Abstände im Farbkreis
   // innerhalb des Schemas, neutrale Haut mit eigener Helligkeit, leichter Tönung und Farbton, zweite und dritte Farbe mit eigener
   // Helligkeit und Kraft im Bereich der Familie, dazu welche Rolle welche Farbe trägt.
   function harmonyValues(seed) {
@@ -691,7 +582,7 @@ const Hatch = (() => {
     return [n.l < 0.8 ? 0.12 + 0.36 * (n.l / 0.8) : 0.76 + 0.14 * ((n.l - 0.8) / 0.2), 0.002 + 0.03 * n.c, n.h];
   }
   function colorsHarmony(family, f, hm) {
-    const o = oklchHex, rg = COLOR_RANGE[2][family], ak = f.accent, tw = f.twoTone, light = family === 'light';
+    const o = oklchHex, rg = COLOR_RANGE[family], ak = f.accent, tw = f.twoTone, light = family === 'light';
     const inL = t => rg[0] + (rg[1] - rg[0]) * t, inC = t => rg[2] + (rg[3] - rg[2]) * t;
     const neutral = hm.scheme === 'neutral';
     const skin = neutral ? neutralSkin(family, hm.neutral) : [inL(f.l), inC(f.c), f.h];
@@ -725,13 +616,14 @@ const Hatch = (() => {
       glow: light ? '#ffffff' : o(0.85, 0.2, gh), bgCenter: light ? '#fff7fb' : '#2a1f3a', bgEdge: light ? '#ffd9ea' : '#0e0a16',
     };
   }
-  // Licht der Schatten-Bühne (E284): leicht kühles Grau statt Lila, bei COLOR_HARMONY false wie vorher. Gilt für alle Versionen.
+  // Licht der Schatten-Bühne (E284): leicht kühles Grau statt Lila, bei COLOR_HARMONY false wie vorher.
   const SHADOW_LIGHT = COLOR_HARMONY ? { sky: 0x9ca2b6, ground: 0x08090e, rim: 0xb4c0da } : { sky: 0x9a86c8, ground: 0x0a0612, rim: 0xb18cff };
 
   // Ovaling-ID nach E29: UUID Version 8, Aufbau Exxxxxxx-xxxx-8VVV-vxxx-xxxxxxxxxxxx.
   // E Code der Eistufe, VVV Regelversion, v Variante (8 bis b), alles andere Zufall (106 Bit).
   // Gleicher Aufbau wie lib/domain/entities/ovaling_id.dart.
-  // Regelversion neuer IDs (Generator V2 seit 26.10.2026). Version 1 bleibt rechenbar, KNOWN_VERSIONS nennt alle hinterlegten
+  // Regelversion neuer IDs (seit 26.10.2026). KNOWN_VERSIONS nennt alle lesbaren Versionen, gebaut werden alle mit demselben
+  // Generator (seit 29.10.2026), gleich wie currentRulesVersion und knownRulesVersions in ovaling_id.dart
   const RULES_VERSION = 2, KNOWN_VERSIONS = [1, 2];
   const EGG_CODE = { normal: 1, rare: 2, epic: 3, legendary: 4, bright: 5, dark: 6 };
   const ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
@@ -752,37 +644,27 @@ const Hatch = (() => {
     return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
   }
 
-  // Ein Ei ausbrüten. Bei einer ID nach E29 kommt die Eistufe aus der ID, ei gilt nur für alte Seeds.
-  // stufe und fam lassen sich zum Prüfen vorgeben.
+  // Ein Ei ausbrüten (docs/generator/REGELN.md Abschnitt 11). Bei einer ID nach E29 kommt die Eistufe aus der ID, ei gilt nur für
+  // alte Seeds. stufe und fam lassen sich zum Prüfen vorgeben. rulesVersion ist die Version aus der ID (0 bei alten Seeds), nur
+  // zur Anzeige, gebaut wird immer gleich.
   function hatch(seed, egg, tier, fam) {
     const fresh = readId(seed);
     if (!fresh && isV8(seed)) throw new Error('Ovaling-ID mit unbekannter Eistufe oder Regelversion');
     if (fresh && !KNOWN_VERSIONS.includes(fresh.version)) throw new Error('Regelversion ' + fresh.version + ' ist hier nicht hinterlegt');
     if (fresh) { seed = fresh.id; egg = fresh.egg; }
     const s = tier || rarity(seed, egg), f = fam ? FAMILIES.find(x => x[0] === fam) : family(seed, egg);
-    if (fresh && fresh.version === 2) return hatchV2(seed, egg, s, f);
-    const g = gene(seed, s), w = values(seed, s), fw = colorValues(seed), mat = materialValues(seed, f[0]);
-    // Hand und Fuß werden immer gerechnet, sichtbar nur bei passendem Arm oder Bein (Reserve für die Gen-Kapsel, E56)
-    const spareHand = handValues(seed, s), spareFoot = footValues(seed, s);
-    const hand = HAND_ARMS.includes(g.parts.arms.number) ? spareHand : null;
-    const foot = FOOT_LEGS.includes(g.parts.legs.number) ? spareFoot : null;
-    return { wings: wingValues(seed, s), bodyMix: bodyMixValues(seed, s, g.parts.body.number), hand, foot, spareHand, spareFoot, seed, egg, rulesVersion: fresh ? fresh.version : 0, rarity: s, rarityName: RARITY_NAME[s], family: f[0], familyName: f[1], familyBonus: familyBonus(seed, f[0], s), quality: w.quality, values: w.values, slots: slots(seed, s), eyeCount: g.eyeCount, palette: g.palette, colors: colors(f[0], g.palette), color: fw, colorsFree: colorsFree(f[0], fw), skin: skinValues(seed), earPosition: earPosition(seed), hornPose: hornPose(seed, s), eyeLayout: eyeLayout(seed), material: mat, rareColor: rareColorValues(seed, !!mat), texture: textureValues(seed, !!mat), parts: Object.assign({}, g.parts, { brows: browValues(seed) }) };
-  }
-
-  // Ein Ei nach Regelversion 2 (docs/v2/REGELN.md Abschnitt 11). Gleiche Form der Rückgabe wie Version 1, dazu eyeLayout.id
-  function hatchV2(seed, egg, s, f) {
-    const g = geneV2(seed, s, f[0]), w = values(seed, s), fw = colorValues(seed), mat = materialValues(seed, f[0]);
-    const lay = eyeLayoutV2(seed, g.layoutTier, f[0]);
+    const g = gene(seed, s, f[0]), w = values(seed, s), fw = colorValues(seed), mat = materialValues(seed, f[0]);
+    const lay = eyeLayout(seed, g.layoutTier, f[0]);
     // Farbharmonie (E284): Strom „harmonie“ nur mit Schalter an
     const harmony = COLOR_HARMONY ? harmonyValues(seed) : null;
-    const spareHand = limbEndV2('haende', 'hands', seed, s, f[0]), spareFoot = limbEndV2('fuesse', 'feet', seed, s, f[0]);
-    const hand = HAND_ARMS_V2.includes(g.parts.arms.number) ? spareHand : null;
-    const foot = FOOT_LEGS_V2.includes(g.parts.legs.number) ? spareFoot : null;
-    return { wings: wingValuesV2(seed, s, f[0]), bodyMix: bodyMixValuesV2(seed, s, f[0], g.parts.body.number), hand, foot, spareHand, spareFoot, seed, egg, rulesVersion: 2,
+    const spareHand = limbEnd('haende', 'hands', seed, s, f[0]), spareFoot = limbEnd('fuesse', 'feet', seed, s, f[0]);
+    const hand = HAND_ARMS.includes(g.parts.arms.number) ? spareHand : null;
+    const foot = FOOT_LEGS.includes(g.parts.legs.number) ? spareFoot : null;
+    return { wings: wingValues(seed, s, f[0]), bodyMix: bodyMixValues(seed, s, f[0], g.parts.body.number), hand, foot, spareHand, spareFoot, seed, egg, rulesVersion: fresh ? fresh.version : 0,
       rarity: s, rarityName: RARITY_NAME[s], family: f[0], familyName: f[1], familyBonus: familyBonus(seed, f[0], s), quality: w.quality, values: w.values, slots: slots(seed, s),
-      eyeCount: lay.eyes, palette: g.palette, colors: colors(f[0], g.palette), color: fw, colorsFree: colorsFree(f[0], fw, 2, harmony), harmony, skin: skinValues(seed), earPosition: earPosition(seed),
+      eyeCount: lay.eyes, palette: g.palette, colors: colors(f[0], g.palette), color: fw, colorsFree: colorsFree(f[0], fw, harmony), harmony, skin: skinValues(seed), earPosition: earPosition(seed),
       hornPose: hornPose(seed, s), eyeLayout: { id: lay.id, tier: lay.tier, pattern: lay.pattern, variant: lay.variant }, material: mat, rareColor: rareColorValues(seed, !!mat),
-      texture: textureValuesV2(seed, s, f[0], mat), parts: Object.assign({}, g.parts, { brows: browValuesV2(seed, s, f[0]) }) };
+      texture: textureValues(seed, s, f[0], mat), parts: Object.assign({}, g.parts, { brows: browValues(seed, s, f[0]) }) };
   }
 
   // Gen-Kapsel (E51): überlagerte Gene aus ihrer Herkunft, wie applyGeneOverrides in gene_capsule.dart. overrides nennt
@@ -804,23 +686,21 @@ const Hatch = (() => {
       else if (key === 'eye_count') { o.eyeCount = s.eyeCount; o.eyeLayout = s.eyeLayout; }
       else if (key === 'horn_pose') o.hornPose = s.hornPose;
       else if (key === 'color') {
-        // Die Farbe bringt in Version 2 ihre Harmonie mit, aus der ID der Herkunft gerechnet (auch aus einem Ovaling der Version 1)
+        // Die Farbe bringt ihre Harmonie mit, aus der ID der Herkunft gerechnet
         o.color = s.color; o.palette = s.palette; o.colors = colors(o.family, s.palette);
-        if (h.rulesVersion === 2 && COLOR_HARMONY) o.harmony = harmonyValues(readId(src).id);
-        o.colorsFree = colorsFree(o.family, s.color, h.rulesVersion === 2 ? 2 : 1, h.rulesVersion === 2 ? o.harmony : null);
+        if (COLOR_HARMONY) o.harmony = harmonyValues(readId(src).id);
+        o.colorsFree = colorsFree(o.family, s.color, o.harmony);
       }
       else if (key === 'skin') { o.material = s.material; o.rareColor = s.rareColor; o.texture = s.texture; }
       else if (key === 'skin_mark') o.skin = s.skin;
     }
     // Hand und Fuß sind sichtbar, wenn Arm und Bein (mit Überlagerung) Platz dafür haben
-    // In Version 2 tragen mehr Arme und Beine Hand und Fuß. Ein Arm aus Version 2 (ab 25) trägt seine Hand in jeder Version
-    const v2 = h.rulesVersion === 2, arm = o.parts.arms.number, leg = o.parts.legs.number;
-    o.hand = (v2 || arm > 24 ? HAND_ARMS_V2 : HAND_ARMS).includes(arm) ? o.spareHand : null;
-    o.foot = (v2 || leg > 24 ? FOOT_LEGS_V2 : FOOT_LEGS).includes(leg) ? o.spareFoot : null;
+    o.hand = HAND_ARMS.includes(o.parts.arms.number) ? o.spareHand : null;
+    o.foot = FOOT_LEGS.includes(o.parts.legs.number) ? o.spareFoot : null;
     return o;
   }
 
-  return { applyGenes, GENE_KEYS, hatch, newId, readId, isV8, RULES_VERSION, KNOWN_VERSIONS, V2_FORMS, V2, NONE_SHARE, HAND_ARMS_V2, FOOT_LEGS_V2, TEX_MAT_CLASH, LAYOUT_TWO_WEIGHT, COLOR_HARMONY, HARMONY_SCHEMES, SHADOW_LIGHT, harmonyValues, colorsHarmony, layoutOf: (tier, fam, pattern) => fromOne('eyeLayout', tier, fam, pattern).n, layoutEyes, bodyMixMaxV2, tierOfV2, rarity, family, slots, values, gene, wingValues, WING_CHANCE, bodyMixValues, BODY_MIX_CHANCE, bodyMixMax, colors, colorValues, colorsFree, oklchHex, skinValues, earPosition, browValues, hornPose, handValues, HAND_ARMS, footValues, FOOT_LEGS, eyeLayout, materialValues, rareColorValues, textureValues, MATERIALS, RARE_KINDS, TEXTURE_KINDS, tierOfForm, optional, EGG_DROP_RATES, RARITIES, STATS, PART_TIERS, PART_TIER_NAME };
+  return { applyGenes, GENE_KEYS, hatch, newId, readId, isV8, RULES_VERSION, KNOWN_VERSIONS, PART_FORMS, FORMS, NONE_SHARE, SLOTS, HAND_ARMS, FOOT_LEGS, TEX_MAT_CLASH, LAYOUT_TWO_WEIGHT, COLOR_HARMONY, HARMONY_SCHEMES, SHADOW_LIGHT, harmonyValues, colorsHarmony, layoutOf: (tier, fam, pattern) => fromOne('eyeLayout', tier, fam, pattern).n, layoutEyes, bodyMixMax, BODY_MIX, tierOf, optional, pickForm, rarity, family, slots, values, gene, wingValues, WING_CHANCE, bodyMixValues, BODY_MIX_CHANCE, colors, colorValues, colorsFree, oklchHex, skinValues, earPosition, browValues, hornPose, limbEnd, eyeLayout, materialValues, rareColorValues, textureValues, MATERIALS, RARE_KINDS, EGG_DROP_RATES, RARITIES, STATS, PART_TIERS, PART_TIER_NAME };
 })();
 if (typeof module !== 'undefined') module.exports = Hatch;
 
@@ -1025,9 +905,9 @@ const ARM_FORMS = [{ old: 1 }, { old: 2 }, { old: 8 }, { mod: 3 }, { mod: 1 }, {
   // verloren), Steinmännchen, Seestern, Perlenkette und Blatt höchstens zu 25 % (sonst lösen sich Stücke ab), Kristall als Partner
   // höchstens zu 25 % (sonst schweben bei schmaler Unterseite die Beine). bodyMixMax gibt den größten Anteil der zweiten Form, 0 heißt nie
   const BODY_MIX = { never: [25, 28, 31], max25: [26, 29, 34, 35, 10] };
-  // Neue Körper zur Auswahl (Auftrag teile-koerper, 24.10.2026): BodyNew aus web3d/src/candidates/koerper_new.js nennt eigene Grenzen
+  // Neue Körper zur Auswahl (Auftrag teile-koerper, 24.10.2026): BodyNew aus web3d/src/parts/body.js nennt eigene Grenzen
   const bodyMixMax = (a, b) => typeof BodyNew !== 'undefined' && (BodyNew.has(a) || BodyNew.has(b)) ? BodyNew.mixMax(a, b, BODY_MIX) : a === b || BODY_MIX.never.includes(a) || BODY_MIX.never.includes(b) ? 0 : BODY_MIX.max25.includes(a) || BODY_MIX.max25.includes(b) ? 0.25 : 0.5;
-  // Generator V2 (Regelversion 2, docs/v2/REGELN.md): die Module der 50 Formen (web3d/src/candidates/*_new.js) gehören fest zum
+  // Generator (docs/generator/REGELN.md): die Module der 50 Formen (web3d/src/parts/*.js) gehören fest zum
   // Baukasten und bauen alle Nummern, die sie kennen, auch Nummern über NAMES hinaus. Ohne Modul (alte Bühnen) bleibt es beim Bestand
   const newPart = slot => slot === 'body' ? (typeof BodyNew !== 'undefined' ? BodyNew : null) : slot === 'eyes' ? (typeof EyeNew !== 'undefined' ? EyeNew : null)
     : slot === 'mouth' ? (typeof MouthNew !== 'undefined' ? MouthNew : null) : slot === 'horns' ? (typeof HornNew !== 'undefined' ? HornNew : null)
@@ -1106,7 +986,7 @@ const ARM_FORMS = [{ old: 1 }, { old: 2 }, { old: 8 }, { mod: 3 }, { mod: 1 }, {
         }
         return best * fk;
       },
-      // Achse und Radien (Prüfung v2_check: liegt ein Glied auf dem Rumpf), ändern nichts am Feld
+      // Achse und Radien (Prüfung figure_check: liegt ein Glied auf dem Rumpf), ändern nichts am Feld
       min, max, pts, rad,
     };
   }
@@ -2283,6 +2163,9 @@ vec3 matColor(vec3 own, out float h, out float rough, out float metal, out vec3 
   return c;
 }
 `;
+  // MAT_GLSL im Kampf (uMatLod): jedes fwidth gilt als MAT_LOD_FW mal so groß, wie TexNew.LOD_FW bei der Struktur
+  const MAT_LOD_FW = 2.6, matGlslCache = {};
+  const matGlsl = lod => matGlslCache[+lod] || (matGlslCache[+lod] = lod ? '#define matFw(x) (fwidth(x) * ' + MAT_LOD_FW.toFixed(2) + ')\n' + MAT_GLSL.replace(/fwidth\(/g, 'matFw(') : MAT_GLSL);
   // Moos, Gras und Fell: Schichten über der Haut (wie Fell in Spielen), jede ein Stück weiter außen. Jede Schicht zeigt
   // nur die Querschnitte der Halme oder Haare. Sie stehen auf einem Zufallsgitter in der Ebene quer zur stärksten Richtung
   // der Normale. Gras wiegt im Wind, Fell hängt nach unten, Moos ist kurz, dicht und klumpig.
@@ -2848,7 +2731,7 @@ vec3 rareHue(vec3 c, float a) {
       const anchor = comic ? '#include <lights_toon_pars_fragment>' : '#include <common>';
       // Kandidaten (Auftrag teile-struktur): TexNew hängt seine Zweige an TEX_GLSL, nur wenn die Uniforms von TexNew da sind (uTexTime),
       // im Kampf (uTexLod) mit ruhigerer Struktur
-      let f = skinGlsl(uni ? uni.uKind.value : 0) + (tex ? '#define TEX_KIND ' + tex.uTexKind.value + '\n' + (tex.uTexTime ? TexNew.glsl(TEX_GLSL, tex.uTexLod ? tex.uTexLod.value : 0) : TEX_GLSL) : '') + (rare ? RARE_GLSL : '') + sh.fragmentShader.replace(anchor, anchor + '\n' + (mu ? '#define MAT_KIND ' + mu.uMatKind.value + '\n' + (comic ? '#define MAT_COMIC\n' : '') + MAT_GLSL : '')).replace('#include <color_fragment>', color);
+      let f = skinGlsl(uni ? uni.uKind.value : 0) + (tex ? '#define TEX_KIND ' + tex.uTexKind.value + '\n' + (tex.uTexTime ? TexNew.glsl(TEX_GLSL, tex.uTexLod ? tex.uTexLod.value : 0) : TEX_GLSL) : '') + (rare ? RARE_GLSL : '') + sh.fragmentShader.replace(anchor, anchor + '\n' + (mu ? '#define MAT_KIND ' + mu.uMatKind.value + '\n' + (comic ? '#define MAT_COMIC\n' : '') + matGlsl(!!mu.uMatLod) : '')).replace('#include <color_fragment>', color);
       if (comic) f = f.replace('#include <aomap_fragment>', '#include <aomap_fragment>\ncomicPost(reflectedLight, totalEmissiveRadiance, diffuseColor.rgb);');
       if (mu) f = f.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = matRough;')
         .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = matMetal;')
@@ -2862,7 +2745,7 @@ vec3 rareHue(vec3 c, float a) {
       if (RARE_GLOW[rk]) f = f.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n' + RARE_GLOW[rk]);
       sh.fragmentShader = f;
     };
-    m.customProgramCacheKey = () => 'haut|' + (uni ? uni.uKind.value : 0) + '|' + (mu ? mu.uMatKind.value : 0) + '|' + (tex ? tex.uTexKind.value : 0) + '|' + (rare ? rare.uRareKind.value : 0) + (tex && tex.uTexLod ? '|tl' + tex.uTexLod.value : '');
+    m.customProgramCacheKey = () => 'haut|' + (uni ? uni.uKind.value : 0) + '|' + (mu ? mu.uMatKind.value + (mu.uMatLod ? 'l' : '') : 0) + '|' + (tex ? tex.uTexKind.value : 0) + '|' + (rare ? rare.uRareKind.value : 0) + (tex && tex.uTexLod ? '|tl' + tex.uTexLod.value : '');
     // Zeit der bewegten Haut: die Uhr, außer jemand setzt build2.clock (Porträts zeichnen bei fester Zeit, sonst sähe jedes Porträt
     // einer Figur mit bewegtem Material anders aus, Lina 14.10.2026)
     if (uni || mu) mesh.onBeforeRender = () => { const t = build2.clock != null ? build2.clock : performance.now() / 1000; if (uni) uni.uTime.value = t; if (mu) mu.uMatTime.value = t; };
@@ -2983,7 +2866,7 @@ vec3 rareHue(vec3 c, float a) {
     const rare = d.rareColor && RARE_KIND[d.rareColor.kind] && !(d.material && MAT_KIND[d.material.kind]) ? d.rareColor : null;
     const fam = d.family, C = rare ? rareColors(d.colors, rare, d.family) : d.colors, T = d.parts, g = new THREE.Group(), mats = {};
     // Probe neuer Körper (Luis 11.10.2026) über d.bodyTry: plan (auch 11 bis 16), mix, Regler, Oberfläche
-    // d.bodyNew: neue Körper zur Auswahl (Auftrag teile-koerper) über ihre Nummer, nur mit BodyNew auf der Werkstatt-Seite
+    // d.bodyNew: neue Körper zur Auswahl (Auftrag teile-koerper) über ihre Nummer, mit BodyNew
     const plan = d.bodyTry && d.bodyTry.plan ? d.bodyTry.plan : d.bodyNew && typeof BodyNew !== 'undefined' && BodyNew.has(d.bodyNew) ? d.bodyNew : formOf(T, 'body');
     const roleColor = {
       skin: '#ffffff', limb: C.limb, earInner: fam === 'shadow' ? C.bodyDark : C.belly, belly: C.belly,
@@ -3237,7 +3120,7 @@ vec3 rareHue(vec3 c, float a) {
       return { prims: [warpPrim(base, (x, y, z) => -0.12 * Math.pow(Math.max(0, Math.sin((y * 3.2 + Math.atan2(z, x) * 0.9) * 2.2)), 0.4) * clamp((cut - y) / 0.25, 0, 1), 0.1)], eyeY: 0.62 * by, mouthY: 0.38 * by, belly: { y: -0.5 * by, ry: 0.4 * by }, armY: -0.1 * by, earY: 1.15 * by, tailY: -0.7 * by, faceS: 0.82, top: 1.42 * by, bottom: -1.42 * by };
     };
     const rdK = lerp(0.6, 1.6, (roundness - 0.85) / 0.4), supE = (c, r) => superPrim(c, r[0], r[1], r[2], 2.0 * roundness, 0);
-    // Neue Körper zur Auswahl (Auftrag teile-koerper): nur auf der Werkstatt-Seite geladen, sonst bleibt alles wie es ist
+    // Neue Körper zur Auswahl (Auftrag teile-koerper): fest im Baukasten (web3d/src/parts/body.js)
     const BN = typeof BodyNew !== 'undefined' ? BodyNew : null;
     const planB = plan => {
     let B;
@@ -3406,7 +3289,7 @@ vec3 rareHue(vec3 c, float a) {
       for (let i = 0; i < 180 && t < 14; i++) {
         let x = o.x + dn.x * t, y = o.y + dn.y * t, z = o.z + dn.z * t, f = field(x, y, z);
         if (f < 0.0015) {
-          // Generator V2 (Brauen bei hohen Augen auf spitzem und birnenförmigem Kopf): wo das Feld kein echter Abstand ist (Spitze des
+          // Generator (Brauen bei hohen Augen auf spitzem und birnenförmigem Kopf): wo das Feld kein echter Abstand ist (Spitze des
           // Kegels), sprang ein großer Schritt über die Haut tief in den Körper, die Braue lag dann im Kopf. Liegt der Treffer tiefer
           // als 0,01 innen, sucht eine Teilung zwischen letztem Punkt außen und dem Treffer die echte Oberfläche
           if (f < -0.01 && i > 0) {
@@ -3432,7 +3315,7 @@ vec3 rareHue(vec3 c, float a) {
     // Beinteile damit fest an den Knochen ihrer Seite statt an den nächstgelegenen
     // rigLeg: Nummer des Beins auf seiner Seite bei Arten mit mehreren Beinen je Seite (Gehen, 08.10.2026), sonst null
     let rigSec = 'body', rigSide = 0, rigLeg = null;
-    // partSlot (Prüfung v2_check, 27.10.2026): zu welchem Bauteil des Gens ein Teil gehört (body, legs, arms, back, tail, ears,
+    // partSlot (Prüfung figure_check, 27.10.2026): zu welchem Bauteil des Gens ein Teil gehört (body, legs, arms, back, tail, ears,
     // eyes, mouth, pattern, brows, wings, horns). Nur zum Prüfen und Zuordnen in userData.slot, ändert nichts am Aussehen
     let partSlot = 'body';
     const later = fn => { const sec = rigSec, side = rigSide, slot = partSlot; after.push(() => { const o = [rigSec, rigSide, partSlot]; rigSec = sec; rigSide = side; partSlot = slot; fn(); rigSec = o[0]; rigSide = o[1]; partSlot = o[2]; }); };
@@ -3445,7 +3328,7 @@ vec3 rareHue(vec3 c, float a) {
 
     // ---------------- Beine ----------------
     rigSec = 'leg'; partSlot = 'legs';
-    // Generator V2: Beine ab 25 und die Fassungen mit Fuß der Bestandsformen 1, 4, 5, 20 und 22 baut LegsNew (Bericht teile-beine),
+    // Generator: Beine ab 25 und die Fassungen mit Fuß der Bestandsformen 1, 4, 5, 20 und 22 baut LegsNew (Bericht teile-beine),
     // die Werkstatt wählt weiter über d.legNew
     const LGN = typeof LegsNew !== 'undefined' ? LegsNew : null, legRaw = T.legs ? T.legs.number || 0 : 0;
     const legV2 = !d.legNew && LGN && legRaw && (LGN.has(legRaw) || (LGN.over && LGN.over(legRaw))) ? legRaw : 0, legOver = d.legNew || legV2;
@@ -3564,7 +3447,7 @@ vec3 rareHue(vec3 c, float a) {
 
     // ---------------- Arme ----------------
     rigSec = 'arm'; rigSide = 0; partSlot = 'arms';
-    // Generator V2: Arme ab 25 baut ArmsNew (Nummer im Gen gleich Nummer im Modul), 1 bis 24 wie bisher über ARM_FORMS
+    // Generator: Arme ab 25 baut ArmsNew (Nummer im Gen gleich Nummer im Modul), 1 bis 24 wie bisher über ARM_FORMS
     const armRaw = T.arms ? T.arms.number || 0 : 0, armV2 = !d.armNew && armRaw > 24 && typeof ArmsNew !== 'undefined' && ArmsNew.has(armRaw) ? armRaw : 0;
     const ar = T.arms, armF = formOf(T, 'arms'), armMap = ARM_FORMS[armF - 1] || { old: armF ? 2 : 0 }, armOld = armV2 ? 0 : armMap.old || 0, armMod = d.armNew || armV2 || armMap.mod || 0;
     {
@@ -3720,9 +3603,9 @@ vec3 rareHue(vec3 c, float a) {
 
     rigSide = 0; partSlot = 'back';
     // ---------------- Rücken vorab: Schneckenhaus und Rückenschild liegen als Schale auf dem Rücken ----------------
-    // Kandidaten (Auftrag teile-ruecken, 25.10.2026): BackNew aus web3d/src/candidates/back_new.js, nur auf der Werkstatt-Seite geladen,
+    // Kandidaten (Auftrag teile-ruecken, 25.10.2026): BackNew aus web3d/src/parts/back.js, fest im Baukasten,
     // Nummer über d.backNew. Ohne BackNew bleibt alles, wie es ist
-    // Generator V2: Rücken ab 25 aus dem Gen baut BackNew ebenso
+    // Generator: Rücken ab 25 aus dem Gen baut BackNew ebenso
     const backRaw = d.backNew || (T.back ? T.back.number || 0 : 0);
     const BKN = typeof BackNew !== 'undefined' && backRaw && BackNew.has(backRaw) ? BackNew : null;
     const ru = T.back, backF = BKN ? backRaw : typeof Backs !== 'undefined' ? Math.min(ru.number || 0, Backs.COUNT) : formOf(T, 'back');
@@ -3769,8 +3652,7 @@ vec3 rareHue(vec3 c, float a) {
     // ---------------- Schwanz ----------------
     rigSec = 'tail'; partSlot = 'tail';
     // schwanzLage: um wie viele Schritte der Schwanz wegen einer Schale tiefer und weiter außen ansetzt
-    // Neue Schwänze zur Auswahl (Auftrag teile-schwanz, 24.10.2026): TailNew aus web3d/src/candidates/tail_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.tailNew. Ohne TailNew bleibt alles, wie es ist
+    // Neue Schwänze zur Auswahl (Auftrag teile-schwanz, 24.10.2026): TailNew aus web3d/src/parts/tail.js, fest im Baukasten, Nummer über d.tailNew. Ohne TailNew bleibt alles, wie es ist
     const TN = typeof TailNew !== 'undefined' ? TailNew : null;
     const sc = T.tail, scF = d.tailNew && TN && TN.has(d.tailNew) ? d.tailNew : formOf(T, 'tail'), tailPlacement = { deeper: 0, outer: 0, hits2: 0 };
     if (scF) {
@@ -3851,7 +3733,7 @@ vec3 rareHue(vec3 c, float a) {
           // Kaulquappenschwanz: flache, gewellte Flosse
           const p = sweep(1.0 * len), { end } = tipOf(p);
           limb(chainPrim(p.slice(0, 5), 0.16 * th, 0.1 * th), 0.1); deco.push({ c: end, r: 0.3 });
-          // Flosse beginnt erst hinter dem Rumpf (v2_check 27.10.2026: ihr oberer Rand steckte am Ansatz im Rücken)
+          // Flosse beginnt erst hinter dem Rumpf (figure_check 27.10.2026: ihr oberer Rand steckte am Ansatz im Rücken)
           const fx0 = build2.TAIL_FIX === false ? 0 : 0.12;
           later(() => { const L = 1.1 * len - fx0, o = []; for (let i = 0; i <= 20; i++) { const u = i / 20; o.push([u * L, (0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } for (let i = 19; i >= 1; i--) { const u = i / 20; o.push([u * L, -(0.24 * (1 - u) + 0.04) * th + 0.05 * Math.sin(u * Math.PI * (2 + 2 * det))]); } add(flatGeo(o, 0.05, true), 'horn', { pos: at(0.1 + fx0, 0.02), quat: frame(back, V(0, 1, 0)), mat: { double: true }, th: 0.016 }); });
         } else if (f === 17) {
@@ -4148,8 +4030,7 @@ vec3 rareHue(vec3 c, float a) {
     // ---------------- Ohren: Teil der Haut, deshalb immer verwachsen ----------------
     rigSec = 'ear'; partSlot = 'ears';
     // Lage der Ohren: eigener Zufall aus der ID, von außen an der Seite (0) bis weiter innen oben (1)
-    // Neue Ohren zur Auswahl (Auftrag teile-ohren, 24.10.2026): EarNew aus web3d/src/candidates/ears_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.earNew. Ohne EarNew bleibt alles, wie es ist
+    // Neue Ohren zur Auswahl (Auftrag teile-ohren, 24.10.2026): EarNew aus web3d/src/parts/ears.js, fest im Baukasten, Nummer über d.earNew. Ohne EarNew bleibt alles, wie es ist
     const EN = typeof EarNew !== 'undefined' ? EarNew : null;
     const oh = T.ears, earF = d.earNew && EN && EN.has(d.earNew) ? d.earNew : formOf(T, 'ears'), earPosition = d.earPosition != null ? d.earPosition : random32(d.seed + '|ohrlage')(), earBases = [];
     // Ohren als Teil der Haut (ohrStart bis Ende des Abschnitts) und Zierteile der Ohren als Netze (ohrNetze)
@@ -4350,8 +4231,7 @@ vec3 rareHue(vec3 c, float a) {
 
     // ---------------- Augen: Maße, Stiele gehören zur Haut ----------------
     rigSec = 'head'; partSlot = 'eyes';
-    // Neue Augenformen zur Auswahl (Auftrag teile-augenform, 25.10.2026): EyeNew aus web3d/src/candidates/eyes_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.eyeNew. Ohne EyeNew bleibt alles, wie es ist
+    // Neue Augenformen zur Auswahl (Auftrag teile-augenform, 25.10.2026): EyeNew aus web3d/src/parts/eyes.js, fest im Baukasten, Nummer über d.eyeNew. Ohne EyeNew bleibt alles, wie es ist
     const EYN = typeof EyeNew !== 'undefined' ? EyeNew : null;
     const au = T.eyes, eyeF = d.eyeNew && EYN && EYN.has(d.eyeNew) ? d.eyeNew : formOf(T, 'eyes'), fs = B.faceS, er = sl(au, 'size', 0.22, 0.38) * fs * (eyeF === 7 ? 1.22 : EYN && EYN.has(eyeF) ? EYN.size(eyeF) : 1);
     const hwEye = hwAt(B.eyeY), gap = Math.min(Math.max(sl(au, 'spacing', 0.36, 0.66) * fs, er + 0.05), Math.max(hwEye - er - 0.12, er * 0.9));
@@ -4363,10 +4243,9 @@ vec3 rareHue(vec3 c, float a) {
     // Kein Kreuz, keine Anordnung 2 mal 2 aus gleichen Augen, keine Buchstabenform.
     const lay = d.eyeLayout && typeof d.eyeLayout === 'object' ? d.eyeLayout : { pattern: 0, variant: 0 };
     const patternNames = EYE_PATTERNS[d.eyeCount] || EYE_PATTERNS[2];
-    // Neue Anordnungen zur Auswahl (Auftrag teile-augenlage, 25.10.2026): EyeLayoutNew aus web3d/src/candidates/eyelayout_new.js, nur
-    // auf der Werkstatt-Seite geladen, Nummer über d.eyeLayoutNew (Muster -1). Ohne EyeLayoutNew bleibt alles, wie es ist
-    // Generator V2 (Regelversion 2): das Gen trägt die Nummer der Anordnung (eyeLayout.id), neue ab 101 baut EyeLayoutNew, der Bestand
-    // ist Augenzahl mal 10 plus Muster (21 ist das klassische Paar). Version 1 wählt das Muster wie bisher aus eyeLayout.pattern
+    // Neue Anordnungen zur Auswahl (Auftrag teile-augenlage, 25.10.2026): EyeLayoutNew aus web3d/src/parts/eye_layout.js, fest im Baukasten, Nummer über d.eyeLayoutNew (Muster -1). Ohne EyeLayoutNew bleibt alles, wie es ist
+    // Generator: das Gen trägt die Nummer der Anordnung (eyeLayout.id), neue ab 101 baut EyeLayoutNew, der Bestand
+    // ist Augenzahl mal 10 plus Muster (21 ist das klassische Paar). Ohne Nummer im Gen (von Hand gebaute Gene) gilt das Muster aus eyeLayout.pattern
     const layId = d.eyeLayoutNew || lay.id || 0;
     const ELN = typeof EyeLayoutNew !== 'undefined' && layId && EyeLayoutNew.has(layId) ? EyeLayoutNew : null;
     let eyeFallback = false, eyeNoBrow = null;
@@ -4443,8 +4322,7 @@ vec3 rareHue(vec3 c, float a) {
 
     // ---------------- Maul: Vertiefung und Rüssel gehören zur Haut ----------------
     rigSec = 'head'; partSlot = 'mouth';
-    // Neue Münder zur Auswahl (Auftrag teile-mund, 24.10.2026): MouthNew aus web3d/src/candidates/mouth_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.mouthNew. Ohne MouthNew bleibt alles, wie es ist
+    // Neue Münder zur Auswahl (Auftrag teile-mund, 24.10.2026): MouthNew aus web3d/src/parts/mouth.js, fest im Baukasten, Nummer über d.mouthNew. Ohne MouthNew bleibt alles, wie es ist
     const MN = typeof MouthNew !== 'undefined' ? MouthNew : null;
     const ma = T.mouth, mouthF = d.mouthNew && MN && MN.has(d.mouthNew) ? d.mouthNew : formOf(T, 'mouth'), mw = sl(ma, 'width', 0.34, 0.78) * fs, mo = sl(ma, 'opening', 0.55, 1.4), mc = sl(ma, 'curvature', 0.35, 1.0);
     let mouthCut = null, trunk = null;
@@ -4467,8 +4345,7 @@ vec3 rareHue(vec3 c, float a) {
     if (backV2 && !B.hollow && Backs.SKIN[backF]) for (const b of Backs.SKIN[backF](backCtx())) { if (b.body) parts.push({ prim: b.prim, k: b.k, limb: false, sec: 'body' }); else limb(b.prim || ellPrim(b.p, [b.r, b.r, b.r]), b.k || 0.16); }
 
     // ---------------- Haut erzeugen ----------------
-    // Neue Muster zur Auswahl (Auftrag teile-muster, 25.10.2026): PatternNew aus web3d/src/candidates/pattern_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.patternNew. Ohne PatternNew bleibt alles, wie es ist
+    // Neue Muster zur Auswahl (Auftrag teile-muster, 25.10.2026): PatternNew aus web3d/src/parts/pattern.js, fest im Baukasten, Nummer über d.patternNew. Ohne PatternNew bleibt alles, wie es ist
     const PN = typeof PatternNew !== 'undefined' ? PatternNew : null;
     const mu = T.pattern, mouthFr = d.patternNew && PN && PN.has(d.patternNew) ? d.patternNew : formOf(T, 'pattern');
     // Haken Nacharbeit Muster (Luis 25.10.2026): PatternNew.over(n) baut Formen des Bestands neu (Ausmaß, Lage, Socken, Sattel).
@@ -4814,17 +4691,20 @@ vec3 rareHue(vec3 c, float a) {
         uBelly: { value: hB ? hB.p : V(0, B.belly.y, 1) }, uBellyR: { value: B.belly.ry * 0.85 },
       };
     }
+    // Ruhiger im Kampf wie die Struktur (Luis 29.10.2026: Materialien flimmerten im Web auf der kleinen Figur wie Pixel): feine
+    // Linien und Funken blenden über ein gröberes fwidth früher aus (MAT_LOD_FW), das Relief ist flacher
+    if (matUni && LOD) { matUni.uMatLod = { value: 1 }; matUni.uMatRelief.value *= TexNew.LOD_AMP; }
     // ---------------- Struktur der Haut (E48) ----------------
     // d.texture: kind (Schlüssel aus TEX_KIND, 24 Arten), strength, size und detail (0 bis 1, ohne Angabe 0.5). Nur bei Haut ohne Material
-    // Kandidaten (Auftrag teile-struktur, 25.10.2026): TexNew aus web3d/src/candidates/texture_new.js, nur auf der Werkstatt-Seite geladen,
+    // Kandidaten (Auftrag teile-struktur, 25.10.2026): TexNew aus web3d/src/parts/texture.js, fest im Baukasten,
     // kennt neue Arten (Nummern ab 101) und bewegte Fassungen der legendären. Ohne TexNew bleibt alles, wie es ist
-    // Generator V2: TexNew gehört fest zum Baukasten. Alle Strukturen laufen über TexNew (im Kampf ruhiger), die vier legendären des
+    // Generator: TexNew gehört fest zum Baukasten. Alle Strukturen laufen über TexNew (im Kampf ruhiger), die vier legendären des
     // Bestands (Waben, Wellblech, Steppnaht, Kiesel) zeichnet es in ihrer bewegten Fassung, der Schlüssel im Gen bleibt der des Bestands
     const TEX_LIVE = { honeycomb: 'honeycomb_live', corrugated: 'corrugated_live', quilted: 'quilted_live', pebble: 'pebble_live' };
     const texKey = d.texture ? (typeof TexNew !== 'undefined' && TEX_LIVE[d.texture.kind] && TexNew.has(TEX_LIVE[d.texture.kind]) ? TEX_LIVE[d.texture.kind] : d.texture.kind) : null;
     const TXN = typeof TexNew !== 'undefined' && texKey && TexNew.has(texKey) ? TexNew : null;
     let texUni = null;
-    // Struktur auf Material (E279, Luis 25.10.2026): seit Regelversion 2 erlaubt, das Gen schließt gleiche Themen aus. Version 1 bringt
+    // Struktur auf Material (E279, Luis 25.10.2026): erlaubt, das Gen schließt gleiche Themen aus. Bis 29.10.2026 brachte der Generator V1
     // beides nie zusammen. d.texWithMat false schaltet es zum Vergleich ab
     if (d.texture && (TXN || TEX_KIND[d.texture.kind]) && (!matUni || d.texWithMat !== false)) {
       const tx = Object.assign({}, d.texture, { kind: texKey }), r = random32(d.seed + '|struktur|'), k = (TXN && TXN.num(tx.kind)) || TEX_KIND[tx.kind], st = tx.strength != null ? tx.strength : 0.5;
@@ -5079,8 +4959,7 @@ vec3 rareHue(vec3 c, float a) {
     partSlot = 'brows';
     // Je Auge eine Braue, das Paar ist gespiegelt. u läuft von innen (Nase) nach außen. Form aus Formeln:
     // Höhe y(u) und Dicke w(u) in Einheiten des Augenradius. Ohne Drehsinn, ohne Kreuze, keine Zickzack-Paare (Blitze).
-    // Neue Brauen zur Auswahl (Auftrag teile-augenbrauen, 25.10.2026): BrowNew aus web3d/src/candidates/brows_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.browNew. Ohne BrowNew bleibt alles, wie es ist
+    // Neue Brauen zur Auswahl (Auftrag teile-augenbrauen, 25.10.2026): BrowNew aus web3d/src/parts/brows.js, fest im Baukasten, Nummer über d.browNew. Ohne BrowNew bleibt alles, wie es ist
     const BrN = typeof BrowNew !== 'undefined' ? BrowNew : null;
     const brF = d.browNew && BrN && BrN.has(d.browNew) ? d.browNew : T.brows ? formOf(T, 'brows') : 0;
     if (brF && eyeF !== 5) {
@@ -5185,7 +5064,7 @@ vec3 rareHue(vec3 c, float a) {
       const browFrom = g.children.length;
       for (const [ex, ey, r, s] of eyesForBrows) brow(ex, ey, r, s);
       // Neue Brauen gehören zum Gesicht, tragen wie die Brauen des Bestands keine Struktur der Haut und hängen ganz am Kopf (rig.js)
-      // Generator V2: alle Brauen hängen ganz am Kopf (vorher hoben Teile des Bestands bei tief sitzenden Ohren mit dem Ohr ab)
+      // Generator: alle Brauen hängen ganz am Kopf (vorher hoben Teile des Bestands bei tief sitzenden Ohren mit dem Ohr ab)
       for (let i = browFrom; i < g.children.length; i++) { g.children[i].userData.browPart = true; g.children[i].userData.browHead = true; if (BrN && BrN.has(brF)) g.children[i].userData.noTex = true; }
     }
 
@@ -5427,7 +5306,7 @@ vec3 rareHue(vec3 c, float a) {
     // d.wings: { number 1 bis 24 (wings.js), size und tilt 0 bis 1, pairs 1 oder 2 }. Jedes Paar sitzt im oberen Rücken, das
     // zweite tiefer, kleiner und weiter nach unten gedreht. Alle Teile hängen am Flügelknochen ihrer Seite (wingPart, wingRoots)
     if (d.wings && d.wings.number && typeof Wings !== 'undefined') {
-      // Neue Flügel zur Auswahl (Auftrag teile-fluegel): WingsNew aus web3d/src/candidates/wings_new.js, nur auf der Werkstatt-Seite geladen
+      // Neue Flügel zur Auswahl (Auftrag teile-fluegel): WingsNew aus web3d/src/parts/wings.js, fest im Baukasten
       const WS = typeof WingsNew !== 'undefined' && WingsNew.has(d.wings.number) ? WingsNew : Wings;
       const wg = d.wings, kind = wg.number, base = WS.SIZE[kind - 1] || 1, wSize = base * lerp(0.8, 1.2, wg.size != null ? wg.size : 0.5);
       const wTilt = lerp(-0.25, 0.25, wg.tilt != null ? wg.tilt : 0.5), pairs = wg.pairs === 2 ? 2 : 1, wingStart = g.children.length, fxWing = fx.length;
@@ -5634,8 +5513,7 @@ vec3 rareHue(vec3 c, float a) {
     // Kommen nach dem Rücken, damit sie gegen alles prüfen können (Luis, 01.10.2026: Hörner überlappen nie mit
     // anderen Teilen und ragen nirgends hinein). hornParts merkt sich je Horn Ansatz, Seite, Teile, wie tief der
     // Ansatz sitzt und den kleinsten Abstand zu allem anderen. Testseiten nutzen das für eine Vorschau ohne Neubau
-    // Neue Hörner zur Auswahl (Auftrag teile-hoerner, 24.10.2026): HornNew aus web3d/src/candidates/horn_new.js, nur auf der
-    // Werkstatt-Seite geladen, Nummer über d.hornNew. Ohne HornNew bleibt alles, wie es ist
+    // Neue Hörner zur Auswahl (Auftrag teile-hoerner, 24.10.2026): HornNew aus web3d/src/parts/horns.js, fest im Baukasten, Nummer über d.hornNew. Ohne HornNew bleibt alles, wie es ist
     const HN = typeof HornNew !== 'undefined' ? HornNew : null;
     const ho = T.horns, hoF = d.hornNew && HN && HN.has(d.hornNew) ? d.hornNew : formOf(T, 'horns'), hornParts = [];
     // Lage aus dem Gen (0 bis 1, 0,5 ist die Grundform) in Größe und Winkel. Ohne Gen bleibt alles wie bisher,
@@ -6107,7 +5985,7 @@ vec3 rareHue(vec3 c, float a) {
     return { group: g, box, skinKey, skin: skinName, skinPhi, body: { rx: hMid }, hornParts, tailPlacement, material: matUni, shells: matShells, field,
       rig: { parts, skin: skinMeshRef, top: B.top, bottom: B.bottom, armY: B.armY, eyeY: B.eyeY, earY: B.earY, eyes: eyeRig, mouth: mouthRig, fam, eyeColor: roleColor.eye, pupilColor: roleColor.pupil, wingRoots, gait } };
   }
-  // Name einer Form im Gen (Generator V2: auch die Nummern der Module der 50 Formen), für Steckbrief, Generator und Katalog
+  // Name einer Form im Gen (Generator: auch die Nummern der Module der 50 Formen), für Steckbrief, Generator und Katalog
   build2.partName = (slot, n) => {
     if (!n) return '';
     // Module mit const stehen nicht an window, deshalb einzeln über typeof
@@ -9669,7 +9547,7 @@ const Backs = (() => {
 })();
 
 // Neue Körper zur Auswahl (Auftrag teile-koerper, Luis 24.10.2026, docs/auftraege/teile/ERWEITERUNG.md)
-// Nur auf der Werkstatt-Seite ovalings-candidates-koerper.html geladen. Der Baukasten fragt über BodyNew nach:
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). Der Baukasten fragt über BodyNew nach:
 //  - plan(n, c): Bauplan wie planB in builder.js (Felder, Lage von Augen, Maul, Armen, Ohren, Schwanz)
 //  - decorate(n, c): Zierteile nach der Haut (Kristalle, Kern, Zifferblatt), Hörner halten Abstand zu ihnen
 //  - skinFx(n): Bewegung der Haut im Shader und Farbe des Kranzes (nur legendär), null ohne eigene Bewegung
@@ -10068,7 +9946,7 @@ const BodyNew = (() => {
 })();
 
 // Neue Augenformen zur Auswahl (Auftrag teile-augenform, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-augenform.html geladen. builder.js ruft EyeNew.build(nummer, ctx) in eyeball()
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft EyeNew.build(nummer, ctx) in eyeball()
 // über den markierten Haken, wenn d.eyeNew eine Nummer aus NEW trägt, je Auge einmal. Gebaut wird wie bei den Formen 13 bis 32:
 // alles im Rahmen des Auges (c Mitte, x quer, y nach oben, z aus der Haut), was eyeball anlegt, hängt am Drehpunkt des Auges und
 // blinzelt mit. Teile, die auf der Haut liegen und nicht blinzeln sollen (Kette des Monokels), kommen über ctx.late nach dem Messen.
@@ -10539,8 +10417,7 @@ const EyeNew = (() => {
 })();
 
 // Neue Anordnungen der Augen zur Auswahl (Auftrag teile-augenlage, Luis 24.10.2026, Ziel 50 Anordnungen: 20 Normal, 15 Rare,
-// 10 Epic, 5 Legendary, Augenzahl 1 bis 5 folgt aus der Anordnung). Wird nur auf der Werkstatt-Seite ovalings-candidates-eyelayout.html
-// geladen. builder.js ruft über den markierten Haken EyeLayoutNew.place(nummer, ctx) statt eines Musters aus EYE_PATTERNS, wenn
+// 10 Epic, 5 Legendary, Augenzahl 1 bis 5 folgt aus der Anordnung). Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft über den markierten Haken EyeLayoutNew.place(nummer, ctx) statt eines Musters aus EYE_PATTERNS, wenn
 // d.eyeLayoutNew eine Nummer aus NEW trägt, und nach dem Zeichnen der Augen EyeLayoutNew.decorate(nummer, ctx) für Zierde und Bewegung
 // (ctx.later läuft nach dem Messen der Figur, für Leuchtpunkte und alles, was vor dem Gesicht schwebt).
 // place liefert die Liste [x, y, r] (Mitte und Radius jedes Auges von vorn gesehen, x quer, y Höhe). Danach gilt wie beim Bestand:
@@ -10853,7 +10730,7 @@ const EyeLayoutNew = (() => {
 })();
 
 // Neue Augenbrauen zur Auswahl (Auftrag teile-augenbrauen, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-augenbrauen.html geladen. builder.js ruft BrowNew.build(nummer, ctx) im Abschnitt
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft BrowNew.build(nummer, ctx) im Abschnitt
 // Augenbrauen je Auge, wenn d.browNew eine Nummer aus NEW trägt, und fragt BrowNew.legendHex nach dem Zeichen legendärer Brauen.
 // Gebaut wird im Rahmen der Braue: u läuft von innen (Nase) nach außen, X(u) ist die Lage auf der Breite, y0 die Grundhöhe über dem Auge,
 // r der Augenradius, th die Dicke aus dem Regler, out die Seite (+1 rechts, -1 links, das Paar ist gespiegelt).
@@ -11378,7 +11255,7 @@ const BrowNew = (() => {
 })();
 
 // Neue Münder zur Auswahl (Auftrag teile-mund, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-mouth.html geladen. builder.js fragt MouthNew.cav (Vertiefung in der Haut)
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js fragt MouthNew.cav (Vertiefung in der Haut)
 // und ruft MouthNew.build(nummer, ctx) im Abschnitt Maul, wenn d.mouthNew eine Nummer aus NEW trägt. rig.js nimmt die Ruhebewegungen
 // aus MouthNew.MOVES. Gebaut wird mit denselben Helfern wie die Münder 13 bis 26 (line, onFace, tooth, fang, tongueGeo …), alles liegt
 // an der Haut oder in der Vertiefung. Marken für die Maul-Animation (E116): line verformt sich, jaw geht mit dem Unterkiefer, pucker
@@ -11744,7 +11621,7 @@ const MouthNew = (() => {
 })();
 
 // Neue Hörner zur Auswahl (Auftrag teile-hoerner, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-horns.html geladen. builder.js ruft HornNew.build(nummer, ctx) im Abschnitt
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft HornNew.build(nummer, ctx) im Abschnitt
 // Hörner über den markierten Haken, wenn d.hornNew eine Nummer aus NEW trägt. Gebaut wird wie bei den Formen 13 bis 35: ein Horn am
 // Ansatz bs, x nach außen (Seite s), y nach oben, z nach vorn. Platz, Größe, Richtung, Ansatz in der Haut und Abstand zu allem
 // anderen übernimmt der Baukasten. Jede Form setzt zuerst den Ring um den Ansatz (rootAt). Würfel-Logik, Gen und hatch.js bleiben
@@ -12024,7 +11901,7 @@ const HornNew = (() => {
 })();
 
 // Neue Ohren zur Auswahl (Auftrag teile-ohren, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-ears.html geladen. builder.js ruft EarNew.build(nummer, ctx) im Abschnitt
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft EarNew.build(nummer, ctx) im Abschnitt
 // Ohren über den markierten Haken, wenn d.earNew eine Nummer aus NEW trägt, je Seite s einmal. Gebaut wird wie bei den Formen 11 bis 30:
 // Ohren aus Abschnitten der Haut (limb) und Zierteilen (earAfter), die am Knochen ihres Ohrs hängen und mitzucken.
 // Rahmen je Ohr: base Ansatz (steckt in der Haut), Y = dir die Richtung, in die das Ohr wächst, X nach außen quer dazu, Z nach vorn.
@@ -12502,7 +12379,7 @@ const EarNew = (() => {
 })();
 
 // Neue Schwänze zur Auswahl (Auftrag teile-schwanz, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-tail.html geladen. builder.js ruft TailNew.build(nummer, ctx) über den
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft TailNew.build(nummer, ctx) über den
 // markierten Haken im Abschnitt Schwanz, wenn d.tailNew eine Nummer aus NEW trägt. Würfel-Logik, Gen und hatch.js bleiben unberührt,
 // den Einbau macht „Ovalings“ nach der Auswahl durch Luis.
 // Regeln wie im Baukasten: Ansatz steckt in der Haut, Zierteile hängen am Schwanzknochen (userData.tailBone, rig.js), Farben nur
@@ -12630,7 +12507,7 @@ const TailNew = (() => {
       // Knochenschwanz: dünne Schnur, darauf sechs bis zehn Wirbel als flache Scheiben in Knochenfarbe, jeder mit einem Dorn nach oben
       const p = curve([0.7 * len, -0.25], [1.3 * len, -0.05], [1.4 * len, 0.45 * len * curl + 0.1], 18), k = cnt(6, 10);
       limb(chainPrim(p, 0.08 * th, 0.04 * th), 0.08); deco.push({ c: p[18], r: 0.12 });
-      // Wirbel erst dort, wo die Schnur frei vom Rumpf ist (v2_check 27.10.2026: der erste Wirbel lag auf dem Rücken und rieb beim
+      // Wirbel erst dort, wo die Schnur frei vom Rumpf ist (figure_check 27.10.2026: der erste Wirbel lag auf dem Rücken und rieb beim
       // Schwingen über die Haut)
       let u0 = 0.12; while (u0 < 0.5 && c.field && build2.TAIL_FIX !== false) { const j = Math.round(u0 * 18), q = p[j]; if (c.field(q.x, q.y, q.z) > lerp(0.17, 0.07, u0) * th + 0.04) break; u0 += 0.02; }
       later(() => {
@@ -12931,7 +12808,7 @@ const TailNew = (() => {
 })();
 
 // Neue Muster zur Auswahl (Auftrag teile-muster, Luis 24.10.2026, Ziel 50 Formen: 20 Normal, 15 Rare, 10 Epic, 5 Legendary).
-// Wird nur auf der Werkstatt-Seite ovalings-candidates-pattern.html geladen. builder.js ruft PatternNew.build(nummer, ctx) im Abschnitt
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). builder.js ruft PatternNew.build(nummer, ctx) im Abschnitt
 // „Flächen auf dem Rumpf“ über den markierten Haken, wenn d.patternNew eine Nummer aus NEW trägt. Ohne PatternNew bleibt alles, wie es ist.
 // Alles aus Formeln (Gestaltungsregeln): Lage, Umriss und Zahl der Flecken kommen aus den Reglern des Gens (density, size, rotation)
 // und aus einem eigenen, festen Zufall der Form (Strom „|musterform|“, zieht immer 96 Zahlen). Keine Buchstaben, Zahlen, Runen, keine
@@ -13659,7 +13536,7 @@ const PatternNew = (() => {
 
 // Neue Rücken zur Auswahl (Auftrag teile-ruecken, Luis 24.10.2026: Ziel 50 Formen, 20 Normal, 15 Rare, 10 Epic, 5 Legendary, jede mit
 // Familienrichtung). Abgenommen sind 24 (AUSWAHL.md: 10 / 9 / 3 / 2), hier entstehen die fehlenden 10 Normal, 6 Rare, 7 Epic und
-// 3 Legendary, dazu je Stufe eine Zusatzform. Nur auf der Werkstatt-Seite ovalings-candidates-back.html geladen. Der Baukasten nimmt
+// 3 Legendary, dazu je Stufe eine Zusatzform. Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). Der Baukasten nimmt
 // eine Form von hier über den Haken in builder.js (Abschnitt Rücken), wenn BackNew.has(d.backNew) gilt. Würfel-Logik, hatch.js und Dart
 // bleiben unberührt, die Nummern 25 bis 54 gibt es nur hier, sie heißen N1 bis N30.
 // Abnahme Luis 25.10.2026: Ausmaß aus dem Regler count für alle Formen (c.ext, siehe E und ex), Gewitterwolke (N30) legendär statt
@@ -14667,7 +14544,7 @@ const BackNew = (() => {
 })();
 
 // Neue Flügel zur Auswahl (Auftrag teile-fluegel, Luis 24.10.2026, docs/auftraege/teile/ERWEITERUNG.md)
-// Nur auf der Werkstatt-Seite ovalings-candidates-wings.html geladen. Der Baukasten fragt über WingsNew nach (Haken in builder.js):
+// Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). Der Baukasten fragt über WingsNew nach (Haken in builder.js):
 // WingsNew.has(n), WingsNew.build(n, c), WingsNew.SIZE[n - 1], WingsNew.PAIR_GAP[n]. Der Rahmen und die Bausteine in c sind dieselben
 // wie in wings.js (X nach außen, Y nach oben, Z nach vorn, Längen in Flügelgröße). Nummern 25 bis 50 sind neu, 23 (Phönixflügel)
 // steht hier noch einmal mit Bewegung (ERWEITERUNG.md: legendär ohne Bewegung bekommt eine).
@@ -15007,7 +14884,7 @@ const WingsNew = (() => {
 
 // Neue Arme zur Auswahl (Auftrag teile-arme, Luis 24.10.2026: Ziel 50 Formen, 20 Normal, 15 Rare, 10 Epic, 5 Legendary, jede mit
 // Familienrichtung). Abgenommen sind 24 (AUSWAHL.md), hier entstehen die fehlenden 10 Normal, 7 Rare, 6 Epic und 3 Legendary, dazu je
-// Stufe eine Zusatzform. Nur auf der Werkstatt-Seite ovalings-candidates-arms.html geladen. Der Baukasten nimmt eine Form von hier über
+// Stufe eine Zusatzform. Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). Der Baukasten nimmt eine Form von hier über
 // den Haken in builder.js (Abschnitt Arme), wenn ArmsNew.has(d.armNew) gilt. Würfel-Logik, hatch.js und Dart bleiben unberührt, die
 // Nummern 25 bis 54 gibt es nur hier, sie heißen N1 bis N30.
 //
@@ -16084,7 +15961,7 @@ const ArmsNew = (() => {
 })();
 
 // Neue Hände zur Auswahl (Auftrag teile-haende, Luis 24.10.2026: abgenommen sind 26, gezielt dazu 1 Rare, 2 Epic, 1 Legendary
-// mit sichtbarer Bewegung, je 1 bis 2 Kandidaten mehr). Nur auf der Werkstatt-Seite ovalings-candidates-hands.html geladen, der
+// mit sichtbarer Bewegung, je 1 bis 2 Kandidaten mehr). Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py), der
 // Baukasten nimmt eine Form von hier über den Haken in handAt (builder.js), wenn HandsNew.has(nummer) gilt. Würfel-Logik, hatch.js
 // und Dart bleiben unberührt, die Nummern 27 bis 34 gibt es nur hier, sie heißen N1 bis N8.
 //
@@ -17040,7 +16917,7 @@ const HandsNew = (() => {
 })();
 
 // Neue Füße zur Auswahl (Auftrag teile-fuesse, Luis 24.10.2026: genau 50 Formen, 20 Normal, 15 Rare, 10 Epic, 5 Legendary, dazu einige
-// Zusatzformen zur Wahl). Nur auf der Werkstatt-Seite ovalings-candidates-feet.html geladen, der Baukasten nimmt eine Form von hier über
+// Zusatzformen zur Wahl). Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py), der Baukasten nimmt eine Form von hier über
 // den Haken in footAt (builder.js), wenn FeetNew.has(nummer) gilt. Würfel-Logik, hatch.js und Dart bleiben unberührt, die Nummern 27 bis 54
 // gibt es nur hier, sie heißen N1 bis N28.
 //
@@ -17868,8 +17745,7 @@ const FeetNew = (() => {
 })();
 
 // Neue Beine zur Auswahl (Auftrag teile-beine, Luis 24.10.2026: genau 50 Formen, 20 Normal, 15 Rare, 10 Epic, 5 Legendary, jede
-// mit Familienrichtung). Abgenommen sind 24 (AUSWAHL.md), dazu kommen hier die fehlenden Formen und einige Zusatzformen. Nur auf
-// der Werkstatt-Seite ovalings-candidates-legs.html geladen. Der Baukasten nimmt eine Form von hier über den Haken in builder.js,
+// mit Familienrichtung). Abgenommen sind 24 (AUSWAHL.md), dazu kommen hier die fehlenden Formen und einige Zusatzformen. Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py). Der Baukasten nimmt eine Form von hier über den Haken in builder.js,
 // wenn d.legNew eine Nummer aus LegsNew trägt. Würfel-Logik, hatch.js und Dart bleiben unberührt, die Nummern ab 25 gibt es nur hier.
 //
 // Aufbau wie legs.js: ein Aufruf baut alle Beine eines Ovalings. ctx wie dort (bottom, ref, under, side, len, th, stance, ends,
@@ -18001,7 +17877,7 @@ const LegsNew = (() => {
     if (mesh && s) mesh.userData.side = s;
     return mesh;
   };
-  // geschlossene flache Form aus zwei Flächen über (u, v), fn(u, v, seite) mit seite +1 vorn und -1 hinten (wie in hands_new.js)
+  // geschlossene flache Form aus zwei Flächen über (u, v), fn(u, v, seite) mit seite +1 vorn und -1 hinten (wie in parts/hands.js)
   const lens = (fn, nu, nv) => {
     const pos = [], idx = [];
     for (const sd of [1, -1]) {
@@ -18895,7 +18771,7 @@ const LegsNew = (() => {
 // Neue Strukturen der Haut zur Auswahl (Auftrag teile-struktur, Luis 24.10.2026: Ziel 50 Formen, 20 Normal, 15 Rare, 10 Epic,
 // 5 Legendary, jede mit Familienrichtung). Abgenommen sind 24 (AUSWAHL.md: 10 / 8 / 2 / 4), hier entstehen die fehlenden 10 Normal,
 // 7 Rare, 8 Epic und 1 Legendary, dazu Zusatzformen, und die vier legendären (Waben, Wellblech, Steppnaht, Kiesel) bekommen eine
-// eigene Bewegung der Struktur (Luis 20a) als Fassung „live“. Nur auf der Werkstatt-Seite ovalings-candidates-texture.html geladen.
+// eigene Bewegung der Struktur (Luis 20a) als Fassung „live“. Fest im Baukasten (seit 27.10.2026 in jeder Seite, PART_MODULES in web3d/build_pages.py).
 // Der Baukasten nimmt eine Struktur von hier über den Haken in builder.js (Abschnitt Struktur der Haut), wenn TexNew.has(d.texture.kind)
 // gilt. Würfel-Logik, hatch.js, Dart und die 24 Zweige in TEX_GLSL bleiben unberührt, die Nummern ab 101 gibt es nur hier.
 //
@@ -19876,7 +19752,7 @@ const Rig = (() => {
     const armMax = {}, armSwing = {}, armProbe = {}, solid = names.map((k, j) => k === 'body' || k === 'head' ? j : -1).filter(j => j >= 0);
     const dBody = (x, y, z) => { let m = 1e9; for (const j of solid) m = Math.min(m, distAt(x, y, z, j)); return m; };
     g.updateMatrixWorld(true);
-    // Glieder bewegen sich nur so weit, wie sie frei bleiben (Luis 27.10.2026, v2_check: Stacheln, Keulen und Flossen schlugen beim
+    // Glieder bewegen sich nur so weit, wie sie frei bleiben (Luis 27.10.2026, figure_check: Stacheln, Keulen und Flossen schlugen beim
     // Wedeln in den Rumpf, Zierteile der Ohren beim Zucken in den Kopf, Flügel beim Ausbreiten in den Rücken). Proben: Hautpunkte des
     // Glieds und Ecken der Teile an seinem Knochen. Geprüft wird die stärkste Haltung zu beiden Seiten. Was in Ruhe schon anliegt (unter
     // 2 cm, der Ansatz), zählt nicht, alles andere bleibt mindestens LIMB_MARGIN vom Rumpf oder kommt ihm nicht näher als in Ruhe.
@@ -20716,7 +20592,8 @@ const Rig = (() => {
     const c = L.cur; if (!c) return;
     if (scene) scene.busy[c.name] = Math.max(0, (scene.busy[c.name] || 1) - 1);
     L.last = c.name; L.cur = null; rig.lifeNow = null;
-    L.next = t + (calm ? 8 + 6 * L.rnd() : 6 + 6 * L.rnd());
+    // rare (Home, Luis 29.10.2026): halb so oft
+    L.next = t + (calm ? 8 + 6 * L.rnd() : 6 + 6 * L.rnd()) * (L.gap || 1);
   }
   // Planen: t in Sekunden (die Zeit, die auch Rig.animate bekommt), scene aus lifeScene (geteilt von allen Figuren einer Szene),
   // opts: off (Wärme ab „serious“: keine Ereignisse, laufende blenden aus), calm (Kampf zwischen den Zügen: nur leise umschauen),
@@ -20732,7 +20609,7 @@ const Rig = (() => {
     }
     // Zeit springt zurück (neue Szene, andere Uhr): neu planen
     if (t < L.t - 0.5) { lifeEnd(rig, L, scene, t, o.calm); L.next = t + 2 + 6 * L.rnd(); }
-    L.t = t;
+    L.t = t; L.gap = o.rare ? 2 : 1;
     const c = L.cur;
     if (c) {
       // Abbrechen, wenn die Lage es verlangt: weich über 0,3 s ausblenden statt springen
@@ -22252,6 +22129,7 @@ float n3(vec3 q) {
   }
 
   // Himmel: Kuppel mit Verlauf, Sonne oder Mond mit Schein, Strahlen (ungerade Zahl, unregelmäßig), Sterne als Punkte
+  // Radius der Bühne in den Räumen Licht und Schatten seit 29.10.2026 1,3 statt 2,5 (Luis: das Ovaling wirkte darauf zu klein)
   function stage(o, add) {
     const g = new THREE.Group(), R = o.r;
     const top = new THREE.CylinderGeometry(R, R, 0.3, 96, 1); top.translate(0, -0.15, 0); add(new THREE.Mesh(top, o.top), g);
@@ -22586,9 +22464,9 @@ void main() {
       return finish({ group, lights, anim, tris, fog: { color: lin('#3a2416'), near: 40, far: 150 } });
     }
     if (kind === 'light') {
-      const white = marble('famLightMarble', '0.93, 0.92, 0.9', '0.62, 0.58, 0.55', '0.12', '0.9');
+      const white = marble('famLightMarble', '0.86, 0.78, 0.64', '0.58, 0.47, 0.33', '0.12', '0.9');
       const gold = new THREE.MeshStandardMaterial({ color: lin('#e8b84a'), roughness: 0.28, metalness: 0.85, emissive: lin('#6a4a10'), emissiveIntensity: 0.25 });
-      group.add(stage({ r: 2.5, top: white, rim: gold, shaft: 0.9 }, add));
+      group.add(stage({ r: 1.3, top: white, rim: gold, shaft: 0.9 }, add));
       const list = [];
       for (let i = 0; i < Math.round(120 * detail); i++) {
         const a = r() * TAU, d = 1.6 + r() * 6, s0 = 0.9 + r() * 1.2 + d * 0.15;
@@ -22603,7 +22481,7 @@ void main() {
     }
     const dark = marble('famShadowMarble', '0.06, 0.05, 0.09', '0.42, 0.3, 0.7', '0.09', '1.0');
     const ringMat = new THREE.MeshBasicMaterial({ color: lin('#b48cff') });
-    group.add(stage({ r: 2.5, top: dark, rim: ringMat, shaft: 1.4 }, add));
+    group.add(stage({ r: 1.3, top: dark, rim: ringMat, shaft: 1.4 }, add));
     const mist = [];
     for (let i = 0; i < Math.round(80 * detail); i++) {
       const a = r() * TAU, d = 2.8 + Math.pow(r(), 0.7) * 10;
@@ -22989,63 +22867,35 @@ const Bosses = (() => {
       c.lerp(new THREE.Color(0x221c18), 0.55 * bump(ax, y, 0.25, 0.045, 0.2, 0.13) * w);
       c.lerp(new THREE.Color(0x0a0405), 0.8 * bump(ax, y, 0.04, -0.37, 0.018, 0.011) * w);
     };
-    // UI V2 (Bewertung 28.10.2026: „Ein Boss hat ein fast fotorealistisches Gesicht“): mit opts.v2 ein Gesicht im Stil der
-    // Ovalings statt der steinernen Fratze. Glattes, warmes Elfenbein, große glänzende Augen mit goldener Iris und zwei Lichtpunkten,
-    // strenge goldene Brauen, kleiner Mund. Kapuze und Krone bleiben. Ohne opts.v2 alles wie bisher
+    // Gesicht wieder die steinerne Fratze mit breitem Grinsen, auch in UI V2 (Luis 29.10.2026, das Gesicht im Stil der
+    // Ovalings aus der Bewertung vom 28.10.2026 entfällt)
+    const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
+    put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
+    // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
     const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
-    const v2Eyes = [];
-    if (opts.v2) {
-      const softFace = (x, y, z) => front(z) * (0.035 * bump(Math.abs(x), y, 0.3, -0.25, 0.14, 0.12) - 0.025 * bump(Math.abs(x), y, 0.26, 0.04, 0.13, 0.1) + 0.03 * bump(x, y, 0, -0.7, 0.2, 0.16));
-      const blush = (x, y, z, c) => c.lerp(new THREE.Color(0xf2a38a), 0.4 * bump(Math.abs(x), y, 0.36, -0.28, 0.1, 0.07) * front(z));
-      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xfff6e8); faceMat.roughness = 0.55; faceMat.envMapIntensity = 0.3;
-      put(head, faceSphere(HR, softFace, [0xd9c7a8, 3, 0.35], blush, faceMat)).scale.set(...HS);
-      const eyeMat = new THREE.MeshStandardMaterial({ color: 0x120e20, roughness: 0.15, metalness: 0.05, envMap: env, envMapIntensity: 0.45 });
-      const irisMat = new THREE.MeshBasicMaterial({ color: 0xe8a62c }), pupilMat = new THREE.MeshBasicMaterial({ color: 0x1a0f08 }), shine = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const browMat = gold;
-      for (const sx of [-1, 1]) {
-        const at = onFace(sx * 0.26, 0.02, 0.96), eye = new THREE.Group(); eye.position.copy(at); eye.rotation.y = sx * 0.42; head.add(eye);
-        const ball = mesh(new THREE.SphereGeometry(0.068, 32, 24), eyeMat); ball.scale.set(0.92, 1.18, 0.45); eye.add(ball);
-        const iris = mesh(new THREE.CircleGeometry(0.042, 32), irisMat, 0, -0.01, 0.031); iris.scale.y = 1.12; eye.add(iris);
-        eye.add(mesh(new THREE.CircleGeometry(0.016, 24), pupilMat, 0, -0.012, 0.0315));
-        eye.add(mesh(new THREE.CircleGeometry(0.018, 20), shine, sx * -0.02, 0.026, 0.0325));
-        eye.add(mesh(new THREE.CircleGeometry(0.008, 16), shine, sx * 0.016, -0.03, 0.0325));
-        v2Eyes.push(eye);
-        // Braue: schräg zur Mitte hin tiefer (streng, aber rund), goldene Kapsel
-        const bAt = onFace(sx * 0.25, 0.25, 1.0), brow = mesh(new THREE.SphereGeometry(1, 20, 12), browMat, bAt.x, bAt.y, bAt.z);
-        brow.scale.set(0.078, 0.022, 0.026); brow.rotation.set(0, sx * 0.4, sx * 0.32); head.add(brow);
+    // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
+    const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
+    const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
+    tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
+    const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
+    toothGeo.translate(0, 0, -0.2);
+    for (const upper of [true, false]) {
+      const n = 15;
+      for (let i = 0; i < n; i++) {
+        const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
+        const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
+        const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
+        const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
+        t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
+        head.add(t);
       }
-      // Mund: kleiner, ruhiger Bogen
-      const mPts = []; for (let i = 0; i <= 12; i++) { const ux = -0.14 + i * (0.28 / 12); mPts.push(onFace(ux, -0.43 + 0.8 * ux * ux, 1.0)); }
-      head.add(mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(mPts), 24, 0.011, 8), new THREE.MeshStandardMaterial({ color: 0x6b2c22, roughness: 0.5 })));
-    } else {
-      const faceMat = ivory.clone(); faceMat.vertexColors = true; faceMat.color = new THREE.Color(0xffffff); faceMat.roughness = 0.72; faceMat.envMapIntensity = 0.15;
-      put(head, faceSphere(HR, faceFn, [0x9d9384, 6, 0.8], faceColor, faceMat)).scale.set(...HS);
-      // Punkt auf der Gesichtskugel (Einheiten wie oben) im Raum des Kopfes, k: Anteil des Radius
-      const onFace = (ux, uy, k) => V3(ux * HR * k * HS[0], uy * HR * k * HS[1], Math.sqrt(Math.max(0, 1 - ux * ux - uy * uy)) * HR * k * HS[2]);
-      // Zähne: zwei Reihen hinter den Lippen, eng zusammengebissen, zu den Winkeln kleiner
-      const toothMat = new THREE.MeshStandardMaterial({ color: 0xeee5cf, roughness: 0.4, envMap: env, envMapIntensity: 0.3 });
-      const tr = new THREE.Shape(), q = 0.22; tr.moveTo(-0.5 + q, -0.5); tr.lineTo(0.5 - q, -0.5); tr.quadraticCurveTo(0.5, -0.5, 0.5, -0.5 + q); tr.lineTo(0.5, 0.5 - q * 0.4);
-      tr.quadraticCurveTo(0.5, 0.5, 0.5 - q, 0.5); tr.lineTo(-0.5 + q, 0.5); tr.quadraticCurveTo(-0.5, 0.5, -0.5, 0.5 - q * 0.4); tr.lineTo(-0.5, -0.5 + q); tr.quadraticCurveTo(-0.5, -0.5, -0.5 + q, -0.5);
-      const toothGeo = new THREE.ExtrudeGeometry(tr, { depth: 0.4, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.15, bevelSegments: 3, curveSegments: 6 });
-      toothGeo.translate(0, 0, -0.2);
-      for (const upper of [true, false]) {
-        const n = 15;
-        for (let i = 0; i < n; i++) {
-          const ux = -0.39 + i * (0.78 / (n - 1)), open = mouthUp(ux) - mouthLo(ux), k = 1 - 0.35 * (ux / 0.43) ** 2;
-          const h = open * (upper ? 0.54 : 0.5), wid = 0.054 * k;
-          const uy = upper ? mouthUp(ux) - h * 0.5 + 0.004 : mouthLo(ux) + h * 0.5 - 0.004;
-          const t = new THREE.Mesh(toothGeo, toothMat); t.position.copy(onFace(ux, uy, 0.975));
-          t.scale.set(wid * HR * 0.86, h * HR * HS[1], 0.014); t.rotation.set(-Math.asin(uy) * 0.5, Math.asin(ux) * 0.95, (upper ? -1 : 1) * ux * 0.25);
-          head.add(t);
-        }
-      }
-      // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
-      for (const sx of [-1, 1]) {
-        const at = onFace(sx * 0.25, 0.045, 0.88);
-        head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
-        head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
-        const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
-      }
+    }
+    // Augen: glühende rote Pupille tief in der schwarzen Höhle, mit weißglühendem Kern
+    for (const sx of [-1, 1]) {
+      const at = onFace(sx * 0.25, 0.045, 0.88);
+      head.add(mesh(new THREE.SphereGeometry(0.009, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff2410 }), at.x, at.y, at.z + 0.004));
+      head.add(mesh(new THREE.SphereGeometry(0.0035, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffd9a0 }), at.x, at.y, at.z + 0.012));
+      const g = glowSprite(0xff1a08, 0.045, tex); g.position.set(at.x, at.y, at.z + 0.02); g.material.opacity = 0.9; head.add(g);
     }
     // Kapuze: Stoff mit Falten, vorn offen, fällt auf die Schultern, dicker Saum an der Öffnung
     const hoodMat = new THREE.MeshStandardMaterial({ color: 0xe9dfcc, roughness: 0.7, side: THREE.DoubleSide, emissive: 0x1c1206, emissiveIntensity: 0.25 });
@@ -23196,7 +23046,6 @@ const Bosses = (() => {
       dust.userData.tick(dt);
       rig.reset();
       // UI V2: Augen blinzeln wie bei den Ovalings (nur Maßstab, keine Allokation)
-      for (let i = 0; i < v2Eyes.length; i++) v2Eyes[i].scale.y = 1 - 0.92 * blink(t, i, 1.7);
       // Idle: schweben, atmen, Rock und Tuch schwingen nach, Kopf schaut sich um und neigt sich, Flügel als Welle von
       // innen nach außen, freie Hand bewegt die Finger, die Lanzenhand greift nach, Kern und Schein pulsieren
       const hover = Math.sin(t * 1.2), br = Math.sin(t * 1.5);
