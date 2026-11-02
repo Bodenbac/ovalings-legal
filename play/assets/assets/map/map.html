@@ -38,7 +38,7 @@ body.embedded .map { border-radius: 0; min-height: 0; }
 
 <body class="embedded">
 <div class="app">
-  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 29.10.2026, 19:08 Uhr</span></div>
+  <div class="top"><h1>Dungeon-Karte</h1><span class="built">Entwurf, Stand 02.11.2026, 23:26 Uhr</span></div>
   <div class="map" id="map"></div>
   <div class="row">
     <button id="lvl1" aria-pressed="true">Level 1</button>
@@ -5826,7 +5826,11 @@ float rkHeight(vec3 q, out float crack, out float id) {
     // See der Stille (Solo-Dungeon des stillen Mönchs, E98): eigene kleine Insel rechts oben (von der Kamera aus), etwas höher
     // als die Hauptinsel, mit deutlichem Abstand. Die Treppe beginnt am Punkt des Umrisses, der der Insel am nächsten liegt,
     // ein Stück innen auf der Wiese (FOOT), dort wachsen keine Bäume
-    const SOLO = V(7.0, 1.3, -8.7);
+    // Kompass um die Hauptinsel (Luis 30.10.2026): gegen den Uhrzeigersinn ab Osten je eine Insel in jeder Himmelsrichtung.
+    // Osten Mönch (Stufe 15), Nordosten Himmelspfad (20), Norden Feste (25), Nordwesten 30, Westen 35, dann Südwesten, Süden,
+    // Südosten. Norden ist hinten (z negativ), Osten rechts. Nordwesten Steingarten (30), Westen Spiegelgipfel (35), Südwesten
+    // Nesselriff (40), Süden Felsenhort (45), Südosten frei
+    const SOLO = V(11.2, 1.3, -0.6);
     let footA = 0, footD = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SOLO.x, Math.sin(th) * rimR[a] - SOLO.z); if (d < footD) { footD = d; footA = a; } }
     const footTh = footA / NA * Math.PI * 2, FOOT = V(Math.cos(footTh) * (rimR[footA] - 0.75), 0, Math.sin(footTh) * (rimR[footA] - 0.75));
@@ -5834,7 +5838,7 @@ float rkHeight(vec3 q, out float crack, out float id) {
     // Himmelspfad (E128): eigene Insel rechts zwischen See der Stille und Ehernen Feste (seit 26.10.2026, vorher links oben),
     // höher als alle anderen (Himmel), seit dem Umzug etwas tiefer (2,0 statt 2,6), damit er den See dahinter nicht verdeckt.
     // Brücke aus Wolkenschollen ab FOOT2
-    const SKY = V(9.6, 2.0, -3.8);
+    const SKY = V(8.4, 2.0, -9.0);
     let foot2A = 0, foot2D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SKY.x, Math.sin(th) * rimR[a] - SKY.z); if (d < foot2D) { foot2D = d; foot2A = a; } }
     const foot2Th = foot2A / NA * Math.PI * 2, FOOT2 = V(Math.cos(foot2Th) * (rimR[foot2A] - 0.75), 0, Math.sin(foot2Th) * (rimR[foot2A] - 0.75));
@@ -5842,14 +5846,14 @@ float rkHeight(vec3 q, out float crack, out float id) {
     // Eherne Feste (sechster Dungeon): eigene Insel rechts neben der Hauptinsel, etwas tiefer, Brücke ab FOOT3. Seit 14.10.2026
     // (Luis: zu nah an der Hauptinsel) mit Abstand wie See und Himmelspfad: rund 2,9 vom Rand bis zur Landestelle (See 2,6,
     // Himmelspfad 3,3, vorher 0,8), leicht nach vorn gedreht
-    const BUL = V(9.8, -0.2, 1.2);
+    const BUL = V(0.3, -0.2, -12.8);
     let foot3A = 0, foot3D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - BUL.x, Math.sin(th) * rimR[a] - BUL.z); if (d < foot3D) { foot3D = d; foot3A = a; } }
     const foot3Th = foot3A / NA * Math.PI * 2, FOOT3 = V(Math.cos(foot3Th) * (rimR[foot3A] - 0.75), 0, Math.sin(foot3Th) * (rimR[foot3A] - 0.75));
     FOOT3.y = heightAt(FOOT3.x, FOOT3.z);
     // Nesselriff (siebter Dungeon): eigene Insel links oben (seit 26.10.2026, vorher links vorn), gegenüber dem See der Stille,
     // mit Abstand wie die anderen (rund 3 vom Rand bis zur Landestelle). Brücke ab FOOT4
-    const REEF = V(-7.2, 0.6, -9.2);
+    const REEF = V(-8.6, 0.6, 8.6);
     let foot4A = 0, foot4D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - REEF.x, Math.sin(th) * rimR[a] - REEF.z); if (d < foot4D) { foot4D = d; foot4A = a; } }
     const foot4Th = foot4A / NA * Math.PI * 2, FOOT4 = V(Math.cos(foot4Th) * (rimR[foot4A] - 0.75), 0, Math.sin(foot4Th) * (rimR[foot4A] - 0.75));
@@ -5857,21 +5861,21 @@ float rkHeight(vec3 q, out float crack, out float id) {
     // Steingarten (achter Dungeon): eigene Insel links vorn neben der Hauptinsel (seit 26.10.2026, vorher hinten in der Mitte),
     // gegenüber der Feste, mit Abstand wie die anderen (rund 3 vom Rand bis zur Landestelle). In der Gesamtansicht nicht ganz zu
     // sehen, erst nach kurzem Schieben nach links. Brücke ab FOOT5
-    const GARDEN = V(-10.0, 0.4, 2.2);
+    const GARDEN = V(-8.4, 0.4, -9.0);
     let foot5A = 0, foot5D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - GARDEN.x, Math.sin(th) * rimR[a] - GARDEN.z); if (d < foot5D) { foot5D = d; foot5A = a; } }
     const foot5Th = foot5A / NA * Math.PI * 2, FOOT5 = V(Math.cos(foot5Th) * (rimR[foot5A] - 0.75), 0, Math.sin(foot5Th) * (rimR[foot5A] - 0.75));
     FOOT5.y = heightAt(FOOT5.x, FOOT5.z);
     // Spiegelgipfel (neunter Dungeon): eigene Insel links zwischen Steingarten und Nesselriff (seit 26.10.2026, vorher rechts),
     // gegenüber dem Himmelspfad, höher als die Hauptinsel (ein Gipfel), mit Abstand wie die anderen. Brücke ab FOOT6
-    const SPIRE = V(-10.2, 1.5, -3.6);
+    const SPIRE = V(-11.2, 1.5, -0.6);
     let foot6A = 0, foot6D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - SPIRE.x, Math.sin(th) * rimR[a] - SPIRE.z); if (d < foot6D) { foot6D = d; foot6A = a; } }
     const foot6Th = foot6A / NA * Math.PI * 2, FOOT6 = V(Math.cos(foot6Th) * (rimR[foot6A] - 0.75), 0, Math.sin(foot6Th) * (rimR[foot6A] - 0.75));
     FOOT6.y = heightAt(FOOT6.x, FOOT6.z);
     // Felsenhort (zehnter Dungeon): eigene Insel hinten in der Mitte zwischen Nesselriff und See der Stille (seit 26.10.2026,
     // vorher links), etwas höher als die Hauptinsel, Höhe wie vorher. Brücke ab FOOT7
-    const HOLD = V(0.3, 1.0, -12.4);
+    const HOLD = V(0.3, 1.0, 12.8);
     let foot7A = 0, foot7D = 1e9;
     for (let a = 0; a < NA; a++) { const th = a / NA * Math.PI * 2, d = Math.hypot(Math.cos(th) * rimR[a] - HOLD.x, Math.sin(th) * rimR[a] - HOLD.z); if (d < foot7D) { foot7D = d; foot7A = a; } }
     const foot7Th = foot7A / NA * Math.PI * 2, FOOT7 = V(Math.cos(foot7Th) * (rimR[foot7A] - 0.75), 0, Math.sin(foot7Th) * (rimR[foot7A] - 0.75));
@@ -6396,18 +6400,22 @@ const reachAt = (list, zc) => list.reduce((m, r) => Math.max(m, r.dx * (1 - ease
 // Grenzen für eine Lage, ohne sie zu ändern: gibt den nächsten erlaubten Punkt zurück
 function limits(x, z, zoom) {
   const m = (ZMAX - Math.min(ZMAX, Math.max(ZMIN, zoom))) / (ZMAX - ZMIN);
-  // Auch ganz herausgezoomt bleibt Spiel zur Seite und nach unten (Luis 06.10.2026: Insel hochschieben, Unterseite sehen)
-  // Zum See der Stille rechts oben (eigene Insel, seit 10.10.2026) führt ein schräger Gang: je weiter rechts, desto weiter
-  // nach hinten, und je weiter hinten, desto weiter nach rechts. Ohne die Insel bleibt es beim Rechteck
-  // Zum Nesselriff links oben (seit 26.10.2026, vorher Himmelspfad) ebenso, gespiegelt
-  // Zum Felsenhort hinten in der Mitte (seit 26.10.2026, vorher Steingarten): um x 0 herum weiter nach hinten
-  // Zu Himmelspfad und Eherner Feste rechts, Steingarten und Spiegelgipfel links: in ihrer Lage weiter zur Seite (REACH_R, REACH_L)
-  const backR = world.parts.solo ? 1 : 0, backL = world.parts.reef ? 1 : 0, backM = world.parts.hold ? 1 : 0;
-  const zc = Math.min(6.5 + 2.5 * m, Math.max(-2.2 - 4 * m - 5.0 * Math.max(backR * ease(1.5, 4.5, x), backL * ease(-1.5, -4.5, x), backM * (1 - ease(1.5, 3.5, Math.abs(x)))), z));
-  const xc = Math.min(3 + 3.4 * m + Math.max(3.0 * backR * ease(-1.5, -5.5, zc), reachAt(REACH_R, zc)),
-    Math.max(-3 - 3.4 * m - Math.max(3.0 * backL * ease(-1.5, -5.5, zc), reachAt(REACH_L, zc)), x));
+  // Inseln im Kompass um die Hauptinsel (Luis 30.10.2026): die Mitte darf bis kurz vor jede vorhandene Insel wandern, ganz
+  // herausgezoomt etwas weniger weit. Nach vorn wie bisher Spiel, um die Unterseite zu sehen (Luis 06.10.2026)
+  const k = 0.78 - 0.18 * m;
+  const xc = Math.min(Math.max(3 + 3.4 * m, ISLE_BOX.x1 * k), Math.max(Math.min(-3 - 3.4 * m, ISLE_BOX.x0 * k), x));
+  const zc = Math.min(Math.max(6.5 + 2.5 * m, ISLE_BOX.z1 * k), Math.max(Math.min(-2.2 - 4 * m, ISLE_BOX.z0 * k), z));
   return { x: xc, z: zc };
 }
+// Ausdehnung aller vorhandenen Inseln (Mitte der Inseln), daraus die Grenzen zum Schieben
+const ISLE_BOX = (() => {
+  const b = { x0: 0, x1: 0, z0: 0, z1: 0 };
+  for (const [key, p] of Object.entries(world.anchors)) {
+    if (!p || key === 'tower' || key === 'crypt' || key === 'swamp') continue;
+    b.x0 = Math.min(b.x0, p.x); b.x1 = Math.max(b.x1, p.x); b.z0 = Math.min(b.z0, p.z); b.z1 = Math.max(b.z1, p.z);
+  }
+  return b;
+})();
 const clampZoom = z => Math.min(ZMAX, Math.max(ZMIN, z));
 // Gummiband: o über den Rand hinaus wird zu höchstens L, am Anfang mit gut der halben Strecke
 const soft = (o, L) => L * Math.tanh(0.55 * o / L);
@@ -6629,7 +6637,8 @@ size(); setLevel(1); clampView(); applyView();
 // Alle Shader gleich übersetzen, nicht erst, wenn ein Teil zum ersten Mal ins Bild kommt (sonst hing der erste Wisch über eine
 // halbe Sekunde, gemessen 14.10.2026)
 renderer.compile(scene, cam);
-{ const f = new URLSearchParams(location.search).get('focus'); if (f) focusOn(f); }
+// Prüfbilder: ?focus=<insel>&az=&el=&dist= (Luis 30.10.2026, Inseln im Kompass von oben ansehen)
+{ const q = new URLSearchParams(location.search), f = q.get('focus'); if (f) focusOn(f, +(q.get('az') || 0), +(q.get('el') || 0.5), +(q.get('dist') || 6)); }
 
 // Verbindung zur App wie bei der Bühne (stage_template.html): Nachrichten über den Kanal „Ovalings“ (Android, iOS) oder
 // postMessage (Web-Fassung der App), Kennung aus dem Anker der Adresse. Befehle: level (Spielerlevel, schaltet Orte frei)
