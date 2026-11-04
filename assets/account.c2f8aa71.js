@@ -114,6 +114,38 @@
     }, function (x) { busy(reg, false); errorOf(reg, message(x.code)); });
   });
 
+  // ----- Google und Apple (Luis 04.11.2026, Paket B): Knöpfe nur für eingeschaltete Anbieter -----
+  A.providers().then(function (list) {
+    var boxes = document.querySelectorAll('[data-social]');
+    for (var i = 0; i < boxes.length; i++) {
+      var any = false, btns = boxes[i].querySelectorAll('[data-oauth],[data-oauth-start]');
+      for (var j = 0; j < btns.length; j++) {
+        var on = list.indexOf(btns[j].getAttribute('data-oauth') || btns[j].getAttribute('data-oauth-start')) >= 0;
+        btns[j].hidden = !on; any = any || on;
+      }
+      boxes[i].hidden = !any;
+    }
+  });
+  signin.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-oauth]'); if (!b) return;
+    errorOf(signin, ''); busy(signin, true);
+    A.oauthSignIn(b.getAttribute('data-oauth'));
+  });
+  // Neues Konto: nur das Geburtsjahr wie in der App (E57), E-Mail und Passwort kommen vom Anbieter
+  reg.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-oauth-start]'); if (!b) return;
+    var y = reg.year.value.trim(), now = new Date().getFullYear();
+    if (!/^\d{4}$/.test(y) || +y < now - 120 || +y > now) { reg.year.focus(); return errorOf(reg, T.errors.year); }
+    if (now - +y < A.cfg.minAge) return errorOf(reg, T.errors.too_young);
+    errorOf(reg, ''); busy(reg, true); sugg.clear();
+    referral().then(function (r) {
+      inviter.removeAttribute('aria-invalid');
+      if (r && r.referred_by) R.clearInvite();
+      return A.oauthStart(b.getAttribute('data-oauth-start'), +y, r, reg);
+    }, function (x) { inviter.setAttribute('aria-invalid', 'true'); inviter.focus(); throw x; })
+      .catch(function (x) { busy(reg, false); errorOf(reg, message(x.code)); });
+  });
+
   // ----- Link erneut senden (höchstens alle 60 s) -----
   var resend = document.querySelector('[data-resend]'), sent = document.querySelector('[data-view="sent"]');
   resend.addEventListener('click', function () {
@@ -155,6 +187,9 @@
   // ----- Start: Link aus einer Mail, sonst Anmelden oder #register -----
   var want = location.hash.slice(1);
   A.takeLink().then(function (r) {
+    // Rückweg von Google oder Apple: mit Fehler zurück auf die Ansicht, sonst zum Profil
+    if (r && r.error && r.oauth) { var f = r.oauth === 'link' ? reg : signin; show(r.oauth === 'link' ? 'register' : 'signin'); segs.classList.add('live'); errorOf(f, message(r.error)); return; }
+    if (r && r.kind === 'oauth') { location.replace(A.cfg.profile); return; }
     if (r && r.error) { show('signin'); errorOf(signin, T.errors.link_expired); return; }
     if (r && r.kind === 'recovery') { show('recovery'); return; }
     if (r && r.kind === 'email_change') { done('email'); return; }

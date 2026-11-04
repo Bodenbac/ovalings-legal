@@ -20762,6 +20762,8 @@ vec3 mskin(vec3 p, bool pos) {
     if (hit && (hit.w.length !== meshes.length || hit.w.some((w, i) => w.AW.length !== 4 * meshes[i].geometry.attributes.position.count))) hit = null;
     const fresh = hit ? null : { w: [], arm: {}, bytes: 0 };
     const SCg = 0.08, sgr = new Map(), sP = [], sG = [], sW = [];
+    // Arten der Bewegung im Shader (ANIM_V2 im Baukasten), deren Teile sich frei um eine Mitte bewegen: spin, bob, rise, shoot, blink
+    const FREE_V = new Set([3, 4, 6, 7, 10]);
     // Runde 13: Schlüssel als Zahl statt Text, Suche in Schalen von innen nach außen mit frühem Ende (Ergebnis gleich: ab Schale r liegt
     // jede weitere Zelle mindestens r * SCg entfernt)
     const gkey = (x, y, z) => ((x + 4096) * 8192 + (y + 4096)) * 8192 + (z + 4096);
@@ -20786,9 +20788,14 @@ vec3 mskin(vec3 p, bool pos) {
         if (kind === 'limb') { const vote = new Map(), st = Math.max(1, Math.floor(n / 400)); for (let i = 0; i < n; i += st) { _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g); weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, sk, hard); if (lastL) vote.set(lastL, (vote.get(lastL) || 0) + 1); } let bv = 0; for (const [k, v] of vote) if (v > bv) { bv = v; only = k; } }
         // Runde 13: gleiche Lage, gleiche Gewichte. Netze ohne Index tragen jeden Punkt mehrfach (je Dreieck), er wird nur einmal gerechnet
         const seen = c === skin ? null : samePos(pa);
+        // Frei bewegte Kleinteile (Lichtpunkte, Funken, kreisende Steine: spin, bob, rise, shoot, blink) sind fest: alle Ecken nehmen die
+        // Gewichte der Mitte ihrer Bewegung und gehen mit dem Teil, um das sie kreisen. Vorher bekamen die Ecken eines Punkts verschiedene
+        // Glieder (Rumpf und Arm), beim Kreisen wurde der Punkt zu einem langen Strich gezogen (Fehler 03.11.2026)
+        const asp = c !== skin && c.material && c.material.userData ? c.material.userData.animSpec : null, free = asp && FREE_V.has(asp.V2) ? asp.C0.clone().applyMatrix4(l2g) : null;
         for (let i = 0; i < n; i++) {
+          if (free && i > 0) { for (let j = 0; j < 4; j++) { AG[4 * i + j] = AG[j]; AW[4 * i + j] = AW[j]; } continue; }
           if (seen) { const j0 = seen(i); if (j0 >= 0) { for (let j = 0; j < 4; j++) { AG[4 * i + j] = AG[4 * j0 + j]; AW[4 * i + j] = AW[4 * j0 + j]; } continue; } }
-          _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g);
+          if (free) _pp.copy(free); else _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g);
           if (kind === 'thing') {
             // nahe der Haut genau ihre Regel (auch das, was ein Glied am Ansatz mitzieht), weiter weg nur Körper und Kopf: ein Horn neben dem
             // Ohr biegt nicht mit dem Ohr, sein Fuß bleibt aber auf der Haut

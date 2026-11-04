@@ -159,11 +159,22 @@
     var h = new URLSearchParams(location.hash.slice(1)), q = new URLSearchParams(location.search);
     var err = h.get('error_code') || q.get('error_code') || h.get('error') || q.get('error');
     var tidy = function () { try { history.replaceState(null, '', location.pathname); } catch (e) { /* alte Browser */ } };
-    if (err) { tidy(); return Promise.resolve({ error: err }); }
+    var oauth = marked();
+    if (err) {
+      tidy();
+      if (!oauth) return Promise.resolve({ error: err });
+      // Rückweg von Google oder Apple mit Fehler: kein Konto (signin), schon an ein anderes Konto gebunden (link), abgebrochen
+      var desc = (h.get('error_description') || q.get('error_description') || '').toLowerCase();
+      var code = err === 'identity_already_exists' || desc.indexOf('already linked') >= 0 ? 'social_used'
+        : desc.indexOf('saving new user') >= 0 ? 'social_none' : err === 'access_denied' ? 'social_cancelled' : 'unknown';
+      // Der Gast für das neue Konto wird nicht gebraucht: löschen (Gäste löscht der Server sofort), dann abmelden
+      var drop = oauth === 'link' && session ? authed('/functions/v1/delete-account', { method: 'POST', body: {} }).catch(function () {}) : Promise.resolve();
+      return drop.then(function () { if (oauth === 'link') signOutLocal(); return { error: code, oauth: oauth }; });
+    }
     // Sicherer E-Mail-Wechsel: der erste von zwei Links bringt nur eine Meldung, die Sitzung kommt mit dem zweiten
     if (h.get('message') && !h.get('access_token')) { tidy(); return Promise.resolve({ kind: 'email_half' }); }
     if (!h.get('access_token')) return Promise.resolve(null);
-    var kind = h.get('type') || 'signup';
+    var kind = oauth ? 'oauth' : h.get('type') || 'signup';
     keep({ access_token: h.get('access_token'), refresh_token: h.get('refresh_token'), expires_at: +h.get('expires_at') || 0,
            expires_in: +h.get('expires_in') || 3600 });
     tidy();
@@ -173,8 +184,46 @@
     }, function () { signOutLocal(); return { error: 'otp_expired' }; });
   }
 
+  // Google und Apple (Luis 04.11.2026, Paket B, wie die App): die Seite des Anbieters, die Sitzung kommt als Anker zurück (takeLink).
+  // Was gerade lief, steht für den Rückweg im Speicher des Tabs: 'signin' (bestehendes Konto) oder 'link' (neues Konto als Gast mit
+  // Geburtsjahr, dann verknüpft). Knöpfe nur für Anbieter, die in Supabase eingeschaltet sind (/auth/v1/settings, external).
+  var OAUTH = 'ovalings.oauth';
+  function mark(kind) { try { sessionStorage.setItem(OAUTH, kind); } catch (e) { /* ohne Speicher gilt der Rückweg als Anmelden */ } }
+  function marked() { try { var k = sessionStorage.getItem(OAUTH); sessionStorage.removeItem(OAUTH); return k; } catch (e) { return null; } }
+  var providersLoad = null;
+  function providers() {
+    if (!providersLoad) {
+      providersLoad = request('/auth/v1/settings').then(function (b) {
+        var ext = (b && b.external) || {};
+        return ['google', 'apple'].filter(function (p) { return ext[p] === true; });
+      }, function () { providersLoad = null; return []; });
+    }
+    return providersLoad;
+  }
+
   window.OvalAuth = {
     cfg: cfg, Fail: Fail,
+    providers: providers,
+    // Bestehendes Konto: weiter zum Anbieter. Ohne Konto legt der Server keines an (Geburtsjahr fehlt), der Rückweg bringt den Fehler
+    oauthSignIn: function (provider) {
+      mark('signin');
+      location.href = cfg.url + '/auth/v1/authorize?provider=' + encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(cfg.redirect);
+    },
+    // Neues Konto: anonym mit Geburtsjahr wie in der App (handle_new_user prüft das Mindestalter), dann Google oder Apple verknüpfen
+    // extra wie bei signUp (Freunde werben, E245)
+    oauthStart: function (provider, birthYear, extra, form) {
+      var data = { birth_year: birthYear, locale: cfg.lang, signup_source: 'web' };
+      if (extra) for (var k in extra) data[k] = extra[k];
+      return captcha(form).then(function (tk) {
+        return request('/auth/v1/signup', { method: 'POST', body: withCaptcha({ data: data }, tk) });
+      }).then(keep).then(function () {
+        return authed('/auth/v1/user/identities/authorize?provider=' + encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(cfg.redirect) + '&skip_http_redirect=true');
+      }).then(function (b) {
+        if (!b || !b.url) throw new Fail('unknown', 0);
+        mark('link');
+        location.href = b.url;
+      });
+    },
     signedIn: function () { return !!session; },
     user: function () { return session && session.user; },
     takeLink: takeLink,
