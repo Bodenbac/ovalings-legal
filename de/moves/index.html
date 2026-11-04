@@ -30,8 +30,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preload" href="../../assets/fonts/Fredoka.8420465c.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/site.9a444f58.css">
+<link rel="preload" href="../../assets/fonts/Fredoka.65577686.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/site.2bd579b7.css">
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
@@ -86,7 +86,7 @@
     <div class="filterrow" role="group" aria-label="Seltenheit" data-filter="rarity">
       <span class="filterlabel">Seltenheit</span>
       <button class="pill" type="button" data-value="" aria-pressed="true">Alle</button>
-<button class="pill r-normal" id="rarity-normal" type="button" data-value="normal" aria-pressed="false">Normal</button><button class="pill r-rare" id="rarity-rare" type="button" data-value="rare" aria-pressed="false">Rare</button><button class="pill r-epic" id="rarity-epic" type="button" data-value="epic" aria-pressed="false">Epic</button><button class="pill r-legendary" id="rarity-legendary" type="button" data-value="legendary" aria-pressed="false">Legendary</button>    </div>
+<button class="pill r-normal" id="rarity-normal" type="button" data-value="normal" aria-pressed="false">Normal</button><button class="pill r-rare" id="rarity-rare" type="button" data-value="rare" aria-pressed="false">Selten</button><button class="pill r-epic" id="rarity-epic" type="button" data-value="epic" aria-pressed="false">Episch</button><button class="pill r-legendary" id="rarity-legendary" type="button" data-value="legendary" aria-pressed="false">Legendär</button>    </div>
     <details class="morefilters">
     <summary>Mehr Filter</summary>
     <div class="filterrow" role="group" aria-label="Art" data-filter="kind">
@@ -101,7 +101,7 @@
 <optgroup label="Stärkungen"><option value="strengthen">Angriff hoch</option><option value="defense_up">Verteidigung hoch</option><option value="haste">Tempo hoch</option><option value="regen">Erneuerung</option><option value="shield">Schild</option><option value="damage_reduction">Schadensminderung</option><option value="mirror">Spiegeln</option><option value="lifeline">Lebensfunke</option><option value="taunt">Spott</option><option value="guard_link">Schutzband</option><option value="ward">Schwächungsschutz</option><option value="counter_attack">Gegenangriff</option><option value="immortal">Unsterblich</option><option value="crit_up">Krit-Chance hoch</option><option value="crit_dmg_up">Krit-Schaden hoch</option></optgroup><optgroup label="Schwächungen"><option value="weaken">Angriff runter</option><option value="armor_break">Verteidigung runter</option><option value="slow">Tempo runter</option><option value="poison">Gift</option><option value="bleed">Blutung</option><option value="stun">Betäubung</option><option value="heal_reduce">Heilung verringert</option></optgroup><optgroup label="Sofortwirkungen"><option value="heal">Heilung</option><option value="lifesteal">Lebensraub</option><option value="revive">Wiederbeleben</option><option value="cleanse">Reinigen</option><option value="meter_fill">Zugleiste füllen</option><option value="meter_drain">Zugleiste leeren</option><option value="interrupt">Unterbrechen</option><option value="self_damage">Lebensopfer</option><option value="ally_strike">Sofortangriff</option><option value="team_lifesteal">Geteilter Lebensraub</option></optgroup>      </select></span>
     </div>
     </details>
-    <p class="dbstatus"><span class="count" data-count="all" data-template="Einträge: #" aria-live="polite">Einträge: 180</span>
+    <p class="dbstatus"><span class="count" data-count="all" data-template="Einträge: #" aria-live="polite">Einträge: 268</span>
       <button class="linkish" type="button" data-reset hidden>Filter zurücksetzen</button></p>
   </section>
 
@@ -2433,282 +2433,898 @@
       <article class="card movecard dbcard" id="passive-light_shield_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 20 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_n-192.a8a4efb7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_shield_n">Schildstart</a></h3><p class="sub">Startet jeden Kampf mit einem &lt;fx:shield&gt;Schild&lt;/fx&gt; von 20 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_shield_n">Schildstart</a></h3></div>
         </div>
         <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 20 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_heal_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 2 %.">
+      <article class="card movecard dbcard" id="passive-light_heal_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 0,3 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_heal_n-192.0f7fd44e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_heal_n">Wärmendes Licht</a></h3><p class="sub">&lt;fx:heal&gt;Heilt&lt;/fx&gt; alle Verbündeten zu Beginn des eigenen Zugs um 2 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_heal_n">Wärmendes Licht</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 2 %.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 0,3 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_resist_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="reines herz 15 % chance, einen schlechten effekt abzuwehren.">
+      <article class="card movecard dbcard" id="passive-light_resist_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="reines herz alle verbündeten haben 25 % chance, einen schlechten effekt abzuwehren.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_resist_n-192.10906da8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_resist_n">Reines Herz</a></h3><p class="sub">15 % Chance, einen [!schlechten Effekt!] abzuwehren.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_resist_n">Reines Herz</a></h3></div>
         </div>
-        <p class="short">15 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
+        <p class="short">Alle Verbündeten haben 25 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_spark_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="lichtfunke heilt nach einem eigenen kritischen treffer das ganze team um 3 % des höchsten lebens.">
+      <article class="card movecard dbcard" id="passive-light_spark_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="lichtfunke heilt nach einem eigenen kritischen treffer das ganze team um 2 % des höchsten lebens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_spark_n-192.7226af7d.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_spark_n">Lichtfunke</a></h3><p class="sub">&lt;fx:heal&gt;Heilt&lt;/fx&gt; nach einem eigenen kritischen Treffer das ganze Team um 3 % des höchsten &lt;hp&gt;Lebens&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_spark_n">Lichtfunke</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> nach einem eigenen kritischen Treffer das ganze Team um 3 % des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> nach einem eigenen kritischen Treffer das ganze Team um 2 % des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_boost_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="heilkraft heilungen und schilde dieses ovalings sind 15 % stärker.">
+      <article class="card movecard dbcard" id="passive-light_boost_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="heilkraft heilungen und schilde dieses ovalings sind 7 % stärker.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_boost_n-192.1612756e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_boost_n">Heilkraft</a></h3><p class="sub">&lt;fx:heal&gt;Heilungen&lt;/fx&gt; und &lt;fx:shield&gt;Schilde&lt;/fx&gt; dieses Ovalings sind 15 % stärker.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_boost_n">Heilkraft</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilungen</span> und <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schilde</span> dieses Ovalings sind 15 % stärker.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilungen</span> und <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schilde</span> dieses Ovalings sind 7 % stärker.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_lifesteal_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 8 % des eigenen schadens.">
+      <article class="card movecard dbcard" id="passive-light_afterglow_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="nachglühen heilt jemand ein ovaling im team über sein volles leben hinaus, wird 50 % davon ein schild. höchstens 10 % seines höchsten lebens.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_afterglow_n-192.ee97e3cf.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_afterglow_n">Nachglühen</a></h3></div>
+        </div>
+        <p class="short">Heilt jemand ein Ovaling im Team über sein volles <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hinaus, wird 50 % davon ein <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span>. Höchstens 10 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_breath_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="atemholen zu beginn seines zugs heilt es sich um 8 % des lebens, das es seit seinem letzten zug verloren hat.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_breath_n-192.641ef786.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_breath_n">Atemholen</a></h3></div>
+        </div>
+        <p class="short">Zu Beginn seines Zugs <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> es sich um 8 % des <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, das es seit seinem letzten Zug verloren hat.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_phalanx_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="phalanx solange alle im team leben, nimmt das ganze team 4 % weniger schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_phalanx_n-192.60a5cbb8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_phalanx_n">Phalanx</a></h3></div>
+        </div>
+        <p class="short">Solange alle im Team leben, nimmt das ganze Team <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">4 % weniger Schaden</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_dome_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="kuppel solange es lebt, nimmt das team von angriffen auf mehrere ziele 15 % weniger schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_dome_n-192.389fafd4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_dome_n">Kuppel</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, nimmt das Team von Angriffen auf mehrere Ziele <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">15 % weniger Schaden</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_glimpse_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="lichtblick fällt ein ovaling im team zum ersten mal unter 50 % leben, heilt es sofort um 8 % seines höchsten lebens. einmal je ovaling und kampf.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_glimpse_n-192.f215b76a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_glimpse_n">Lichtblick</a></h3></div>
+        </div>
+        <p class="short">Fällt ein Ovaling im Team zum ersten Mal unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> es sofort um 8 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. Einmal je Ovaling und Kampf.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_forewarn_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="vorwarnung solange es lebt, macht der erste angriff jedes gegners dem team 8 % weniger schaden. bei jedem 3. eigenen zug beginnt das neu.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_forewarn_n-192.ded782ee.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_forewarn_n">Vorwarnung</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, macht der erste Angriff jedes Gegners dem Team <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">8 % weniger Schaden</span>. Bei jedem 3. eigenen Zug beginnt das neu.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_tide_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="gezeitenlicht zu beginn seiner züge abwechselnd: das ganze team bekommt 1 zug lang 4 % mehr angriff, beim nächsten mal 1 zug lang 4 % weniger schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_tide_n-192.f4033bb8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_tide_n">Gezeitenlicht</a></h3></div>
+        </div>
+        <p class="short">Zu Beginn seiner Züge abwechselnd: das ganze Team bekommt 1 Zug lang <strong class="buff">4 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong>, beim nächsten Mal 1 Zug lang <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">4 % weniger Schaden</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_catch_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="auffanglicht übersteht ein ovaling im team einen treffer von mindestens 15 % seines lebens, bekommt es sofort einen schild von 5 % seines lebens.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_catch_n-192.16215ddd.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_catch_n">Auffanglicht</a></h3></div>
+        </div>
+        <p class="short">Übersteht ein Ovaling im Team einen Treffer von mindestens 15 % seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, bekommt es sofort einen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 5 % seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_dawn_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="frühlicht zu beginn des kampfs und jeder neuen welle hat es schon 15 % zugleiste.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_dawn_n-192.1902fb5d.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_dawn_n">Frühlicht</a></h3></div>
+        </div>
+        <p class="short">Zu Beginn des Kampfs und jeder neuen Welle hat es schon <strong class="buff">15 % Zugleiste</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_tailwind_n" data-card data-family="light" data-rarity="normal" data-kind="passive" data-effects="" data-search="aufwind es hat dauerhaft 3 % mehr tempo.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_tailwind_n-192.12381667.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_tailwind_n">Aufwind</a></h3></div>
+        </div>
+        <p class="short">Es hat dauerhaft <strong class="buff">3 % mehr <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_lifesteal_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 15 % des eigenen schadens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_lifesteal_n-192.fe81987d.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_n">Blutdurst</a></h3><p class="sub">&lt;fx:lifesteal&gt;Heilt sich&lt;/fx&gt; um 8 % des eigenen Schadens.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_n">Blutdurst</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 8 % des eigenen Schadens.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 15 % des eigenen Schadens.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_counter_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="gegenschlag 15 % chance, nach einem treffer zurückzuschlagen.">
+      <article class="card movecard dbcard" id="passive-shadow_counter_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="gegenschlag 22 % chance, nach einem treffer zurückzuschlagen.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_counter_n-192.4c6325a2.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_counter_n">Gegenschlag</a></h3><p class="sub">15 % Chance, nach einem Treffer &lt;fx:counter_attack&gt;zurückzuschlagen&lt;/fx&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_counter_n">Gegenschlag</a></h3></div>
         </div>
-        <p class="short">15 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
+        <p class="short">22 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_crit_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 8 prozentpunkte.">
+      <article class="card movecard dbcard" id="passive-shadow_crit_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 11 prozentpunkte.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_crit_n-192.673ea10d.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_crit_n">Raubtierblick</a></h3><p class="sub">[[&lt;crit&gt;Krit-Chance&lt;/crit&gt; plus 8 Prozentpunkte]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_crit_n">Raubtierblick</a></h3></div>
         </div>
-        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 8 Prozentpunkte</strong>.</p>
+        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 11 Prozentpunkte</strong>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_pierce_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="durchschlag kritische treffer ignorieren 15 % der verteidigung des ziels.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_pierce_n-192.53ce0b87.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_pierce_n">Durchschlag</a></h3><p class="sub">Kritische Treffer ignorieren 15 % der &lt;def&gt;Verteidigung&lt;/def&gt; des Ziels.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_pierce_n">Durchschlag</a></h3></div>
         </div>
         <p class="short">Kritische Treffer ignorieren 15 % der <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> des Ziels.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_finish_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="gnadenstoß plus 20 % schaden gegen ziele unter 30 % leben.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_finish_n-192.b5055b97.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_finish_n">Gnadenstoß</a></h3><p class="sub">Plus 20 % Schaden gegen Ziele unter 30 % &lt;hp&gt;Leben&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_finish_n">Gnadenstoß</a></h3></div>
         </div>
         <p class="short">Plus 20 % Schaden gegen Ziele unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 30 %.">
+      <article class="card movecard dbcard" id="passive-shadow_bloodprice_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="blutpreis jede eigene attacke mit schaden kostet es 3 % seines höchsten lebens und macht dafür 40 % mehr schaden. hat es dafür zu wenig leben, zahlt es nichts und bekommt nichts.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_bloodprice_n-192.7153bfdb.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_bloodprice_n">Blutpreis</a></h3></div>
+        </div>
+        <p class="short">Jede eigene Attacke mit Schaden kostet es 3 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> und macht dafür <strong class="buff">40 % mehr Schaden</strong>. Hat es dafür zu wenig <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, zahlt es nichts und bekommt nichts.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_fever_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="blutfieber nach jedem zug, in dem es handelt, machen seine treffer 2 % mehr schaden, höchstens 5 mal. gilt bis zum ende des kampfs.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_fever_n-192.23e1d095.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_fever_n">Blutfieber</a></h3></div>
+        </div>
+        <p class="short">Nach jedem Zug, in dem es handelt, machen seine Treffer <strong class="buff">2 % mehr Schaden</strong>, höchstens 5 Mal. Gilt bis zum Ende des Kampfs.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_ambush_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="überfall sein erster angriff in jeder welle macht 35 % mehr schaden, und der erste treffer davon ist sicher kritisch.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_ambush_n-192.dab22d01.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_ambush_n">Überfall</a></h3></div>
+        </div>
+        <p class="short">Sein erster Angriff in jeder Welle macht <strong class="buff">35 % mehr Schaden</strong>, und der erste Treffer davon ist sicher kritisch.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_lurk_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="nachtauge jeder treffer ohne krit gibt ihm 35 prozentpunkte mehr krit-chance, bis es wieder kritisch trifft.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_lurk_n-192.e11a0cc1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_lurk_n">Nachtauge</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer ohne Krit gibt ihm <strong class="buff">35 Prozentpunkte mehr <span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span></strong>, bis es wieder kritisch trifft.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_erode_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="zermürben jeder treffer senkt die verteidigung des ziels um 2 % bis zum ende des kampfs, höchstens 3 mal. reinigen nimmt das weg.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_erode_n-192.4a9613a3.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_erode_n">Zermürben</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer senkt <strong class="debuff">die <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> des Ziels um 2 %</strong> bis zum Ende des Kampfs, höchstens 3 Mal. <span class="statmark buff"><img src="../../assets/art/effect/cleanse-96.494b7e1b.webp" alt="" aria-hidden="true" width="18" height="18">Reinigen</span> nimmt das weg.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_scent_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="witterung solange es lebt, macht das ganze team 20 % mehr schaden gegen gegner unter 30 % leben.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_scent_n-192.588ad60d.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_scent_n">Witterung</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, macht das ganze Team <strong class="buff">20 % mehr Schaden</strong> gegen Gegner unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_chase_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="nachsetzen trifft eine eigene attacke mindestens einmal kritisch, bekommt es danach 15 % zugleiste.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_chase_n-192.76844476.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_chase_n">Nachsetzen</a></h3></div>
+        </div>
+        <p class="short">Trifft eine eigene Attacke mindestens einmal kritisch, bekommt es danach <strong class="buff">15 % Zugleiste</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_fury_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="ingrimm je weniger leben es hat, desto mehr schaden machen seine treffer, bis zu 60 % mehr. bei halbem leben ist es die hälfte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_fury_n-192.9b069c95.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_fury_n">Ingrimm</a></h3></div>
+        </div>
+        <p class="short">Je weniger <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> es hat, desto mehr Schaden machen seine Treffer, bis zu <strong class="buff">60 % mehr</strong>. Bei halbem <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> ist es die Hälfte.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_thorns_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="dornenhaut trifft ein gegner es direkt, bekommt der angreifer sofort 15 % dieses schadens zurück.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_thorns_n-192.ee51c2c1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_thorns_n">Dornenhaut</a></h3></div>
+        </div>
+        <p class="short">Trifft ein Gegner es direkt, bekommt der Angreifer sofort 15 % dieses Schadens zurück.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_plague_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="seuchenbiss jeder treffer vergiftet mit 10 % chance für 2 züge (je zug 3 % leben). bei bossen höchstens halb so viel wie sein angriff je zug.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_plague_n-192.ae425ca7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_plague_n">Seuchenbiss</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftet</span> mit 10 % Chance für 2 Züge (je Zug 3 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>). Bei Bossen höchstens halb so viel wie sein <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> je Zug.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_timeeater_n" data-card data-family="shadow" data-rarity="normal" data-kind="passive" data-effects="" data-search="zeitfresser jede eigene attacke nimmt jedem getroffenen gegner 3 % zugleiste. ein gegner verliert so höchstens 30 % bis zu seinem nächsten zug. bei bossen sammelt es sich und wirkt in schritten von 5 %.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_timeeater_n-192.25571501.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_timeeater_n">Zeitfresser</a></h3></div>
+        </div>
+        <p class="short">Jede eigene Attacke nimmt jedem getroffenen Gegner <strong class="debuff">3 % Zugleiste</strong>. Ein Gegner verliert so höchstens 30 % bis zu seinem nächsten Zug. Bei Bossen sammelt es sich und wirkt in Schritten von 5 %.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_shield_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 26 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_r-192.5ca4d2bb.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_shield_r">Schildstart</a></h3><p class="sub">Startet jeden Kampf mit einem &lt;fx:shield&gt;Schild&lt;/fx&gt; von 30 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_shield_r">Schildstart</a></h3></div>
         </div>
-        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 30 %.</p>
+        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 26 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_stand_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="rücken zur wand unter 30 % leben: verteidigung plus 60 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_stand_r-192.3d517244.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_stand_r">Rücken zur Wand</a></h3><p class="sub">Unter 30 % &lt;hp&gt;Leben&lt;/hp&gt;: [[&lt;def&gt;Verteidigung&lt;/def&gt; plus 60 %]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_stand_r">Rücken zur Wand</a></h3></div>
         </div>
         <p class="short">Unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>: <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> plus 60 %</strong>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_resist_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="reines herz 20 % chance, einen schlechten effekt abzuwehren.">
+      <article class="card movecard dbcard" id="passive-light_resist_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="reines herz alle verbündeten haben 40 % chance, einen schlechten effekt abzuwehren.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_resist_r-192.f3cd6a88.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_resist_r">Reines Herz</a></h3><p class="sub">20 % Chance, einen [!schlechten Effekt!] abzuwehren.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_resist_r">Reines Herz</a></h3></div>
         </div>
-        <p class="short">20 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
+        <p class="short">Alle Verbündeten haben 40 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_lead_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="leitlicht alle verbündeten bekommen krit-chance plus 12 prozentpunkte, solange dieses ovaling lebt.">
+      <article class="card movecard dbcard" id="passive-light_lead_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="leitlicht alle verbündeten bekommen krit-chance plus 10 prozentpunkte, solange dieses ovaling lebt.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_lead_r-192.ab72f7a8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_lead_r">Leitlicht</a></h3><p class="sub">Alle Verbündeten bekommen [[&lt;crit&gt;Krit-Chance&lt;/crit&gt; plus 12 Prozentpunkte]], solange dieses Ovaling lebt.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_lead_r">Leitlicht</a></h3></div>
         </div>
-        <p class="short">Alle Verbündeten bekommen <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 12 Prozentpunkte</strong>, solange dieses Ovaling lebt.</p>
+        <p class="short">Alle Verbündeten bekommen <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 10 Prozentpunkte</strong>, solange dieses Ovaling lebt.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_circle_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="schutzkreis zu beginn jedes kampfs bekommt das ganze team einen schild von 10 % des maximalen lebens.">
+      <article class="card movecard dbcard" id="passive-light_circle_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="schutzkreis zu beginn jedes kampfs bekommt das ganze team einen schild von 5 % des maximalen lebens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_circle_r-192.1db01de0.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_circle_r">Schutzkreis</a></h3><p class="sub">Zu Beginn jedes Kampfs bekommt das ganze Team einen &lt;fx:shield&gt;Schild&lt;/fx&gt; von 10 % des maximalen &lt;hp&gt;Lebens&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_circle_r">Schutzkreis</a></h3></div>
         </div>
-        <p class="short">Zu Beginn jedes Kampfs bekommt das ganze Team einen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 10 % des maximalen <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
+        <p class="short">Zu Beginn jedes Kampfs bekommt das ganze Team einen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 5 % des maximalen <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_venom_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="giftkunde plus 20 % schaden gegen vergiftete ziele.">
+      <article class="card movecard dbcard" id="passive-light_beacon_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="leuchtturm solange es mehr als 70 % leben hat, gehen einzelangriffe der gegner auf es, wie bei spott. dann nimmt es 20 % weniger schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_beacon_r-192.47334e8b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_beacon_r">Leuchtturm</a></h3></div>
+        </div>
+        <p class="short">Solange es mehr als 70 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hat, gehen Einzelangriffe der Gegner auf es, wie bei <span class="statmark buff"><img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="18" height="18">Spott</span>. Dann nimmt es <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">20 % weniger Schaden</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_crystal_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="kristallhaut solange es lebt, machen kritische treffer gegen sein team 25 % weniger zusatzschaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_crystal_r-192.0755e007.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_crystal_r">Kristallhaut</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, machen kritische Treffer gegen sein Team 25 % weniger Zusatzschaden.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_mirror_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="spiegelglanz solange es lebt, prallt jede schwächung eines gegners auf sein team mit 20 % chance ab und trifft den absender.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_mirror_r-192.cb3c49e1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_mirror_r">Spiegelglanz</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, prallt jede <strong class="debuff">Schwächung</strong> eines Gegners auf sein Team mit 20 % Chance ab und trifft den Absender.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_echo_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="widerhall setzt ein verbündeter eine fähigkeit mit abklingzeit ein, bekommt es 10 % zugleiste.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_echo_r-192.5efe5cd0.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_echo_r">Widerhall</a></h3></div>
+        </div>
+        <p class="short">Setzt ein Verbündeter eine Fähigkeit mit Abklingzeit ein, bekommt es <strong class="buff">10 % Zugleiste</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_sundial_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="sonnenuhr in jedem eigenen zug wird mit 50 % chance die längste laufende abklingzeit im team 1 zug kürzer. jede fähigkeit wird je einsatz höchstens 1 zug schneller.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_sundial_r-192.7d6bcfee.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_sundial_r">Sonnenuhr</a></h3></div>
+        </div>
+        <p class="short">In jedem eigenen Zug wird mit 50 % Chance die längste laufende Abklingzeit im Team 1 Zug kürzer. Jede Fähigkeit wird je Einsatz höchstens 1 Zug schneller.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_clarity_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="klarlicht solange es lebt, halten neue schwächungen auf seinem team 1 zug kürzer, mindestens 1 zug, und wirken ein viertel schwächer.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_clarity_r-192.6590d188.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_clarity_r">Klarlicht</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, halten neue <strong class="debuff">Schwächungen</strong> auf seinem Team 1 Zug kürzer, mindestens 1 Zug, und wirken ein Viertel schwächer.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_shoulder_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="schulterschluss nach jeder eigenen fähigkeit schlägt mit 35 % chance der verbündete mit dem höchsten angriff mit 70 % grundangriff mit zu.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_shoulder_r-192.63d1cc89.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_shoulder_r">Schulterschluss</a></h3></div>
+        </div>
+        <p class="short">Nach jeder eigenen Fähigkeit schlägt mit 35 % Chance der Verbündete mit dem höchsten <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> mit 70 % Grundangriff mit zu.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_tough_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="abhärtung jeder treffer, den es abbekommt, gibt ihm bis zum ende des kampfs 1 % weniger schaden, höchstens 5 mal.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_tough_r-192.d5f25cd4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_tough_r">Abhärtung</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer, den es abbekommt, gibt ihm bis zum Ende des Kampfs <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">1 % weniger Schaden</span>, höchstens 5 Mal.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_purge_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="lichtbad in jedem eigenen zug, in dem es handelt, nimmt es dem verbündeten mit den meisten schwächungen eine ab. jede abnahme heilt das ziel um 6 % seines höchsten lebens. betäubung bleibt.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_purge_r-192.7d301e10.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_purge_r">Lichtbad</a></h3></div>
+        </div>
+        <p class="short">In jedem eigenen Zug, in dem es handelt, nimmt es dem Verbündeten mit den meisten Schwächungen eine ab. Jede Abnahme <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> das Ziel um 6 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. <span class="statmark debuff"><img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="18" height="18">Betäubung</span> bleibt.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_tailwind_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="aufwind es hat dauerhaft 4 % mehr tempo.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_tailwind_r-192.7045e837.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_tailwind_r">Aufwind</a></h3></div>
+        </div>
+        <p class="short">Es hat dauerhaft <strong class="buff">4 % mehr <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_bequest_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="vermächtnis fällt es, heilt es alle lebenden verbündeten um 25 % ihres höchsten lebens und nimmt ihnen alle schwächungen. was über das volle leben geht, wird schild. einmal je kampf.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_bequest_r-192.d7c6d001.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_bequest_r">Vermächtnis</a></h3></div>
+        </div>
+        <p class="short">Fällt es, <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> es alle lebenden Verbündeten um 25 % ihres höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> und nimmt ihnen alle <strong class="debuff">Schwächungen</strong>. Was über das volle <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> geht, wird <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span>. Einmal je Kampf.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_watch_r" data-card data-family="light" data-rarity="rare" data-kind="passive" data-effects="" data-search="wächterblick bekommt ein verbündeter unter 50 % leben einen direkten treffer, fängt es 40 % davon ab und spürt selbst nur ein viertel davon, solange es über 50 % leben hat.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_watch_r-192.31320311.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_watch_r">Wächterblick</a></h3></div>
+        </div>
+        <p class="short">Bekommt ein Verbündeter unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> einen direkten Treffer, fängt es 40 % davon ab und spürt selbst nur ein Viertel davon, solange es über 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hat.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_venom_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="giftkunde plus 55 % schaden gegen vergiftete ziele.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_venom_r-192.5b0b71a1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_venom_r">Giftkunde</a></h3><p class="sub">Plus 20 % Schaden gegen &lt;fx:poison&gt;vergiftete&lt;/fx&gt; Ziele.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_venom_r">Giftkunde</a></h3></div>
         </div>
-        <p class="short">Plus 20 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
+        <p class="short">Plus 55 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_lifesteal_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 12 % des eigenen schadens.">
+      <article class="card movecard dbcard" id="passive-shadow_lifesteal_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 38 % des eigenen schadens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_lifesteal_r-192.038f60c2.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_r">Blutdurst</a></h3><p class="sub">&lt;fx:lifesteal&gt;Heilt sich&lt;/fx&gt; um 12 % des eigenen Schadens.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_r">Blutdurst</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 12 % des eigenen Schadens.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 38 % des eigenen Schadens.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_counter_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="gegenschlag 20 % chance, nach einem treffer zurückzuschlagen.">
+      <article class="card movecard dbcard" id="passive-shadow_counter_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="gegenschlag 35 % chance, nach einem treffer zurückzuschlagen.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_counter_r-192.3a44fcaf.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_counter_r">Gegenschlag</a></h3><p class="sub">20 % Chance, nach einem Treffer &lt;fx:counter_attack&gt;zurückzuschlagen&lt;/fx&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_counter_r">Gegenschlag</a></h3></div>
         </div>
-        <p class="short">20 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
+        <p class="short">35 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_edge_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="klingenschärfe krit-schaden plus 20 prozentpunkte.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_edge_r-192.c31f27cc.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_edge_r">Klingenschärfe</a></h3><p class="sub">[[&lt;cdmg&gt;Krit-Schaden&lt;/cdmg&gt; plus 20 Prozentpunkte]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_edge_r">Klingenschärfe</a></h3></div>
         </div>
         <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> plus 20 Prozentpunkte</strong>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_wound_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="wundbiss eigene kritische treffer lassen das ziel 2 züge bluten: 15 % des eigenen angriffs als schaden je zug.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_wound_r-192.e3e6306a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_wound_r">Wundbiss</a></h3><p class="sub">Eigene kritische Treffer lassen das Ziel 2 Züge &lt;fx:bleed&gt;bluten&lt;/fx&gt;: 15 % des eigenen &lt;atk&gt;Angriffs&lt;/atk&gt; als Schaden je Zug.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_wound_r">Wundbiss</a></h3></div>
         </div>
         <p class="short">Eigene kritische Treffer lassen das Ziel 2 Züge <span class="statmark debuff"><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="18" height="18">bluten</span>: 15 % des eigenen <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriffs</span> als Schaden je Zug.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_heal_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 4 %.">
+      <article class="card movecard dbcard" id="passive-shadow_tear_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="nachbluten trifft es ein blutendes ziel, wirkt die blutung sofort mit 100 % ein zusätzliches mal. blutet das ziel noch nicht, setzt der erste treffer mit 25 % chance 2 züge blutung. einmal je attacke und ziel.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_tear_r-192.0737f01f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_tear_r">Nachbluten</a></h3></div>
+        </div>
+        <p class="short">Trifft es ein <span class="statmark debuff"><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="18" height="18">blutendes</span> Ziel, wirkt die Blutung sofort mit 100 % ein zusätzliches Mal. Blutet das Ziel noch nicht, setzt der erste Treffer mit 25 % Chance 2 Züge <span class="statmark debuff"><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="18" height="18">Blutung</span>. Einmal je Attacke und Ziel.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_surge_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="blutwallung fällt sein leben zum ersten mal unter 50 % und zum ersten mal unter 25 %, bekommt es jedes mal 30 % zugleiste und 3 züge lang 55 % mehr angriff.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_surge_r-192.d040f6a9.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_surge_r">Blutwallung</a></h3></div>
+        </div>
+        <p class="short">Fällt sein <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> zum ersten Mal unter 50 % und zum ersten Mal unter 25 %, bekommt es jedes Mal <strong class="buff">30 % Zugleiste</strong> und 3 Züge lang <strong class="buff">55 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_gamble_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="alles oder nichts jeder treffer würfelt: 8 % chance auf dreifachen schaden, sonst je zur hälfte 150 % oder 50 %.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_gamble_r-192.45071799.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_gamble_r">Alles oder nichts</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer würfelt: 8 % Chance auf dreifachen Schaden, sonst je zur Hälfte 150 % oder 50 %.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_linger_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="langer schatten trifft es ein ziel, halten dessen angriff runter, verteidigung runter, tempo runter und heilung verringert 1 zug länger. jede schwächung nur einmal. hat das ziel keine davon, bekommt es mit 25 % chance 2 züge verteidigung runter 30 %.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_linger_r-192.d8fc955a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_linger_r">Langer Schatten</a></h3></div>
+        </div>
+        <p class="short">Trifft es ein Ziel, halten dessen <span class="statmark debuff"><img src="../../assets/art/effect/weaken-96.eeecbcb5.webp" alt="" aria-hidden="true" width="18" height="18">Angriff runter</span>, <span class="statmark debuff"><img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung runter</span>, <span class="statmark debuff"><img src="../../assets/art/effect/slow-96.20acb374.webp" alt="" aria-hidden="true" width="18" height="18">Tempo runter</span> und <span class="statmark debuff"><img src="../../assets/art/effect/heal_reduce-96.3a83b82d.webp" alt="" aria-hidden="true" width="18" height="18">Heilung verringert</span> 1 Zug länger. Jede Schwächung nur einmal. Hat das Ziel keine davon, bekommt es mit 25 % Chance 2 Züge <span class="statmark debuff"><img src="../../assets/art/effect/armor_break-96.53ce27a0.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung runter</span> 30 %.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_shieldeater_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="schildfresser seine treffer ignorieren 10 % verteidigung. gegen schilde zählen sie 50 % mehr: 100 schaden nehmen 150 vom schild. was danach übrig bleibt, trifft normal.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_shieldeater_r-192.ba235874.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_shieldeater_r">Schildfresser</a></h3></div>
+        </div>
+        <p class="short">Seine Treffer ignorieren 10 % <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span>. Gegen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schilde</span> zählen sie 50 % mehr: 100 Schaden nehmen 150 vom Schild. Was danach übrig bleibt, trifft normal.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_stalker_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="wegelagerer setzt ein gegner eine fähigkeit mit abklingzeit ein, schlägt es mit 60 % chance sofort mit 60 % grundangriff auf ihn zu. danach wartet es bis nach seinem nächsten zug.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_stalker_r-192.0a666222.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_stalker_r">Wegelagerer</a></h3></div>
+        </div>
+        <p class="short">Setzt ein Gegner eine Fähigkeit mit Abklingzeit ein, schlägt es mit 60 % Chance sofort mit 60 % Grundangriff auf ihn zu. Danach wartet es bis nach seinem nächsten Zug.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_decoy_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="trugbild zu kampfbeginn und nach jeweils 30 eigenen zügen liegt für das team ein trugbild bereit, höchstens eins. es fängt den nächsten einzelangriff eines gegners samt effekten ab. ein unbenutztes verfällt, wenn die welle wechselt.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_decoy_r-192.8354af3b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_decoy_r">Trugbild</a></h3></div>
+        </div>
+        <p class="short">Zu Kampfbeginn und nach jeweils 30 eigenen Zügen liegt für das Team ein Trugbild bereit, höchstens eins. Es fängt den nächsten Einzelangriff eines Gegners samt Effekten ab. Ein unbenutztes verfällt, wenn die Welle wechselt.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_deathcurse_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="totenfluch fällt es oder, solange es lebt, ein verbündeter, bekommt der bezwinger 3 züge lang 30 % weniger angriff und 30 % weniger verteidigung.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_deathcurse_r-192.1ff9c9b3.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_deathcurse_r">Totenfluch</a></h3></div>
+        </div>
+        <p class="short">Fällt es oder, solange es lebt, ein Verbündeter, bekommt der Bezwinger 3 Züge lang <strong class="debuff">30 % weniger <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> und <strong class="debuff">30 % weniger <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_frenzy_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="jagdrausch liegt ein ziel seiner attacke danach unter 50 % leben oder ist gefallen, bekommt es 22 % zugleiste. einmal je attacke.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_frenzy_r-192.819ae085.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_frenzy_r">Jagdrausch</a></h3></div>
+        </div>
+        <p class="short">Liegt ein Ziel seiner Attacke danach unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> oder ist gefallen, bekommt es <strong class="buff">22 % Zugleiste</strong>. Einmal je Attacke.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_step_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="nebelschritt 25 % chance, jedem direkten treffer eines gegners auszuweichen. ein ausgewichener treffer macht keinen schaden und bringt keine effekte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_step_r-192.8dbe8d7b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_step_r">Nebelschritt</a></h3></div>
+        </div>
+        <p class="short">25 % Chance, jedem direkten Treffer eines Gegners auszuweichen. Ein ausgewichener Treffer macht keinen Schaden und bringt keine Effekte.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_predator_r" data-card data-family="shadow" data-rarity="rare" data-kind="passive" data-effects="" data-search="siegeszug jeder gegner, der fällt, und jedes zehntel leben, das ein boss verliert, gibt ihm 4 % mehr angriff bis zum kampfende, höchstens 5 mal. fällt es, ist alles weg.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_predator_r-192.b05a72ff.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_predator_r">Siegeszug</a></h3></div>
+        </div>
+        <p class="short">Jeder Gegner, der fällt, und jedes Zehntel <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, das ein Boss verliert, gibt ihm <strong class="buff">4 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> bis zum Kampfende, höchstens 5 Mal. Fällt es, ist alles weg.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_heal_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 0,8 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_heal_e-192.753edd47.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_heal_e">Wärmendes Licht</a></h3><p class="sub">&lt;fx:heal&gt;Heilt&lt;/fx&gt; alle Verbündeten zu Beginn des eigenen Zugs um 4 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_heal_e">Wärmendes Licht</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 4 %.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 0,8 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 40 %.">
+      <article class="card movecard dbcard" id="passive-light_shield_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 34 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_e-192.fa115cb4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_shield_e">Schildstart</a></h3><p class="sub">Startet jeden Kampf mit einem &lt;fx:shield&gt;Schild&lt;/fx&gt; von 40 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_shield_e">Schildstart</a></h3></div>
         </div>
-        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 40 %.</p>
+        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 34 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_stand_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="rücken zur wand unter 30 % leben: verteidigung plus 80 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_stand_e-192.b9cce0b8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_stand_e">Rücken zur Wand</a></h3><p class="sub">Unter 30 % &lt;hp&gt;Leben&lt;/hp&gt;: [[&lt;def&gt;Verteidigung&lt;/def&gt; plus 80 %]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_stand_e">Rücken zur Wand</a></h3></div>
         </div>
         <p class="short">Unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>: <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> plus 80 %</strong>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_spark_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="lichtfunke heilt nach einem eigenen kritischen treffer das ganze team um 6 % des höchsten lebens.">
+      <article class="card movecard dbcard" id="passive-light_spark_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="lichtfunke heilt nach einem eigenen kritischen treffer das ganze team um 4 % des höchsten lebens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_spark_e-192.430d0773.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_spark_e">Lichtfunke</a></h3><p class="sub">&lt;fx:heal&gt;Heilt&lt;/fx&gt; nach einem eigenen kritischen Treffer das ganze Team um 6 % des höchsten &lt;hp&gt;Lebens&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_spark_e">Lichtfunke</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> nach einem eigenen kritischen Treffer das ganze Team um 6 % des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> nach einem eigenen kritischen Treffer das ganze Team um 4 % des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_boost_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="heilkraft heilungen und schilde dieses ovalings sind 30 % stärker.">
+      <article class="card movecard dbcard" id="passive-light_boost_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="heilkraft heilungen und schilde dieses ovalings sind 15 % stärker.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_boost_e-192.7d8b8762.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_boost_e">Heilkraft</a></h3><p class="sub">&lt;fx:heal&gt;Heilungen&lt;/fx&gt; und &lt;fx:shield&gt;Schilde&lt;/fx&gt; dieses Ovalings sind 30 % stärker.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_boost_e">Heilkraft</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilungen</span> und <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schilde</span> dieses Ovalings sind 30 % stärker.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilungen</span> und <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schilde</span> dieses Ovalings sind 15 % stärker.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_crit_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 16 prozentpunkte.">
+      <article class="card movecard dbcard" id="passive-light_anchor_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="seelenanker fällt zum ersten mal ein verbündeter, steht er sofort mit 25 % leben wieder auf. einmal je kampf für das ganze team, auch wenn dieses ovaling schon gefallen ist.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_anchor_e-192.e50daa36.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_anchor_e">Seelenanker</a></h3></div>
+        </div>
+        <p class="short">Fällt zum ersten Mal ein Verbündeter, steht er sofort mit 25 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> wieder auf. Einmal je Kampf für das ganze Team, auch wenn dieses Ovaling schon gefallen ist.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_linger_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="dauerlicht stärkungen aus fähigkeiten halten auf seinem team 3 züge länger. nicht bei unsterblich, spott, lebensfunke und schwächungsschutz.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_linger_e-192.c2e38985.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_linger_e">Dauerlicht</a></h3></div>
+        </div>
+        <p class="short"><strong class="buff">Stärkungen</strong> aus Fähigkeiten halten auf seinem Team 3 Züge länger. Nicht bei <span class="statmark buff"><img src="../../assets/art/effect/immortal-96.94299c19.webp" alt="" aria-hidden="true" width="18" height="18">Unsterblich</span>, <span class="statmark buff"><img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="18" height="18">Spott</span>, <span class="statmark buff"><img src="../../assets/art/effect/lifeline-96.0054d00c.webp" alt="" aria-hidden="true" width="18" height="18">Lebensfunke</span> und <span class="statmark buff"><img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="18" height="18">Schwächungsschutz</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_painlimit_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="schmerzgrenze von jedem schaden über 10 % seines höchsten lebens kommt nur die hälfte an.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_painlimit_e-192.b39f8b2b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_painlimit_e">Schmerzgrenze</a></h3></div>
+        </div>
+        <p class="short">Von jedem Schaden über 10 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> kommt nur die Hälfte an.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_defer_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="stundung 15 % jedes direkten treffers kommen erst zu beginn seines nächsten zugs an, davon nur drei viertel. ist seine schadensminderung schon fast voll, verfällt weniger.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_defer_e-192.19073372.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_defer_e">Stundung</a></h3></div>
+        </div>
+        <p class="short">15 % jedes direkten Treffers kommen erst zu Beginn seines nächsten Zugs an, davon nur drei Viertel. Ist seine <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">Schadensminderung</span> schon fast voll, verfällt weniger.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_banner_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="bannerträger solange es lebt, hat das ganze team 5 % mehr angriff und 5 % mehr verteidigung.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_banner_e-192.423db3e2.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_banner_e">Bannerträger</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, hat das ganze Team <strong class="buff">5 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> und <strong class="buff">5 % mehr <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_scale_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="waage zu beginn seines zugs rückt das leben der verbündeten unter dem durchschnitt des teams um 4 % näher heran. wer darüber liegt, gibt dafür halb so viel ab, niemand fällt dadurch.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_scale_e-192.54641e0f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_scale_e">Waage</a></h3></div>
+        </div>
+        <p class="short">Zu Beginn seines Zugs rückt das <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> der Verbündeten unter dem Durchschnitt des Teams um 4 % näher heran. Wer darüber liegt, gibt dafür halb so viel ab, niemand fällt dadurch.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_glare_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="blendschein trifft ein gegner jemanden im team, der danach unter 50 % leben hat, hat der gegner bis zum ende seines nächsten zugs 25 % weniger angriff.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_glare_e-192.c59dacf2.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_glare_e">Blendschein</a></h3></div>
+        </div>
+        <p class="short">Trifft ein Gegner jemanden im Team, der danach unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hat, hat der Gegner bis zum Ende seines nächsten Zugs <strong class="debuff">25 % weniger <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_beacon_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="leuchtturm solange es mehr als 50 % leben hat, gehen einzelangriffe der gegner auf es, wie bei spott. dann nimmt es 20 % weniger schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_beacon_e-192.87efe06a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_beacon_e">Leuchtturm</a></h3></div>
+        </div>
+        <p class="short">Solange es mehr als 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hat, gehen Einzelangriffe der Gegner auf es, wie bei <span class="statmark buff"><img src="../../assets/art/effect/taunt-96.138c09fa.webp" alt="" aria-hidden="true" width="18" height="18">Spott</span>. Dann nimmt es <span class="statmark buff"><img src="../../assets/art/effect/damage_reduction-96.ca2b3fe0.webp" alt="" aria-hidden="true" width="18" height="18">20 % weniger Schaden</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_pulse_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="lichttakt nach jedem 3. eigenen zug, in dem es handelt, bekommen alle anderen verbündeten 20 % zugleiste.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_pulse_e-192.5d248aa1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_pulse_e">Lichttakt</a></h3></div>
+        </div>
+        <p class="short">Nach jedem 3. eigenen Zug, in dem es handelt, bekommen alle anderen Verbündeten <strong class="buff">20 % Zugleiste</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_phoenix_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="phönixglut einmal je kampf überlebt es einen tödlichen schaden mit 14 % leben und verliert alle schwächungen. das zählt als wiederbeleben.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_phoenix_e-192.32e20c91.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_phoenix_e">Phönixglut</a></h3></div>
+        </div>
+        <p class="short">Einmal je Kampf überlebt es einen tödlichen Schaden mit 14 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> und verliert alle <strong class="debuff">Schwächungen</strong>. Das zählt als <span class="statmark buff"><img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="18" height="18">Wiederbeleben</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_watch_e" data-card data-family="light" data-rarity="epic" data-kind="passive" data-effects="" data-search="wächterblick bekommt ein verbündeter unter 50 % leben einen direkten treffer, fängt es 50 % davon ab und spürt selbst nur ein viertel davon, solange es über 50 % leben hat.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_watch_e-192.5f6007ef.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_watch_e">Wächterblick</a></h3></div>
+        </div>
+        <p class="short">Bekommt ein Verbündeter unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> einen direkten Treffer, fängt es 50 % davon ab und spürt selbst nur ein Viertel davon, solange es über 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> hat.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_crit_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 32 prozentpunkte.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_crit_e-192.3b687cce.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_crit_e">Raubtierblick</a></h3><p class="sub">[[&lt;crit&gt;Krit-Chance&lt;/crit&gt; plus 16 Prozentpunkte]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_crit_e">Raubtierblick</a></h3></div>
         </div>
-        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 16 Prozentpunkte</strong>.</p>
+        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 32 Prozentpunkte</strong>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_venom_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="giftkunde plus 30 % schaden gegen vergiftete ziele.">
+      <article class="card movecard dbcard" id="passive-shadow_venom_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="giftkunde plus 90 % schaden gegen vergiftete ziele.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_venom_e-192.442296c7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_venom_e">Giftkunde</a></h3><p class="sub">Plus 30 % Schaden gegen &lt;fx:poison&gt;vergiftete&lt;/fx&gt; Ziele.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_venom_e">Giftkunde</a></h3></div>
         </div>
-        <p class="short">Plus 30 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
+        <p class="short">Plus 90 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_counter_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="gegenschlag 25 % chance, nach einem treffer zurückzuschlagen.">
+      <article class="card movecard dbcard" id="passive-shadow_counter_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="gegenschlag 55 % chance, nach einem treffer zurückzuschlagen.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_counter_e-192.17a98d51.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_counter_e">Gegenschlag</a></h3><p class="sub">25 % Chance, nach einem Treffer &lt;fx:counter_attack&gt;zurückzuschlagen&lt;/fx&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_counter_e">Gegenschlag</a></h3></div>
         </div>
-        <p class="short">25 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
+        <p class="short">55 % Chance, nach einem Treffer <span class="statmark buff"><img src="../../assets/art/effect/counter_attack-96.0ea7b9a0.webp" alt="" aria-hidden="true" width="18" height="18">zurückzuschlagen</span>.</p>
       </article>
       <article class="card movecard dbcard" id="passive-shadow_pierce_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="durchschlag kritische treffer ignorieren 30 % der verteidigung des ziels.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_pierce_e-192.c13aeec5.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_pierce_e">Durchschlag</a></h3><p class="sub">Kritische Treffer ignorieren 30 % der &lt;def&gt;Verteidigung&lt;/def&gt; des Ziels.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_pierce_e">Durchschlag</a></h3></div>
         </div>
         <p class="short">Kritische Treffer ignorieren 30 % der <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span> des Ziels.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_finish_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="gnadenstoß plus 40 % schaden gegen ziele unter 30 % leben.">
+      <article class="card movecard dbcard" id="passive-shadow_finish_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="gnadenstoß plus 80 % schaden gegen ziele unter 30 % leben.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_finish_e-192.12843ff8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_finish_e">Gnadenstoß</a></h3><p class="sub">Plus 40 % Schaden gegen Ziele unter 30 % &lt;hp&gt;Leben&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_finish_e">Gnadenstoß</a></h3></div>
         </div>
-        <p class="short">Plus 40 % Schaden gegen Ziele unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>.</p>
+        <p class="short">Plus 80 % Schaden gegen Ziele unter 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_heal_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 5 %.">
+      <article class="card movecard dbcard" id="passive-shadow_lantern_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="seelenlaterne jedes gefallene ovaling und jedes fünftel leben, das ein boss verliert, lädt eine seele, höchstens 3. seine nächste attacke verbraucht sie und macht je seele 50 % mehr schaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_lantern_e-192.cd439fdf.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_lantern_e">Seelenlaterne</a></h3></div>
+        </div>
+        <p class="short">Jedes gefallene Ovaling und jedes Fünftel <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, das ein Boss verliert, lädt eine Seele, höchstens 3. Seine nächste Attacke verbraucht sie und macht je Seele <strong class="buff">50 % mehr Schaden</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_giant_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="riesentöter macht 30 % mehr schaden gegen gegner mit mehr höchstem leben als es selbst, etwa bosse.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_giant_e-192.228b3295.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_giant_e">Riesentöter</a></h3></div>
+        </div>
+        <p class="short">Macht <strong class="buff">30 % mehr Schaden</strong> gegen Gegner mit mehr höchstem <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> als es selbst, etwa Bosse.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_axe_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="richtbeil fällt ein normaler gegner durch seinen treffer unter 20 % leben, fällt er sofort. bosse fallen nicht, nehmen unter 20 % leben aber 100 % mehr schaden von ihm.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_axe_e-192.628a1641.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_axe_e">Richtbeil</a></h3></div>
+        </div>
+        <p class="short">Fällt ein normaler Gegner durch seinen Treffer unter 20 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, fällt er sofort. Bosse fallen nicht, nehmen unter 20 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> aber <strong class="buff">100 % mehr Schaden</strong> von ihm.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_mark_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="todesmal nach jeder attacke markiert es den getroffenen gegner mit dem meisten leben. das ganze team macht ihm 6 % mehr schaden, solange es lebt.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_mark_e-192.60d0d3ca.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_mark_e">Todesmal</a></h3></div>
+        </div>
+        <p class="short">Nach jeder Attacke markiert es den getroffenen Gegner mit dem meisten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>. Das ganze Team macht ihm <strong class="buff">6 % mehr Schaden</strong>, solange es lebt.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_magpie_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="elsterngriff jeder treffer raubt dem ziel 1 % angriff bis zum ende des kampfs und gibt ihn sich selbst, höchstens 10 mal.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_magpie_e-192.1a041484.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_magpie_e">Elsterngriff</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer raubt dem Ziel <strong class="debuff">1 % <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> bis zum Ende des Kampfs und gibt ihn sich selbst, höchstens 10 Mal.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_oath_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="blutschwur solange es lebt, haben kritische treffer des ganzen teams krit-schaden plus 15 prozentpunkte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_oath_e-192.b6ee86fb.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_oath_e">Blutschwur</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, haben kritische Treffer des ganzen Teams <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> plus 15 Prozentpunkte</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_offering_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="blutgabe hat es mehr als die hälfte seines lebens, opfert es zu beginn seines zugs 3 % leben. dafür hat das ganze team 1 zug lang 25 % mehr angriff.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_offering_e-192.a22167a8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_offering_e">Blutgabe</a></h3></div>
+        </div>
+        <p class="short">Hat es mehr als die Hälfte seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>, opfert es zu Beginn seines Zugs 3 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>. Dafür hat das ganze Team 1 Zug lang <strong class="buff">25 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_revenge_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="blutrache fällt es oder ein verbündeter durch den treffer eines gegners, schlägt es sofort mit 150 % stärke und sicherem krit auf den angreifer zurück. einmal je gegnerischer attacke für das ganze team.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_revenge_e-192.a4738a66.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_revenge_e">Blutrache</a></h3></div>
+        </div>
+        <p class="short">Fällt es oder ein Verbündeter durch den Treffer eines Gegners, schlägt es sofort mit 150 % Stärke und sicherem Krit auf den Angreifer zurück. Einmal je gegnerischer Attacke für das ganze Team.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_thorns_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="dornenhaut trifft ein gegner es direkt, bekommt der angreifer sofort 30 % dieses schadens zurück.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_thorns_e-192.1640f5b5.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_thorns_e">Dornenhaut</a></h3></div>
+        </div>
+        <p class="short">Trifft ein Gegner es direkt, bekommt der Angreifer sofort 30 % dieses Schadens zurück.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_plague_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="seuchenbiss jeder treffer vergiftet mit 30 % chance für 2 züge (je zug 3 % leben). bei bossen höchstens halb so viel wie sein angriff je zug.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_plague_e-192.987291fb.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_plague_e">Seuchenbiss</a></h3></div>
+        </div>
+        <p class="short">Jeder Treffer <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftet</span> mit 30 % Chance für 2 Züge (je Zug 3 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>). Bei Bossen höchstens halb so viel wie sein <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span> je Zug.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_timeeater_e" data-card data-family="shadow" data-rarity="epic" data-kind="passive" data-effects="" data-search="zeitfresser jede eigene attacke nimmt jedem getroffenen gegner 7 % zugleiste. ein gegner verliert so höchstens 30 % bis zu seinem nächsten zug. bei bossen sammelt es sich und wirkt in schritten von 5 %.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_timeeater_e-192.560d1ba3.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_timeeater_e">Zeitfresser</a></h3></div>
+        </div>
+        <p class="short">Jede eigene Attacke nimmt jedem getroffenen Gegner <strong class="debuff">7 % Zugleiste</strong>. Ein Gegner verliert so höchstens 30 % bis zu seinem nächsten Zug. Bei Bossen sammelt es sich und wirkt in Schritten von 5 %.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_heal_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="wärmendes licht heilt alle verbündeten zu beginn des eigenen zugs um 1,1 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_heal_g-192.2a132917.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_heal_g">Wärmendes Licht</a></h3><p class="sub">&lt;fx:heal&gt;Heilt&lt;/fx&gt; alle Verbündeten zu Beginn des eigenen Zugs um 5 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_heal_g">Wärmendes Licht</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 5 %.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">Heilt</span> alle Verbündeten zu Beginn des eigenen Zugs um 1,1 %.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_resist_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="reines herz 40 % chance, einen schlechten effekt abzuwehren.">
+      <article class="card movecard dbcard" id="passive-light_resist_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="reines herz alle verbündeten haben 75 % chance, einen schlechten effekt abzuwehren.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_resist_g-192.12771354.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_resist_g">Reines Herz</a></h3><p class="sub">40 % Chance, einen [!schlechten Effekt!] abzuwehren.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_resist_g">Reines Herz</a></h3></div>
         </div>
-        <p class="short">40 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
+        <p class="short">Alle Verbündeten haben 75 % Chance, einen <strong class="debuff">schlechten Effekt</strong> abzuwehren.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-light_shield_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 60 %.">
+      <article class="card movecard dbcard" id="passive-light_shield_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="schildstart startet jeden kampf mit einem schild von 45 %.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_shield_g-192.708716b1.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_shield_g">Schildstart</a></h3><p class="sub">Startet jeden Kampf mit einem &lt;fx:shield&gt;Schild&lt;/fx&gt; von 60 %.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_shield_g">Schildstart</a></h3></div>
         </div>
-        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 60 %.</p>
+        <p class="short">Startet jeden Kampf mit einem <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 45 %.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_lead_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="leitlicht alle verbündeten bekommen krit-chance plus 24 prozentpunkte, solange dieses ovaling lebt.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_lead_g-192.6e0ba4fd.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_lead_g">Leitlicht</a></h3><p class="sub">Alle Verbündeten bekommen [[&lt;crit&gt;Krit-Chance&lt;/crit&gt; plus 24 Prozentpunkte]], solange dieses Ovaling lebt.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_lead_g">Leitlicht</a></h3></div>
         </div>
         <p class="short">Alle Verbündeten bekommen <strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 24 Prozentpunkte</strong>, solange dieses Ovaling lebt.</p>
       </article>
       <article class="card movecard dbcard" id="passive-light_circle_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="schutzkreis zu beginn jedes kampfs bekommt das ganze team einen schild von 20 % des maximalen lebens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/light_circle_g-192.e9fbaa02.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-light_circle_g">Schutzkreis</a></h3><p class="sub">Zu Beginn jedes Kampfs bekommt das ganze Team einen &lt;fx:shield&gt;Schild&lt;/fx&gt; von 20 % des maximalen &lt;hp&gt;Lebens&lt;/hp&gt;.</p></div>
+          <div><h3><a class="cardlink" href="#passive-light_circle_g">Schutzkreis</a></h3></div>
         </div>
         <p class="short">Zu Beginn jedes Kampfs bekommt das ganze Team einen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 20 % des maximalen <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_lifesteal_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 20 % des eigenen schadens.">
+      <article class="card movecard dbcard" id="passive-light_crystal_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="kristallhaut solange es lebt, machen kritische treffer gegen sein team 40 % weniger zusatzschaden.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_crystal_g-192.959d47b4.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_crystal_g">Kristallhaut</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, machen kritische Treffer gegen sein Team 40 % weniger Zusatzschaden.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_sundial_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="sonnenuhr in jedem eigenen zug wird mit 75 % chance die längste laufende abklingzeit im team 1 zug kürzer. jede fähigkeit wird je einsatz höchstens 1 zug schneller.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_sundial_g-192.ee57f52a.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_sundial_g">Sonnenuhr</a></h3></div>
+        </div>
+        <p class="short">In jedem eigenen Zug wird mit 75 % Chance die längste laufende Abklingzeit im Team 1 Zug kürzer. Jede Fähigkeit wird je Einsatz höchstens 1 Zug schneller.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_anchor_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="seelenanker fällt zum ersten mal ein verbündeter, steht er sofort mit 30 % leben wieder auf. einmal je kampf für das ganze team, auch wenn dieses ovaling schon gefallen ist.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_anchor_g-192.af50f664.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_anchor_g">Seelenanker</a></h3></div>
+        </div>
+        <p class="short">Fällt zum ersten Mal ein Verbündeter, steht er sofort mit 30 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> wieder auf. Einmal je Kampf für das ganze Team, auch wenn dieses Ovaling schon gefallen ist.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_hourglass_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="sanduhr fällt sein leben unter 25 %, dreht es einmal je kampf die zeit zurück: es bekommt 125 % des lebens zurück, das es seit beginn seines letzten zugs verloren hat, und neue schwächungen verschwinden. das rettet auch vor dem fall, zählt dann aber als wiederbeleben.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_hourglass_g-192.2ac84afc.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_hourglass_g">Sanduhr</a></h3></div>
+        </div>
+        <p class="short">Fällt sein <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> unter 25 %, dreht es einmal je Kampf die Zeit zurück: es bekommt 125 % des <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> zurück, das es seit Beginn seines letzten Zugs verloren hat, und neue <strong class="debuff">Schwächungen</strong> verschwinden. Das rettet auch vor dem Fall, zählt dann aber als <span class="statmark buff"><img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="18" height="18">Wiederbeleben</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_sunrun_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="sonnenlauf nach jedem eigenen zug, in dem es handelt, bekommt der verbündete mit der kleinsten zugleiste 35 % zugleiste.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_sunrun_g-192.3097baa8.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_sunrun_g">Sonnenlauf</a></h3></div>
+        </div>
+        <p class="short">Nach jedem eigenen Zug, in dem es handelt, bekommt der Verbündete mit der kleinsten Zugleiste <strong class="buff">35 % Zugleiste</strong>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_chorus_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="chor des lichts solange es lebt, macht das ganze team 3 % mehr schaden je weiterem lebenden verbündeten, höchstens 4.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_chorus_g-192.1893ab4f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_chorus_g">Chor des Lichts</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, macht das ganze Team <strong class="buff">3 % mehr Schaden</strong> je weiterem lebenden Verbündeten, höchstens 4.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_starhour_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="sternstunde bei jedem 5. zug seines teams greifen alle anderen verbündeten sofort mit 20 % grundangriff den gegner mit dem wenigsten leben an.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_starhour_g-192.3fa1bec3.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_starhour_g">Sternstunde</a></h3></div>
+        </div>
+        <p class="short">Bei jedem 5. Zug seines Teams greifen alle anderen Verbündeten sofort mit 20 % Grundangriff den Gegner mit dem wenigsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> an.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_crown_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="sonnenkrone in jedem eigenen zug, in dem es handelt, bekommt der verbündete mit dem wenigsten leben einen schild von 2 % seines lebens und 1 zug lang schwächungsschutz.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_crown_g-192.ba4a9935.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_crown_g">Sonnenkrone</a></h3></div>
+        </div>
+        <p class="short">In jedem eigenen Zug, in dem es handelt, bekommt der Verbündete mit dem wenigsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> einen <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span> von 2 % seines <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> und 1 Zug lang <span class="statmark buff"><img src="../../assets/art/effect/ward-96.f52c62b6.webp" alt="" aria-hidden="true" width="18" height="18">Schwächungsschutz</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_phoenix_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="phönixglut einmal je kampf überlebt es einen tödlichen schaden mit 22 % leben und verliert alle schwächungen. das zählt als wiederbeleben.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_phoenix_g-192.401cb55b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_phoenix_g">Phönixglut</a></h3></div>
+        </div>
+        <p class="short">Einmal je Kampf überlebt es einen tödlichen Schaden mit 22 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> und verliert alle <strong class="debuff">Schwächungen</strong>. Das zählt als <span class="statmark buff"><img src="../../assets/art/effect/revive-96.f12f37fb.webp" alt="" aria-hidden="true" width="18" height="18">Wiederbeleben</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_purge_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="lichtbad in jedem eigenen zug, in dem es handelt, nimmt es bis zu 5 verbündeten je eine schwächung ab, die längste zuerst. jede abnahme heilt das ziel um 6 % seines höchsten lebens. betäubung bleibt.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_purge_g-192.ac6038e3.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_purge_g">Lichtbad</a></h3></div>
+        </div>
+        <p class="short">In jedem eigenen Zug, in dem es handelt, nimmt es bis zu 5 Verbündeten je eine Schwächung ab, die längste zuerst. Jede Abnahme <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> das Ziel um 6 % seines höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. <span class="statmark debuff"><img src="../../assets/art/effect/stun-96.d47aa1fa.webp" alt="" aria-hidden="true" width="18" height="18">Betäubung</span> bleibt.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-light_bequest_g" data-card data-family="light" data-rarity="legendary" data-kind="passive" data-effects="" data-search="vermächtnis fällt es, heilt es alle lebenden verbündeten um 35 % ihres höchsten lebens und nimmt ihnen alle schwächungen. was über das volle leben geht, wird schild. einmal je kampf.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/light_bequest_g-192.83b96ae6.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-light_bequest_g">Vermächtnis</a></h3></div>
+        </div>
+        <p class="short">Fällt es, <span class="statmark buff"><img src="../../assets/art/effect/heal-96.47474ae5.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> es alle lebenden Verbündeten um 35 % ihres höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span> und nimmt ihnen alle <strong class="debuff">Schwächungen</strong>. Was über das volle <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> geht, wird <span class="statmark buff"><img src="../../assets/art/effect/shield-96.d82680d5.webp" alt="" aria-hidden="true" width="18" height="18">Schild</span>. Einmal je Kampf.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_lifesteal_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="blutdurst heilt sich um 100 % des eigenen schadens.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_lifesteal_g-192.98f17a8b.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_g">Blutdurst</a></h3><p class="sub">&lt;fx:lifesteal&gt;Heilt sich&lt;/fx&gt; um 20 % des eigenen Schadens.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_lifesteal_g">Blutdurst</a></h3></div>
         </div>
-        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 20 % des eigenen Schadens.</p>
+        <p class="short"><span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">Heilt sich</span> um 100 % des eigenen Schadens.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_crit_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 20 prozentpunkte.">
+      <article class="card movecard dbcard" id="passive-shadow_crit_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="raubtierblick krit-chance plus 50 prozentpunkte.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_crit_g-192.9966ca46.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_crit_g">Raubtierblick</a></h3><p class="sub">[[&lt;crit&gt;Krit-Chance&lt;/crit&gt; plus 20 Prozentpunkte]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_crit_g">Raubtierblick</a></h3></div>
         </div>
-        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 20 Prozentpunkte</strong>.</p>
+        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_rate_small-48.7848bda6.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Chance</span> plus 50 Prozentpunkte</strong>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_venom_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="giftkunde plus 40 % schaden gegen vergiftete ziele.">
+      <article class="card movecard dbcard" id="passive-shadow_venom_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="giftkunde plus 140 % schaden gegen vergiftete ziele.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_venom_g-192.89cd24de.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_venom_g">Giftkunde</a></h3><p class="sub">Plus 40 % Schaden gegen &lt;fx:poison&gt;vergiftete&lt;/fx&gt; Ziele.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_venom_g">Giftkunde</a></h3></div>
         </div>
-        <p class="short">Plus 40 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
+        <p class="short">Plus 140 % Schaden gegen <span class="statmark debuff"><img src="../../assets/art/effect/poison-96.7b9d97ec.webp" alt="" aria-hidden="true" width="18" height="18">vergiftete</span> Ziele.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_edge_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="klingenschärfe krit-schaden plus 40 prozentpunkte.">
+      <article class="card movecard dbcard" id="passive-shadow_edge_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="klingenschärfe krit-schaden plus 55 prozentpunkte.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_edge_g-192.67eefff7.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_edge_g">Klingenschärfe</a></h3><p class="sub">[[&lt;cdmg&gt;Krit-Schaden&lt;/cdmg&gt; plus 40 Prozentpunkte]].</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_edge_g">Klingenschärfe</a></h3></div>
         </div>
-        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> plus 40 Prozentpunkte</strong>.</p>
+        <p class="short"><strong class="buff"><span class="statmark"><img src="../../assets/art/stat/crit_damage_small-48.1ea37466.webp" alt="" aria-hidden="true" width="18" height="18">Krit-Schaden</span> plus 55 Prozentpunkte</strong>.</p>
       </article>
-      <article class="card movecard dbcard" id="passive-shadow_wound_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="wundbiss eigene kritische treffer lassen das ziel 2 züge bluten: 20 % des eigenen angriffs als schaden je zug.">
+      <article class="card movecard dbcard" id="passive-shadow_wound_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="wundbiss eigene kritische treffer lassen das ziel 2 züge bluten: 24 % des eigenen angriffs als schaden je zug.">
         <div class="movehead">
           <img class="passiveart" src="../../assets/art/passive/shadow_wound_g-192.7f3774c5.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
-          <div><h3><a class="cardlink" href="#passive-shadow_wound_g">Wundbiss</a></h3><p class="sub">Eigene kritische Treffer lassen das Ziel 2 Züge &lt;fx:bleed&gt;bluten&lt;/fx&gt;: 20 % des eigenen &lt;atk&gt;Angriffs&lt;/atk&gt; als Schaden je Zug.</p></div>
+          <div><h3><a class="cardlink" href="#passive-shadow_wound_g">Wundbiss</a></h3></div>
         </div>
-        <p class="short">Eigene kritische Treffer lassen das Ziel 2 Züge <span class="statmark debuff"><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="18" height="18">bluten</span>: 20 % des eigenen <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriffs</span> als Schaden je Zug.</p>
+        <p class="short">Eigene kritische Treffer lassen das Ziel 2 Züge <span class="statmark debuff"><img src="../../assets/art/effect/bleed-96.480eb8bf.webp" alt="" aria-hidden="true" width="18" height="18">bluten</span>: 24 % des eigenen <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriffs</span> als Schaden je Zug.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_echo_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="schattenecho nach jeder eigenen attacke mit schaden 40 % chance: sie trifft dieselben ziele sofort noch einmal mit halber stärke, ohne effekte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_echo_g-192.6c501799.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_echo_g">Schattenecho</a></h3></div>
+        </div>
+        <p class="short">Nach jeder eigenen Attacke mit Schaden 40 % Chance: sie trifft dieselben Ziele sofort noch einmal mit halber Stärke, ohne Effekte.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_doom_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="todesuhr sein treffer startet am ziel eine uhr. nach 3 zügen des ziels trifft es 30 % des schadens, den es ihm seither zugefügt hat, höchstens 25 % des höchsten lebens. danach startet der nächste treffer eine neue uhr.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_doom_g-192.fefbbbe6.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_doom_g">Todesuhr</a></h3></div>
+        </div>
+        <p class="short">Sein Treffer startet am Ziel eine Uhr. Nach 3 Zügen des Ziels trifft es 30 % des Schadens, den es ihm seither zugefügt hat, höchstens 25 % des höchsten <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Lebens</span>. Danach startet der nächste Treffer eine neue Uhr.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_rush_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="todesrausch einmal je kampf: ein tödlicher treffer lässt es mit 1 leben stehen. es ist sofort am zug, alle attacken sind bereit, und in diesem zug heilt es sich um 150 % seines schadens.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_rush_g-192.574c3c4c.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_rush_g">Todesrausch</a></h3></div>
+        </div>
+        <p class="short">Einmal je Kampf: ein tödlicher Treffer lässt es mit 1 <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> stehen. Es ist sofort am Zug, alle Attacken sind bereit, und in diesem Zug <span class="statmark buff"><img src="../../assets/art/effect/lifesteal-96.7a4be0b7.webp" alt="" aria-hidden="true" width="18" height="18">heilt</span> es sich um 150 % seines Schadens.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_blades_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="klingenwirbel jede eigene attacke mit schaden trifft danach jedes ziel noch einmal mit 25 % der stärke eines treffers, ohne effekte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_blades_g-192.81d87990.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_blades_g">Klingenwirbel</a></h3></div>
+        </div>
+        <p class="short">Jede eigene Attacke mit Schaden trifft danach jedes Ziel noch einmal mit 25 % der Stärke eines Treffers, ohne Effekte.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_moonstrike_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="mondstoß in jedem 2. eigenen zug sind alle treffer seiner attacke sicher kritisch und ignorieren 30 % mehr verteidigung.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_moonstrike_g-192.42b37640.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_moonstrike_g">Mondstoß</a></h3></div>
+        </div>
+        <p class="short">In jedem 2. eigenen Zug sind alle Treffer seiner Attacke sicher kritisch und ignorieren 30 % mehr <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_thread_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="seelenfaden sein kritischer treffer bindet das ziel 2 züge an sich. trifft das gebundene ziel einen verbündeten, nimmt es selbst 35 % dieses schadens.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_thread_g-192.20259d5e.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_thread_g">Seelenfaden</a></h3></div>
+        </div>
+        <p class="short">Sein kritischer Treffer bindet das Ziel 2 Züge an sich. Trifft das gebundene Ziel einen Verbündeten, nimmt es selbst 35 % dieses Schadens.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_rot_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="moderhauch solange es lebt, ignorieren alle treffer seines teams 12 % mehr verteidigung.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_rot_g-192.4ebfffd9.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_rot_g">Moderhauch</a></h3></div>
+        </div>
+        <p class="short">Solange es lebt, ignorieren alle Treffer seines Teams 12 % mehr <span class="statmark"><img src="../../assets/art/stat/defense_small-48.5cc4b07c.webp" alt="" aria-hidden="true" width="18" height="18">Verteidigung</span>.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_warp_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="zerrspiegel jede eigene attacke kehrt bei jedem getroffenen gegner die neueste stärkung ins gegenteil, bei bossen entfernt sie sie nur. hat er keine, hat er 2 züge lang 10 % weniger tempo, ein boss 1 zug.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_warp_g-192.5ff11b55.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_warp_g">Zerrspiegel</a></h3></div>
+        </div>
+        <p class="short">Jede eigene Attacke kehrt bei jedem getroffenen Gegner die neueste <strong class="buff">Stärkung</strong> ins Gegenteil, bei Bossen entfernt sie sie nur. Hat er keine, hat er 2 Züge lang <strong class="debuff">10 % weniger <span class="statmark"><img src="../../assets/art/stat/speed_small-48.3a6c7581.webp" alt="" aria-hidden="true" width="18" height="18">Tempo</span></strong>, ein Boss 1 Zug.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_frenzy_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="jagdrausch liegt ein ziel seiner attacke danach unter 50 % leben oder ist gefallen, bekommt es 35 % zugleiste. einmal je attacke.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_frenzy_g-192.c568be3f.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_frenzy_g">Jagdrausch</a></h3></div>
+        </div>
+        <p class="short">Liegt ein Ziel seiner Attacke danach unter 50 % <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span> oder ist gefallen, bekommt es <strong class="buff">35 % Zugleiste</strong>. Einmal je Attacke.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_step_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="nebelschritt 65 % chance, jedem direkten treffer eines gegners auszuweichen. ein ausgewichener treffer macht keinen schaden und bringt keine effekte.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_step_g-192.6df716ab.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_step_g">Nebelschritt</a></h3></div>
+        </div>
+        <p class="short">65 % Chance, jedem direkten Treffer eines Gegners auszuweichen. Ein ausgewichener Treffer macht keinen Schaden und bringt keine Effekte.</p>
+      </article>
+      <article class="card movecard dbcard" id="passive-shadow_predator_g" data-card data-family="shadow" data-rarity="legendary" data-kind="passive" data-effects="" data-search="siegeszug jeder gegner, der fällt, und jedes zehntel leben, das ein boss verliert, gibt ihm 8 % mehr angriff bis zum kampfende, höchstens 5 mal. fällt es, ist alles weg.">
+        <div class="movehead">
+          <img class="passiveart" src="../../assets/art/passive/shadow_predator_g-192.05f405ed.webp" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
+          <div><h3><a class="cardlink" href="#passive-shadow_predator_g">Siegeszug</a></h3></div>
+        </div>
+        <p class="short">Jeder Gegner, der fällt, und jedes Zehntel <span class="statmark"><img src="../../assets/art/stat/hp_small-48.3e41aa27.webp" alt="" aria-hidden="true" width="18" height="18">Leben</span>, das ein Boss verliert, gibt ihm <strong class="buff">8 % mehr <span class="statmark"><img src="../../assets/art/stat/attack_small-48.612620b6.webp" alt="" aria-hidden="true" width="18" height="18">Angriff</span></strong> bis zum Kampfende, höchstens 5 Mal. Fällt es, ist alles weg.</p>
       </article>
     </div>
   </section>
@@ -2718,7 +3334,7 @@
     <h2 class="stitle" id="how"><img src="../../assets/art/nav/bag-192.7742540e.webp" alt="" aria-hidden="true" width="40" height="40"><span>So bekommst du sie</span></h2>
     <ul class="checks">
       <li>Attacken fallen als Beute in den Dungeons. Der allererste Dungeon-Sieg deines Kontos bringt sicher eine.</li>
-<li>Passiven fallen nur in diesen Dungeons: Giftsumpf.</li>      <li>Du setzt sie auf der Seite eines Ovalings ein. Eine Attacke passt nur zu einem Ovaling ihrer Familie.</li>
+<li>Passiven-Truhen fallen nur in diesen Dungeons: Giftsumpf.</li>      <li>Du setzt sie auf der Seite eines Ovalings ein. Eine Attacke passt nur zu einem Ovaling ihrer Familie.</li>
     </ul>
   </section>
 </div>

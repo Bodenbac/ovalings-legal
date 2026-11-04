@@ -20525,6 +20525,45 @@ if (typeof module !== 'undefined') module.exports = FaceV3;
 const MotionV3 = (() => {
   const GAP_B = 0.05, MAXG = 16, PI = Math.PI, NONE = [], THING_KINDS = ['arm', 'tail', 'trunk'], M_TRUNK = ['trunk'];
   const sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  // Richtungen der Arm-Tabellen (36 mal 18) einmal vorab, gleiche Formel wie dirOf (Leistungsprobe 03.11.2026: Sinus und Kosinus
+  // in der Suche nach der nächsten erlaubten Richtung kosteten im Kampf ein Zehntel der Bauzeit)
+  const DNA = 36, DNE = 18, DIRS = new Float64Array(DNA * DNE * 3);
+  for (let k = 0; k < DNA * DNE; k++) { const az = (k % DNA + 0.5) / DNA * 2 * PI, el = ((Math.floor(k / DNA) + 0.5) / DNE - 0.5) * PI; DIRS[3 * k] = Math.cos(el) * Math.sin(az); DIRS[3 * k + 1] = Math.sin(el); DIRS[3 * k + 2] = Math.cos(el) * Math.cos(az); }
+  // Je Zelle die nächste erlaubte Richtung (größtes Skalarprodukt, bei Gleichstand die erste), gleiches Ergebnis wie die Suche über dirOf
+  function nearestOk(ok, out) {
+    const N = DNA * DNE, list = []; for (let j = 0; j < N; j++) if (ok[j]) list.push(j);
+    for (let k = 0; k < N; k++) {
+      if (ok[k]) { out[k] = k; continue; }
+      const kx = DIRS[3 * k], ky = DIRS[3 * k + 1], kz = DIRS[3 * k + 2]; let best = -2, bj = -1;
+      for (let i = 0; i < list.length; i++) { const j = list[i], dd = DIRS[3 * j] * kx + DIRS[3 * j + 1] * ky + DIRS[3 * j + 2] * kz; if (dd > best) { best = dd; bj = j; } }
+      out[k] = bj;
+    }
+    return out;
+  }
+  // Zwischenspeicher der Rechnung je Figur (Leistungsprobe 03.11.2026: im Kampf kostete das Einrichten der Bewegung V3 dreimal so viel
+  // wie bei rig.js, das seine Abstände ablegt). Schlüssel ist die gespeicherte Haut (Eingang samt Stand des Baukastens, dazu gehört
+  // diese Datei) und die Mimik. Abgelegt werden nur Ergebnisse aus der Ruhelage: Gewichte je Netz, Stichproben des Bodens und die
+  // Tabellen der Arme. Gleicher Eingang, gleiche Zahlen, die Figur sieht genauso aus wie frisch gerechnet. Nur im Speicher der Seite,
+  // höchstens 24 MB, die ältesten fallen heraus
+  const CACHE = new Map(), CACHE_BYTES = 24 * 1024 * 1024; let cacheBytes = 0;
+  function cacheGet(key) { const e = key ? CACHE.get(key) : null; if (e) { CACHE.delete(key); CACHE.set(key, e); } return e || null; }
+  function cachePut(key, e) {
+    if (!key) return; const old = CACHE.get(key); if (old) { cacheBytes -= old.bytes; CACHE.delete(key); }
+    CACHE.set(key, e); cacheBytes += e.bytes;
+    while (cacheBytes > CACHE_BYTES && CACHE.size > 1) { const k = CACHE.keys().next().value; cacheBytes -= CACHE.get(k).bytes; CACHE.delete(k); }
+  }
+  // Gleiche Lage eines Punkts ohne Text-Schlüssel: Streutabelle über die Bits der Koordinaten (+0 statt -0, wie beim Text „0“),
+  // Vergleich der Zahlen selbst. Liefert den ersten Punkt mit gleicher Lage oder -1 und merkt sich den neuen
+  const _hf = new Float32Array(3), _hi = new Int32Array(_hf.buffer);
+  function samePos(pa) {
+    const n = pa.count; let cap = 1; while (cap < n * 2) cap <<= 1;
+    const slot = new Int32Array(cap).fill(-1), mask = cap - 1;
+    return i => {
+      const x = pa.getX(i), y = pa.getY(i), z = pa.getZ(i); _hf[0] = x + 0; _hf[1] = y + 0; _hf[2] = z + 0;
+      let h = (Math.imul(_hi[0], 73856093) ^ Math.imul(_hi[1], 19349663) ^ Math.imul(_hi[2], 83492791)) & mask;
+      for (;;) { const j = slot[h]; if (j < 0) { slot[h] = i; return -1; } if (pa.getX(j) === x && pa.getY(j) === y && pa.getZ(j) === z) return j; h = (h + 1) & mask; }
+    };
+  }
   const ease = u => u * u * u * (u * (u * 6 - 15) + 10);
   // Stückweise Kurve: K = [t0, v0, t1, v1, …], weiche Übergänge. Überschwingen und Ausholen stehen als eigene Schlüssel darin
   function key(t, K) {
@@ -20728,6 +20767,10 @@ vec3 mskin(vec3 p, bool pos) {
     // und Stein) bilden eine Gruppe und folgen als Ganzes der Haut an ihrem Ansatz (gleiche Gewichte wie die Haut dort). Flächen auf der
     // Haut (Muster, Bauch, Masken) übernehmen Punkt für Punkt die Gewichte der Haut darunter. Teile an Gliedern biegen mit dem Glied
     meshes.sort((a, b) => (a === skin ? -1 : b === skin ? 1 : 0));
+    const ckey = opts && opts.cacheKey ? opts.cacheKey + (opts.face ? '|f' : '|k') : null;
+    let hit = cacheGet(ckey);
+    if (hit && (hit.w.length !== meshes.length || hit.w.some((w, i) => w.AW.length !== 4 * meshes[i].geometry.attributes.position.count))) hit = null;
+    const fresh = hit ? null : { w: [], arm: {}, bytes: 0 };
     const SCg = 0.08, sgr = new Map(), sP = [], sG = [], sW = [];
     // Runde 13: Schlüssel als Zahl statt Text, Suche in Schalen von innen nach außen mit frühem Ende (Ergebnis gleich: ab Schale r liegt
     // jede weitere Zelle mindestens r * SCg entfernt)
@@ -20737,43 +20780,48 @@ vec3 mskin(vec3 p, bool pos) {
         if (bi >= 0 && best <= rr * SCg) break; }
       return bi; };
     const kindOfMesh = c => { const sk = c === skin ? null : c.userData.mouthTag === 'trunk' && M_TRUNK ? M_TRUNK : c.userData.sec === 'arm' ? SLOT_KINDS.arms : c.userData.sec === 'leg' ? SLOT_KINDS.legs : c.userData.sec === 'tail' ? SLOT_KINDS.tail : SLOT_KINDS[c.userData.slot]; return c === skin ? 'skin' : sk && sk !== NONE ? 'limb' : c.userData.surface || c.userData.slot === 'pattern' || c.userData.slot === 'body' ? 'surface' : 'thing'; };
-    for (const c of meshes) {
+    meshes.forEach((c, mi) => {
       const l2g = gInv.clone().multiply(c.matrixWorld), g2l = l2g.clone().invert();
       c.userData.l2g = l2g;
       // Gewichte aus der Lage in Ruhe im Raum der Figur (eigene Kopie des Netzes, geteilte Netze bekämen sonst fremde Gewichte)
-      const geo = c === skin ? c.geometry : c.geometry.clone(), pa = geo.attributes.position, n = pa.count, AG = new Float32Array(n * 4), AW = new Float32Array(n * 4);
-      const sk = c === skin ? null : c.userData.mouthTag === 'trunk' && M_TRUNK ? M_TRUNK : c.userData.sec === 'arm' ? SLOT_KINDS.arms : c.userData.sec === 'leg' ? SLOT_KINDS.legs : c.userData.sec === 'tail' ? SLOT_KINDS.tail : SLOT_KINDS[c.userData.slot], hard = !!(sk && sk !== NONE);
-      const kind = kindOfMesh(c);
-      // Teile eines Glieds (eigene Netze): das ganze Netz gehört zu einem Glied (Mehrheit seiner Punkte). Sonst nahmen Punkte am unteren
-      // Arm von vier Armen das Gewicht des oberen und das Netz spannte sich als Haut zwischen beiden (Prüfrunde 7)
-      let only = null;
-      if (kind === 'limb') { const vote = new Map(), st = Math.max(1, Math.floor(n / 400)); for (let i = 0; i < n; i += st) { _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g); weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, sk, hard); if (lastL) vote.set(lastL, (vote.get(lastL) || 0) + 1); } let bv = 0; for (const [k, v] of vote) if (v > bv) { bv = v; only = k; } }
-      // Runde 13: gleiche Lage, gleiche Gewichte. Netze ohne Index tragen jeden Punkt mehrfach (je Dreieck), er wird nur einmal gerechnet
-      const seen = c === skin ? null : new Map();
-      for (let i = 0; i < n; i++) {
-        if (seen) { const kk2 = pa.getX(i) + '|' + pa.getY(i) + '|' + pa.getZ(i), j0 = seen.get(kk2); if (j0 !== undefined) { for (let j = 0; j < 4; j++) { AG[4 * i + j] = AG[4 * j0 + j]; AW[4 * i + j] = AW[4 * j0 + j]; } continue; } seen.set(kk2, i); }
-        _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g);
-        if (kind === 'thing') {
-          // nahe der Haut genau ihre Regel (auch das, was ein Glied am Ansatz mitzieht), weiter weg nur Körper und Kopf: ein Horn neben dem
-          // Ohr biegt nicht mit dem Ohr, sein Fuß bleibt aber auf der Haut
-          weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, c.userData.slot === 'wings' || c.userData.wingPart ? NONE : THING_KINDS, false); const t = sm(0.14, 0.04, Math.abs(fld(_pp.x, _pp.y, _pp.z)));
-          const wl = tw4[2] + tw4[3];
-          if (wl > 1e-6 && t < 1) { const f0 = (1 - t) * wl; const b0 = tw4[0] + tw4[1]; if (b0 > 1e-6) { tw4[0] += f0 * tw4[0] / b0; tw4[1] += f0 * tw4[1] / b0; } else tw4[0] += f0; tw4[2] *= t; tw4[3] *= t; }
-        } else {
-          weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, sk, hard, only);
-          if (kind === 'surface') { const k = nearSkin(_pp, 0.12); if (k >= 0) for (let j = 0; j < 4; j++) { tg4[j] = sG[k][j]; tw4[j] = sW[k][j]; } }
-          else if (kind === 'limb') {
-            // Teile an Gliedern: dicht an der Haut genau deren Gewichte (gleiten nicht von ihr ab), weiter weg die Regel des Glieds,
-            // weich gemischt, wenn beide dieselben Knochen tragen
-            const k = nearSkin(_pp, 0.2);
-            if (k >= 0) { const a2 = sm(0.05, 0.2, sP[k].distanceTo(_pp)), G0 = sG[k], W0 = sW[k];
-              if (G0[1] === tg4[1] && (G0[2] === tg4[2] || W0[2] < 1e-6) && (G0[3] === tg4[3] || W0[3] < 1e-6)) for (let j = 0; j < 4; j++) { tg4[j] = tg4[j] || G0[j]; tw4[j] = W0[j] * (1 - a2) + tw4[j] * a2; }
-              else if (a2 < 0.5 && (!only || G0[2] === 0 || G0[2] === gIdx(only.A))) for (let j = 0; j < 4; j++) { tg4[j] = G0[j]; tw4[j] = W0[j]; } }
+      const geo = c === skin ? c.geometry : c.geometry.clone(), pa = geo.attributes.position, n = pa.count;
+      // im Speicher die Knochen als Byte (0 bis 16), die Gewichte genau. Das Netz bekommt eigene Felder, die Gewichte werden geteilt
+      const AG = hit ? Float32Array.from(hit.w[mi].AG) : new Float32Array(n * 4), AW = hit ? hit.w[mi].AW : new Float32Array(n * 4);
+      if (!hit) {
+        const sk = c === skin ? null : c.userData.mouthTag === 'trunk' && M_TRUNK ? M_TRUNK : c.userData.sec === 'arm' ? SLOT_KINDS.arms : c.userData.sec === 'leg' ? SLOT_KINDS.legs : c.userData.sec === 'tail' ? SLOT_KINDS.tail : SLOT_KINDS[c.userData.slot], hard = !!(sk && sk !== NONE);
+        const kind = kindOfMesh(c);
+        // Teile eines Glieds (eigene Netze): das ganze Netz gehört zu einem Glied (Mehrheit seiner Punkte). Sonst nahmen Punkte am unteren
+        // Arm von vier Armen das Gewicht des oberen und das Netz spannte sich als Haut zwischen beiden (Prüfrunde 7)
+        let only = null;
+        if (kind === 'limb') { const vote = new Map(), st = Math.max(1, Math.floor(n / 400)); for (let i = 0; i < n; i += st) { _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g); weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, sk, hard); if (lastL) vote.set(lastL, (vote.get(lastL) || 0) + 1); } let bv = 0; for (const [k, v] of vote) if (v > bv) { bv = v; only = k; } }
+        // Runde 13: gleiche Lage, gleiche Gewichte. Netze ohne Index tragen jeden Punkt mehrfach (je Dreieck), er wird nur einmal gerechnet
+        const seen = c === skin ? null : samePos(pa);
+        for (let i = 0; i < n; i++) {
+          if (seen) { const j0 = seen(i); if (j0 >= 0) { for (let j = 0; j < 4; j++) { AG[4 * i + j] = AG[4 * j0 + j]; AW[4 * i + j] = AW[4 * j0 + j]; } continue; } }
+          _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g);
+          if (kind === 'thing') {
+            // nahe der Haut genau ihre Regel (auch das, was ein Glied am Ansatz mitzieht), weiter weg nur Körper und Kopf: ein Horn neben dem
+            // Ohr biegt nicht mit dem Ohr, sein Fuß bleibt aber auf der Haut
+            weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, c.userData.slot === 'wings' || c.userData.wingPart ? NONE : THING_KINDS, false); const t = sm(0.14, 0.04, Math.abs(fld(_pp.x, _pp.y, _pp.z)));
+            const wl = tw4[2] + tw4[3];
+            if (wl > 1e-6 && t < 1) { const f0 = (1 - t) * wl; const b0 = tw4[0] + tw4[1]; if (b0 > 1e-6) { tw4[0] += f0 * tw4[0] / b0; tw4[1] += f0 * tw4[1] / b0; } else tw4[0] += f0; tw4[2] *= t; tw4[3] *= t; }
+          } else {
+            weightsAt(_pp.x, _pp.y, _pp.z, tg4, tw4, sk, hard, only);
+            if (kind === 'surface') { const k = nearSkin(_pp, 0.12); if (k >= 0) for (let j = 0; j < 4; j++) { tg4[j] = sG[k][j]; tw4[j] = sW[k][j]; } }
+            else if (kind === 'limb') {
+              // Teile an Gliedern: dicht an der Haut genau deren Gewichte (gleiten nicht von ihr ab), weiter weg die Regel des Glieds,
+              // weich gemischt, wenn beide dieselben Knochen tragen
+              const k = nearSkin(_pp, 0.2);
+              if (k >= 0) { const a2 = sm(0.05, 0.2, sP[k].distanceTo(_pp)), G0 = sG[k], W0 = sW[k];
+                if (G0[1] === tg4[1] && (G0[2] === tg4[2] || W0[2] < 1e-6) && (G0[3] === tg4[3] || W0[3] < 1e-6)) for (let j = 0; j < 4; j++) { tg4[j] = tg4[j] || G0[j]; tw4[j] = W0[j] * (1 - a2) + tw4[j] * a2; }
+                else if (a2 < 0.5 && (!only || G0[2] === 0 || G0[2] === gIdx(only.A))) for (let j = 0; j < 4; j++) { tg4[j] = G0[j]; tw4[j] = W0[j]; } }
+            }
           }
+          if (c === skin) { const k = sP.length; sP.push(_pp.clone()); sG.push(tg4.slice()); sW.push(tw4.slice()); const kk = gkey(Math.floor(_pp.x / SCg), Math.floor(_pp.y / SCg), Math.floor(_pp.z / SCg)); let L = sgr.get(kk); if (!L) { L = []; sgr.set(kk, L); } L.push(k); }
+          for (let j = 0; j < 4; j++) { AG[4 * i + j] = tg4[j]; AW[4 * i + j] = tw4[j]; }
         }
-        if (c === skin) { const k = sP.length; sP.push(_pp.clone()); sG.push(tg4.slice()); sW.push(tw4.slice()); const kk = gkey(Math.floor(_pp.x / SCg), Math.floor(_pp.y / SCg), Math.floor(_pp.z / SCg)); let L = sgr.get(kk); if (!L) { L = []; sgr.set(kk, L); } L.push(k); }
-        for (let j = 0; j < 4; j++) { AG[4 * i + j] = tg4[j]; AW[4 * i + j] = tw4[j]; }
       }
+      if (fresh) { fresh.w.push({ AG: Uint8Array.from(AG), AW }); fresh.bytes += 20 * n; }
       geo.setAttribute('aMG', new THREE.BufferAttribute(AG, 4)); geo.setAttribute('aMW', new THREE.BufferAttribute(AW, 4)); c.geometry = geo;
       // eigene Kopie des Materials, Zusätze im Shader (Bewegung legendärer Teile, Struktur, Haut) übernehmen
       const m0 = c.material, m = c === skin ? m0 : m0.clone();
@@ -20790,7 +20838,7 @@ vec3 mskin(vec3 p, bool pos) {
       };
       m.customProgramCacheKey = () => key0() + '|bewegung3';
       m.needsUpdate = true; c.frustumCulled = false;
-    }
+    });
     function patchMat(m, l2g, g2l) {
       const prev = m.onBeforeCompile, key0 = m.customProgramCacheKey ? m.customProgramCacheKey.bind(m) : () => '', mine = { uL2G: { value: l2g }, uG2L: { value: g2l } };
       m.onBeforeCompile = (sh, r) => {
@@ -20810,29 +20858,31 @@ vec3 mskin(vec3 p, bool pos) {
     function full(p, k, out) { out.copy(p); while (k >= 0) { const G = groups[k]; out.sub(G.pivot).applyQuaternion(G.q).add(G.pivot).add(G.off); k = G.parent; } return out; }
     function deform(p, G4, W4, out) { out.set(0, 0, 0); for (let j = 0; j < 4; j++) { const w = W4[j]; if (w <= 0) continue; full(p, G4[j] - 1, _f); out.addScaledVector(_f, w); } return out; }
     // ---------- Boden: Stichproben aus allen Netzen (im Raum der Figur) ----------
-    const S = [];
-    for (const c of meshes) {
+    const S = hit ? hit.S : [];
+    if (!hit) for (const c of meshes) {
       const geo = c.geometry, pa = geo.attributes.position, AG = geo.attributes.aMG.array, AW = geo.attributes.aMW.array, n = pa.count, by = new Map(), isSkin = c === skin;
       for (let i = 0; i < n; i++) { const key = AG[4 * i + 2] * 64 + AG[4 * i + 3] * 4096 + AG[4 * i + 1]; if (!by.has(key)) by.set(key, []); by.get(key).push(i); }
       for (const list of by.values()) {
-        const P = list.map(i => _pp.fromBufferAttribute(pa, i).applyMatrix4(c.userData.l2g).clone()), ord = list.map((_, k) => k).sort((a, b) => P[a].y - P[b].y);
+        // nur die Höhe je Punkt zum Sortieren, Punkte als Vektor nur für die Auswahl (03.11.2026, gleiches Ergebnis)
+        const l2g = c.userData.l2g, Y = new Float64Array(list.length); for (let k = 0; k < list.length; k++) Y[k] = _pp.fromBufferAttribute(pa, list[k]).applyMatrix4(l2g).y;
+        const ord = list.map((_, k) => k).sort((a, b) => Y[a] - Y[b]);
         const pick = ord.slice(0, isSkin ? 14 : 4), st = Math.max(1, Math.floor(ord.length / (isSkin ? 300 : 6))); for (let k = 14; k < ord.length; k += st) pick.push(ord[k]);
-        for (const k of pick) { const i = list[k]; S.push({ p: P[k], g: Array.from(AG.subarray(4 * i, 4 * i + 4)), w: Array.from(AW.subarray(4 * i, 4 * i + 4)) }); }
+        for (const k of pick) { const i = list[k]; S.push({ p: _pp.fromBufferAttribute(pa, i).applyMatrix4(l2g).clone(), g: Array.from(AG.subarray(4 * i, 4 * i + 4)), w: Array.from(AW.subarray(4 * i, 4 * i + 4)) }); }
       }
     }
     // Arm-Stichproben (Gewicht überwiegend Oberarm oder Unterarm) tragen die Figur nicht: der Boden kommt aus Beinen, Füßen, Körper
     // und Schwanz. Hände dürfen den Boden berühren (wie die Knöchel eines Gorillas), aber weder hindurch noch die Figur anheben
     const armOfS = s => { let wa = 0, side = 0; for (let j = 0; j < 4; j++) { const k = s.g[j] - 1; if (k >= 0 && (groups[k].kind === 'arm' || groups[k].kind === 'fore')) { wa += s.w[j]; side = groups[k].side; } } return wa > 0.5 ? side : 0; };
-    const SUP = [], ARM = { '-1': [], '1': [] };
-    for (const x of S) { const sd = armOfS(x); if (sd) ARM[sd].push(x); else SUP.push(x); }
-    if (!SUP.length) for (const x of S) SUP.push(x);
+    const SUP = hit ? hit.SUP : [], ARM = { '-1': [], '1': [] };
+    if (!hit) { for (const x of S) { const sd = armOfS(x); if (sd) ARM[sd].push(x); else SUP.push(x); } if (!SUP.length) for (const x of S) SUP.push(x); }
     let ground = 1e9; for (const x of SUP) ground = Math.min(ground, x.p.y);
     // Tiefster Punkt schneller (Luis 02.11.2026, gleiches Ergebnis): jeder Knochen samt Wurzel ist im Bildtakt eine affine Abbildung, die
     // Höhe eines Punkts also Summe der Gewichte mal (Zeile · Punkt + Versatz). Zeilen je Knochen einmal je Bild, dann je Punkt nur
     // Multiplizieren statt der Kette aus Drehungen. Punkte als Zahlenfelder
     const packY = list => { const n = list.length, P = new Float32Array(3 * n), Gi = new Int8Array(4 * n), Wt = new Float32Array(4 * n);
       list.forEach((x, i) => { P[3 * i] = x.p.x; P[3 * i + 1] = x.p.y; P[3 * i + 2] = x.p.z; for (let j = 0; j < 4; j++) { Gi[4 * i + j] = x.g[j]; Wt[4 * i + j] = x.w[j]; } }); return { n, P, Gi, Wt }; };
-    const SUPY = packY(SUP), ARMY = { '-1': packY(ARM['-1']), '1': packY(ARM['1']) };
+    const SUPY = hit ? hit.SUPY : packY(SUP), ARMY = hit ? hit.ARMY : { '-1': packY(ARM['-1']), '1': packY(ARM['1']) };
+    if (fresh) Object.assign(fresh, { S, SUP, SUPY, ARMY });
     const RY = new Float32Array(4 * (groups.length + 1)), _o3 = V(0, 0, 0), _e3 = V(0, 0, 0), _u3 = V(0, 0, 0);
     // Zeile der Höhe nach Wurzel (M.hm) für jeden Knochen k (Index + 1, 0 ohne Knochen)
     function rowsY(hm) {
@@ -20908,28 +20958,31 @@ vec3 mskin(vec3 p, bool pos) {
     for (const A of groups.filter(G => G.kind === 'arm')) {
       const LB = limbs.find(l => l.A === A); if (!LB) continue;
       let rad = 0.1; for (const p of LB.prims) for (const r of (p.prim.rad || [])) rad = Math.max(rad, Math.min(r, 0.3));
-      const ok = new Uint8Array(NA * NE), dv = V(0, 0, 0), q = V(0, 0, 0), L = Math.max(0.2, A.len);
-      // Grenze: wie gebaut (manche Arme liegen schon am Körper an), höchstens 0
-      let need = 0; dv.copy(A.dir); for (let t = 0.4; t <= 1.001; t += 0.2) { q.copy(A.pivot).addScaledVector(dv, t * L); need = Math.min(need, fld(q.x, q.y, q.z) - rad * (1 - 0.4 * t)); }
-      need = Math.min(0, need) - 0.01;
-      for (let ie = 0; ie < NE; ie++) for (let ia = 0; ia < NA; ia++) {
-        dirOf(ia, ie, dv); let mn = 1e9; for (let t = 0.4; t <= 1.001; t += 0.15) { q.copy(A.pivot).addScaledVector(dv, t * L); mn = Math.min(mn, fld(q.x, q.y, q.z) - rad * (1 - 0.4 * t)); }
-        ok[ie * NA + ia] = mn >= need ? 1 : 0;
+      // Tabellen aus dem Zwischenspeicher (gleiche Figur), sonst gerechnet
+      const ca = hit ? hit.arm[A.name] : null, ok = ca ? ca.ok : new Uint8Array(NA * NE), dv = V(0, 0, 0), q = V(0, 0, 0), L = Math.max(0.2, A.len);
+      if (!ca) {
+        // Grenze: wie gebaut (manche Arme liegen schon am Körper an), höchstens 0
+        let need = 0; dv.copy(A.dir); for (let t = 0.4; t <= 1.001; t += 0.2) { q.copy(A.pivot).addScaledVector(dv, t * L); need = Math.min(need, fld(q.x, q.y, q.z) - rad * (1 - 0.4 * t)); }
+        need = Math.min(0, need) - 0.01;
+        for (let ie = 0; ie < NE; ie++) for (let ia = 0; ia < NA; ia++) {
+          dirOf(ia, ie, dv); let mn = 1e9; for (let t = 0.4; t <= 1.001; t += 0.15) { q.copy(A.pivot).addScaledVector(dv, t * L); mn = Math.min(mn, fld(q.x, q.y, q.z) - rad * (1 - 0.4 * t)); }
+          ok[ie * NA + ia] = mn >= need ? 1 : 0;
+        }
       }
       // nächste erlaubte Richtung je Zelle
       // Runde 12: Mit Ruhehaltung „Neu“ prüft die Tabelle den Arm so gebeugt, wie er in Ruhe hängt (Punkte des Arms und seiner Teile),
       // statt eines gestreckten Arms. Der gestreckte Arm galt beim Hängen oft als im Körper, die Tabelle drückte ihn dann waagerecht
       // nach außen (T-Haltung). Grenze wie in der Ruhehaltung: so frei wie dort, höchstens 0
-      if (A.restNew && A.restChk && A.restChk.length) { const Fr = groups[groups.indexOf(A) + 1], okR = new Uint8Array(NA * NE), fOk = Fr && Fr.parent === groups.indexOf(A) && Fr.restNew, rd = V(0, 0, 0), cd = V(0, 0, 0), tq = new THREE.Quaternion(), P0 = [];
+      if (ca) A.okR = ca.okR; else if (A.restNew && A.restChk && A.restChk.length) { const Fr = groups[groups.indexOf(A) + 1], okR = new Uint8Array(NA * NE), fOk = Fr && Fr.parent === groups.indexOf(A) && Fr.restNew, rd = V(0, 0, 0), cd = V(0, 0, 0), tq = new THREE.Quaternion(), P0 = [];
         rd.copy(A.tip); if (fOk) rd.sub(Fr.pivot).applyQuaternion(Fr.restNew).add(Fr.pivot); rd.sub(A.pivot).applyQuaternion(A.restNew).normalize();
         let mnR = 1e9; for (const c of A.restChk) { const p = c.p.clone(); if (c.fore && fOk) p.sub(Fr.pivot).applyQuaternion(Fr.restNew).add(Fr.pivot); p.sub(A.pivot).applyQuaternion(A.restNew); P0.push([p, c.r]); q.copy(p).add(A.pivot); mnR = Math.min(mnR, fld(q.x, q.y, q.z) - c.r); }
         const needR = Math.min(0, mnR) - 0.01;
         for (let k = 0; k < NA * NE; k++) { dirOf(k % NA, Math.floor(k / NA), cd); tq.setFromUnitVectors(rd, cd); let mn = 1e9; for (const [p, rr] of P0) { q.copy(p).applyQuaternion(tq).add(A.pivot); const fv = fld(q.x, q.y, q.z) - rr; if (fv < mn) mn = fv; if (mn < needR) break; } okR[k] = mn >= needR ? 1 : 0; } A.okR = okR; }
-      const nearOk = new Int16Array(NA * NE).fill(-1), dk = V(0, 0, 0), dj = V(0, 0, 0);
-      for (let k = 0; k < NA * NE; k++) { if (ok[k]) { nearOk[k] = k; continue; } dirOf(k % NA, Math.floor(k / NA), dk); let best = -2, bj = -1; for (let j = 0; j < NA * NE; j++) if (ok[j]) { const dd = dirOf(j % NA, Math.floor(j / NA), dj).dot(dk); if (dd > best) { best = dd; bj = j; } } nearOk[k] = bj; }
+      const nearOk = ca ? ca.nearOk : nearestOk(ok, new Int16Array(NA * NE).fill(-1));
       A.safe = { ok, nearOk, cellOf, dirOf };
       // zweite Tabelle für Ruhe und Gesten (Arm gebeugt wie in Ruhe), im Angriff gilt die erste (gestreckter Arm)
-      if (A.okR) { const okR = A.okR, nr = new Int16Array(NA * NE).fill(-1); for (let k = 0; k < NA * NE; k++) { if (okR[k]) { nr[k] = k; continue; } dirOf(k % NA, Math.floor(k / NA), dk); let best = -2, bj = -1; for (let j = 0; j < NA * NE; j++) if (okR[j]) { const dd = dirOf(j % NA, Math.floor(j / NA), dj).dot(dk); if (dd > best) { best = dd; bj = j; } } nr[k] = bj; } A.safeRest = { ok: okR, nearOk: nr, cellOf, dirOf }; }
+      if (A.okR) { const okR = A.okR, nr = ca ? ca.nr : nearestOk(okR, new Int16Array(NA * NE).fill(-1)); A.safeRest = { ok: okR, nearOk: nr, cellOf, dirOf }; }
+      if (fresh) fresh.arm[A.name] = { ok, okR: A.okR || null, nearOk, nr: A.safeRest ? A.safeRest.nearOk : null };
       // Dicke, kurze Arme (Stummel): weit gehoben drückt die Schulter als Beule in die Seite. Höchster Winkel zur Ruhe nach Dicke zur Länge
       { let rmax = 0; for (const p of LB.prims) for (const r of (p.prim.rad || [])) rmax = Math.max(rmax, r); const ratio = 2 * rmax / Math.max(0.2, A.len); A.maxDev = ratio > 0.35 ? lerp(1.6, 0.6, clamp((ratio - 0.35) / 0.2, 0, 1)) : 9; }
       // Vier Arme: beide Paare wachsen aus einer gemeinsamen Haut, weit gehoben zöge die Haut zwischen ihnen eine Flughaut auf
@@ -21083,6 +21136,7 @@ vec3 mskin(vec3 p, bool pos) {
     if (FACE) FaceV3.dynamic(FACE, g, meshes);
     M.reset(false); M.commit();
     if (arena) M.fx = arenaFx(arena);
+    if (fresh) cachePut(ckey, fresh);
     return M;
   }
 
@@ -21494,7 +21548,9 @@ vec3 mskin(vec3 p, bool pos) {
     M.faceBlink = opt.blink || 0; faceStep(M, opt.t || 0, !!opt.face && !opt.attack); M.faceBlink = 0;
     if (opt.attack) { M.noPose = true; attack(M, opt.attack, opt.t || 0); M.noPose = false; }
   }
-  return { rig, update, prepareAttack, poseAt, hideFx, hideTargets, T, ACTS };
+  // Belegung des Zwischenspeichers (Prüfung und Leistungsprobe)
+  const cacheInfo = () => ({ figures: CACHE.size, mb: Math.round(cacheBytes / 1e5) / 10 });
+  return { rig, update, prepareAttack, poseAt, hideFx, hideTargets, cacheInfo, T, ACTS };
 })();
 if (typeof module !== 'undefined') module.exports = MotionV3;
 
@@ -22987,7 +23043,8 @@ const RigV3 = (() => {
   function attach(built, opts) {
     const d = built && built.input;
     if (!d || !d.v3 || typeof MotionV3 === 'undefined') return null;
-    const M = MotionV3.rig(built, d, null, { face: !!(opts && opts.face) });
+    // Schlüssel der gespeicherten Haut: MotionV3 legt Gewichte und Tabellen der Figur im Speicher der Seite ab (03.11.2026)
+    const M = MotionV3.rig(built, d, null, { face: !!(opts && opts.face), cacheKey: built.skinKey || null });
     if (!M) return null;
     const rig = { v3: true, M, still: !!(opts && opts.still), dist: null, distCached: true, height: (built.rig.top - built.rig.bottom) || 1,
       st: { idleNew: true, walking: false, face: !!(opts && opts.face), attack: null, over: null }, g: null, gNext: null, gBuf: [{}, {}], stance: 0, t: 0 };
