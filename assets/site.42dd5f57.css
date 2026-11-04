@@ -636,8 +636,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.7b415d7b.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.c0e28e6c.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.1df7e9cb.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.f1f798f6.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1668,9 +1668,9 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
   .js .reveal { opacity: 1; transform: none; }
 }
 /* Store-Knöpfe vor dem Start (18.10.2026): gesperrt mit „bald“ darunter */
-/* Discord neben der Sprachwahl (18.10.2026): runder Knopf wie die Sprachwahl, Zeichen in Textfarbe, beim Überfahren Akzent */
-.discordpill { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; border-radius: var(--r-full); background: var(--counter-fill); border: 2.5px solid var(--counter-rim); color: var(--text); }
-.discordpill:hover { color: var(--accent); filter: brightness(1.04); }
+/* Discord neben der Sprachwahl (18.10.2026): blauer Kreis mit weißem Zeichen wie im Fuß (Luis 04.11.2026), die Farben stehen im SVG */
+.discordpill { margin-left: auto; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; border-radius: var(--r-full); }
+.discordpill:hover { filter: brightness(1.08); }
 .discordpill + .langpill { margin-left: 8px; }
 /* Ab 900 px kommt die Leiste mit den Bereichen dazu, bis 1099 px ist kein Platz für die Namen von Anmelden und Sprache (Messung
    18.10.2026 mit Anmelde-Knopf). Die Stores stehen seit UX Website 1 nicht mehr im Kopf */
