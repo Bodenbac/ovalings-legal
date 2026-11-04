@@ -116,14 +116,9 @@
 
   // ----- Google und Apple (Luis 04.11.2026, Paket B): Knöpfe nur für eingeschaltete Anbieter -----
   A.providers().then(function (list) {
-    var boxes = document.querySelectorAll('[data-social]');
-    for (var i = 0; i < boxes.length; i++) {
-      var any = false, btns = boxes[i].querySelectorAll('[data-oauth],[data-oauth-start]');
-      for (var j = 0; j < btns.length; j++) {
-        var on = list.indexOf(btns[j].getAttribute('data-oauth') || btns[j].getAttribute('data-oauth-start')) >= 0;
-        btns[j].hidden = !on; any = any || on;
-      }
-      boxes[i].hidden = !any;
+    var btns = document.querySelectorAll('[data-oauth],[data-oauth-start]');
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].hidden = list.indexOf(btns[j].getAttribute('data-oauth') || btns[j].getAttribute('data-oauth-start')) < 0;
     }
   });
   signin.addEventListener('click', function (e) {
