@@ -188,6 +188,14 @@
   var want = location.hash.slice(1);
   A.takeLink().then(function (r) {
     // Rückweg von Google oder Apple: mit Fehler zurück auf die Ansicht, sonst zum Profil
+    // Anmelden mit Google oder Apple ohne Konto (Luis 04.11.2026): gleich weiter zu „Konto erstellen“, dort fehlt nur das Geburtsjahr
+    if (r && r.error === 'social_none' && r.oauth === 'signin') {
+      show('register'); segs.classList.add('live');
+      var hint = reg.querySelector('[data-social-hint]');
+      hint.textContent = (T.socialStart && T.socialStart[r.provider]) || T.errors.social_none; hint.hidden = false;
+      reg.year.focus(); reg.year.scrollIntoView({ block: 'center' });
+      return;
+    }
     if (r && r.error && r.oauth) { var f = r.oauth === 'link' ? reg : signin; show(r.oauth === 'link' ? 'register' : 'signin'); segs.classList.add('live'); errorOf(f, message(r.error)); return; }
     if (r && r.kind === 'oauth') { location.replace(A.cfg.profile); return; }
     if (r && r.error) { show('signin'); errorOf(signin, T.errors.link_expired); return; }

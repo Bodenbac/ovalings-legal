@@ -159,7 +159,8 @@
     var h = new URLSearchParams(location.hash.slice(1)), q = new URLSearchParams(location.search);
     var err = h.get('error_code') || q.get('error_code') || h.get('error') || q.get('error');
     var tidy = function () { try { history.replaceState(null, '', location.pathname); } catch (e) { /* alte Browser */ } };
-    var oauth = marked();
+    // Was lief und mit welchem Anbieter (signin:apple, link:google), für die Meldung und den Weg zu „Konto erstellen“
+    var mk = (marked() || '').split(':'), oauth = mk[0] || null, provider = mk[1] || null;
     if (err) {
       tidy();
       if (!oauth) return Promise.resolve({ error: err });
@@ -169,7 +170,7 @@
         : desc.indexOf('saving new user') >= 0 ? 'social_none' : err === 'access_denied' ? 'social_cancelled' : 'unknown';
       // Der Gast für das neue Konto wird nicht gebraucht: löschen (Gäste löscht der Server sofort), dann abmelden
       var drop = oauth === 'link' && session ? authed('/functions/v1/delete-account', { method: 'POST', body: {} }).catch(function () {}) : Promise.resolve();
-      return drop.then(function () { if (oauth === 'link') signOutLocal(); return { error: code, oauth: oauth }; });
+      return drop.then(function () { if (oauth === 'link') signOutLocal(); return { error: code, oauth: oauth, provider: provider }; });
     }
     // Sicherer E-Mail-Wechsel: der erste von zwei Links bringt nur eine Meldung, die Sitzung kommt mit dem zweiten
     if (h.get('message') && !h.get('access_token')) { tidy(); return Promise.resolve({ kind: 'email_half' }); }
@@ -206,7 +207,7 @@
     providers: providers,
     // Bestehendes Konto: weiter zum Anbieter. Ohne Konto legt der Server keines an (Geburtsjahr fehlt), der Rückweg bringt den Fehler
     oauthSignIn: function (provider) {
-      mark('signin');
+      mark('signin:' + provider);
       location.href = cfg.url + '/auth/v1/authorize?provider=' + encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(cfg.redirect);
     },
     // Neues Konto: anonym mit Geburtsjahr wie in der App (handle_new_user prüft das Mindestalter), dann Google oder Apple verknüpfen
@@ -220,7 +221,7 @@
         return authed('/auth/v1/user/identities/authorize?provider=' + encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(cfg.redirect) + '&skip_http_redirect=true');
       }).then(function (b) {
         if (!b || !b.url) throw new Fail('unknown', 0);
-        mark('link');
+        mark('link:' + provider);
         location.href = b.url;
       });
     },
