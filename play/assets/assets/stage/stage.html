@@ -3211,7 +3211,7 @@ vec3 rareHue(vec3 c, float a) {
       pattern: C.pattern, cheek: '#ff9ec4', mouth: fam === 'light' ? '#2b3a67' : fam === 'forest' ? INK : '#0d0a14',
       teeth: fam === 'shadow' ? C.accent : '#ffffff', eye: fam === 'shadow' ? C.glow : '#ffffff',
       pupil: fam === 'light' ? '#2b3a67' : fam === 'forest' ? INK : '#140d05', shine: '#ffffff',
-      lid: fam === 'forest' ? C.bodyDark : C.limb, ink: INK, tongue: '#ff7aa8', feather: '#ffffff',
+      lid: fam === 'forest' ? C.bodyDark : C.limb, ink: INK, tongue: '#ff7aa8', feather: '#e4ddd4', // Federn nicht reinweiß (Luis 04.11.2026): im Licht lief Weiß über, man sah keine Federn mehr
       // Dämonenflügel (Luis, 02.10.2026) immer fast schwarz wie die Engelsflügel immer weiß: Haut weinrot-schwarz, Knochen schwarz, Krallen knochenfarben
       demon: '#2a1420', demonBone: '#120c14', demonClaw: '#e8dccb',
       light: fam === 'shadow' ? C.glow : C.accent, gold: GOLD, gem: fam === 'shadow' ? C.glow : C.accent,
@@ -54787,7 +54787,7 @@ window.ovalingsStage = b => { try { enqueue(typeof b === 'string' ? JSON.parse(b
 // Fünftel der Bauzeit. Sie wird einmal gerechnet, kompakt gepackt (Lage 16 Bit, Farben 8 Bit, Normalen werden neu
 // gerechnet) und von der App als Datei abgelegt. Der Schlüssel kommt aus den Eingaben des Baukastens und seinem Stand,
 // ändert sich der Baukasten, wird neu gerechnet.
-const BUILDER_HASH = '331eac5224';
+const BUILDER_HASH = 'ec8d683c42';
 const SkinStore = (() => {
   // Grenze nach Größe statt Anzahl (Lina 14.10.2026): eine Haut belegt rund 400 KB, ihre Abstände fürs Skelett rund 290 KB. Mit 40
   // Einträgen passten nur noch 20 Figuren, seit auch die Porträts mit Skelett bauen, eine Sammlung rechnete dann alles neu
@@ -54983,7 +54983,8 @@ new ResizeObserver(size).observe(el);
 function setLights(fam, target) {
   const L = target || lights;
   while (L.children.length) L.remove(L.children[0]);
-  if (fam === 'light') { L.add(new THREE.HemisphereLight(0xffffff, 0xffc9e2, 0.92)); const d = new THREE.DirectionalLight(0xffffff, 0.5); d.position.set(3, 6, 7); L.add(d); }
+  // Licht auf 80 % (Luis 04.11.2026): helle Teile liefen vor dem Lichtraum über und waren nicht mehr erkennbar
+  if (fam === 'light') { L.add(new THREE.HemisphereLight(0xffffff, 0xffc9e2, 0.74)); const d = new THREE.DirectionalLight(0xffffff, 0.4); d.position.set(3, 6, 7); L.add(d); }
   else if (fam === 'forest') { L.add(new THREE.AmbientLight(0xffffff, 0.62)); const d = new THREE.DirectionalLight(0xffffff, 0.75); d.position.set(4, 6, 6); L.add(d); }
   else if (fam === 'shadow') { L.add(new THREE.HemisphereLight(Hatch.SHADOW_LIGHT.sky, Hatch.SHADOW_LIGHT.ground, 0.75)); const d = new THREE.DirectionalLight(0xfff0dd, 0.55); d.position.set(2, 5, 6); L.add(d); const r = new THREE.DirectionalLight(Hatch.SHADOW_LIGHT.rim, 0.7); r.position.set(-4, 3, -6); L.add(r); }
   else { L.add(new THREE.HemisphereLight(0xffffff, 0xd9c7a8, 0.85)); const d = new THREE.DirectionalLight(0xfff6e8, 0.75); d.position.set(3, 6, 6); L.add(d); const r = new THREE.DirectionalLight(0xc9d8ff, 0.35); r.position.set(-5, 2, -4); L.add(r); }
@@ -55406,7 +55407,7 @@ const PORTRAIT_KEEP = 6, portraitKept = [];
 // Nummer: ändert sich Licht, Kamera oder Größe der Porträts hier, PORTRAIT_REV um eins erhöhen
 // 2: Generator V3 (E313, 02.11.2026), alle Porträts neu
 const PORTRAIT_REV = 2;
-const PORTRAIT_LOOK = '87411d0ba9ab';
+const PORTRAIT_LOOK = 'f5f3ff46b9dc';
 function portraitRelease(m) {
   const mats = new Set();
   m.traverse(c => { if (c.geometry) c.geometry.dispose(); if (c.material && c.material.dispose) mats.add(c.material); });

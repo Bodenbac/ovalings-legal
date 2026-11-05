@@ -41,7 +41,7 @@
   font: 700 clamp(14px, 3.9vw, 17px)/1.15 var(--display); text-align: center; transition: color var(--t-quick) var(--ease);
 }
 .vmode:hover { color: var(--text); }
-.vmode[aria-pressed="true"] { color: var(--white); text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent); cursor: default; }
+.vmode[aria-pressed="true"] { color: var(--ink); cursor: default; }
 .vmode:focus-visible { border-radius: var(--r-full); outline-offset: 1px; }
 
 .vform { max-width: 760px; margin-top: var(--s-l); padding: var(--s-l) var(--s-l) var(--s-s); }

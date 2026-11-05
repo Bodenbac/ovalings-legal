@@ -636,8 +636,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.1df7e9cb.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.f1f798f6.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.7f0ac2aa.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.2daae640.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -1084,7 +1084,6 @@ a.card:hover { transform: translateY(calc(-1 * var(--lift))); box-shadow: 0 6px 
   position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: calc(var(--h) + var(--e)); padding: 0 22px var(--e); border: 0; background: none; cursor: pointer;
   font: 700 17px/1.1 var(--display); color: var(--fg); text-decoration: none; text-align: center;
-  text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent);
   transition: transform var(--t-quick) var(--spring);
 }
 .ob::before, .ob::after { content: ""; position: absolute; left: 0; right: 0; border: var(--o) solid var(--ink); border-radius: var(--r-m); }
@@ -1449,6 +1448,8 @@ a.nextcard:hover { color: var(--white); }
 .islandpic { align-items: center; padding: var(--s-s) 0; }
 .islandpic img { width: 124px; height: auto; max-height: 150px; object-fit: contain; }
 .islandchip { background: var(--c-node); color: var(--c-on); border: 2px solid var(--ink); }
+/* Die Wolkenstadt hat einen gelben Knoten: dunkle Schrift wie beim Hauptknopf (Luis 04.11.2026) */
+.ch-cloudcity .islandchip, .ch-cloudcity .islandnum { color: var(--ink); }
 .headisland { margin-bottom: calc(-1 * var(--s-xl)); width: auto; height: calc(0.85 * clamp(150px, 34vw, 340px)); max-width: clamp(150px, 34vw, 340px); object-fit: contain; }
 @media (max-width: 720px) { .headisland { height: calc(0.85 * 62vw); max-width: 62vw; } }
 .chestgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1621,7 +1622,7 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 .legal textarea { min-height: 160px; resize: vertical; }
 .legal button {
   position: relative; isolation: isolate; justify-self: start; min-height: 51px; padding: 0 22px 5px; border: 0; background: none; cursor: pointer;
-  font: 700 17px/1 var(--display); color: var(--white); text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent);
+  font: 700 17px/1 var(--display); color: var(--ink);
 }
 .legal button::before, .legal button::after { content: ""; position: absolute; left: 0; right: 0; border: 2.5px solid var(--ink); border-radius: var(--r-m); }
 .legal button::before { top: 5px; bottom: 0; background: var(--primary-edge); z-index: -2; }
@@ -1714,7 +1715,7 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
   font: 700 clamp(14px, 3.9vw, 17px)/1.15 var(--display); text-align: center;
 }
 .seg:hover { color: var(--text); }
-.seg[aria-pressed="true"] { color: var(--white); text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent); cursor: default; }
+.seg[aria-pressed="true"] { color: var(--ink); cursor: default; }
 .acform { display: grid; gap: var(--s-m); }
 .acform[hidden] { display: none; }
 .acform h2 { font-size: 24px; }
@@ -1794,10 +1795,9 @@ body:not(:has(.tabbar)) .foot { padding-bottom: var(--s-xxl); }
 .askfab {
   position: fixed; z-index: 30; right: var(--page); bottom: calc(96px + env(safe-area-inset-bottom)); width: 62px; height: 62px;
   display: grid; place-items: center; border-radius: 50%; cursor: pointer; padding: 0 0 4px;
-  border: 2.5px solid var(--ink); color: var(--white); font: 700 34px/1 var(--display);
+  border: 2.5px solid var(--ink); color: var(--ink); font: 700 34px/1 var(--display);
   background: linear-gradient(color-mix(in srgb, var(--white) 38%, transparent), transparent 46%), linear-gradient(var(--primary-top), var(--primary));
   box-shadow: 0 5px 0 var(--primary-edge), 0 0 0 2.5px var(--ink), var(--float-shadow);
-  text-shadow: 0 1.5px 0 color-mix(in srgb, var(--ink) 55%, transparent);
   transition: transform var(--t-quick) var(--spring);
 }
 .askfab:hover { transform: translateY(calc(-1 * var(--lift))); }
