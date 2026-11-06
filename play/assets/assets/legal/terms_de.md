@@ -9,7 +9,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: o
 
 ## 2. Konto
 
-- Du musst mindestens 16 Jahre alt sein. Bist du jünger als 18, sind Käufe mit echtem Geld gesperrt, bis deine Eltern sie freigeben.
+- Du musst mindestens 13 Jahre alt sein. Unter 16 gibt es keine Käufe mit echtem Geld. Bist du 16 oder 17, sind sie gesperrt, bis deine Eltern sie freigeben.
 - Deine Angaben bei der Registrierung müssen stimmen. Halte dein Passwort geheim.
 - Dein Konto gehört nur dir. Du darfst es nicht verkaufen, verschenken oder mit anderen teilen.
 - Dein Anzeigename darf niemanden beleidigen und nicht so tun, als wärst du jemand anderes.
@@ -23,11 +23,11 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: o
 
 ## 4. Käufe in der App
 
-- Käufe mit echtem Geld laufen über den App Store von Apple oder Google Play. Dafür gelten zusätzlich deren Bedingungen, auch für Zahlung und Erstattung.
+- Käufe mit echtem Geld laufen über den App Store von Apple oder Google Play. Dafür gelten zusätzlich deren Bedingungen, auch für Zahlung und Erstattung. In Belgien und Brasilien gibt es keine Käufe mit echtem Geld, das Spiel bleibt dort spielbar.
 - Gekaufte Inhalte bekommst du sofort nach dem Kauf. Bei digitalen Inhalten erlischt dein Widerrufsrecht, wenn die Lieferung mit deiner ausdrücklichen Zustimmung beginnt und du bestätigt hast, dass du dein Widerrufsrecht damit verlierst (§ 356 Abs. 6 BGB). Wie das beim Kauf abläuft, regeln Apple und Google.
 - Preise in echtem Geld zeigt dir der Store vor dem Kauf.
 - Gutgeschrieben wird ein Kauf erst, wenn unser Server ihn bei Apple oder Google geprüft hat, je Beleg genau einmal. Startpakete gibt es je Konto nur einmal.
-- Gäste können nichts mit echtem Geld kaufen. Bist du unter 18, brauchst du die Freigabe deiner Eltern per E-Mail. Sie legen dabei eine Grenze je Monat fest und können die Freigabe jederzeit zurückziehen.
+- Gäste können nichts mit echtem Geld kaufen. Unter 16 kannst du nichts mit echtem Geld kaufen. Bist du 16 oder 17, brauchst du die Freigabe deiner Eltern per E-Mail. Sie legen dabei eine Grenze je Monat fest und können die Freigabe jederzeit zurückziehen.
 - Kann ein Kauf nicht gutgeschrieben werden, etwa weil die Freigabe fehlt oder die Grenze erreicht ist, bestätigen wir ihn beim Store nicht. Google erstattet ihn dann von selbst. Bei Apple bleibt er offen und wird gutgeschrieben, sobald die Freigabe vorliegt. Lehnen deine Eltern ab oder entscheiden sie nicht innerhalb von 7 Tagen, gilt der Kauf als nicht genehmigt (§ 108 BGB). Du kannst dann bei Apple die Erstattung beantragen, wir helfen dir dabei über das Kontaktformular.
 - Monatspässe (VIP und VVIP) verlängern sich jeden Monat, bis du sie im App Store oder bei Google Play kündigst. Die Diamanten je Tag holst du in der App ab. Tage, an denen dein Pass lief, bleiben abholbar, auch nach seinem Ende. In der App auf Android und iOS bekommst du mit einem Pass die Belohnungen der Werbevideos ohne Video. Mit dem VVIP-Pass kannst du Kämpfe zusätzlich dreifach schnell laufen lassen, und deine Ovalings bekommen aus Kämpfen 20 % mehr Erfahrung.
 - Erstatten Apple oder Google einen Kauf, buchen wir seinen Inhalt zurück, höchstens bis dein Bestand bei 0 liegt. Hast du die Diamanten schon ausgegeben, merken wir uns den Fehlbetrag. Ab der zweiten solchen Erstattung kannst du erst wieder kaufen, wenn du den Fehlbetrag mit Diamanten ausgeglichen hast. Eier und Gegenstände aus einem erstatteten Paket fallen weg, solange sie ungeöffnet, unbenutzt und nicht auf dem Marktplatz eingestellt sind. Die Sperre dient nur dazu, Missbrauch durch Kaufen, Ausgeben und Erstatten zu verhindern. Sobald der Fehlbetrag ausgeglichen ist, endet sie.

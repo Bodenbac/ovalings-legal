@@ -33,7 +33,7 @@
     level: $('[data-level]'), xp: $('[data-xp]'), xpBar: $('[data-xp-bar]'),
     slotsPanel: $('[data-slots-panel]'), slots: $('[data-slots]'), statsPanel: $('[data-stats-panel]'), stats: $('[data-stats]'),
     hex: $('[data-hex]'), profile: $('[data-profile]'), profileText: $('[data-profile-text]'), profileEn: $('[data-profile-en]'),
-    skin: $('[data-skin]'), egg: $('[data-egg]'), hatched: $('[data-hatched]'), rules: $('[data-rules]'), id: $('[data-id]'),
+    skin: $('[data-skin]'), egg: $('[data-egg]'), hatched: $('[data-hatched]'), id: $('[data-id]'),
     copy: $('[data-copy-id]'), share: $('[data-share]'),
     dialog: $('#vdialog'), barrier: $('#vbarrier'), dialogClose: $('#vdialogclose'), dialogHead: $('[data-dialog-head]'),
     dialogBody: $('[data-dialog-body]'),
@@ -754,7 +754,6 @@
     el.skin.appendChild(tier);
     el.egg.textContent = (D.eggs[o.egg] || {}).name || o.egg;
     el.hatched.textContent = date(o.hatched_at);
-    el.rules.textContent = num(o.rules_version);
     el.id.textContent = o.id;
   }
   function date(text) {

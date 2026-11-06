@@ -1,7 +1,7 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang), Übersetzung von privacy_de.md. Bei Abweichungen gilt die deutsche Fassung. Platzhalter vor dem Start ersetzen. -->
 # Privacy policy
 
-Last updated: 23 October 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
+Last updated: 5 November 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
 
 ## 1. Controller
 
@@ -30,14 +30,15 @@ We are not required to appoint a data protection officer. You can reach us about
 - Clans: your clan, your role in it, requests and invitations, your clan points, donations and fulfilled wishes per week, purchases in the clan shop, messages in the clan chat, the clan log (who joined, left or was promoted) and reports about clans (see section 21).
 - Question bot on Discord: only a daily count with an encrypted check value of your Discord ID (see section 22).
 - Technical data: every connection to our server involves your IP address, the time and the request.
+- Crash reports, only if you agreed: if the app crashes or an error occurs, the error message, the place in the program, the app version and the model and system of your device. Without account, display name, email address or game progress (see section 5).
 - On your device: your sign-in (encrypted), your settings and cached images of your Ovalings.
 
-We ourselves do not use analytics or tracking tools. Google's advertising SDK is built in for the reward videos, section 9 explains what it processes. The app does not access your location, contacts, photos, camera or microphone. When loading a video, Google's advertising SDK receives your device's IP address and may use it to estimate your approximate location (see section 9).
+We ourselves do not use analytics or tracking tools. Crash reports only serve to fix errors. Google's advertising SDK is built in for the reward videos, section 9 explains what it processes. The app does not access your location, contacts, photos, camera or microphone. When loading a video, Google's advertising SDK receives your device's IP address and may use it to estimate your approximate location (see section 9).
 
 ## 3. Purposes and legal bases
 
 - Account, game progress, friends, marketplace and inbox: so you can play Ovalings. The legal basis is the contract of use (Art. 6(1)(b) GDPR).
-- Year of birth: to enforce the minimum age of 16 and to lock purchases for players under 18 (Art. 6(1)(b) and (c) GDPR).
+- Year of birth: to enforce the minimum age of 13, to exclude purchases with real money under 16 and lock them under 18, and to show no personalised ads under 16 (Art. 6(1)(b) and (c) GDPR).
 - Confirmation emails and password reset emails: for your account (Art. 6(1)(b) GDPR).
 - Profiles: so every Ovaling gets its own description (Art. 6(1)(b) GDPR) and to limit the number of calls per account and day and the cost (Art. 6(1)(f) GDPR).
 - Reward videos: to credit the reward you choose exactly once and to keep the daily limits (Art. 6(1)(b) GDPR). For personalised ads and for Google storing information on your device we ask for your consent first (Art. 6(1)(a) GDPR, Section 25(1) TDDDG).
@@ -47,6 +48,7 @@ We ourselves do not use analytics or tracking tools. Google's advertising SDK is
 - Contact form: to answer your request (Art. 6(1)(b) or (f) GDPR).
 - Chat, leaderboard and events: so you can write with others and compete with them (Art. 6(1)(b) GDPR). Checking messages, reports, mutes and blocking protect all players, especially young ones, and keep the tone friendly (Art. 6(1)(f) GDPR).
 - Captcha: to fend off automated sign-ups and abuse (Art. 6(1)(f) GDPR).
+- Crash reports: to find and fix errors. The legal basis is your consent (Art. 6(1)(a) GDPR, Section 25(1) TDDDG). The app asks you once. You can withdraw your consent at any time in Settings, which takes effect from then on.
 - Deleting your account: to carry out your request (Art. 6(1)(c) GDPR together with Art. 17 GDPR).
 
 ## 4. Storage on your device
@@ -67,6 +69,7 @@ If you sign in on the website, your browser keeps the session (local storage, ke
 - Apple and Google: they distribute the app and handle in-app purchases. They are responsible for this themselves and their privacy policies apply. Our server checks every receipt with them to verify a purchase, and they notify us of renewals, cancellations and refunds. We only receive the information we need for this, no payment data.
 - Cloudflare: Cloudflare, Inc. delivers the website ovalings.app on our behalf (Art. 28 GDPR, data processing agreement as part of Cloudflare's terms). For every visit Cloudflare processes technically necessary data such as IP address, time, requested address and browser identifier to deliver the site and to fend off attacks. We do not analyse visits ourselves. When you sign in, register, start as a guest or reset your password, Cloudflare Turnstile checks in the app whether a human is making the request. For this Cloudflare processes your IP address and technical information about your device and browser, but sets no advertising or analytics cookies. We only receive the result of the check.
 <!-- Offen: Turnstile ist vorbereitet, aber noch ausgeschaltet. Den Satz zu Turnstile erst mit dem Einschalten (Schalter in Supabase) veröffentlichen oder bis dahin streichen. -->
+- Sentry: receives the crash reports on our behalf (Functional Software, Inc., USA, Art. 28 GDPR). The reports are stored in Frankfurt am Main. When sending, Sentry technically receives the IP address of your device but does not store it.
 - Discord: the Ovalings Discord server runs on the platform of Discord Inc. What you write there is processed by Discord itself under its privacy policy. If you ask the question bot something, Discord sends the question to our server, which passes it on to Anthropic as with the question chat on the website (section 22).
 - GitHub: an earlier address of the website with the legal texts can still be reached on GitHub Pages (GitHub, Inc.). GitHub stores the IP address of every visit for security purposes.
 
@@ -74,7 +77,7 @@ We do not sell data. For advertising we only pass on what section 9 describes.
 
 ## 6. Transfers outside the EU
 
-Supabase is based in Singapore and uses service providers, including Amazon Web Services in the USA. Your game data is stored in Frankfurt, but access from these countries is possible, for example for maintenance and support. The safeguard is the European Commission's standard contractual clauses (Art. 46(2)(c) GDPR). You can get a copy on request. GitHub transfers data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and standard contractual clauses. Anthropic processes the information for the profiles and the question chat in the USA, on the basis of the Standard Contractual Clauses. Resend processes the emails mainly in the USA, on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the Standard Contractual Clauses. Google may transfer data to the USA, also on the basis of the EU-US Data Privacy Framework. Cloudflare may transfer data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the standard contractual clauses.
+Supabase is based in Singapore and uses service providers, including Amazon Web Services in the USA. Your game data is stored in Frankfurt, but access from these countries is possible, for example for maintenance and support. The safeguard is the European Commission's standard contractual clauses (Art. 46(2)(c) GDPR). You can get a copy on request. GitHub transfers data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and standard contractual clauses. Anthropic processes the information for the profiles and the question chat in the USA, on the basis of the Standard Contractual Clauses. Resend processes the emails mainly in the USA, on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the Standard Contractual Clauses. Google may transfer data to the USA, also on the basis of the EU-US Data Privacy Framework. Cloudflare may transfer data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the standard contractual clauses. Sentry may also process crash reports in the USA, also on the basis of the EU-US Data Privacy Framework and the standard contractual clauses.
 
 ## 7. AI-written profiles
 
@@ -92,7 +95,7 @@ If you enter the ID of an Ovaling on ovalings.app, your browser sends the ID and
 
 Ovalings only shows ad videos that you start voluntarily to get a reward, such as double loot after a fight, energy or diamonds. There are no ads between actions and no banners. Players with a monthly pass get the same rewards without a video. Reward videos only exist in the app on Android and iOS. On Steam and on the web, Ovalings shows no ads.
 
-The videos come from Google AdMob (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Where required, for example in the EU, the app uses Google's consent form at start-up to ask whether Google may use data for personalised ads and store information on your device. You can change your choice at any time in the settings under "Ad privacy options". Without consent, Google only shows non-personalised ads or none. We only allow ads that are suitable for teenagers. You can consent to personalised advertising yourself from the age of 16 (Art. 8 GDPR), and you cannot play Ovalings if you are younger. On the iPhone the app does not ask for tracking across apps (App Tracking Transparency), so Google does not receive an advertising ID there.
+The videos come from Google AdMob (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Where required, for example in the EU, the app uses Google's consent form at start-up to ask whether Google may use data for personalised ads and store information on your device. You can change your choice at any time in the settings under "Ad privacy options". Without consent, Google only shows non-personalised ads or none. We only allow ads that are suitable for teenagers. You can consent to personalised advertising yourself from the age of 16 (Art. 8 GDPR). If you are younger, we do not ask and only request non-personalised ads. On the iPhone the app does not ask for tracking across apps (App Tracking Transparency), so Google does not receive an advertising ID there, and the app only requests non-personalised ads there, even if you consent in the form.
 
 What Google processes when loading and showing a video (such as device identifiers, IP address, information about the device and the ad) is decided by Google itself, and Google's privacy policy applies. When a video is loaded, we only pass Google your account ID and the place in the game, for double loot also the ID of the fight. After the video, Google tells our server that you have earned the reward. Our server checks the signature of this message and credits the reward exactly once per transaction. Section 2 lists what we store. These records stay until you delete your account.
 
@@ -102,7 +105,7 @@ Purchases go through Apple's App Store or Google Play. After a purchase, the app
 
 If you get a refund, we take back the content of the purchase, at most until your balance reaches 0. If diamonds are missing because they were already spent, we note the shortfall. From the second such refund on, further purchases are locked until you settle the shortfall with diamonds.
 
-If you are under 18, purchases are locked until your parents unlock them. To do this, you enter your parents' email address in the app. We send them an email through Resend with your display name and two links, one to approve with a monthly limit and one to decline or withdraw the approval later. We only store a check value of the links. We delete the address as soon as your parents have decided, at the latest after 7 days. After that we only store whether purchases are approved, the limit and the time.
+Under 16 there are no purchases with real money, not even with approval. If you are 16 or 17, purchases are locked until your parents approve them. To do this, you enter your parents' email address in the app. We send them an email through Resend with your display name and two links, one to approve with a monthly limit and one to decline or withdraw the approval later. We only store a check value of the links. We delete the address as soon as your parents have decided, at the latest after 7 days. After that we only store whether purchases are approved, the limit and the time.
 
 Guest accounts cannot make purchases with real money.
 
@@ -110,6 +113,7 @@ Guest accounts cannot make purchases with real money.
 
 - Account and game progress: until you delete your account. We then mark it for deletion for 30 days. During this time others no longer see you, and you can cancel the deletion by signing in. After that we delete everything that belongs to your account, including your messages sent through the contact form, and your account ID and nicknames are removed from the history of Ovalings you sold. Guest accounts are deleted right away. Ovalings, eggs and items you sold to others belong to them and stay with them, as do the profiles of those Ovalings.
 - Reward videos: until you delete your account.
+- Crash reports: at most 90 days.
 - Parents' email address: until they decide, at most 7 days. Resend keeps the email sent as long as our contract with Resend runs, and at most 90 days after it ends.
 - Information sent to Anthropic: kept there for at most 30 days (exceptions in section 7).
 - Contact form: until your request is resolved, then for at most one year.
@@ -131,7 +135,7 @@ You can also lodge a complaint with a data protection supervisory authority, for
 
 ## 13. Children and young people
 
-Ovalings is for players aged 16 and over. For players under 18, purchases with real money are locked until their parents unlock them (section 10). In-app purchases go through Apple and Google, where their family settings also apply.
+Ovalings is for players aged 13 and over. Under 16 there are no purchases with real money and no personalised ads. For players aged 16 and 17, purchases with real money are locked until their parents unlock them (section 10). In-app purchases go through Apple and Google, where their family settings also apply.
 
 ## 14. Do you have to provide data?
 

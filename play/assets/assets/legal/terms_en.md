@@ -9,7 +9,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, 
 
 ## 2. Account
 
-- You must be at least 16 years old. If you are under 18, purchases with real money are locked until your parents unlock them.
+- You must be at least 13 years old. There are no purchases with real money under 16. If you are 16 or 17, they are locked until your parents unlock them.
 - The information you give when registering must be correct. Keep your password secret.
 - Your account belongs only to you. You may not sell it, give it away or share it with others.
 - Your display name must not insult anyone or pretend to be someone else.
@@ -23,11 +23,11 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, 
 
 ## 4. In-app purchases
 
-- Purchases with real money go through Apple's App Store or Google Play. Their terms also apply, including for payment and refunds.
+- Purchases with real money go through Apple's App Store or Google Play. Their terms also apply, including for payment and refunds. There are no purchases with real money in Belgium and Brazil, the game stays playable there.
 - You receive purchased content immediately after the purchase. For digital content, your right of withdrawal ends when delivery starts with your express consent and you have confirmed that you lose your right of withdrawal as a result (Section 356(6) German Civil Code). Apple and Google handle how this works at the time of purchase.
 - The store shows you prices in real money before you buy.
 - A purchase is only credited once our server has verified it with Apple or Google, exactly once per receipt. Starter packs are available only once per account.
-- Guest accounts cannot buy anything with real money. If you are under 18, you need your parents' approval by email. They set a monthly limit and can withdraw the approval at any time.
+- Guest accounts cannot buy anything with real money. Under 16 you cannot buy anything with real money. If you are 16 or 17, you need your parents' approval by email. They set a monthly limit and can withdraw the approval at any time.
 - If a purchase cannot be credited, for example because the approval is missing or the limit has been reached, we do not confirm it with the store. Google then refunds it automatically. With Apple it stays open and is credited as soon as the approval is given. If your parents refuse or do not decide within 7 days, the purchase counts as not approved (Section 108 German Civil Code). You can then ask Apple for a refund, and we will help you through the contact form.
 - Monthly passes (VIP and VVIP) renew every month until you cancel them in the App Store or on Google Play. You collect the daily diamonds in the app. Days on which your pass was running remain collectable, even after it ends. In the app on Android and iOS, a pass gives you the rewards of the ad videos without watching a video. With the VVIP pass you can also run battles at triple speed, and your Ovalings get 20 % more experience from battles.
 - If Apple or Google refund a purchase, we take back its content, at most until your balance reaches 0. If you have already spent the diamonds, we note the shortfall. From the second such refund on, you can only buy again once you have settled the shortfall with diamonds. Eggs and items from a refunded pack are removed as long as they are unopened, unused and not listed on the marketplace. The block only serves to prevent abuse by buying, spending and refunding. It ends as soon as the shortfall has been settled.

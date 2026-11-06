@@ -3,5 +3,6 @@
 /discord https://discord.gg/VqSPPpdz3T 302
 /i/:code /invite/?code=:code 302
 /invite /invite/ 301
+/:lang/tips/ /:lang/guide/ 301
 /play2 /play/ 301
 /play2/* /play/:splat 301

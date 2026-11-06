@@ -636,8 +636,8 @@
    App erzeugt), hier nur Variablen, transparent, currentColor und Mischungen über color-mix. Bausteine wie in der App:
    Garten unter einem Schleier, Karten mit Kontur und fester Kante, Knöpfe im Spielstil, gemalte Symbole. */
 
-@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.7f0ac2aa.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.2daae640.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "Fredoka"; src: url("fonts/Fredoka.80b89ba8.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("fonts/NunitoSans.b938dffc.woff2") format("woff2"); font-weight: 200 1000; font-stretch: 75% 125%; font-display: swap; }
 
 :root { --garden: url("bg/garden_day-540.ab12ab78.webp"); --head-h: 64px; }
 @media (prefers-color-scheme: dark) { :root { --garden: url("bg/garden_night-540.430193db.webp"); } }
@@ -680,7 +680,6 @@ body:not(.plain) > main { flex: 1 0 auto; }
 .wrap { width: 100%; max-width: calc(1120px + 2 * var(--page)); margin: 0 auto; padding-left: max(var(--page), env(safe-area-inset-left)); padding-right: max(var(--page), env(safe-area-inset-right)); }
 /* Fließtext so breit wie Bilder und Tabellen der Seite (Luis 23.10.2026: keine kurzen Zeilen mehr, vorher 680px) */
 .read { max-width: none; }
-.tierword { color: var(--c-hi); font-weight: 800; }
 /* nur oben und unten, sonst nähme es .wrap den Rand an den Seiten (Eier, Spielwissen, Fragen, Betrachter) */
 .section { padding-top: var(--s-xxxl); padding-bottom: var(--s-s); }
 .small { font-size: 14px; }
@@ -1048,6 +1047,8 @@ main { display: block; padding-bottom: var(--s-huge); }
 
 .stitle { display: flex; align-items: center; gap: var(--s-m); font-size: clamp(26px, 4.6vw, 34px); margin-bottom: var(--s-l); color: var(--text); }
 .stitle img { width: 44px; height: 44px; flex: none; filter: drop-shadow(0 3px 3px color-mix(in srgb, var(--black) 12%, transparent)); }
+.stitle > svg { flex: none; }
+.expander > h3 { margin-top: var(--s-m); }
 .subtitle { font-size: 21px; margin: var(--s-xxl) 0 var(--s-m); }
 .minorhead { font-size: 22px; margin-bottom: var(--s-s); }
 .minor, .card .minor, .card h3.minor, .card h4.minor { font: 800 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin: var(--s-l) 0 var(--s-s); }
@@ -1499,8 +1500,6 @@ a.nextcard:hover { color: var(--white); }
   .products:not(.compact) .productpic img { width: 78px; height: 78px; }
   .productbody .lines { font-size: 14px; }
 }
-.tips { display: grid; gap: var(--s-m); grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
-.tip > img { width: 48px; height: 48px; object-fit: contain; }
 
 /* Häufige Fragen */
 /* Drei Fragen je Reihe (Luis 27.10.2026), auf schmaleren Bildschirmen zwei oder eine. Offene Fragen wachsen nach unten, die Nachbarn bleiben oben */
