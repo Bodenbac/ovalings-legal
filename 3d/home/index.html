@@ -11903,9 +11903,13 @@ const MouthNew = (() => {
         };
         const L = ry * 2;
         [[-0.72, 0.95], [-0.32, 0.5], [0.06, 0.42], [0.42, 0.5], [0.76, 0.95]].forEach(([sx, k], i) => fang(sx, true, L * k, rx * 0.16 * (0.7 + 0.4 * k), i * 0.7));
+        const nLow = g.children.length;
         [[-0.5, 0.45], [-0.12, 0.38], [0.24, 0.4], [0.6, 0.45]].forEach(([sx, k], i) => fang(sx, false, L * k, rx * 0.14, 3 + i * 0.7));
+        const nRest = g.children.length;
         add(ellGeo(rx * 0.8, ry * 0.7, 0.01), 'mouth', { pos: hc.p.clone().sub(hc.n.clone().multiplyScalar(0.08)), quat: qf, outline: false });
         tagNew(n0, 'fixed');
+        // Die unteren Zähne gehen beim Öffnen mit dem Unterkiefer (Luis 09.11.2026: sie blieben stehen, während der Mund aufging)
+        for (let i = nLow; i < nRest; i++) g.children[i].userData.mouthTag = 'jaw';
         // Funken: fliegen zwischen einer oberen und einer unteren Spitze hin und her
         for (let i = 0; i < 4; i++) {
           const a = tips[0][[0, 1, 3, 4][i]], b = tips[1][i]; if (!a || !b) continue;

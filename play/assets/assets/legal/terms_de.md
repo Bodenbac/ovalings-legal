@@ -30,7 +30,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: o
 - Gäste können nichts mit echtem Geld kaufen. Unter 16 kannst du nichts mit echtem Geld kaufen. Bist du 16 oder 17, brauchst du die Freigabe deiner Eltern per E-Mail. Sie legen dabei eine Grenze je Monat fest und können die Freigabe jederzeit zurückziehen.
 - Kann ein Kauf nicht gutgeschrieben werden, etwa weil die Freigabe fehlt oder die Grenze erreicht ist, bestätigen wir ihn beim Store nicht. Google erstattet ihn dann von selbst. Bei Apple bleibt er offen und wird gutgeschrieben, sobald die Freigabe vorliegt. Lehnen deine Eltern ab oder entscheiden sie nicht innerhalb von 7 Tagen, gilt der Kauf als nicht genehmigt (§ 108 BGB). Du kannst dann bei Apple die Erstattung beantragen, wir helfen dir dabei über das Kontaktformular.
 - Monatspässe (VIP und VVIP) verlängern sich jeden Monat, bis du sie im App Store oder bei Google Play kündigst. Die Diamanten je Tag holst du in der App ab. Tage, an denen dein Pass lief, bleiben abholbar, auch nach seinem Ende. In der App auf Android und iOS bekommst du mit einem Pass die Belohnungen der Werbevideos ohne Video. Mit dem VVIP-Pass kannst du Kämpfe zusätzlich dreifach schnell laufen lassen, und deine Ovalings bekommen aus Kämpfen 20 % mehr Erfahrung.
-- Erstatten Apple oder Google einen Kauf, buchen wir seinen Inhalt zurück, höchstens bis dein Bestand bei 0 liegt. Hast du die Diamanten schon ausgegeben, merken wir uns den Fehlbetrag. Ab der zweiten solchen Erstattung kannst du erst wieder kaufen, wenn du den Fehlbetrag mit Diamanten ausgeglichen hast. Eier und Gegenstände aus einem erstatteten Paket fallen weg, solange sie ungeöffnet, unbenutzt und nicht auf dem Marktplatz eingestellt sind. Die Sperre dient nur dazu, Missbrauch durch Kaufen, Ausgeben und Erstatten zu verhindern. Sobald der Fehlbetrag ausgeglichen ist, endet sie.
+- Erstatten Apple oder Google einen Kauf, buchen wir seinen Inhalt zurück, höchstens bis dein Bestand bei 0 liegt. Hast du die Diamanten schon ausgegeben, merken wir uns den Fehlbetrag. Ab der zweiten solchen Erstattung kannst du erst wieder kaufen, wenn du den Fehlbetrag mit Diamanten ausgeglichen hast. Eier und Gegenstände aus einem erstatteten Paket fallen weg, solange sie ungeöffnet, unbenutzt und nicht auf dem Tauschmarkt eingestellt sind. Die Sperre dient nur dazu, Missbrauch durch Kaufen, Ausgeben und Erstatten zu verhindern. Sobald der Fehlbetrag ausgeglichen ist, endet sie.
 
 ## 5. Werbevideos
 
@@ -48,16 +48,16 @@ Die drei Sätze im Steckbrief eines Ovalings formuliert eine KI (Claude Haiku vo
 
 Was in einem Ei steckt, entscheidet der Zufall. Die Chancen für jede Seltenheit und jede Familie stehen im Shop, bevor du ein Ei kaufst. Jedes Ovaling ist einmalig. Einen Anspruch auf ein bestimmtes Ergebnis gibt es nicht.
 
-## 8. Marktplatz und Handel zwischen Spieler:innen
+## 8. Tauschmarkt und Handel zwischen Spieler:innen
 
-- Auf dem Marktplatz kannst du Ovalings, Eier und Gegenstände gegen Spielwährungen anbieten und kaufen. Die Zahl der Plätze ist begrenzt.
+- Auf dem Tauschmarkt kannst du Ovalings, Eier und Gegenstände gegen Spielwährungen anbieten und kaufen. Die Zahl der Plätze ist begrenzt.
 - Was du anbietest, ist bis zum Verkauf oder Zurückziehen gesperrt.
-- Ein Kauf auf dem Marktplatz ist endgültig. Preise legen die Spieler:innen selbst fest.
+- Ein Kauf auf dem Tauschmarkt ist endgültig. Preise legen die Spieler:innen selbst fest.
 - Bei jedem Verkauf behalten wir eine Gebühr von 10 % des Preises ein, abgerundet auf ganze Einheiten, mindestens 1. Wer kauft, zahlt den vollen Preis, wer verkauft, bekommt den Preis ohne die Gebühr. Die App zeigt beides vor dem Einstellen. Die Gebühr verlässt das Spiel und geht an niemanden.
 
 ## 9. Freunde werben und Einladungs-Event
 
-- Lädst du jemanden ein und erreicht diese Person Spieler-Level 10 mit bestätigter E-Mail-Adresse, bekommt ihr beide 100 Diamanten und ein Normal Egg in die Inbox. Wer einlädt, bekommt zusätzlich Bonus-Eier, wie sie in der App beschrieben sind. Eine Obergrenze gibt es nicht.
+- Lädst du jemanden ein und erreicht diese Person Spielerlevel 10 mit bestätigter E-Mail-Adresse, bekommt ihr beide 100 Diamanten und ein Normal Egg in den Posteingang. Wer einlädt, bekommt zusätzlich Bonus-Eier, wie sie in der App beschrieben sind. Eine Obergrenze gibt es nicht.
 - Angeben, wer dich eingeladen hat, kannst du beim Registrieren oder in den ersten 7 Tagen danach, nur einmal und nicht dich selbst.
 - Einladungs-Event: Bis zum Start der Server zählen wir für jede Person die eingeladenen Konten, die ihre E-Mail-Adresse bestätigt haben. Die drei mit den meisten Einladungen bekommen 5.000, 2.000 und 1.000 Diamanten. Bei Gleichstand liegt vorn, wer die Zahl zuerst erreicht hat.
 - Einladungen von Konten, die nur zum Zählen angelegt wurden, etwa mehrere Konten derselben Person oder Wegwerf-Adressen, zählen nicht. Vor der Auszahlung prüfen wir die Besten. Bei Verstößen können wir Einladungen streichen und das Konto vom Event ausschließen (Abschnitt 12).
@@ -65,7 +65,7 @@ Was in einem Ei steckt, entscheidet der Zufall. Die Chancen für jede Seltenheit
 
 ## 10. Clans
 
-- Clans gibt es ab Spieler-Level 12. Die Anführung legt Name, Flagge, Sprache und Regeln für den Beitritt fest und kann Mitglieder befördern oder entfernen.
+- Clans gibt es ab Spielerlevel 12. Die Anführung legt Name, Flagge, Sprache und Regeln für den Beitritt fest und kann Mitglieder befördern oder entfernen.
 - Für Namen, Flaggen und den Clan-Chat gelten die Regeln in Abschnitt 11.
 - Was es in der Clan-Woche gibt (Truhen, Wünsche, Clan-Shop), steht in der App. Spenden an den Clan sind endgültig.
 - Verlässt du einen Clan oder wirst entfernt, bleiben deine bereits erhaltenen Belohnungen bei dir.
@@ -85,7 +85,7 @@ Im Chat gilt außerdem:
 - Sei freundlich. Keine Beleidigungen, keine Hetze, keine Drohungen, nichts Sexuelles.
 - Keine Telefonnummern, Adressen oder andere persönlichen Daten, weder eigene noch fremde.
 - Keine Werbung, kein Spam, kein Handel gegen echtes Geld.
-- Den Chat gibt es ab Spieler-Level 10, mit Räumen je Sprache und ohne private Nachrichten.
+- Den Chat gibt es ab Spielerlevel 10, mit Räumen je Sprache und ohne private Nachrichten.
 
 So prüfen wir Inhalte: Jede Nachricht und jeder Anzeigename läuft vor dem Speichern automatisch durch eine Liste verbotener Wörter und eine Erkennung von Telefonnummern, ohne KI. Gemeldete Nachrichten prüft ein Mensch.
 
@@ -97,7 +97,7 @@ Fehler, die du findest, melde bitte über das Kontaktformular.
 
 Verstößt jemand gegen diese Regeln, informieren wir zuerst mit Grund und geben Gelegenheit zur Stellungnahme. Danach entscheiden wir neu. Je nach Schwere können wir verwarnen, Inhalte entfernen, die durch den Verstoß entstanden sind, oder das Konto zeitweise oder dauerhaft sperren. Bei schweren Verstößen, etwa Angriffen auf den Server, sperren wir sofort vorläufig und holen die Anhörung danach nach. Deine gesetzlichen Rechte bleiben unberührt.
 
-Im Chat greifen einige Maßnahmen sofort und automatisch: Eine Nachricht, die gegen die Regeln verstößt, wird nicht gesendet, und du siehst den Grund. Drei Verstöße an einem Tag schalten dich für 24 Stunden stumm. Melden drei verschiedene Konten eine Nachricht, wird sie verborgen, bis wir sie geprüft haben, und du bekommst dazu eine Nachricht mit Grund in deine Inbox. Hältst du eine solche Maßnahme für falsch, schreib uns über das Kontaktformular, wir prüfen sie dann selbst. Außerdem steht dir der Weg zu den Gerichten offen.
+Im Chat greifen einige Maßnahmen sofort und automatisch: Eine Nachricht, die gegen die Regeln verstößt, wird nicht gesendet, und du siehst den Grund. Drei Verstöße an einem Tag schalten dich für 24 Stunden stumm. Melden drei verschiedene Konten eine Nachricht, wird sie verborgen, bis wir sie geprüft haben, und du bekommst dazu eine Nachricht mit Grund in deine Posteingang. Hältst du eine solche Maßnahme für falsch, schreib uns über das Kontaktformular, wir prüfen sie dann selbst. Außerdem steht dir der Weg zu den Gerichten offen.
 
 ## 13. Änderungen am Spiel
 

@@ -30,7 +30,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, 
 - Guest accounts cannot buy anything with real money. Under 16 you cannot buy anything with real money. If you are 16 or 17, you need your parents' approval by email. They set a monthly limit and can withdraw the approval at any time.
 - If a purchase cannot be credited, for example because the approval is missing or the limit has been reached, we do not confirm it with the store. Google then refunds it automatically. With Apple it stays open and is credited as soon as the approval is given. If your parents refuse or do not decide within 7 days, the purchase counts as not approved (Section 108 German Civil Code). You can then ask Apple for a refund, and we will help you through the contact form.
 - Monthly passes (VIP and VVIP) renew every month until you cancel them in the App Store or on Google Play. You collect the daily diamonds in the app. Days on which your pass was running remain collectable, even after it ends. In the app on Android and iOS, a pass gives you the rewards of the ad videos without watching a video. With the VVIP pass you can also run battles at triple speed, and your Ovalings get 20 % more experience from battles.
-- If Apple or Google refund a purchase, we take back its content, at most until your balance reaches 0. If you have already spent the diamonds, we note the shortfall. From the second such refund on, you can only buy again once you have settled the shortfall with diamonds. Eggs and items from a refunded pack are removed as long as they are unopened, unused and not listed on the marketplace. The block only serves to prevent abuse by buying, spending and refunding. It ends as soon as the shortfall has been settled.
+- If Apple or Google refund a purchase, we take back its content, at most until your balance reaches 0. If you have already spent the diamonds, we note the shortfall. From the second such refund on, you can only buy again once you have settled the shortfall with diamonds. Eggs and items from a refunded pack are removed as long as they are unopened, unused and not listed on the Trading Post. The block only serves to prevent abuse by buying, spending and refunding. It ends as soon as the shortfall has been settled.
 
 ## 5. Ad videos
 
@@ -48,11 +48,11 @@ The three sentences in an Ovaling's profile are written by an AI (Claude Haiku b
 
 What is inside an egg is decided by chance. The odds for every rarity and every family are shown in the shop before you buy an egg. Every Ovaling is unique. There is no right to a particular result.
 
-## 8. Marketplace and trading between players
+## 8. Trading Post and trading between players
 
-- On the marketplace you can offer and buy Ovalings, eggs and items for game currencies. The number of slots is limited.
+- On the Trading Post you can offer and buy Ovalings, eggs and items for game currencies. The number of slots is limited.
 - Whatever you offer is locked until it is sold or withdrawn.
-- A purchase on the marketplace is final. Players set their prices themselves.
+- A purchase on the Trading Post is final. Players set their prices themselves.
 - On every sale we keep a fee of 10% of the price, rounded down to whole units, at least 1. The buyer pays the full price, the seller receives the price minus the fee. The app shows both before you list an offer. The fee leaves the game and goes to no one.
 
 ## 9. Inviting friends and invite event
