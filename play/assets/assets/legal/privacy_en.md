@@ -1,21 +1,21 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang), Übersetzung von privacy_de.md. Bei Abweichungen gilt die deutsche Fassung. Platzhalter vor dem Start ersetzen. -->
 # Privacy policy
 
-Last updated: 5 November 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
+Last updated: 15 November 2026. This policy applies to the Ovalings app and the website ovalings.app. It tells you which data we process, why, and what rights you have. If the German and English versions differ, the German version applies.
 
 ## 1. Controller
 
 - Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany
-- Email: ovalings.support@proton.me
+- Email: support@ovalings.app
 - Contact form: in the app under Settings, Legal, Contact, and on the website
 
 We are not required to appoint a data protection officer. You can reach us about any privacy question through the channels above.
 
 ## 2. Which data we process
 
-- Account: email address, password (only stored as an encrypted check value, never in plain text) and year of birth.
+- Account: email address, password (only stored as an encrypted check value, never in plain text) and year of birth. If you sign in with Google or Apple, instead of the password the identifier of your account there and the details Google or Apple send us (email address, with Google also name and profile picture). We do not use the name or the profile picture.
 - Profile: display name and friend code.
-- Game progress: diamonds, gold, energy and their bookings, eggs, Ovalings with their history, items, backdrops.
+- Game progress: diamonds, gold, energy, essence and their bookings, eggs, Ovalings with their history, items, backdrops.
 - Playing together: friendships, Trading Post offers, inbox messages.
 - Chat: your messages with room and time, whom you block, reports (who reported, the reported message, the reason), breaches of the rules in chat and for display names, and mutes (see section 18).
 - Leaderboard and events: your player level, the best Gene Score of your Ovalings, your highest stage per dungeon, your points, your group and your rank in events (see section 18).
@@ -66,18 +66,19 @@ If you sign in on the website, your browser keeps the session (local storage, ke
 - Google AdMob: shows the reward videos (Google Ireland Limited). Google is itself responsible for the data it processes in doing so (independent controller under Google's ads data protection terms, not on our behalf). Details in section 9.
 - Resend: sends the emails of Ovalings on our behalf (Art. 28 GDPR): account confirmation, password reset and the email to your parents when you are under 18 and ask for approval of purchases (section 10). For this Resend receives the recipient address and the content of the email. The data processing agreement is part of Resend's terms.
 - Other players: others can see your display name, your showcase, your backdrop and your Trading Post offers. Only your friends can see your profile with your collection. Everyone in the same room sees your chat messages with your display name. The leaderboard shows your display name and your value if you are in the top 100, among friends always. In an event, the others in your group see your display name, your points and your rank. Everyone who looks at an Ovaling can see its profile. Nobody can see your email address. Anyone who knows the ID of an Ovaling can view it on ovalings.app: look, stats, level, attacks, passive and profile. Your account, your display name and the Ovaling's nickname never appear there. If you signed up through an invitation, the person who invited you sees your display name and whether you have reached the goal. The leaderboard of inviters shows display name and number of invitations if you are among the best. Members of your clan see your display name, your role, your clan points, donations and fulfilled wishes of the week and your messages in the clan chat. Everyone can see a clan's name, flag, level and number of members.
-- Apple and Google: they distribute the app and handle in-app purchases. They are responsible for this themselves and their privacy policies apply. Our server checks every receipt with them to verify a purchase, and they notify us of renewals, cancellations and refunds. We only receive the information we need for this, no payment data.
+- Apple and Google: they distribute the app and handle in-app purchases. If you sign in with Google or Apple, they confirm to us that the account is yours and learn that you use Ovalings. They are responsible for this themselves and their privacy policies apply. Our server checks every receipt with them to verify a purchase, and they notify us of renewals, cancellations and refunds. We only receive the information we need for this, no payment data.
 - Cloudflare: Cloudflare, Inc. delivers the website ovalings.app on our behalf (Art. 28 GDPR, data processing agreement as part of Cloudflare's terms). For every visit Cloudflare processes technically necessary data such as IP address, time, requested address and browser identifier to deliver the site and to fend off attacks. We do not analyse visits ourselves. When you sign in, register, start as a guest or reset your password, Cloudflare Turnstile checks in the app whether a human is making the request. For this Cloudflare processes your IP address and technical information about your device and browser, but sets no advertising or analytics cookies. We only receive the result of the check.
 <!-- Offen: Turnstile ist vorbereitet, aber noch ausgeschaltet. Den Satz zu Turnstile erst mit dem Einschalten (Schalter in Supabase) veröffentlichen oder bis dahin streichen. -->
 - Sentry: receives the crash reports on our behalf (Functional Software, Inc., USA, Art. 28 GDPR). The reports are stored in Frankfurt am Main. When sending, Sentry technically receives the IP address of your device but does not store it.
 - Discord: the Ovalings Discord server runs on the platform of Discord Inc. What you write there is processed by Discord itself under its privacy policy. If you ask the question bot something, Discord sends the question to our server, which passes it on to Anthropic as with the question chat on the website (section 22).
+- Proton: Cloudflare forwards emails to support@ovalings.app to our mailbox at Proton (Proton AG, Switzerland). If you write us an email, it is stored there until your request is settled, then for one year at most.
 - GitHub: an earlier address of the website with the legal texts can still be reached on GitHub Pages (GitHub, Inc.). GitHub stores the IP address of every visit for security purposes.
 
 We do not sell data. For advertising we only pass on what section 9 describes.
 
 ## 6. Transfers outside the EU
 
-Supabase is based in Singapore and uses service providers, including Amazon Web Services in the USA. Your game data is stored in Frankfurt, but access from these countries is possible, for example for maintenance and support. The safeguard is the European Commission's standard contractual clauses (Art. 46(2)(c) GDPR). You can get a copy on request. GitHub transfers data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and standard contractual clauses. Anthropic processes the information for the profiles and the question chat in the USA, on the basis of the Standard Contractual Clauses. Resend processes the emails mainly in the USA, on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the Standard Contractual Clauses. Google may transfer data to the USA, also on the basis of the EU-US Data Privacy Framework. Cloudflare may transfer data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the standard contractual clauses. Sentry may also process crash reports in the USA, also on the basis of the EU-US Data Privacy Framework and the standard contractual clauses.
+Proton is based in Switzerland, which is covered by an adequacy decision of the European Commission. Supabase is based in Singapore and uses service providers, including Amazon Web Services in the USA. Your game data is stored in Frankfurt, but access from these countries is possible, for example for maintenance and support. The safeguard is the European Commission's standard contractual clauses (Art. 46(2)(c) GDPR). You can get a copy on request. GitHub transfers data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and standard contractual clauses. Anthropic processes the information for the profiles and the question chat in the USA, on the basis of the Standard Contractual Clauses. Resend processes the emails mainly in the USA, on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the Standard Contractual Clauses. Google may transfer data to the USA, also on the basis of the EU-US Data Privacy Framework. Cloudflare may transfer data to the USA on the basis of the adequacy decision for certified companies (EU-US Data Privacy Framework) and the standard contractual clauses. Sentry may also process crash reports in the USA, also on the basis of the EU-US Data Privacy Framework and the standard contractual clauses.
 
 ## 7. AI-written profiles
 
@@ -139,7 +140,7 @@ Ovalings is for players aged 13 and over. Under 16 there are no purchases with r
 
 ## 14. Do you have to provide data?
 
-For an account we need your email address, a password and your year of birth. Without them you cannot play Ovalings. Everything else is created while you play. Reward videos and purchases are voluntary.
+For an account we need your year of birth and either an email address and a password or a sign-in with Google or Apple. As a guest, the year of birth is enough. Without these details you cannot play Ovalings. Everything else is created while you play. Reward videos and purchases are voluntary.
 
 ## 15. Automated decisions
 

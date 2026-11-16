@@ -1,11 +1,11 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Käufe, Werbevideos und Steckbrief mit KI, 16.10.2026 um Marktgebühr und Chat), Übersetzung von terms_de.md. Bei Abweichungen gilt die deutsche Fassung. Platzhalter vor dem Start ersetzen. -->
 # Terms of use
 
-Last updated: 23 October 2026. These terms apply between you and the provider of Ovalings when you create an account and play. If the German and English versions differ, the German version applies.
+Last updated: 15 November 2026. These terms apply between you and the provider of Ovalings when you create an account and play. If the German and English versions differ, the German version applies.
 
 ## 1. Provider
 
-Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, email: ovalings.support@proton.me. More details are in the imprint.
+Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, email: support@ovalings.app. More details are in the imprint.
 
 ## 2. Account
 
@@ -16,7 +16,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, Germany, 
 
 ## 3. Game content and right of use
 
-- Ovalings, eggs, items, backdrops, diamonds, gold and energy are game content. You receive a right to use them in the game, not ownership.
+- Ovalings, eggs, items, backdrops, diamonds, gold, energy and essence are game content. You receive a right to use them in the game, not ownership.
 - Game currencies are not money. They cannot be paid out or exchanged for real money.
 - Diamonds you bought with real money do not expire.
 - Trading for real money outside the game, such as selling Ovalings, game currencies or accounts on other sites, is not allowed.

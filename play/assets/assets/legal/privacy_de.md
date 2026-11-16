@@ -1,21 +1,21 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 23.10.2026 um Freunde werben, Clans, Frage-Bot im Discord und keine Werbung auf Steam und im Web, 12.10.2026 um Steckbrief mit KI, Belohnungsvideos und Käufe mit echtem Geld, 15.10.2026 um die Webseite ovalings.app, 16.10.2026 um Chat, Rangliste, Events, Captcha und Mailversand über Resend, 22.10.2026 um den Frage-Chat der Webseite, Freigabe durch Luis vor dem Livegang) nach der Recherche „Ovalings Datenschutz und Nutzungsbedingungen“. Keine Rechtsberatung. Platzhalter in eckigen Klammern vor dem Start ersetzen. -->
 # Datenschutzerklärung
 
-Stand: 5. November 2026. Diese Erklärung gilt für die App Ovalings und die Webseite ovalings.app. Sie sagt dir, welche Daten wir verarbeiten, wozu und welche Rechte du hast.
+Stand: 15. November 2026. Diese Erklärung gilt für die App Ovalings und die Webseite ovalings.app. Sie sagt dir, welche Daten wir verarbeiten, wozu und welche Rechte du hast.
 
 ## 1. Verantwortlicher
 
 - Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main
-- E-Mail: ovalings.support@proton.me
+- E-Mail: support@ovalings.app
 - Kontaktformular: in der App unter Einstellungen, Rechtliches, Kontakt, und auf der Webseite
 
 Eine Datenschutzbeauftragte oder einen Datenschutzbeauftragten müssen wir nicht benennen. Für alle Fragen zum Datenschutz erreichst du uns über die Wege oben.
 
 ## 2. Welche Daten wir verarbeiten
 
-- Konto: E-Mail-Adresse, Passwort (nur verschlüsselt als Prüfwert, nie im Klartext) und Geburtsjahr.
+- Konto: E-Mail-Adresse, Passwort (nur verschlüsselt als Prüfwert, nie im Klartext) und Geburtsjahr. Meldest du dich mit Google oder Apple an, statt des Passworts die Kennung deines Kontos dort und die Angaben, die Google oder Apple uns dabei übermitteln (E-Mail-Adresse, bei Google auch Name und Profilbild). Name und Profilbild nutzen wir nicht.
 - Profil: Anzeigename und Freundescode.
-- Spielstand: Diamanten, Gold, Energie und deren Buchungen, Eier, Ovalings mit ihrem Verlauf, Gegenstände, Kulissen.
+- Spielstand: Diamanten, Gold, Energie, Essenz und deren Buchungen, Eier, Ovalings mit ihrem Verlauf, Gegenstände, Kulissen.
 - Miteinander spielen: Freundschaften, Angebote auf dem Tauschmarkt, Nachrichten im Posteingang.
 - Chat: deine Nachrichten mit Raum und Zeitpunkt, wen du blockierst, Meldungen (wer gemeldet hat, die gemeldete Nachricht, der Grund), Verstöße gegen die Regeln im Chat und beim Anzeigenamen sowie Stummschaltungen (siehe Abschnitt 18).
 - Rangliste und Events: dein Spielerlevel, der beste Gene Score deiner Ovalings, deine höchste Stufe je Dungeon, deine Punkte, deine Gruppe und dein Platz in Events (siehe Abschnitt 18).
@@ -66,18 +66,19 @@ Meldest du dich auf der Webseite an, legt dein Browser die Sitzung (lokaler Spei
 - Google AdMob: zeigt die Belohnungsvideos (Google Ireland Limited). Für die Daten, die Google dabei verarbeitet, ist Google selbst verantwortlich (eigene Verantwortung nach den Datenschutzbedingungen von Google für Werbung, kein Auftrag von uns). Einzelheiten in Abschnitt 9.
 - Resend: verschickt in unserem Auftrag die E-Mails von Ovalings (Art. 28 DSGVO): Bestätigung des Kontos, Zurücksetzen des Passworts und die E-Mail an deine Eltern, wenn du unter 18 eine Freigabe für Käufe anfragst (Abschnitt 10). Dafür erhält Resend die Empfängeradresse und den Inhalt der Mail. Der Vertrag zur Auftragsverarbeitung ist Teil der Bedingungen von Resend.
 - Andere Spieler:innen: Deinen Anzeigenamen, deine Vitrine, deine Kulisse und deine Angebote auf dem Tauschmarkt sehen andere. Dein Profil mit Sammlung sehen nur deine Freund:innen. Deine Nachrichten im Chat sehen alle im selben Raum mit deinem Anzeigenamen. In der Rangliste stehen dein Anzeigename und dein Wert, wenn du unter den besten 100 bist, unter Freund:innen auch sonst. In einem Event sehen die anderen deiner Gruppe deinen Anzeigenamen, deine Punkte und deinen Platz. Die Steckbriefe der Ovalings sehen alle, die das Ovaling ansehen. Deine E-Mail-Adresse sieht niemand. Wer die ID eines Ovalings kennt, kann es auf ovalings.app ansehen: Aussehen, Werte, Level, Attacken, Passive und Steckbrief. Dein Konto, dein Anzeigename und der Spitzname des Ovalings erscheinen dort nie. Hast du dich über Freunde werben angemeldet, sieht die Person, die dich eingeladen hat, deinen Anzeigenamen und ob du das Ziel schon erreicht hast. In der Rangliste der Werbenden stehen Anzeigename und Zahl der Einladungen, wenn du unter den Besten bist. Mitglieder deines Clans sehen deinen Anzeigenamen, deine Rolle, deine Clan-Punkte, Spenden und erfüllten Wünsche der Woche und deine Nachrichten im Clan-Chat. Name, Flagge, Level und Zahl der Mitglieder eines Clans sehen alle.
-- Apple und Google: Sie stellen die App bereit und wickeln Käufe in der App ab. Dafür sind sie selbst verantwortlich, es gelten ihre Datenschutzerklärungen. Unser Server fragt bei ihnen jeden Beleg nach, um einen Kauf zu prüfen, und sie melden uns Verlängerungen, Kündigungen und Rückerstattungen. Wir erhalten nur die Angaben, die wir dafür brauchen, keine Zahlungsdaten.
+- Apple und Google: Sie stellen die App bereit und wickeln Käufe in der App ab. Meldest du dich mit Google oder Apple an, bestätigen sie uns, dass das Konto dir gehört, und erfahren dabei, dass du Ovalings nutzt. Dafür sind sie selbst verantwortlich, es gelten ihre Datenschutzerklärungen. Unser Server fragt bei ihnen jeden Beleg nach, um einen Kauf zu prüfen, und sie melden uns Verlängerungen, Kündigungen und Rückerstattungen. Wir erhalten nur die Angaben, die wir dafür brauchen, keine Zahlungsdaten.
 - Cloudflare: Die Webseite ovalings.app liefert Cloudflare, Inc. in unserem Auftrag aus (Art. 28 DSGVO, Vertrag zur Auftragsverarbeitung als Teil der Bedingungen von Cloudflare). Bei jedem Aufruf verarbeitet Cloudflare technisch nötige Daten wie IP-Adresse, Zeitpunkt, aufgerufene Adresse und Browserkennung, um die Seite auszuliefern und Angriffe abzuwehren. Wir selbst werten keine Zugriffe aus. Beim Anmelden, Registrieren, Start als Gast und Zurücksetzen des Passworts prüft Cloudflare Turnstile in der App, ob ein Mensch die Anfrage stellt. Dafür verarbeitet Cloudflare IP-Adresse und technische Angaben zu Gerät und Browser, setzt aber keine Werbe- oder Analyse-Cookies. Wir erhalten nur das Ergebnis der Prüfung.
 <!-- Offen: Turnstile ist vorbereitet, aber noch ausgeschaltet. Den Satz zu Turnstile erst mit dem Einschalten (Schalter in Supabase) veröffentlichen oder bis dahin streichen. -->
 - Sentry: empfängt in unserem Auftrag die Absturzberichte (Functional Software, Inc., USA, Art. 28 DSGVO). Die Berichte liegen in Frankfurt am Main. Beim Senden erhält Sentry technisch die IP-Adresse deines Geräts, speichert sie aber nicht.
 - Discord: Den Discord-Server von Ovalings betreibt Discord Inc. als Plattform. Was du dort schreibst, verarbeitet Discord selbst nach seiner Datenschutzerklärung. Stellst du dem Frage-Bot eine Frage, schickt Discord sie an unseren Server, der sie wie beim Frage-Chat der Webseite an Anthropic weitergibt (Abschnitt 22).
+- Proton: E-Mails an support@ovalings.app leitet Cloudflare an unser Postfach bei Proton weiter (Proton AG, Schweiz). Schreibst du uns eine E-Mail, liegt sie dort, bis deine Anfrage erledigt ist, danach höchstens ein Jahr.
 - GitHub: Eine frühere Adresse der Webseite mit den Rechtstexten ist noch bei GitHub Pages (GitHub, Inc.) erreichbar. GitHub speichert dabei die IP-Adresse jedes Besuchs zu Sicherheitszwecken.
 
 Wir verkaufen keine Daten. Für Werbung geben wir nur weiter, was in Abschnitt 9 steht.
 
 ## 6. Übermittlung in Länder außerhalb der EU
 
-Supabase sitzt in Singapur und setzt Dienstleister ein, darunter Amazon Web Services in den USA. Deine Spieldaten liegen in Frankfurt, ein Zugriff aus diesen Ländern ist aber möglich, etwa für Wartung und Support. Grundlage sind die Standardvertragsklauseln der EU-Kommission (Art. 46 Abs. 2 lit. c DSGVO). Eine Kopie bekommst du auf Anfrage. GitHub übermittelt Daten in die USA auf Grundlage des Angemessenheitsbeschlusses für zertifizierte Unternehmen (EU-US Data Privacy Framework) und der Standardvertragsklauseln. Anthropic verarbeitet die Angaben für die Steckbriefe und den Frage-Chat in den USA, Grundlage sind die Standardvertragsklauseln. Resend verarbeitet die Mails vor allem in den USA, Grundlage sind der Angemessenheitsbeschluss für zertifizierte Unternehmen (EU-US Data Privacy Framework) und die Standardvertragsklauseln. Google kann Daten in die USA übermitteln, Grundlage ist ebenfalls das EU-US Data Privacy Framework. Cloudflare kann Daten in die USA übermitteln, Grundlage sind der Angemessenheitsbeschluss für zertifizierte Unternehmen (EU-US Data Privacy Framework) und die Standardvertragsklauseln. Sentry kann Absturzberichte auch in den USA verarbeiten, Grundlage sind ebenfalls das EU-US Data Privacy Framework und die Standardvertragsklauseln.
+Proton sitzt in der Schweiz, für sie gilt ein Angemessenheitsbeschluss der EU-Kommission. Supabase sitzt in Singapur und setzt Dienstleister ein, darunter Amazon Web Services in den USA. Deine Spieldaten liegen in Frankfurt, ein Zugriff aus diesen Ländern ist aber möglich, etwa für Wartung und Support. Grundlage sind die Standardvertragsklauseln der EU-Kommission (Art. 46 Abs. 2 lit. c DSGVO). Eine Kopie bekommst du auf Anfrage. GitHub übermittelt Daten in die USA auf Grundlage des Angemessenheitsbeschlusses für zertifizierte Unternehmen (EU-US Data Privacy Framework) und der Standardvertragsklauseln. Anthropic verarbeitet die Angaben für die Steckbriefe und den Frage-Chat in den USA, Grundlage sind die Standardvertragsklauseln. Resend verarbeitet die Mails vor allem in den USA, Grundlage sind der Angemessenheitsbeschluss für zertifizierte Unternehmen (EU-US Data Privacy Framework) und die Standardvertragsklauseln. Google kann Daten in die USA übermitteln, Grundlage ist ebenfalls das EU-US Data Privacy Framework. Cloudflare kann Daten in die USA übermitteln, Grundlage sind der Angemessenheitsbeschluss für zertifizierte Unternehmen (EU-US Data Privacy Framework) und die Standardvertragsklauseln. Sentry kann Absturzberichte auch in den USA verarbeiten, Grundlage sind ebenfalls das EU-US Data Privacy Framework und die Standardvertragsklauseln.
 
 ## 7. Steckbrief mit KI
 
@@ -139,7 +140,7 @@ Ovalings ist ab 13 Jahren. Unter 16 gibt es keine Käufe mit echtem Geld und kei
 
 ## 14. Musst du Daten angeben?
 
-Für ein Konto brauchen wir E-Mail-Adresse, Passwort und Geburtsjahr. Ohne sie kannst du Ovalings nicht spielen. Alles andere entsteht beim Spielen. Belohnungsvideos und Käufe sind freiwillig.
+Für ein Konto brauchen wir dein Geburtsjahr und entweder E-Mail-Adresse und Passwort oder eine Anmeldung mit Google oder Apple. Als Gast genügt das Geburtsjahr. Ohne diese Angaben kannst du Ovalings nicht spielen. Alles andere entsteht beim Spielen. Belohnungsvideos und Käufe sind freiwillig.
 
 ## 15. Automatisierte Entscheidungen
 

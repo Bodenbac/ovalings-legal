@@ -8,7 +8,7 @@
 
 ## Kontakt
 
-- E-Mail: ovalings.support@proton.me
+- E-Mail: support@ovalings.app
 - Kontaktformular: in der App unter Einstellungen, Rechtliches, Kontakt, und auf der Webseite
 
 ## Verbraucherstreitbeilegung

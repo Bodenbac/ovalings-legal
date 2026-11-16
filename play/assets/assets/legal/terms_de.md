@@ -1,11 +1,11 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Käufe, Werbevideos und Steckbrief mit KI, 16.10.2026 um Marktgebühr und Chat, 23.10.2026 um Freunde werben, Clans und keine Werbung auf Steam und im Web) nach der Recherche „Ovalings Datenschutz und Nutzungsbedingungen“. Keine Rechtsberatung. Platzhalter in eckigen Klammern vor dem Start ersetzen. -->
 # Nutzungsbedingungen
 
-Stand: 23. Oktober 2026. Diese Bedingungen gelten zwischen dir und dem Anbieter von Ovalings, wenn du ein Konto anlegst und spielst.
+Stand: 15. November 2026. Diese Bedingungen gelten zwischen dir und dem Anbieter von Ovalings, wenn du ein Konto anlegst und spielst.
 
 ## 1. Anbieter
 
-Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: ovalings.support@proton.me. Weitere Angaben stehen im Impressum.
+Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: support@ovalings.app. Weitere Angaben stehen im Impressum.
 
 ## 2. Konto
 
@@ -16,7 +16,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: o
 
 ## 3. Spielinhalte und Nutzungsrecht
 
-- Ovalings, Eier, Gegenstände, Kulissen, Diamanten, Gold und Energie sind Inhalte des Spiels. Du bekommst daran ein Recht zur Nutzung im Spiel, kein Eigentum.
+- Ovalings, Eier, Gegenstände, Kulissen, Diamanten, Gold, Energie und Essenz sind Inhalte des Spiels. Du bekommst daran ein Recht zur Nutzung im Spiel, kein Eigentum.
 - Spielwährungen sind kein Geld. Sie lassen sich nicht auszahlen und nicht in echtes Geld tauschen.
 - Diamanten, die du mit echtem Geld gekauft hast, verfallen nicht.
 - Handel mit echtem Geld außerhalb des Spiels, etwa der Verkauf von Ovalings, Spielwährungen oder Konten auf anderen Seiten, ist nicht erlaubt.
@@ -57,7 +57,7 @@ Was in einem Ei steckt, entscheidet der Zufall. Die Chancen für jede Seltenheit
 
 ## 9. Freunde werben und Einladungs-Event
 
-- Lädst du jemanden ein und erreicht diese Person Spielerlevel 10 mit bestätigter E-Mail-Adresse, bekommt ihr beide 100 Diamanten und ein Normal Egg in den Posteingang. Wer einlädt, bekommt zusätzlich Bonus-Eier, wie sie in der App beschrieben sind. Eine Obergrenze gibt es nicht.
+- Lädst du jemanden ein und erreicht diese Person Spielerlevel 10 mit bestätigter E-Mail-Adresse, bekommt ihr beide 100 Diamanten und ein Normales Ei in den Posteingang. Wer einlädt, bekommt zusätzlich Bonus-Eier, wie sie in der App beschrieben sind. Eine Obergrenze gibt es nicht.
 - Angeben, wer dich eingeladen hat, kannst du beim Registrieren oder in den ersten 7 Tagen danach, nur einmal und nicht dich selbst.
 - Einladungs-Event: Bis zum Start der Server zählen wir für jede Person die eingeladenen Konten, die ihre E-Mail-Adresse bestätigt haben. Die drei mit den meisten Einladungen bekommen 5.000, 2.000 und 1.000 Diamanten. Bei Gleichstand liegt vorn, wer die Zahl zuerst erreicht hat.
 - Einladungen von Konten, die nur zum Zählen angelegt wurden, etwa mehrere Konten derselben Person oder Wegwerf-Adressen, zählen nicht. Vor der Auszahlung prüfen wir die Besten. Bei Verstößen können wir Einladungen streichen und das Konto vom Event ausschließen (Abschnitt 12).
@@ -97,7 +97,7 @@ Fehler, die du findest, melde bitte über das Kontaktformular.
 
 Verstößt jemand gegen diese Regeln, informieren wir zuerst mit Grund und geben Gelegenheit zur Stellungnahme. Danach entscheiden wir neu. Je nach Schwere können wir verwarnen, Inhalte entfernen, die durch den Verstoß entstanden sind, oder das Konto zeitweise oder dauerhaft sperren. Bei schweren Verstößen, etwa Angriffen auf den Server, sperren wir sofort vorläufig und holen die Anhörung danach nach. Deine gesetzlichen Rechte bleiben unberührt.
 
-Im Chat greifen einige Maßnahmen sofort und automatisch: Eine Nachricht, die gegen die Regeln verstößt, wird nicht gesendet, und du siehst den Grund. Drei Verstöße an einem Tag schalten dich für 24 Stunden stumm. Melden drei verschiedene Konten eine Nachricht, wird sie verborgen, bis wir sie geprüft haben, und du bekommst dazu eine Nachricht mit Grund in deine Posteingang. Hältst du eine solche Maßnahme für falsch, schreib uns über das Kontaktformular, wir prüfen sie dann selbst. Außerdem steht dir der Weg zu den Gerichten offen.
+Im Chat greifen einige Maßnahmen sofort und automatisch: Eine Nachricht, die gegen die Regeln verstößt, wird nicht gesendet, und du siehst den Grund. Drei Verstöße an einem Tag schalten dich für 24 Stunden stumm. Melden drei verschiedene Konten eine Nachricht, wird sie verborgen, bis wir sie geprüft haben, und du bekommst dazu eine Nachricht mit Grund in deinen Posteingang. Hältst du eine solche Maßnahme für falsch, schreib uns über das Kontaktformular, wir prüfen sie dann selbst. Außerdem steht dir der Weg zu den Gerichten offen.
 
 ## 13. Änderungen am Spiel
 

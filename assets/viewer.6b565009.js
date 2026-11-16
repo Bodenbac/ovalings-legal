@@ -505,7 +505,7 @@
   }
   function openStat(st, info) {
     var list = [[D.t.rolled, statValue(st.stat, st.rolled)]];
-    if (st.lucky) list[0][1] = D.t.lucky + ' · ' + list[0][1];
+    if (st.lucky) list[0][1] = D.t.lucky + ', ' + list[0][1];
     if (st.family_bonus_percent) list.push([D.t.familyBonus, pct(st.family_bonus_percent), 'up']);
     // Wie monsterLevel(level) in der App: „Level 50“ und daneben der Bonus, nicht „Level 98 %“
     if (st.level_percent) list.push([fill(D.t.level, { level: num(shown.level.level) }), pct(st.level_percent), 'up']);

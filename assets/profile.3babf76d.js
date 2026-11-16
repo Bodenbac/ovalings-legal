@@ -113,7 +113,7 @@
       var a = document.createElement('a');
       a.className = 'prtile r-' + (m.rarity_id || 'normal');
       a.href = C.viewer + '#' + m.id;
-      var label = m.name || m._c.title || (T.rarities[m.rarity_id] || '') + ' · ' + (T.families[m.family_id] || '');
+      var label = m.name || m._c.title || (T.rarities[m.rarity_id] || '') + ', ' + (T.families[m.family_id] || '');
       a.setAttribute('aria-label', fill(T.open, { ovaling: label }));
       var pic = document.createElement('span'); pic.className = 'prpic';
       var img = document.createElement('img');
