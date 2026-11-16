@@ -1,7 +1,7 @@
 <!-- Entwurf von Claude (04.10.2026, ergänzt 12.10.2026 um Käufe, Werbevideos und Steckbrief mit KI, 16.10.2026 um Marktgebühr und Chat, 23.10.2026 um Freunde werben, Clans und keine Werbung auf Steam und im Web) nach der Recherche „Ovalings Datenschutz und Nutzungsbedingungen“. Keine Rechtsberatung. Platzhalter in eckigen Klammern vor dem Start ersetzen. -->
 # Nutzungsbedingungen
 
-Stand: 15. November 2026. Diese Bedingungen gelten zwischen dir und dem Anbieter von Ovalings, wenn du ein Konto anlegst und spielst.
+Stand: 16. November 2026. Diese Bedingungen gelten zwischen dir und dem Anbieter von Ovalings, wenn du ein Konto anlegst und spielst.
 
 ## 1. Anbieter
 
@@ -29,7 +29,7 @@ Luis Dominic Bodenbach, Vogelsbergstraße 27, 60316 Frankfurt am Main, E-Mail: s
 - Gutgeschrieben wird ein Kauf erst, wenn unser Server ihn bei Apple oder Google geprüft hat, je Beleg genau einmal. Startpakete gibt es je Konto nur einmal.
 - Gäste können nichts mit echtem Geld kaufen. Unter 16 kannst du nichts mit echtem Geld kaufen. Bist du 16 oder 17, brauchst du die Freigabe deiner Eltern per E-Mail. Sie legen dabei eine Grenze je Monat fest und können die Freigabe jederzeit zurückziehen.
 - Kann ein Kauf nicht gutgeschrieben werden, etwa weil die Freigabe fehlt oder die Grenze erreicht ist, bestätigen wir ihn beim Store nicht. Google erstattet ihn dann von selbst. Bei Apple bleibt er offen und wird gutgeschrieben, sobald die Freigabe vorliegt. Lehnen deine Eltern ab oder entscheiden sie nicht innerhalb von 7 Tagen, gilt der Kauf als nicht genehmigt (§ 108 BGB). Du kannst dann bei Apple die Erstattung beantragen, wir helfen dir dabei über das Kontaktformular.
-- Monatspässe (VIP und VVIP) verlängern sich jeden Monat, bis du sie im App Store oder bei Google Play kündigst. Die Diamanten je Tag holst du in der App ab. Tage, an denen dein Pass lief, bleiben abholbar, auch nach seinem Ende. In der App auf Android und iOS bekommst du mit einem Pass die Belohnungen der Werbevideos ohne Video. Mit dem VVIP-Pass kannst du Kämpfe zusätzlich dreifach schnell laufen lassen, und deine Ovalings bekommen aus Kämpfen 20 % mehr Erfahrung.
+- Monatspässe (VIP und VVIP) verlängern sich jeden Monat, bis du sie im App Store oder bei Google Play kündigst. Die Diamanten je Tag liegen an jedem Tag, an dem du dich anmeldest, als Nachricht in deinem Posteingang. Diese Nachrichten verfallen nicht, auch nicht nach dem Ende des Passes. Für Tage, an denen du dich nicht anmeldest, gibt es keine Diamanten. In der App auf Android und iOS bekommst du mit einem Pass die Belohnungen der Werbevideos ohne Video. Mit dem VVIP-Pass kannst du Kämpfe zusätzlich dreifach schnell laufen lassen, und deine Ovalings bekommen aus Kämpfen 20 % mehr Erfahrung.
 - Erstatten Apple oder Google einen Kauf, buchen wir seinen Inhalt zurück, höchstens bis dein Bestand bei 0 liegt. Hast du die Diamanten schon ausgegeben, merken wir uns den Fehlbetrag. Ab der zweiten solchen Erstattung kannst du erst wieder kaufen, wenn du den Fehlbetrag mit Diamanten ausgeglichen hast. Eier und Gegenstände aus einem erstatteten Paket fallen weg, solange sie ungeöffnet, unbenutzt und nicht auf dem Tauschmarkt eingestellt sind. Die Sperre dient nur dazu, Missbrauch durch Kaufen, Ausgeben und Erstatten zu verhindern. Sobald der Fehlbetrag ausgeglichen ist, endet sie.
 
 ## 5. Werbevideos

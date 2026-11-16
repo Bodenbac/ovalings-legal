@@ -51,8 +51,9 @@
     var el = $('[data-name-rule]');
     if (!rule) { el.hidden = true; return; }
     var wait = rule.next_at && new Date(rule.next_at) > new Date();
-    el.textContent = wait ? fill(T.nameWait, { date: day(rule.next_at) })
-      : rule.free ? fill(T.renameFree, { days: rule.days }) : fill(T.renamePaid, { price: num(rule.price), days: rule.days });
+    // Kostenlos einmal je 30 Tage, dazwischen für Diamanten (Luis 16.11.2026), wie das Fenster in der App
+    el.textContent = rule.free ? fill(T.renameFree, { days: rule.days })
+      : wait ? fill(T.renamePaid, { price: num(rule.price), date: day(rule.next_at) }) : fill(T.renamePaidNoDate, { price: num(rule.price) });
     el.hidden = false;
   }
   function loadRule() {
