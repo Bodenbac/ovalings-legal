@@ -11,6 +11,10 @@
 - E-Mail: support@ovalings.app
 - Kontaktformular: in der App unter Einstellungen, Rechtliches, Kontakt, und auf der Webseite
 
+## Umsatzsteuer-Identifikationsnummer
+
+Umsatzsteuer-Identifikationsnummer nach § 27a Umsatzsteuergesetz: DE466524021
+
 ## Verbraucherstreitbeilegung
 
 Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.

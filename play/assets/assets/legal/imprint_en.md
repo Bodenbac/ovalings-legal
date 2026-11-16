@@ -11,6 +11,10 @@
 - Email: support@ovalings.app
 - Contact form: in the app under Settings, Legal, Contact, and on the website
 
+## VAT identification number
+
+VAT identification number under Section 27a of the German VAT Act: DE466524021
+
 ## Consumer dispute resolution
 
 We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.
