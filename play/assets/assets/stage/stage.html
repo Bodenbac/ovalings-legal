@@ -12,8 +12,11 @@ html, body { margin: 0; height: 100%; background: transparent; overflow: hidden;
 #battle-hud { position: fixed; inset: 0; pointer-events: none; overflow: hidden; font-family: "Fredoka", "Trebuchet MS", system-ui, sans-serif; font-weight: 700; }
 #battle-boss { position: absolute; left: 50%; top: calc(12px + env(safe-area-inset-top, 0px)); width: min(70%, 420px); transform: translateX(-50%); }
 /* Spielstil (Luis 11.10.2026, wie Knöpfe und Balken der App): dunkle Kontur, Füllung mit Verlauf, Glanz oben */
-.bt-track { position: relative; height: 10px; border-radius: 7px; background: linear-gradient(#0e0b14cc, #2a2338aa); overflow: hidden; border: 2px solid #2a1a3e; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35); }
-.bt-track::after, .bt-bar::after { content: ""; position: absolute; left: 3px; right: 3px; top: 1px; height: 32%; border-radius: 4px; background: rgba(255, 255, 255, 0.32); pointer-events: none; }
+/* Glasröhre in Goldfassung mit Teilstrichen bei jedem Viertel (Luis 18.11.2026, A, wie _HpBar der App): Gold als Rand, die
+   dunkle Kontur außen als Schatten, die Striche als Verlauf über den Füllungen */
+.bt-track { position: relative; height: 10px; border-radius: 7px; background: linear-gradient(#0e0b14cc, #2a2338aa); overflow: hidden; border: 2px solid #e2a425; box-shadow: 0 0 0 1.5px #0b0b0b, 0 2px 0 1.5px rgba(0, 0, 0, 0.35); }
+.bt-track::before, .bt-bar::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent calc(25% - .6px), rgba(0, 0, 0, .4) calc(25% - .6px), rgba(0, 0, 0, .4) calc(25% + .6px), transparent calc(25% + .6px), transparent calc(50% - .6px), rgba(0, 0, 0, .4) calc(50% - .6px), rgba(0, 0, 0, .4) calc(50% + .6px), transparent calc(50% + .6px), transparent calc(75% - .6px), rgba(0, 0, 0, .4) calc(75% - .6px), rgba(0, 0, 0, .4) calc(75% + .6px), transparent calc(75% + .6px)); }
+.bt-track::after, .bt-bar::after { content: ""; position: absolute; left: 3px; right: 3px; top: 1px; height: 32%; border-radius: 4px; background: rgba(255, 255, 255, 0.36); pointer-events: none; z-index: 3; }
 .bt-track i, .bt-track b, .bt-bar i, .bt-bar b { position: absolute; top: 0; bottom: 0; left: 0; display: block; transition: width .25s, left .25s; }
 .bt-track i { background: linear-gradient(#ff8a7e, #e0453a 60%, #b8322a); }
 .bt-track b, .bt-bar b { background: #9fe3ff; }
@@ -22,8 +25,11 @@ html, body { margin: 0; height: 100%; background: transparent; overflow: hidden;
 .bt-track s, .bt-bar s { position: absolute; top: 0; bottom: 0; left: 0; display: block; text-decoration: none; }
 .bt-track s { background: #ffc2bc; }
 .bt-bar s { background: #c8f5d2; }
-.bt-bar { position: absolute; width: 46px; height: 7px; margin-left: -25px; margin-top: -3px; border-radius: 6px; background: linear-gradient(#0e0b14cc, #2a2338aa); border: 2px solid #2a1a3e; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35); overflow: hidden; will-change: transform; }
+.bt-bar { position: absolute; width: 48px; height: 8px; margin-left: -26px; margin-top: -4px; border-radius: 6px; background: linear-gradient(#0e0b14cc, #2a2338aa); border: 2px solid #e2a425; box-shadow: 0 0 0 1.5px #0b0b0b, 0 2px 0 1.5px rgba(0, 0, 0, 0.35); overflow: hidden; will-change: transform; }
 .bt-bar i { background: linear-gradient(#86ec9c, #4cc26b 60%, #33994f); }
+/* Gegner rot wie der Balken des Bosses und die Liste ohne 3D (Luis 19.11.2026) */
+.bt-bar.foe i { background: linear-gradient(#ff8a7e, #e0453a 60%, #b8322a); }
+.bt-bar.foe s { background: #ffc2bc; }
 /* Effekte über dem Lebensbalken (Luis 05.10.2026): Bilder malt die App (EffectIcon), daneben die restlichen Züge */
 /* Pfeile über wählbaren Zielen (Luis 05.10.2026): ein Winkel nach unten, wippt */
 .bt-target { position: absolute; margin-left: -11px; pointer-events: none; will-change: transform; }
@@ -32,7 +38,7 @@ html, body { margin: 0; height: 100%; background: transparent; overflow: hidden;
 .bt-fx { position: absolute; margin-left: -22px; margin-top: -19px; display: flex; gap: 2px; pointer-events: none; will-change: transform; }
 .bt-fx span { position: relative; width: 16px; height: 16px; }
 .bt-fx img { width: 16px; height: 16px; display: block; }
-.bt-fx em { position: absolute; right: -3px; bottom: -4px; font-style: normal; font-size: 9px; line-height: 1; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); }
+.bt-fx em { position: absolute; right: -3px; top: -3px; font-style: normal; font-size: 9px; line-height: 1; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); }
 .bt-num { position: absolute; font-size: 20px; line-height: 1; color: #fff; -webkit-text-stroke: 4px #2a1a3e; paint-order: stroke fill; text-shadow: 0 3px 0 rgba(42, 26, 62, 0.6); transform: translate(-50%, -50%); white-space: nowrap; animation: bt-jump .95s cubic-bezier(.2, .7, .3, 1) forwards; --dx: 0px; --dy: -60px; }
 .bt-num.big { font-size: 26px; color: #ffdede; }
 /* Kritisch (Plan Kampf-Animationen Punkt 8): größer, springt mit einem kräftigeren Ruck heraus */
@@ -55710,7 +55716,7 @@ function battleAddMember(m, i, foe, n) {
   const spot = foe ? BATTLE_FOE_SPOTS[i] : teamSpot('tower', n || BATTLE_SPOTS.length, i);
   const holder = new THREE.Group(), home = V(spot[0], 0, spot[1]);
   holder.position.copy(home); holder.rotation.y = foe ? 0 : Math.PI; battle.scene.add(holder);
-  const bar = document.createElement('div'); bar.className = 'bt-bar'; bar.innerHTML = '<i style="width:100%"></i><b style="width:0"></b>'; hud.appendChild(bar);
+  const bar = document.createElement('div'); bar.className = foe ? 'bt-bar foe' : 'bt-bar'; bar.innerHTML = '<i style="width:100%"></i><b style="width:0"></b>'; hud.appendChild(bar);
   const fx = document.createElement('div'); fx.className = 'bt-fx'; hud.appendChild(fx);
   const blob = Backdrops.blob(0.55, 0.85); blob.position.set(home.x, 0.012, home.z); battle.scene.add(blob);
   const f = battleFighter(m.key || 'a' + i, holder, home, 0.95, m.hp, { bar, fx, rig: null, blob });
@@ -55852,7 +55858,7 @@ function campaignAddFigure(m, o) {
     home.y = W.heightAt(home.x, home.z); yaw = Math.atan2(-fr.fwd.x, -fr.fwd.z);
     holder.position.copy(home); holder.rotation.y = yaw;
   } else { slot = teamSpot('campaign', o.n || CAMPAIGN_TEAM_SPOTS.length, o.i); home = V(0, 0, 0); }
-  const bar = document.createElement('div'); bar.className = 'bt-bar'; bar.innerHTML = '<i style="width:100%"></i><b style="width:0"></b>'; hud.appendChild(bar);
+  const bar = document.createElement('div'); bar.className = o.foe ? 'bt-bar foe' : 'bt-bar'; bar.innerHTML = '<i style="width:100%"></i><b style="width:0"></b>'; hud.appendChild(bar);
   const fx = document.createElement('div'); fx.className = 'bt-fx'; hud.appendChild(fx);
   const blob = (W.blob || Backdrops.blob)(size * 0.58, 0.85); blob.position.set(home.x, home.y + 0.015, home.z); B.scene.add(blob);
   const f = battleFighter(key, holder, home, height, m.hp, { bar, fx, rig, blob, alpha, act: null, wave: o.foe ? o.wave : 0, slot, yaw, wt: 0, hidden: null });
